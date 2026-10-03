@@ -2,11 +2,11 @@
   "name": "Nocturna",
   "short_name": "Nocturna",
   "description": "Publicação digital de leitura. By Riquelmi.",
-  "start_url": "./index.html",
-  "scope": "./",
+  "start_url": "/Nocturna/",
+  "scope": "/Nocturna/",
   "display": "standalone",
   "lang": "pt-BR",
   "background_color": "#121212",
   "theme_color": "#121212",
-  "icons": [{ "src": "assets/global/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }]
+  "icons": [{ "src": "/Nocturna/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }]
 }
