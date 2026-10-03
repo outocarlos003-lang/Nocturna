@@ -6,6 +6,7 @@ on:
     paths:
       - "index.html"
       - "sitemap.mjs"
+      - "neural-index.mjs"
       - "robots.txt"
       - ".github/workflows/indexability.yml"
   workflow_dispatch:
@@ -25,17 +26,19 @@ jobs:
         with:
           node-version: 20
 
-      - name: Gerar páginas rastreáveis e sitemap
-        run: node sitemap.mjs "https://outocarlos003-lang.github.io/Nocturna/"
+      - name: Gerar páginas rastreáveis, sitemap e grafo neural
+        run: |
+          node sitemap.mjs "https://outocarlos003-lang.github.io/Nocturna/"
+          node neural-index.mjs "https://outocarlos003-lang.github.io/Nocturna/"
 
       - name: Publicar alterações geradas
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add sitemap.xml robots.txt artigos categorias tags arquivo sobre faq contato privacidade
+          git add sitemap.xml robots.txt artigos categorias tags arquivo sobre faq contato privacidade mapa-neural dados-neurais
           if git diff --cached --quiet; then
             echo "Nenhuma alteração de indexação."
           else
-            git commit -m "Atualiza camada rastreável [skip ci]"
+            git commit -m "Atualiza camada rastreável e grafo neural [skip ci]"
             git push
           fi
