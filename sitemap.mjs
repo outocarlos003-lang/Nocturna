@@ -67,7 +67,6 @@ for (const t of tags) {
   routes.push(writeRoute(tagPath(t),"Tag: "+t+" — Nocturna","Publicações marcadas com "+t+" na Nocturna.",
     '<h1>Tag: '+esc(t)+'</h1>'+cards(items),{"@context":"https://schema.org","@type":"CollectionPage","name":"Tag: "+t,"url":abs(tagPath(t))}));
 }
-const core = [
 const years=[...new Set(DATA.pubs.filter(p=>p.date).map(p=>p.date.slice(0,4)))].sort((a,b)=>b.localeCompare(a));
 const archiveBody='<h1>Arquivo</h1><p class="meta">Arquivo cronológico das publicações da Nocturna.</p>'+years.map(y=>'<section><h2>'+y+'</h2>'+cards(DATA.pubs.filter(p=>p.date&&p.date.startsWith(y)))+'</section>').join("");
 const core = [
