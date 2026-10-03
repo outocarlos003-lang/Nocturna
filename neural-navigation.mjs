@@ -1,15 +1,13 @@
 import { readdirSync, readFileSync, writeFileSync, statSync } from "node:fs";
-import { join, relative } from "node:path";
+import { join } from "node:path";
 
 const root = process.cwd();
 const skip = new Set([".git", ".github", "node_modules"]);
 const files = [];
-
 function walk(dir) {
   for (const name of readdirSync(dir)) {
     if (skip.has(name)) continue;
-    const full = join(dir, name);
-    const st = statSync(full);
+    const full = join(dir, name), st = statSync(full);
     if (st.isDirectory()) walk(full);
     else if (name.toLowerCase() === "index.html") files.push(full);
   }
@@ -30,35 +28,24 @@ const css = `<style id="nocturna-neural-style">
 .nn-breadcrumb{display:flex;flex-wrap:wrap;gap:.35rem;align-items:center;color:#b2aa98;font:.9rem system-ui,sans-serif;margin:.6rem 0 1rem}.nn-breadcrumb a{color:#e0bfae}.nn-sep{opacity:.55}
 .nn-results{display:grid;gap:.65rem}.nn-result{display:block;padding:.8rem;border:1px solid #38333c;border-radius:8px;background:#121212;color:#e9e1cf;text-decoration:none}.nn-result:hover{border-color:#9c2d49}.nn-result strong{display:block;font-family:Georgia,serif}.nn-result small{display:block;color:#b2aa98;margin-top:.2rem;overflow-wrap:anywhere}.nn-empty{padding:1rem;border:1px dashed #38333c;border-radius:8px;color:#b2aa98}
 .nn-related{display:flex;flex-wrap:wrap;gap:.45rem;margin:.6rem 0 1.2rem}.nn-related a{padding:.45rem .65rem;border:1px solid #38333c;border-radius:999px;color:#e0bfae;text-decoration:none;background:#121212}
-.nn-path{font: .78rem ui-monospace,SFMono-Regular,Consolas,monospace;color:#b2aa98;overflow-wrap:anywhere}
 @media(max-width:600px){#nocturna-neural-launcher{left:10px;right:10px;bottom:10px;justify-content:stretch}.nn-mobile-full{flex:1}#nocturna-neural-card{border-radius:8px}}
 </style>`;
 
 const js = `<script id="nocturna-neural-script">(()=>{
-const root=new URL("/Nocturna/",location.origin), q=s=>document.querySelector(s), esc=s=>String(s??"").replace(/[&<>\"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c]));
-const norm=s=>String(s??"").toLocaleLowerCase("pt-BR").normalize("NFD").replace(/[\\u0300-\\u036f]/g,"");
-const rel=location.pathname.startsWith(root.pathname)?location.pathname.slice(root.pathname.length):location.pathname.replace(/^\\//,"");
-const parts=rel.split("/").filter(Boolean), pathLabel=parts.map(x=>decodeURIComponent(x).replace(/[-_]+/g," ")).filter(x=>x!=="index.html");
-const launcher=document.createElement("div");launcher.id="nocturna-neural-launcher";launcher.innerHTML='<button class="nn-mobile-full" id="nn-open">⌕ Pesquisa neural</button><a class="nn-alt" href="'+root.href+'">⌂ Núcleo</a><a class="nn-alt" href="'+new URL("explorar/",root).href+'">⇄ Explorar</a><a class="nn-alt" href="'+new URL("mapa-neural/",root).href+'">◉ Mapa</a>';document.body.appendChild(launcher);
-const panel=document.createElement("div");panel.id="nocturna-neural-panel";panel.innerHTML='<div id="nocturna-neural-card"><div id="nocturna-neural-search"><input id="nn-q" type="search" placeholder="Pesquisar em páginas, artigos, categorias, tags, pastas…" autocomplete="off" aria-label="Pesquisa neural transversal"><button id="nn-close" type="button">Fechar</button></div><div id="nn-bc"></div><section><h2 id="nn-title">Pesquisa transversal</h2><p id="nn-status" class="nn-empty">Carregando índice semântico…</p><div id="nn-results" class="nn-results"></div></section><section><h3>Continuidade deste nó</h3><div id="nn-related" class="nn-related"></div></section></div>';document.body.appendChild(panel);
-const open=()=>{panel.classList.add("open");q("#nn-q").focus()};const close=()=>panel.classList.remove("open");q("#nn-open").onclick=open;q("#nn-close").onclick=close;panel.addEventListener("click",e=>{if(e.target===panel)close()});document.addEventListener("keydown",e=>{if(e.key==="Escape")close();if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==="k"){e.preventDefault();open()}});
-const bc=q("#nn-bc");bc.innerHTML='<div class="nn-breadcrumb"><a href="'+root.href+'">Nocturna</a>'+pathLabel.map((p,i)=>'<span class="nn-sep">›</span><span>'+esc(p)+'</span>').join("")+'</div>';
-let graph=null, urls=[];
-Promise.all([fetch(new URL("dados-neurais/grafo.json",root),{cache:"no-store"}).then(r=>r.ok?r.json():null),fetch(new URL("sitemap.xml",root),{cache:"no-store"}).then(r=>r.ok?r.text():"")]).then(([g,xml])=>{graph=g;try{const d=new DOMParser().parseFromString(xml,"application/xml");urls=[...d.querySelectorAll("loc")].map(x=>x.textContent.trim()).filter(Boolean)}catch{};renderRelated();render("");}).catch(()=>{q("#nn-status").textContent="O índice transversal não pôde ser carregado agora."});
+const root=new URL("/Nocturna/",location.origin),q=s=>document.querySelector(s),esc=s=>String(s??"").replace(/[&<>\"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c])),norm=s=>String(s??"").toLocaleLowerCase("pt-BR").normalize("NFD").replace(/[\\u0300-\\u036f]/g,"");
+const rel=location.pathname.startsWith(root.pathname)?location.pathname.slice(root.pathname.length):location.pathname.replace(/^\\//,""),parts=rel.split("/").filter(Boolean),pathLabel=parts.map(x=>decodeURIComponent(x).replace(/[-_]+/g," ")).filter(x=>x!=="index.html");
+const launcher=document.createElement("div");launcher.id="nocturna-neural-launcher";launcher.innerHTML='<button class="nn-mobile-full" id="nn-open">⌕ Pesquisa neural</button><a class="nn-alt" href="'+root.href+'">⌂ Núcleo</a><a class="nn-alt" href="'+new URL("explorar/",root).href+'">⇄ Explorar</a>';document.body.appendChild(launcher);
+const panel=document.createElement("div");panel.id="nocturna-neural-panel";panel.innerHTML='<div id="nocturna-neural-card"><div id="nocturna-neural-search"><input id="nn-q" type="search" placeholder="Pesquisar em páginas, artigos, categorias, tags, pastas…" autocomplete="off" aria-label="Pesquisa neural transversal"><button id="nn-close" type="button">Fechar</button></div><div id="nn-bc"></div><section><h2>Pesquisa transversal</h2><p id="nn-status" class="nn-empty">Carregando índice semântico…</p><div id="nn-results" class="nn-results"></div></section><section><h3>Continuidade deste nó</h3><div id="nn-related" class="nn-related"></div></section></div></div>';document.body.appendChild(panel);
+const open=()=>{panel.classList.add("open");q("#nn-q").focus()},close=()=>panel.classList.remove("open");q("#nn-open").onclick=open;q("#nn-close").onclick=close;panel.addEventListener("click",e=>{if(e.target===panel)close()});document.addEventListener("keydown",e=>{if(e.key==="Escape")close();if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==="k"){e.preventDefault();open()}});
+q("#nn-bc").innerHTML='<div class="nn-breadcrumb"><a href="'+root.href+'">Nocturna</a>'+pathLabel.map(p=>'<span class="nn-sep">›</span><span>'+esc(p)+"</span>").join("")+"</div>";
+let graph=null,urls=[];
+Promise.all([fetch(new URL("dados-neurais/grafo.json",root),{cache:"no-store"}).then(r=>r.ok?r.json():null),fetch(new URL("sitemap.xml",root),{cache:"no-store"}).then(r=>r.ok?r.text():"")]).then(([g,xml])=>{graph=g;try{const d=new DOMParser().parseFromString(xml,"application/xml");urls=[...d.querySelectorAll("loc")].map(x=>x.textContent.trim()).filter(Boolean)}catch{}renderRelated();render("")}).catch(()=>{q("#nn-status").textContent="O índice transversal não pôde ser carregado agora."});
 function currentNode(){if(!graph?.nodes)return null;const here=location.href.replace(/\\/$/,"");return graph.nodes.find(n=>n.url&&String(n.url).replace(/\\/$/,"")===here)||null}
-function renderRelated(){const box=q("#nn-related"),n=currentNode();if(!n||!graph?.edges){box.innerHTML='<span class="nn-empty">Este nó ainda não possui relações explícitas no grafo.</span>';return}const ids=new Set(graph.edges.filter(e=>e.from===n.id||e.to===n.id).map(e=>e.from===n.id?e.to:e.from));const nodes=graph.nodes.filter(x=>ids.has(x.id)&&x.url).slice(0,24);box.innerHTML=nodes.map(x=>'<a href="'+esc(x.url)+'">'+esc(x.label||x.id)+'</a>').join("")||'<span class="nn-empty">Nenhuma conexão adicional disponível.</span>'}
-function render(term){const box=q("#nn-results"),status=q("#nn-status"),t=norm(term);let rows=[];if(graph?.nodes){rows=graph.nodes.filter(n=>n.url&&(!t||norm([n.label,n.type,n.id,n.source,JSON.stringify(n.record||"")].join(" ")).includes(t))).map(n=>({url:n.url,label:n.label||n.id,type:n.type,path:n.source||n.id}));}if(!rows.length&&urls.length){rows=urls.filter(u=>!t||norm(u).includes(t)).map(u=>({url:u,label:decodeURIComponent(u).replace(/\\/$/,"").split("/").pop()||"Nocturna",type:"página",path:u}))}rows=rows.slice(0,80);status.textContent=t?(rows.length+" resultado(s) encontrados"):(graph?((graph.nodes||[]).length+" nós disponíveis para rastreamento"):(urls.length+" URLs indexadas"));box.innerHTML=rows.map(r=>'<a class="nn-result" href="'+esc(r.url)+'"><strong>'+esc(r.label)+'</strong><small>'+esc(r.type||"conteúdo")+' · '+esc(r.path||r.url)+'</small></a>').join("")||'<div class="nn-empty">Nenhum conteúdo corresponde à pesquisa.</div>'}
+function renderRelated(){const box=q("#nn-related"),n=currentNode();if(!n||!graph?.edges){box.innerHTML='<span class="nn-empty">Este nó ainda não possui relações explícitas no grafo.</span>';return}const ids=new Set(graph.edges.filter(e=>e.from===n.id||e.to===n.id).map(e=>e.from===n.id?e.to:e.from));const nodes=graph.nodes.filter(x=>ids.has(x.id)&&x.url).slice(0,24);box.innerHTML=nodes.map(x=>'<a href="'+esc(x.url)+'">'+esc(x.label||x.id)+"</a>").join("")||'<span class="nn-empty">Nenhuma conexão adicional disponível.</span>'}
+function render(term){const box=q("#nn-results"),status=q("#nn-status"),t=norm(term);let rows=[];if(graph?.nodes)rows=graph.nodes.filter(n=>n.url&&(!t||norm([n.label,n.type,n.id,n.source,JSON.stringify(n.record||"")].join(" ")).includes(t))).map(n=>({url:n.url,label:n.label||n.id,type:n.type,path:n.source||n.id}));if(!rows.length&&urls.length)rows=urls.filter(u=>!t||norm(u).includes(t)).map(u=>({url:u,label:decodeURIComponent(u).replace(/\\/$/,"").split("/").pop()||"Nocturna",type:"página",path:u}));rows=rows.slice(0,80);status.textContent=t?(rows.length+" resultado(s) encontrados"):(graph?((graph.nodes||[]).length+" nós disponíveis para rastreamento"):(urls.length+" URLs indexadas"));box.innerHTML=rows.map(r=>'<a class="nn-result" href="'+esc(r.url)+'"><strong>'+esc(r.label)+'</strong><small>'+esc(r.type||"conteúdo")+" · "+esc(r.path||r.url)+"</small></a>").join("")||'<div class="nn-empty">Nenhum conteúdo corresponde à pesquisa.</div>'}
 q("#nn-q").addEventListener("input",e=>render(e.target.value));
 })();</script>`;
 
-let changed = 0;
-for (const file of files) {
-  let html = readFileSync(file, "utf8");
-  if (!html.includes("id=\"nocturna-neural-script\"")) {
-    html = html.replace(/<\/head>/i, css + "</head>");
-    html = html.replace(/<\/body>/i, js + "</body>");
-    writeFileSync(file, html, "utf8");
-    changed++;
-  }
-}
+let changed=0;
+for(const file of files){let html=readFileSync(file,"utf8");if(!html.includes('id="nocturna-neural-script"')){html=html.replace(/<\\/head>/i,css+"</head>").replace(/<\\/body>/i,js+"</body>");writeFileSync(file,html,"utf8");changed++}}
 console.log(`Navegação neural injetada em ${changed} páginas HTML; ${files.length} páginas HTML encontradas.`);
