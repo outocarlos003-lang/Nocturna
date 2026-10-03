@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="t d">
+<title id="t">O Livro Branco e o Autor Vivo</title>
+<desc id="d">Imagem em estética dark romanticism de um livro branco aberto diante de uma porta habitada por luz, contrastando vazio e habitação.</desc>
+<defs>
+<radialGradient id="bg" cx="50%" cy="38%" r="75%"><stop offset="0" stop-color="#3a2930"/><stop offset=".55" stop-color="#171216"/><stop offset="1" stop-color="#07070a"/></radialGradient>
+<linearGradient id="beam" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#eee1c7" stop-opacity=".9"/><stop offset=".55" stop-color="#c4a77d" stop-opacity=".28"/><stop offset="1" stop-color="#6e3345" stop-opacity="0"/></linearGradient>
+<linearGradient id="page" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f0e6cd"/><stop offset="1" stop-color="#9d8c72"/></linearGradient>
+<filter id="blur"><feGaussianBlur stdDeviation="28"/></filter>
+</defs>
+<rect width="1600" height="900" fill="url(#bg)"/>
+<ellipse cx="800" cy="300" rx="260" ry="260" fill="#d8c49d" opacity=".1" filter="url(#blur)"/>
+<path d="M800 45 L1035 655 L565 655 Z" fill="url(#beam)"/>
+<path d="M585 650 V330 Q585 190 800 125 Q1015 190 1015 330 V650" fill="#09090c" stroke="#775765" stroke-width="18"/>
+<path d="M635 650 V340 Q635 235 800 185 Q965 235 965 340 V650" fill="#171216" stroke="#9a786f" stroke-width="4"/>
+<path d="M770 650 V385 Q770 315 800 280 Q830 315 830 385 V650" fill="#050508"/>
+<path d="M800 280 V650" stroke="#d0ad87" stroke-width="3" opacity=".45"/>
+<path d="M330 770 Q520 635 800 705 Q1080 635 1270 770 L1225 830 Q1040 760 800 810 Q560 760 375 830 Z" fill="#08080b"/>
+<path d="M430 710 L800 605 L1170 710 L800 790 Z" fill="#1e171b" stroke="#7e665a" stroke-width="6"/>
+<path d="M430 710 L800 605 L800 790 L430 710 Z" fill="url(#page)"/>
+<path d="M800 605 L1170 710 L800 790 Z" fill="#b4a486"/>
+<path d="M495 700 L775 625 M490 720 L775 650 M825 625 L1100 705 M825 650 L1080 725" stroke="#6c5d4e" stroke-width="5" opacity=".65"/>
+<path d="M800 790 V842" stroke="#8e705d" stroke-width="7" opacity=".6"/>
+<path d="M690 560 Q800 510 910 560" fill="none" stroke="#b98d76" stroke-width="5" opacity=".5"/>
+<g fill="#d5bf9c" opacity=".35"><circle cx="245" cy="190" r="2"/><circle cx="335" cy="275" r="3"/><circle cx="1300" cy="175" r="2"/><circle cx="1370" cy="300" r="3"/></g>
+<text x="800" y="870" text-anchor="middle" fill="#d3b99b" opacity=".68" font-family="Georgia,serif" font-size="30" letter-spacing="6">O VAZIO NÃO É O FIM DA ESCRITA</text>
+</svg>
