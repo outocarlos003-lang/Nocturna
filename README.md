@@ -55,16 +55,16 @@ Nocturna. Todos os direitos reservados.
 | Arquivo | Função |
 |---|---|
 | `index.html` | Núcleo autocontido: CSS, JS e dados (`DATA`) internos. Sem `fetch()`, módulos, bibliotecas ou CSS externo. |
-| `manifest.webmanifest` | Manifesto referenciado em `index.html`; ícone em `assets/global/icon.svg`. |
+| `manifest.webmanifest` | Manifesto referenciado em `index.html`; ícone global em `icon.svg`. |
 | `assets/global/` · `assets/editorial/` | Recursos da identidade · imagens das publicações (nunca alteradas automaticamente). |
 | `social-card.svg` | Card social global. Muitas plataformas não aceitam SVG em `og:image`; se for o caso, exporte PNG com o mesmo nome-base. |
 | `robots.txt` | Permite rastreamento (não é controle de segurança). |
-| `scripts/sitemap.mjs` | Gera `sitemap.xml` a partir de uma URL pública real. Sem URL real não há sitemap. |
-| `tests/validate.mjs` | Valida categorias, IDs, relações, manifesto, assets e ausência de dependências externas. |
+| `sitemap.mjs` | Gera `sitemap.xml` a partir de uma URL pública real. Sem URL real não há sitemap. |
+| `validate.mjs` | Valida categorias, IDs, relações, manifesto, assets e ausência de dependências externas. |
 
 ## Executar
 
-Abra `index.html` direto (`file://`) ou sirva por HTTP/HTTPS (ex.: GitHub Pages). Rotas usam hash (`#/categorias/metafisica`) porque caminhos reais não existem em `file://`/`content://`. Manifesto, canonical e armazenamento dependem de HTTP(S); a canonical só é emitida nesse caso. Não há Service Worker.
+Abra `index.html` direto (`file://`) ou sirva por HTTP/HTTPS (ex.: GitHub Pages). A aplicação aceita rotas por hash (`#/categorias/metafisica`) e também reconhece as rotas estáticas correspondentes no GitHub Pages. Manifesto, canonical e armazenamento dependem de HTTP(S); a canonical só é emitida nesse caso. Não há Service Worker.
 
 ## Modelo editorial (fonte única)
 
