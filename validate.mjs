@@ -1,4 +1,4 @@
-// Uso: node tests/validate.mjs
+// Uso: node validate.mjs
 import { readFileSync, existsSync } from "node:fs";
 const html = readFileSync("index.html", "utf8");
 const DATA = new Function(html.match(/\/\*DATA\*\/([\s\S]*?)\/\*END DATA\*\/(?=)/)[1] + ";return DATA")();
