@@ -155,7 +155,7 @@ faq:()=>({t:"FAQ",d:"Perguntas frequentes sobre a Nocturna.",h:`<h1 tabindex="-1
 const LEAF=["sobre","buscar","faq","contato","privacidade"];
 function meta(n,a,v){let e=$(`meta[${n}="${a}"]`);if(e)e.content=v}
 function render(){
- const[pt,qs]=(location.hash.slice(1)||"/").split("?"),q=new URLSearchParams(qs||""),s=pt.split("/").filter(Boolean).map(decodeURIComponent);let r;
+ const routeSource=location.hash.slice(1)||window.__STATIC_ROUTE||location.pathname.replace(/^\/Nocturna(?=\/|$)/,"")||"/";const[pt,qs]=routeSource.split("?"),q=new URLSearchParams(qs||""),s=pt.split("/").filter(Boolean).map(decodeURIComponent);let r;
  if(!s.length)r=P.home();
  else if(s[0]==="categorias"&&s.length<3)r=s[1]?P.cat(s[1],q):P.cats();
  else if(s[0]==="artigos"&&s.length<3)r=s[1]?P.art(s[1]):P.arts(q);
