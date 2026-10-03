@@ -28,7 +28,7 @@ jobs:
         with:
           node-version: 20
 
-      - name: Conectar a página inicial ao explorador
+      - name: Remover Mapa neural da interface pública
         run: |
           node --input-type=module <<'NODE'
           import fs from 'node:fs';
@@ -36,10 +36,10 @@ jobs:
           let s=fs.readFileSync(file,'utf8');
           const nav='<li><a href="explorar/">Explorar acervo</a></li>';
           if(!s.includes('href="explorar/"')) s=s.replace('<ul id="tree"></ul>','<ul id="tree"></ul>'+nav);
-          // Remove qualquer botão/atalho público do Mapa neural que tenha sido gerado anteriormente.
-          s=s.replace(/<a[^>]*href=["']mapa-neural\\/["'][^>]*>\\s*Mapa neural\\s*<\\/a>/gi,'');
-          s=s.replace(/<a[^>]*href=["'][^"']*mapa-neural[^"']*["'][^>]*>\\s*Mapa neural\\s*<\\/a>/gi,'');
-          s=s.replace(/<p[^>]*class=["'][^"']*archive-actions[^"']*["'][^>]*>\\s*<a[^>]*href=["']explorar\\/["'][^>]*>[^<]*<\\/a>\\s*<\\/p>/gi,'');
+          s=s.replace(/<a\b[^>]*href=["'][^"']*mapa-neural[^"']*["'][^>]*>[\s\S]*?<\/a>/gi,'');
+          s=s.replace(/<a\b[^>]*>[\s\S]*?Mapa neural[\s\S]*?<\/a>/gi,'');
+          const guard=`<style id="nocturna-hide-neural-map">a[href*="mapa-neural"],button[data-neural-map],.neural-map-link{display:none!important}</style><script id="nocturna-hide-neural-map-script">(()=>{const hide=()=>{document.querySelectorAll('a[href*="mapa-neural"],button[data-neural-map],.neural-map-link').forEach(e=>e.remove());document.querySelectorAll('a,button').forEach(e=>{if(e.textContent.trim().toLocaleLowerCase('pt-BR')==='mapa neural')e.remove()})};new MutationObserver(hide).observe(document.documentElement,{subtree:true,childList:true});hide()})();</script>`;
+          if(!s.includes('nocturna-hide-neural-map-script')) s=s.replace('</head>',guard+'</head>');
           fs.writeFileSync(file,s);
           NODE
 
@@ -59,6 +59,6 @@ jobs:
           if git diff --cached --quiet; then
             echo "Nenhuma alteração de indexação."
           else
-            git commit -m "Remove Mapa neural da interface pública [skip ci]"
+            git commit -m "Oculta definitivamente o Mapa neural da interface [skip ci]"
             git push
           fi
