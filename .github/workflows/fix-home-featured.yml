@@ -1,13 +1,14 @@
 name: Ajustar tela inicial
 on:
-  push:
-    branches: [main]
+  issues:
+    types: [opened]
 
 permissions:
   contents: write
 
 jobs:
   fix:
+    if: contains(github.event.issue.title, 'AJUSTE-TELA-INICIAL')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -27,12 +28,12 @@ jobs:
               raise SystemExit('Estrutura esperada de P.home não encontrada; nenhuma alteração foi feita.')
           path.write_text(new_text, encoding='utf-8')
 
-      - name: Commitar alteração e remover workflow temporário
+      - name: Commitar alteração e remover temporários
         run: |
-          rm -f .github/workflows/fix-home-featured.yml
+          rm -f .github/workflows/fix-home-featured.yml .nocturna-home-fix-trigger
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add index.html .github/workflows/fix-home-featured.yml
+          git add index.html .github/workflows/fix-home-featured.yml .nocturna-home-fix-trigger
           git diff --cached --quiet && exit 0
           git commit -m "Deixar somente o destaque na tela inicial"
           git push
