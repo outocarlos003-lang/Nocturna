@@ -7,6 +7,7 @@ on:
       - "index.html"
       - "sitemap.mjs"
       - "neural-index.mjs"
+      - "neural-navigation.mjs"
       - "robots.txt"
       - "explorar/index.html"
       - ".github/workflows/indexability.yml"
@@ -42,19 +43,22 @@ jobs:
           fs.writeFileSync(file,s);
           NODE
 
-      - name: Gerar páginas rastreáveis, sitemap e grafo neural
+      - name: Gerar sitemap e grafo sem perda de dados
         run: |
           node sitemap.mjs "https://outocarlos003-lang.github.io/Nocturna/"
           node neural-index.mjs "https://outocarlos003-lang.github.io/Nocturna/"
+
+      - name: Injetar navegação neural em todas as páginas
+        run: node neural-navigation.mjs
 
       - name: Publicar alterações geradas
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add index.html sitemap.xml robots.txt artigos categorias tags arquivo sobre faq contato privacidade mapa-neural dados-neurais explorar
+          git add index.html sitemap.xml robots.txt artigos categorias tags arquivo sobre faq contato privacidade mapa-neural dados-neurais explorar *.html neural-navigation.mjs
           if git diff --cached --quiet; then
             echo "Nenhuma alteração de indexação."
           else
-            git commit -m "Conecta navegação neural ao acervo [skip ci]"
+            git commit -m "Unifica navegação, pesquisa e rastreabilidade neural [skip ci]"
             git push
           fi
