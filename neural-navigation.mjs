@@ -47,5 +47,17 @@ q("#nn-q").addEventListener("input",e=>render(e.target.value));
 })();</script>`;
 
 let changed=0;
-for(const file of files){let html=readFileSync(file,"utf8");if(!html.includes('id="nocturna-neural-script"')){html=html.replace(/<\\/head>/i,css+"</head>").replace(/<\\/body>/i,js+"</body>");writeFileSync(file,html,"utf8");changed++}}
-console.log(`Navegação neural injetada em ${changed} páginas HTML; ${files.length} páginas HTML encontradas.`);
+for(const file of files){
+  let html=readFileSync(file,"utf8");
+  // Remove qualquer atalho público para o mapa, inclusive os que estejam embutidos em strings JavaScript.
+  const before=html;
+  html=html.replace(/<a\b[^>]*href=["'][^"']*mapa-neural[^"']*["'][^>]*>[\s\S]*?<\/a>/gi,"");
+  html=html.replace(/<a\b[^>]*>\s*Mapa\s+neural\s*<\/a>/gi,"");
+  html=html.replace(/<button\b[^>]*>\s*Mapa\s+neural\s*<\/button>/gi,"");
+  // Também impede que uma interface antiga o recrie dinamicamente.
+  const guard=`<style id="nocturna-hide-neural-map">a[href*="mapa-neural"],button[data-neural-map],.neural-map-link{display:none!important}</style><script id="nocturna-hide-neural-map-script">(()=>{const hide=()=>{document.querySelectorAll('a[href*="mapa-neural"],button[data-neural-map],.neural-map-link').forEach(e=>e.remove());document.querySelectorAll('a,button').forEach(e=>{if(e.textContent.trim().toLocaleLowerCase('pt-BR')==='mapa neural')e.remove()})};const start=()=>{hide();new MutationObserver(hide).observe(document.documentElement,{subtree:true,childList:true})};document.readyState==='loading'?document.addEventListener('DOMContentLoaded',start,{once:true}):start()})();</script>`;
+  if(!html.includes('nocturna-hide-neural-map-script')) html=html.replace(/<\/head>/i,guard+"</head>");
+  if(!html.includes('id="nocturna-neural-script"')) html=html.replace(/<\/head>/i,css+"</head>").replace(/<\/body>/i,js+"</body>");
+  if(html!==before){writeFileSync(file,html,"utf8");changed++}
+}
+console.log(`Camada neural atualizada em ${changed} páginas HTML; ${files.length} páginas HTML encontradas.`);
