@@ -10,7 +10,7 @@ const ids = new Set(DATA.pubs.map(p => p.id));
 ok(ids.size === DATA.pubs.length, "publicações únicas");
 DATA.pubs.forEach(p => (p.cats || []).forEach(k => ok(DATA.cats.some(c => c.id === k), `categoria inexistente em ${p.id}`)));
 const man = JSON.parse(readFileSync("manifest.webmanifest", "utf8"));
-ok(html.includes('rel="manifest" href="manifest.webmanifest"'), "manifest referenciado");
+ok(html.includes('rel="manifest" href="/Nocturna/manifest.webmanifest"'), "manifest referenciado");
 man.icons.forEach(i => ok(existsSync(i.src), `ícone ${i.src}`));
 ok(existsSync("social-card.svg"), "social-card.svg");
 ok(!/fetch\(|import\s|<script src|<link[^>]+stylesheet/.test(html), "sem dependências externas");
