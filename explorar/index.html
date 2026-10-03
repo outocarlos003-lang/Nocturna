@@ -25,9 +25,9 @@
 .nn-related{display:flex;flex-wrap:wrap;gap:.45rem;margin:.6rem 0 1.2rem}.nn-related a{padding:.45rem .65rem;border:1px solid #38333c;border-radius:999px;color:#e0bfae;text-decoration:none;background:#121212}
 .nn-path{font: .78rem ui-monospace,SFMono-Regular,Consolas,monospace;color:#b2aa98;overflow-wrap:anywhere}
 @media(max-width:600px){#nocturna-neural-launcher{left:10px;right:10px;bottom:10px;justify-content:stretch}.nn-mobile-full{flex:1}#nocturna-neural-card{border-radius:8px}}
-</style></head>
+</style><style id="nocturna-hide-neural-map">a[href*="mapa-neural"],button[data-neural-map],.neural-map-link{display:none!important}</style><script id="nocturna-hide-neural-map-script">(()=>{const hide=()=>{document.querySelectorAll('a[href*="mapa-neural"],button[data-neural-map],.neural-map-link').forEach(e=>e.remove());document.querySelectorAll('a,button').forEach(e=>{if(e.textContent.trim().toLocaleLowerCase('pt-BR')==='mapa neural')e.remove()})};const start=()=>{hide();new MutationObserver(hide).observe(document.documentElement,{subtree:true,childList:true})};document.readyState==='loading'?document.addEventListener('DOMContentLoaded',start,{once:true}):start()})();</script></head>
 <body>
-<header><div class="bar"><a class="btn alt" href="../">← Nocturna</a><a class="btn alt" href="../mapa-neural/">Mapa neural</a><form id="search" class="search" role="search"><label for="q" style="position:absolute;left:-9999px">Filtrar acervo</label><input id="q" type="search" placeholder="Filtrar pastas, subpastas e páginas…" autocomplete="off"></form></div></header>
+<header><div class="bar"><a class="btn alt" href="../">← Nocturna</a><form id="search" class="search" role="search"><label for="q" style="position:absolute;left:-9999px">Filtrar acervo</label><input id="q" type="search" placeholder="Filtrar pastas, subpastas e páginas…" autocomplete="off"></form></div></header>
 <main>
 <h1>Explorar o acervo</h1>
 <p class="meta">Percurso físico + editorial: cada botão leva à página publicada correspondente. A árvore é construída a partir do <a href="../sitemap.xml">sitemap</a>, portanto novas páginas entram no mapa quando o índice é regenerado.</p>
