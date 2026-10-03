@@ -81,7 +81,7 @@ const core = [
    '<h1>Privacidade e cookies</h1><div class="read"><p>Este site não usa cookies, não grava dados no navegador e não carrega scripts, fontes ou imagens de terceiros. O formulário de contato não envia dados a nenhum servidor: apenas abre seu aplicativo de e-mail.</p></div>']
 ];
 for (const [route,title,description,body] of core) {
-  routes.push(writeRoute(route,title,description,body,{"@context":"https://schema.org","@type":"WebPage","name":title.replace(" — Nocturna",""),"description":description,"url":abs(route)});
+  routes.push(writeRoute(route,title,description,body,{"@context":"https://schema.org","@type":"WebPage","name":title.replace(" — Nocturna",""),"description":description,"url":abs(route)}));
 }
 
 for (const p of DATA.pubs) {
