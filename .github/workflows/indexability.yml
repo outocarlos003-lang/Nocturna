@@ -23,12 +23,7 @@ jobs:
       - name: Baixar repositório
         uses: actions/checkout@v4
 
-      - name: Configurar Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-
-      - name: Remover Mapa neural da interface pública
+      - name: Remover atalhos públicos de Mapa neural e Explorar pastas e subpastas
         run: |
           node --input-type=module <<'NODE'
           import fs from 'node:fs';
@@ -36,10 +31,25 @@ jobs:
           let s=fs.readFileSync(file,'utf8');
           const nav='<li><a href="explorar/">Explorar acervo</a></li>';
           if(!s.includes('href="explorar/"')) s=s.replace('<ul id="tree"></ul>','<ul id="tree"></ul>'+nav);
+
+          // Remove links/botões já materializados no HTML.
           s=s.replace(/<a\b[^>]*href=["'][^"']*mapa-neural[^"']*["'][^>]*>[\s\S]*?<\/a>/gi,'');
           s=s.replace(/<a\b[^>]*>[\s\S]*?Mapa neural[\s\S]*?<\/a>/gi,'');
-          const guard=`<style id="nocturna-hide-neural-map">a[href*="mapa-neural"],button[data-neural-map],.neural-map-link{display:none!important}</style><script id="nocturna-hide-neural-map-script">(()=>{const hide=()=>{document.querySelectorAll('a[href*="mapa-neural"],button[data-neural-map],.neural-map-link').forEach(e=>e.remove());document.querySelectorAll('a,button').forEach(e=>{if(e.textContent.trim().toLocaleLowerCase('pt-BR')==='mapa neural')e.remove()})};new MutationObserver(hide).observe(document.documentElement,{subtree:true,childList:true});hide()})();</script>`;
-          if(!s.includes('nocturna-hide-neural-map-script')) s=s.replace('</head>',guard+'</head>');
+          s=s.replace(/<button\b[^>]*>[\s\S]*?Mapa neural[\s\S]*?<\/button>/gi,'');
+          s=s.replace(/<a\b[^>]*>[\s\S]*?Explorar pastas e subpastas[\s\S]*?<\/a>/gi,'');
+          s=s.replace(/<button\b[^>]*>[\s\S]*?Explorar pastas e subpastas[\s\S]*?<\/button>/gi,'');
+
+          // Remove também o contêiner de ações caso tenha ficado vazio ou contenha o atalho antigo.
+          s=s.replace(/<div\b[^>]*class=["'][^"']*archive-actions[^"']*["'][^>]*>[\s\S]*?<\/div>/gi,(block)=>{
+            const clean=block.replace(/Mapa neural|Explorar pastas e subpastas/gi,'').trim();
+            return /href=["']explorar\/["']/.test(clean) ? clean : '';
+          });
+
+          // Guarda permanente contra recriação dinâmica dos dois atalhos.
+          const guard=`<style id="nocturna-hide-public-shortcuts">a[href*="mapa-neural"],button[data-neural-map],.neural-map-link{display:none!important}</style><script id="nocturna-hide-public-shortcuts-script">(()=>{const labels=['mapa neural','explorar pastas e subpastas'];const hide=()=>document.querySelectorAll('a,button').forEach(e=>{const t=e.textContent.trim().toLocaleLowerCase('pt-BR');if(labels.includes(t))e.remove()});new MutationObserver(hide).observe(document.documentElement,{subtree:true,childList:true});hide()})();</script>`;
+          s=s.replace(/<style id="nocturna-hide-neural-map">[\s\S]*?<\/script>/i,'');
+          s=s.replace(/<style id="nocturna-hide-public-shortcuts">[\s\S]*?<\/script>/i,'');
+          s=s.replace('</head>',guard+'</head>');
           fs.writeFileSync(file,s);
           NODE
 
@@ -59,6 +69,6 @@ jobs:
           if git diff --cached --quiet; then
             echo "Nenhuma alteração de indexação."
           else
-            git commit -m "Oculta definitivamente o Mapa neural da interface [skip ci]"
+            git commit -m "Remove atalhos públicos de exploração e mapa neural [skip ci]"
             git push
           fi
