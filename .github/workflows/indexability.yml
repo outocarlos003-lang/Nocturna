@@ -8,8 +8,6 @@ on:
       - "sitemap.mjs"
       - "neural-index.mjs"
       - "neural-navigation.mjs"
-      - "robots.txt"
-      - "explorar/index.html"
       - ".github/workflows/indexability.yml"
   workflow_dispatch:
 
@@ -23,52 +21,36 @@ jobs:
       - name: Baixar repositório
         uses: actions/checkout@v4
 
-      - name: Remover atalhos públicos de Mapa neural e Explorar pastas e subpastas
+      - name: Limpar atalhos públicos da página inicial
         run: |
-          node --input-type=module <<'NODE'
-          import fs from 'node:fs';
-          const file='index.html';
-          let s=fs.readFileSync(file,'utf8');
-          const nav='<li><a href="explorar/">Explorar acervo</a></li>';
-          if(!s.includes('href="explorar/"')) s=s.replace('<ul id="tree"></ul>','<ul id="tree"></ul>'+nav);
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('index.html')
+          s=p.read_text(encoding='utf-8')
+          import re
+          s=re.sub(r'<li>\s*<a\s+href=["\']explorar/["\'][^>]*>\s*Explorar acervo\s*</a>\s*</li>','',s,flags=re.I)
+          s=re.sub(r'<a\b[^>]*href=["\'][^"\']*explorar/["\'][^>]*>\s*Explorar acervo\s*</a>','',s,flags=re.I)
+          s=re.sub(r'<a\b[^>]*>\s*Explorar pastas e subpastas\s*</a>','',s,flags=re.I)
+          s=re.sub(r'<a\b[^>]*>\s*Mapa neural\s*</a>','',s,flags=re.I)
+          p.write_text(s,encoding='utf-8')
+          PY
 
-          // Remove links/botões já materializados no HTML.
-          s=s.replace(/<a\b[^>]*href=["'][^"']*mapa-neural[^"']*["'][^>]*>[\s\S]*?<\/a>/gi,'');
-          s=s.replace(/<a\b[^>]*>[\s\S]*?Mapa neural[\s\S]*?<\/a>/gi,'');
-          s=s.replace(/<button\b[^>]*>[\s\S]*?Mapa neural[\s\S]*?<\/button>/gi,'');
-          s=s.replace(/<a\b[^>]*>[\s\S]*?Explorar pastas e subpastas[\s\S]*?<\/a>/gi,'');
-          s=s.replace(/<button\b[^>]*>[\s\S]*?Explorar pastas e subpastas[\s\S]*?<\/button>/gi,'');
-
-          // Remove também o contêiner de ações caso tenha ficado vazio ou contenha o atalho antigo.
-          s=s.replace(/<div\b[^>]*class=["'][^"']*archive-actions[^"']*["'][^>]*>[\s\S]*?<\/div>/gi,(block)=>{
-            const clean=block.replace(/Mapa neural|Explorar pastas e subpastas/gi,'').trim();
-            return /href=["']explorar\/["']/.test(clean) ? clean : '';
-          });
-
-          // Guarda permanente contra recriação dinâmica dos dois atalhos.
-          const guard=`<style id="nocturna-hide-public-shortcuts">a[href*="mapa-neural"],button[data-neural-map],.neural-map-link{display:none!important}</style><script id="nocturna-hide-public-shortcuts-script">(()=>{const labels=['mapa neural','explorar pastas e subpastas'];const hide=()=>document.querySelectorAll('a,button').forEach(e=>{const t=e.textContent.trim().toLocaleLowerCase('pt-BR');if(labels.includes(t))e.remove()});new MutationObserver(hide).observe(document.documentElement,{subtree:true,childList:true});hide()})();</script>`;
-          s=s.replace(/<style id="nocturna-hide-neural-map">[\s\S]*?<\/script>/i,'');
-          s=s.replace(/<style id="nocturna-hide-public-shortcuts">[\s\S]*?<\/script>/i,'');
-          s=s.replace('</head>',guard+'</head>');
-          fs.writeFileSync(file,s);
-          NODE
-
-      - name: Gerar sitemap e grafo sem perda de dados
+      - name: Gerar sitemap e grafo
         run: |
           node sitemap.mjs "https://outocarlos003-lang.github.io/Nocturna/"
           node neural-index.mjs "https://outocarlos003-lang.github.io/Nocturna/"
 
-      - name: Injetar navegação neural em todas as páginas
+      - name: Aplicar navegação comum
         run: node neural-navigation.mjs
 
-      - name: Publicar alterações geradas
+      - name: Publicar alterações
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add index.html sitemap.xml robots.txt artigos categorias tags arquivo sobre faq contato privacidade mapa-neural dados-neurais explorar *.html neural-navigation.mjs
+          git add -A
           if git diff --cached --quiet; then
-            echo "Nenhuma alteração de indexação."
+            echo "Nenhuma alteração."
           else
-            git commit -m "Remove atalhos públicos de exploração e mapa neural [skip ci]"
+            git commit -m "Remove Explorar acervo da interface pública [skip ci]"
             git push
           fi
