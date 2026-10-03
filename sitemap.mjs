@@ -97,7 +97,7 @@ for (const p of DATA.pubs) {
   routes.push(writeRoute(pubPath(p),p.title+" — Nocturna",p.summary||p.title,body,{"@context":"https://schema.org","@type":"Article","headline":p.title,"description":p.summary||undefined,"datePublished":p.date||undefined,"author":{"@type":"Person","name":"Riquelmi"},"image":p.image?abs("/"+p.image.src.replace(/^\//,"")):undefined,"mainEntityOfPage":abs(pubPath(p))}));
 }
 
-const all=["/",...routes];
+const all=[...new Set(["/",...routes])];
 const today=new Date().toISOString().slice(0,10);
 const xml='<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'+
   all.map(u=>'  <url><loc>'+esc(abs(u))+'</loc><lastmod>'+today+'</lastmod></url>').join("\n")+"\n</urlset>\n";
