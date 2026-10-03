@@ -67,6 +67,22 @@ for (const t of tags) {
   routes.push(writeRoute(tagPath(t),"Tag: "+t+" — Nocturna","Publicações marcadas com "+t+" na Nocturna.",
     '<h1>Tag: '+esc(t)+'</h1>'+cards(items),{"@context":"https://schema.org","@type":"CollectionPage","name":"Tag: "+t,"url":abs(tagPath(t))}));
 }
+const core = [
+  ["/arquivo/","Arquivo — Nocturna","Arquivo cronológico das publicações da Nocturna.",
+   '<h1>Arquivo</h1><p class="meta">Arquivo cronológico das publicações da Nocturna.</p>'+Object.keys(DATA.pubs.filter(p=>p.date).reduce((g,p)=>(g[p.date.slice(0,4)]??=[]).push(p),{})).length],
+  ["/sobre/","Sobre — Nocturna","Sobre a Nocturna, publicação digital de leitura.",
+   '<h1>Sobre</h1><div class="read"><p>A Nocturna é uma publicação digital organizada em cinco categorias: Metafísica, Teologia, Ficção, Psicologia e Filosofia. By Riquelmi.</p></div>'],
+  ["/faq/","FAQ — Nocturna","Perguntas frequentes sobre a Nocturna.",
+   '<h1>FAQ</h1><details open><summary>O que é a Nocturna?</summary><p>Uma publicação digital de leitura organizada em cinco categorias.</p></details><details><summary>Como pesquisar?</summary><p>Use o campo de pesquisa do site.</p></details><details><summary>O site coleta dados?</summary><p>Não. Veja Privacidade e cookies.</p></details>'],
+  ["/contato/","Contato — Nocturna","Contato da Nocturna.",
+   '<h1>Contato</h1><p>Use a página de Contato da Nocturna para iniciar uma mensagem.</p>'],
+  ["/privacidade/","Privacidade e cookies — Nocturna","Como a Nocturna trata dados, cookies e armazenamento.",
+   '<h1>Privacidade e cookies</h1><div class="read"><p>Este site não usa cookies, não grava dados no navegador e não carrega scripts, fontes ou imagens de terceiros. O formulário de contato não envia dados a nenhum servidor: apenas abre seu aplicativo de e-mail.</p></div>']
+];
+for (const [route,title,description,body] of core) {
+  routes.push(writeRoute(route,title,description,body,{"@context":"https://schema.org","@type":"WebPage","name":title.replace(" — Nocturna",""),"description":description,"url":abs(route)});
+}
+
 for (const p of DATA.pubs) {
   const cats=(p.cats||[]).map(id=>DATA.cats.find(c=>c.id===id)).filter(Boolean);
   const related=DATA.pubs.filter(x=>x.id!==p.id&&(((x.cats||[]).some(c=>(p.cats||[]).includes(c)))||((x.tags||[]).some(t=>(p.tags||[]).includes(t))))).slice(0,4);
