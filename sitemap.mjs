@@ -49,6 +49,8 @@ function cards(items) {
 
 const routes = ["/"];
 writeRoute("/artigos/","Artigos — Nocturna","Todas as publicações da Nocturna.",'<h1>Artigos</h1>'+cards(DATA.pubs),{"@context":"https://schema.org","@type":"CollectionPage","name":"Artigos — Nocturna","url":abs("/artigos/")});
+// Alias editorial rastreável: Publicações aponta para o mesmo acervo de Artigos.
+writeRoute("/publicacoes/","Publicações — Nocturna","Todas as publicações da Nocturna.",'<h1>Publicações</h1>'+cards(DATA.pubs),{"@context":"https://schema.org","@type":"CollectionPage","name":"Publicações — Nocturna","url":abs("/publicacoes/")});
 
 writeRoute("/categorias/","Categorias — Nocturna","Categorias editoriais da Nocturna.",'<h1>Categorias</h1><ul class="grid">'+DATA.cats.map(c=>'<li class="card"><h2><a href="'+abs(catPath(c))+'">'+esc(c.name)+'</a></h2><p>'+esc(c.description||"Publicações da categoria "+c.name+" na Nocturna.")+'</p></li>').join("")+"</ul>",{"@context":"https://schema.org","@type":"CollectionPage","name":"Categorias — Nocturna","url":abs("/categorias/")});
 routes.push("/artigos/","/categorias/");
