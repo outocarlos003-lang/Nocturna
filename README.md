@@ -73,7 +73,7 @@ Tudo vem de `DATA` em `index.html`: Home, grade, menu, rodapé, busca, índices,
 - **Categorias**: `id`, `slug`, `name`, `description` (`null` até haver texto definitivo). Rotas: `#/categorias/<slug>`.
 - **Séries**: `DATA.series` usa a hierarquia `série → blocks → chapters`. Rotas: `#/series`, `#/series/<serie>`, `#/series/<serie>/<bloco>`, `#/series/<serie>/<bloco>/<capitulo>`. Séries são independentes de `DATA.pubs` e não entram na busca, categorias, tags ou contagens de posts. Detalhes: [`series-editorial-model.md`](./series-editorial-model.md).
 - **Publicação**: `{id, title, summary, cats:[idDeCategoria], body:[{h},{p}]}`. Uma única vez em `pubs`; várias categorias não duplicam resultados. Sem categoria continua acessível e pesquisável.
-- **Adicionar publicação**: inclua o objeto em `pubs`, rode `node tests/validate.mjs`. **Editar/remover**: altere/remova o objeto; índices e contagens se atualizam. **Categorias**: edite `cats` e valide referências antes de remover.
+- **Adicionar publicação**: inclua o objeto em `pubs`, rode `node validate.mjs`. **Editar/remover**: altere/remova o objeto; índices e contagens se atualizam. **Categorias**: edite `cats` e valide referências antes de remover.
 
 ## Contato
 
