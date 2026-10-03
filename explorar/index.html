@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Explorar o acervo — Nocturna</title>
+<meta name="description" content="Mapa navegável de pastas, subpastas e páginas da Nocturna.">
+<style>
+:root{--bg:#121212;--panel:#1c1b1d;--line:#38333c;--ink:#e9e1cf;--mute:#b2aa98;--wine:#7a1f35;--wine2:#9c2d49;--hi:#e0bfae}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 system-ui,-apple-system,"Segoe UI",sans-serif}main{max-width:76rem;margin:auto;padding:1.25rem}a{color:var(--hi)}button,input{font:inherit}header{position:sticky;top:0;z-index:5;background:rgba(18,18,18,.96);border-bottom:1px solid var(--line);backdrop-filter:blur(8px)}.bar{max-width:76rem;margin:auto;padding:.7rem 1.25rem;display:flex;gap:.6rem;align-items:center;flex-wrap:wrap}.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:.55rem .9rem;border:1px solid var(--wine2);border-radius:7px;background:var(--wine);color:#fff;text-decoration:none;cursor:pointer}.btn.alt{background:transparent;border-color:var(--line);color:var(--ink)}.search{display:flex;gap:.5rem;flex:1;min-width:15rem}.search input{width:100%;min-height:44px;padding:.55rem .75rem;border:1px solid var(--line);border-radius:7px;background:var(--panel);color:var(--ink)}.meta{color:var(--mute)}.tree{margin-top:1.25rem}.node{border:1px solid var(--line);background:var(--panel);border-radius:8px;margin:.55rem 0;overflow:hidden}.node summary{cursor:pointer;min-height:44px;padding:.7rem .85rem;display:flex;align-items:center;gap:.5rem;font-weight:600}.node summary:hover{background:#242225}.children{padding:.15rem .85rem .75rem 1.25rem}.link{display:flex;align-items:center;gap:.6rem;min-height:44px;padding:.45rem .6rem;border-radius:6px;text-decoration:none}.link:hover{background:#282529}.folder{color:var(--hi)}.badge{margin-left:auto;color:var(--mute);font-size:.8rem}.empty{padding:1rem;border:1px dashed var(--line);border-radius:8px;color:var(--mute)}.legend{display:flex;flex-wrap:wrap;gap:.6rem;margin:1rem 0}.pill{border:1px solid var(--line);border-radius:999px;padding:.25rem .65rem;color:var(--mute)}
+</style>
+</head>
+<body>
+<header><div class="bar"><a class="btn alt" href="../">← Nocturna</a><a class="btn alt" href="../mapa-neural/">Mapa neural</a><form id="search" class="search" role="search"><label for="q" style="position:absolute;left:-9999px">Filtrar acervo</label><input id="q" type="search" placeholder="Filtrar pastas, subpastas e páginas…" autocomplete="off"></form></div></header>
+<main>
+<h1>Explorar o acervo</h1>
+<p class="meta">Percurso físico + editorial: cada botão leva à página publicada correspondente. A árvore é construída a partir do <a href="../sitemap.xml">sitemap</a>, portanto novas páginas entram no mapa quando o índice é regenerado.</p>
+<div class="legend"><span class="pill" id="count">Carregando…</span><span class="pill">Toque/clique para abrir</span><span class="pill">Digite para filtrar</span></div>
+<section id="tree" class="tree" aria-live="polite"><div class="empty">Lendo o índice do acervo…</div></section>
+</main>
+<script>
+const tree=document.querySelector('#tree'),q=document.querySelector('#q'),count=document.querySelector('#count');
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const label=p=>decodeURIComponent(p.split('/').filter(Boolean).pop()||'Início').replace(/[-_]+/g,' ').replace(/\b\w/g,m=>m.toUpperCase());
+function build(urls,term=''){
+ const root={name:'Nocturna',path:'',children:new Map(),pages:[]};
+ for(const url of urls){
+  let u;try{u=new URL(url,location.href)}catch{continue}
+  if(u.origin!==location.origin||!u.pathname.startsWith('/Nocturna/'))continue;
+  const rel=u.pathname.replace(/^\/Nocturna\/?/,'').replace(/index\.html$/,'').replace(/\/$/,'');
+  if(!rel) {root.pages.push({url:u.href,name:'Início'});continue}
+  const parts=rel.split('/').filter(Boolean);let n=root;
+  parts.forEach((part,i)=>{if(!n.children.has(part))n.children.set(part,{name:label(part),path:[...parts.slice(0,i+1)].join('/'),children:new Map(),pages:[]});n=n.children.get(part)});
+  n.pages.push({url:u.href,name:'Abrir página'});
+ }
+ const norm=term.trim().toLocaleLowerCase('pt-BR');
+ const hit=n=>!norm||`${n.name} ${n.path}`.toLocaleLowerCase('pt-BR').includes(norm);
+ function nodeHtml(n,depth=0){
+  const children=[...n.children.values()].map(c=>nodeHtml(c,depth+1)).filter(Boolean).join('');
+  const pages=n.pages.filter(p=>!norm||`${n.name} ${n.path} ${p.name}`.toLocaleLowerCase('pt-BR').includes(norm)).map(p=>`<a class="link" href="${esc(p.url)}">↳ ${esc(p.name)}<span class="badge">página</span></a>`).join('');
+  if(norm&&!hit(n)&&!children&& !pages)return '';
+  if(!children&&!pages)return '';
+  return `<details class="node" ${depth<1||norm?'open':''}><summary><span class="folder">▸</span>${esc(n.name)}<span class="badge">${children? 'subseções':''}</span></summary><div class="children">${pages}${children}</div></details>`;
+ }
+ const html=nodeHtml(root);
+ tree.innerHTML=html||'<div class="empty">Nenhum caminho corresponde ao filtro.</div>';
+ count.textContent=`${urls.length} URLs indexadas`;
+}
+fetch('../sitemap.xml',{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error('sitemap');return r.text()}).then(xml=>{const doc=new DOMParser().parseFromString(xml,'application/xml');const urls=[...doc.querySelectorAll('loc')].map(x=>x.textContent.trim()).filter(Boolean);build(urls);q.addEventListener('input',()=>build(urls,q.value));}).catch(()=>{tree.innerHTML='<div class="empty">Não foi possível carregar o sitemap agora. Abra o <a href="../sitemap.xml">sitemap.xml</a> diretamente.</div>';count.textContent='Índice indisponível';});
+</script>
+</body>
+</html>
