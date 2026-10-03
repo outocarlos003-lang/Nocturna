@@ -28,7 +28,7 @@ jobs:
         with:
           node-version: 20
 
-      - name: Conectar a página inicial ao explorador e ao mapa neural
+      - name: Conectar a página inicial ao explorador
         run: |
           node --input-type=module <<'NODE'
           import fs from 'node:fs';
@@ -36,10 +36,10 @@ jobs:
           let s=fs.readFileSync(file,'utf8');
           const nav='<li><a href="explorar/">Explorar acervo</a></li>';
           if(!s.includes('href="explorar/"')) s=s.replace('<ul id="tree"></ul>','<ul id="tree"></ul>'+nav);
-          const heroLinks='<p class="archive-actions"><a class="btn" href="explorar/">Explorar pastas e subpastas</a><a class="btn alt" href="mapa-neural/">Mapa neural</a></p>';
-          if(!s.includes('archive-actions')) s=s.replace('</section>${DATA.pubs.filter(p=>p.featured)',heroLinks+'</section>${DATA.pubs.filter(p=>p.featured)');
-          const css='.archive-actions{display:flex;flex-wrap:wrap;gap:.6rem;margin:1rem 0 0}.archive-actions a{color:#fff}.archive-actions .alt{color:var(--ink)}';
-          if(!s.includes('.archive-actions{')) s=s.replace('</style>',css+'</style>');
+          // Remove qualquer botão/atalho público do Mapa neural que tenha sido gerado anteriormente.
+          s=s.replace(/<a[^>]*href=["']mapa-neural\\/["'][^>]*>\\s*Mapa neural\\s*<\\/a>/gi,'');
+          s=s.replace(/<a[^>]*href=["'][^"']*mapa-neural[^"']*["'][^>]*>\\s*Mapa neural\\s*<\\/a>/gi,'');
+          s=s.replace(/<p[^>]*class=["'][^"']*archive-actions[^"']*["'][^>]*>\\s*<a[^>]*href=["']explorar\\/["'][^>]*>[^<]*<\\/a>\\s*<\\/p>/gi,'');
           fs.writeFileSync(file,s);
           NODE
 
@@ -59,6 +59,6 @@ jobs:
           if git diff --cached --quiet; then
             echo "Nenhuma alteração de indexação."
           else
-            git commit -m "Unifica navegação, pesquisa e rastreabilidade neural [skip ci]"
+            git commit -m "Remove Mapa neural da interface pública [skip ci]"
             git push
           fi
