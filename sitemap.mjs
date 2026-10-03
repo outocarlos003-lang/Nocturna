@@ -68,8 +68,10 @@ for (const t of tags) {
     '<h1>Tag: '+esc(t)+'</h1>'+cards(items),{"@context":"https://schema.org","@type":"CollectionPage","name":"Tag: "+t,"url":abs(tagPath(t))}));
 }
 const core = [
-  ["/arquivo/","Arquivo — Nocturna","Arquivo cronológico das publicações da Nocturna.",
-   '<h1>Arquivo</h1><p class="meta">Arquivo cronológico das publicações da Nocturna.</p>'+Object.keys(DATA.pubs.filter(p=>p.date).reduce((g,p)=>(g[p.date.slice(0,4)]??=[]).push(p),{})).length],
+const years=[...new Set(DATA.pubs.filter(p=>p.date).map(p=>p.date.slice(0,4)))].sort((a,b)=>b.localeCompare(a));
+const archiveBody='<h1>Arquivo</h1><p class="meta">Arquivo cronológico das publicações da Nocturna.</p>'+years.map(y=>'<section><h2>'+y+'</h2>'+cards(DATA.pubs.filter(p=>p.date&&p.date.startsWith(y)))+'</section>').join("");
+const core = [
+  ["/arquivo/","Arquivo — Nocturna","Arquivo cronológico das publicações da Nocturna.",archiveBody],
   ["/sobre/","Sobre — Nocturna","Sobre a Nocturna, publicação digital de leitura.",
    '<h1>Sobre</h1><div class="read"><p>A Nocturna é uma publicação digital organizada em cinco categorias: Metafísica, Teologia, Ficção, Psicologia e Filosofia. By Riquelmi.</p></div>'],
   ["/faq/","FAQ — Nocturna","Perguntas frequentes sobre a Nocturna.",
