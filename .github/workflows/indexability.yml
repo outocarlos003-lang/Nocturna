@@ -51,6 +51,6 @@ jobs:
           if git diff --cached --quiet; then
             echo "Nenhuma alteração."
           else
-            git commit -m "Atualiza páginas públicas e índice rastreável"
+            git commit -m "Atualiza páginas públicas e índice rastreável [skip ci]"
             git push
           fi
