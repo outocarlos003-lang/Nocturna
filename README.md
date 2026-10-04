@@ -51,7 +51,7 @@ Por Riquelmi.
 
 | Arquivo | Acesso | Função |
 |---|---|---|
-| `index.html` | [abrir](./index.html) | Núcleo autocontido da aplicação: CSS, JS e dados (`DATA`) internos. |
+| `index.html` | [abrir](./index.html) | Núcleo único da aplicação: CSS, JS e todo o conteúdo editorial (`DATA`) internos. |
 | `manifest.webmanifest` | [abrir](./manifest.webmanifest) | Manifesto referenciado em `index.html`. |
 | `robots.txt` | [abrir](./robots.txt) | Orienta rastreadores de mecanismos de busca. |
 | `sitemap.xml` | [abrir](./sitemap.xml) | Mapa das URLs públicas atualmente versionadas. |
@@ -75,7 +75,7 @@ Por Riquelmi.
 
 | Arquivo | Função |
 |---|---|
-| `index.html` | Núcleo autocontido: CSS, JS e dados (`DATA`) internos. O conteúdo editorial principal está no próprio arquivo; há `fetch()` same-origin para recursos de rastreabilidade (`dados-neurais/grafo.json` e `sitemap.xml`). |
+| `index.html` | Núcleo autocontido: CSS, JS, dados e conteúdo editorial em `DATA`. A navegação neural também nasce desse mesmo registro, sem arquivo editorial externo. |
 | `manifest.webmanifest` | Manifesto referenciado em `index.html`; ícone global em `icon.svg`. |
 | `assets/global/` · `assets/editorial/` | Recursos da identidade · imagens das publicações (nunca alteradas automaticamente). |
 | `social-card.svg` | Card social global. Muitas plataformas não aceitam SVG em `og:image`; se for o caso, exporte PNG com o mesmo nome-base. |
@@ -85,7 +85,7 @@ Por Riquelmi.
 
 ## Executar
 
-Abra `index.html` direto (`file://`) ou sirva por HTTP/HTTPS (ex.: GitHub Pages). A aplicação aceita rotas por hash (`#/categorias/metafisica`) e também reconhece as rotas estáticas correspondentes no GitHub Pages. Parte da camada de rastreabilidade é carregada em tempo de execução por recursos same-origin; portanto, HTML bruto inicial e interface renderizada não são necessariamente equivalentes. Manifesto, canonical e armazenamento dependem de HTTP(S); a canonical só é emitida nesse caso. Não há Service Worker.
+Abra `index.html` direto (`file://`) ou sirva por HTTP/HTTPS (ex.: GitHub Pages). A aplicação aceita rotas por hash (`#/categorias/metafisica`) e também reconhece as rotas estáticas correspondentes no GitHub Pages. As rotas públicas são cascas mínimas geradas a partir de `index.html`; ao abrir uma rota, o navegador retorna ao núcleo e o `index.html` resolve o conteúdo. Manifesto, canonical e armazenamento dependem de HTTP(S); a canonical só é emitida nesse caso. Não há Service Worker.
 
 ## Modelo editorial (fonte única)
 
@@ -104,6 +104,6 @@ E-mail e WhatsApp em `DATA.contact`. Sem backend, o formulário só prepara o e-
 
 Sem credenciais, administração, cookies ou armazenamento local. Todo texto dinâmico é escapado. Edição ocorre fora da camada pública (commits/PR); o histórico do Git é o versionamento e a reversão.
 
-## Rastreabilidade de alterações
+## Núcleo único e compatibilidade de rotas\n\nO conteúdo editorial não é duplicado em páginas estáticas. `sitemap.mjs` cria somente cascas mínimas para preservar URLs diretas e o sitemap; cada casca encaminha para a rota equivalente dentro de `index.html`. Assim, todas as publicações, existentes e futuras, vivem uma única vez em `DATA.pubs`.\n\nA camada neural também é interna: a pesquisa transversal e as relações entre publicações são construídas diretamente a partir de `DATA` no `index.html`. Os artefatos derivados antigos (`dados-neurais/grafo.json`, `neural-index.mjs`, `neural-navigation.mjs` e `mapa-neural/`) deixam de fazer parte do caminho de execução.\n\n## Rastreabilidade de alterações
 
 Cada mudança relevante deve permanecer registrada no histórico do Git. Para auditar uma versão específica, use os links de **commits** e **árvore do repositório** acima; para localizar qualquer arquivo ou diretório, use a **árvore Git completa**.

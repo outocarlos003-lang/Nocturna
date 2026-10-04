@@ -1,7 +1,6 @@
 name: Deploy Nocturna to GitHub Pages
 
 on:
-  # Publica cada push normal em main; commits marcados como [skip ci] não disparam Actions.
   push:
     branches: ["main"]
   workflow_dispatch:
@@ -26,13 +25,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
-
-      - name: Gerar páginas públicas e sitemap
+      - name: Gerar cascas de rota e sitemap
         run: node sitemap.mjs "https://outocarlos003-lang.github.io/Nocturna/"
-
       - name: Padronizar rodapé
         run: |
           python3 - <<'PY'
@@ -44,20 +40,19 @@ jobs:
               if old in text:
                   path.write_text(text.replace(old, new), encoding="utf-8")
           PY
-
-      - name: Validar estrutura pública
+      - name: Validar núcleo editorial
         run: |
+          node validate.mjs
           test -f index.html
           test -f .nojekyll
           test -f robots.txt
           test -f sitemap.xml
           test -f artigos/a-dupla-dinamica-da-santificacao/index.html
-
+          test $(wc -c < artigos/a-dupla-dinamica-da-santificacao/index.html) -lt 5000
       - name: Upload site artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: .
-
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
