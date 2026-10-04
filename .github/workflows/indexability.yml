@@ -1,4 +1,4 @@
-name: Atualizar camada rastreável do site
+name: Validar camada pública do site
 
 on:
   push:
@@ -6,51 +6,28 @@ on:
     paths:
       - "index.html"
       - "sitemap.mjs"
-      - "neural-index.mjs"
-      - "neural-navigation.mjs"
+      - "validate.mjs"
       - ".github/workflows/indexability.yml"
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
-  indexability:
+  validate:
     runs-on: ubuntu-latest
     steps:
       - name: Baixar repositório
         uses: actions/checkout@v4
 
-      - name: Limpar atalhos públicos da página inicial
-        run: |
-          python3 - <<'PY'
-          from pathlib import Path
-          p=Path('index.html')
-          s=p.read_text(encoding='utf-8')
-          import re
-          s=re.sub(r'<li>\s*<a\s+href=["\']explorar/["\'][^>]*>\s*Explorar acervo\s*</a>\s*</li>','',s,flags=re.I)
-          s=re.sub(r'<a\b[^>]*href=["\'][^"\']*explorar/["\'][^>]*>\s*Explorar acervo\s*</a>','',s,flags=re.I)
-          s=re.sub(r'<a\b[^>]*>\s*Explorar pastas e subpastas\s*</a>','',s,flags=re.I)
-          s=re.sub(r'<a\b[^>]*>\s*Mapa neural\s*</a>','',s,flags=re.I)
-          p.write_text(s,encoding='utf-8')
-          PY
+      - name: Validar fonte editorial única
+        run: node validate.mjs
 
-      - name: Gerar sitemap e grafo
-        run: |
-          node sitemap.mjs "https://outocarlos003-lang.github.io/Nocturna/"
-          node neural-index.mjs "https://outocarlos003-lang.github.io/Nocturna/"
+      - name: Gerar projeções públicas em ambiente descartável
+        run: node sitemap.mjs "https://outocarlos003-lang.github.io/Nocturna/"
 
-      - name: Aplicar navegação comum
-        run: node neural-navigation.mjs
-
-      - name: Publicar alterações
+      - name: Verificar publicação integral gerada
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -A
-          if git diff --cached --quiet; then
-            echo "Nenhuma alteração."
-          else
-            git commit -m "Atualiza páginas públicas e índice rastreável [skip ci]"
-            git push
-          fi
+          test -f artigos/a-dupla-dinamica-da-santificacao/index.html
+          grep -q "A Dupla Dinâmica da Santificação" artigos/a-dupla-dinamica-da-santificacao/index.html
+          grep -q "index.html:DATA" sitemap.mjs
