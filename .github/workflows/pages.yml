@@ -30,11 +30,8 @@ jobs:
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
 
-      - name: Gerar páginas públicas, sitemap e grafo
-        run: |
-          node sitemap.mjs "https://outocarlos003-lang.github.io/Nocturna/"
-          node neural-index.mjs "https://outocarlos003-lang.github.io/Nocturna/"
-          node neural-navigation.mjs
+      - name: Gerar páginas públicas e sitemap
+        run: node sitemap.mjs "https://outocarlos003-lang.github.io/Nocturna/"
 
       - name: Padronizar rodapé
         run: |
