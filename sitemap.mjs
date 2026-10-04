@@ -26,6 +26,7 @@ function page(route, title, description, body, ld) {
   html = html.replace(/<meta name="description" content="[^"]*">/, '<meta name="description" content="'+esc(description)+'">');
   html = html.replace(/<meta property="og:title" content="[^"]*">/, '<meta property="og:title" content="'+esc(title)+'">');
   html = html.replace(/<meta property="og:description" content="[^"]*">/, '<meta property="og:description" content="'+esc(description)+'">');
+  html = html.replace("</head>", '<meta name="robots" content="index,follow"><meta name="author" content="Riquelmi"><meta property="og:url" content="'+esc(abs(route))+'"><meta name="twitter:title" content="'+esc(title)+'"><meta name="twitter:description" content="'+esc(description)+'"></head>');
   html = html.replace(/<script type="application\/ld\+json">[\s\S]*?<\/script>/, '<script type="application/ld+json">'+JSON.stringify(ld)+'</script>');
   html = html.replace("</head>", '<link rel="canonical" href="'+esc(abs(route))+'"><script>window.__STATIC_ROUTE='+JSON.stringify(route.replace(/\/$/,""))+';</script></head>');
   return html.replace('<main id="main" class="wrap"></main>', '<main id="main" class="wrap">'+body+"</main>");
@@ -94,7 +95,25 @@ for (const p of DATA.pubs) {
     '<p class="meta">'+cats.map(c=>'<a href="'+abs(catPath(c))+'">'+esc(c.name)+'</a>').join(" · ")+((p.tags||[]).length?" · "+p.tags.map(t=>'<a href="'+abs(tagPath(t))+'">'+esc(t)+'</a>').join(" · "):"")+'</p>'+
     '<div class="read-content" style="white-space:pre-wrap">'+esc(p.content||"")+'</div>'+
     (related.length?'<section><h2>Relacionados</h2>'+cards(related)+"</section>":"")+'</article>';
-  routes.push(writeRoute(pubPath(p),p.title+" — Nocturna",p.summary||p.title,body,{"@context":"https://schema.org","@type":"Article","headline":p.title,"description":p.summary||undefined,"datePublished":p.date||undefined,"author":{"@type":"Person","name":"Riquelmi"},"image":p.image?abs("/"+p.image.src.replace(/^\//,"")):undefined,"mainEntityOfPage":abs(pubPath(p))}));
+  const articleText = String(p.content || "");
+  const articleLd = {
+    "@context":"https://schema.org",
+    "@type":"Article",
+    "headline":p.title,
+    "description":p.summary||undefined,
+    "datePublished":p.date||undefined,
+    "dateModified":p.date||undefined,
+    "author":{"@type":"Person","name":"Riquelmi"},
+    "publisher":{"@type":"Organization","name":"Nocturna"},
+    "mainEntityOfPage":abs(pubPath(p)),
+    "url":abs(pubPath(p)),
+    "articleBody":articleText,
+    "wordCount":articleText.trim()?articleText.trim().split(/\s+/u).length:0,
+    "keywords":(p.tags||[]).join(", "),
+    "inLanguage":"pt-BR",
+    "image":p.image?abs("/"+p.image.src.replace(/^\//,"")):undefined
+  };
+  routes.push(writeRoute(pubPath(p),p.title+" — Nocturna",p.summary||p.title,body,articleLd));
 }
 
 const all=[...new Set(["/",...routes])];
