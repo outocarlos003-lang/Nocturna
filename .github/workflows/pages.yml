@@ -1,6 +1,7 @@
 name: Deploy Nocturna to GitHub Pages
 
 on:
+  # Publica cada push normal em main; commits marcados como [skip ci] não disparam Actions.
   push:
     branches: ["main"]
   workflow_dispatch:
