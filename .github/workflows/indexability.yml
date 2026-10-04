@@ -23,11 +23,13 @@ jobs:
       - name: Validar fonte editorial única
         run: node validate.mjs
 
-      - name: Gerar projeções públicas em ambiente descartável
+      - name: Gerar cascas públicas em ambiente descartável
         run: node sitemap.mjs "https://outocarlos003-lang.github.io/Nocturna/"
 
-      - name: Verificar publicação integral gerada
+      - name: Verificar núcleo e rota compatível
         run: |
+          grep -q "A Dupla Dinâmica da Santificação" index.html
           test -f artigos/a-dupla-dinamica-da-santificacao/index.html
-          grep -q "A Dupla Dinâmica da Santificação" artigos/a-dupla-dinamica-da-santificacao/index.html
+          test $(wc -c < artigos/a-dupla-dinamica-da-santificacao/index.html) -lt 5000
+          grep -q 'location.replace(root+"#"+route' artigos/a-dupla-dinamica-da-santificacao/index.html
           grep -q "index.html:DATA" sitemap.mjs
