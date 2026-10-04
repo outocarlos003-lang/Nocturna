@@ -39,8 +39,25 @@ const launcher=document.createElement("div");launcher.id="nocturna-neural-launch
 const panel=document.createElement("div");panel.id="nocturna-neural-panel";panel.innerHTML='<div id="nocturna-neural-card"><div id="nocturna-neural-search"><input id="nn-q" type="search" placeholder="Pesquisar em páginas, artigos, categorias, tags, pastas…" autocomplete="off" aria-label="Pesquisa neural transversal"><button id="nn-close" type="button">Fechar</button></div><div id="nn-bc"></div><section><h2>Pesquisa transversal</h2><p id="nn-status" class="nn-empty">Carregando índice semântico…</p><div id="nn-results" class="nn-results"></div></section><section><h3>Continuidade deste nó</h3><div id="nn-related" class="nn-related"></div></section></div></div>';document.body.appendChild(panel);
 const open=()=>{panel.classList.add("open");q("#nn-q").focus()},close=()=>panel.classList.remove("open");q("#nn-open").onclick=open;q("#nn-close").onclick=close;panel.addEventListener("click",e=>{if(e.target===panel)close()});document.addEventListener("keydown",e=>{if(e.key==="Escape")close();if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==="k"){e.preventDefault();open()}});
 q("#nn-bc").innerHTML='<div class="nn-breadcrumb"><a href="'+root.href+'">Nocturna</a>'+pathLabel.map(p=>'<span class="nn-sep">›</span><span>'+esc(p)+"</span>").join("")+"</div>";
+const embeddedData=typeof DATA==="object"&&DATA&&Array.isArray(DATA.pubs)?DATA:null;
 let graph=null,urls=[];
-Promise.all([fetch(new URL("dados-neurais/grafo.json",root),{cache:"no-store"}).then(r=>r.ok?r.json():null),fetch(new URL("sitemap.xml",root),{cache:"no-store"}).then(r=>r.ok?r.text():"")]).then(([g,xml])=>{graph=g;try{const d=new DOMParser().parseFromString(xml,"application/xml");urls=[...d.querySelectorAll("loc")].map(x=>x.textContent.trim()).filter(Boolean)}catch{}renderRelated();render("")}).catch(()=>{q("#nn-status").textContent="O índice transversal não pôde ser carregado agora."});
+Promise.all([
+  fetch(new URL("dados-neurais/grafo.json",root),{cache:"no-store"}).then(r=>r.ok?r.json():null),
+  fetch(new URL("sitemap.xml",root),{cache:"no-store"}).then(r=>r.ok?r.text():"")
+]).then(([g,xml])=>{
+  graph=g;
+  if (embeddedData) {
+    graph=graph||{};
+    graph.sourceData=embeddedData;
+    graph.nodes=Array.isArray(graph.nodes)?graph.nodes:[];
+    graph.edges=Array.isArray(graph.edges)?graph.edges:[];
+  }
+  try{const d=new DOMParser().parseFromString(xml,"application/xml");urls=[...d.querySelectorAll("loc")].map(x=>x.textContent.trim()).filter(Boolean)}catch{}
+  renderRelated();render("")
+}).catch(()=>{
+  if(embeddedData){renderRelated();render("");}
+  else q("#nn-status").textContent="O índice transversal não pôde ser carregado agora."
+});
 function currentNode(){if(!graph?.nodes)return null;const here=location.href.replace(/\\/$/,"");return graph.nodes.find(n=>n.url&&String(n.url).replace(/\\/$/,"")===here)||null}
 function renderRelated(){const box=q("#nn-related"),n=currentNode();if(!n||!graph?.edges){box.innerHTML='<span class="nn-empty">Este nó ainda não possui relações explícitas no grafo.</span>';return}const ids=new Set(graph.edges.filter(e=>e.from===n.id||e.to===n.id).map(e=>e.from===n.id?e.to:e.from));const nodes=graph.nodes.filter(x=>ids.has(x.id)&&x.url).slice(0,24);box.innerHTML=nodes.map(x=>'<a href="'+esc(x.url)+'">'+esc(x.label||x.id)+"</a>").join("")||'<span class="nn-empty">Nenhuma conexão adicional disponível.</span>'}
 function render(term){const box=q("#nn-results"),status=q("#nn-status"),t=norm(term);let rows=[];if(graph?.nodes)rows=graph.nodes.filter(n=>n.url&&(!t||norm([n.label,n.type,n.id,n.source,JSON.stringify(n.record||"")].join(" ")).includes(t))).map(n=>({url:n.url,label:n.label||n.id,type:n.type,path:n.source||n.id}));if(!rows.length&&urls.length)rows=urls.filter(u=>!t||norm(u).includes(t)).map(u=>({url:u,label:decodeURIComponent(u).replace(/\\/$/,"").split("/").pop()||"Nocturna",type:"página",path:u}));rows=rows.slice(0,80);status.textContent=t?(rows.length+" resultado(s) encontrados"):(graph?((graph.nodes||[]).length+" nós disponíveis para rastreamento"):(urls.length+" URLs indexadas"));box.innerHTML=rows.map(r=>'<a class="nn-result" href="'+esc(r.url)+'"><strong>'+esc(r.label)+'</strong><small>'+esc(r.type||"conteúdo")+" · "+esc(r.path||r.url)+"</small></a>").join("")||'<div class="nn-empty">Nenhum conteúdo corresponde à pesquisa.</div>'}
