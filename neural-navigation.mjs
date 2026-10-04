@@ -1,5 +1,6 @@
 import { readdirSync, readFileSync, writeFileSync, statSync } from "node:fs";
 import { join } from "node:path";
+import vm from "node:vm";
 
 const root = process.cwd();
 const skip = new Set([".git", ".github", "node_modules"]);
@@ -46,9 +47,33 @@ function render(term){const box=q("#nn-results"),status=q("#nn-status"),t=norm(t
 q("#nn-q").addEventListener("input",e=>render(e.target.value));
 })();</script>`;
 
+const sourceIndex = readFileSync(join(root, "index.html"), "utf8");
+const dataMatch = sourceIndex.match(/const DATA=(\\{[\\s\\S]*?\\});\\s*\\/\\*END DATA\\*\\//);
+const editorialData = dataMatch ? vm.runInNewContext("(" + dataMatch[1] + ")") : { pubs: [] };
+const articleById = new Map((editorialData.pubs || []).map(p => [p.id, p]));
+const htmlEscape = s => String(s ?? "").replace(/[&<>\"]/g, c => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", "\"":"&quot;" }[c]));
+const articleStaticHtml = p => {
+  const paragraphs = String(p.content || "").split(/\\n\\n+/).map(x => x.trim()).filter(Boolean);
+  const body = paragraphs.map(x => "<p>" + htmlEscape(x).replace(/\\n/g, "<br>") + "</p>").join("\\n");
+  return "<article class=\"read\" data-ai-readable=\"full-article\"><p class=\"meta\">Publicação digital de leitura</p><h1 tabindex=\"0\">" + htmlEscape(p.title) + "</h1><div class=\"read-content\">" + body + "</div></article>";
+};
+const hydrateStaticArticle = (html, file) => {
+  const m = file.replace(/\\\\/g, "/").match(/(?:^|\\/)artigos\\/([^/]+)\\/index\\.html$/);
+  if (!m) return html;
+  const p = articleById.get(decodeURIComponent(m[1]));
+  if (!p || !p.content) return html;
+  const staticArticle = articleStaticHtml(p);
+  const mainPattern = /<main id="main"[^>]*>[\\s\\S]*?<\\/main>/i;
+  if (mainPattern.test(html)) html = html.replace(mainPattern, "<main id=\"main\" class=\"wrap\">" + staticArticle + "</main>");
+  const alt = '<link rel="alternate" type="text/plain" title="Conteúdo editorial integral" href="/Nocturna/llms-full.txt">';
+  if (!html.includes('title="Conteúdo editorial integral"')) html = html.replace(/<\\/head>/i, alt + "</head>");
+  return html;
+};
 let changed=0;
 for(const file of files){
   let html=readFileSync(file,"utf8");
+  // Pré-renderiza o corpo integral de artigos no HTML estático para leitores, indexadores e agentes que não executam JavaScript.
+  html = hydrateStaticArticle(html, file);
   // Remove qualquer atalho público para o mapa, inclusive os que estejam embutidos em strings JavaScript.
   const before=html;
   html=html.replace(/<a\b[^>]*href=["'][^"']*mapa-neural[^"']*["'][^>]*>[\s\S]*?<\/a>/gi,"");
