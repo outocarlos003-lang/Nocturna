@@ -1,8 +1,10 @@
 # Nocturna
 
-Publicação digital de leitura em Dark Romanticism. By Riquelmi.
+Publicação digital de leitura em Dark Romanticism. Por Riquelmi.
 
-Nocturna. Todos os direitos reservados.
+© 2026 Nocturna. Todos os direitos reservados.
+
+Por Riquelmi.
 
 ## Acesso e rastreabilidade
 
