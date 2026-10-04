@@ -47,10 +47,8 @@ const tagMap = new Map();
 for (const p of DATA.pubs || []) {
   const pid = "article:" + p.id;
   addNode(pid, "article", p.title, {
-    url: abs("artigos/" + encodeURIComponent(p.id) + "/"),
-    source: "index.html:DATA.pubs[" + p.id + "]",
-    // Cópia integral do registro editorial. Isto preserva inclusive campos futuros adicionados ao DATA.
-    record: p
+    url: abs("#/artigos/" + encodeURIComponent(p.id)),
+    source: "index.html:DATA.pubs[" + p.id + "]"
   });
   addEdge("site:nocturna", pid, "publishes");
   if (p.date) addEdge(pid, "time:" + p.date, "dated");
@@ -114,9 +112,8 @@ const graph = {
   semantics: {
     nodeTypes: ["site", "page", "category", "article", "tag", "image", "date", "contact"],
     edgeRelations: ["contains", "identifies", "has-contact", "has-category", "publishes", "dated", "classified-as", "uses-tag", "tagged-with", "illustrated-by", "semantically-related", "has-publication-date", "has-page"],
-    note: "O grafo mantém cada registro editorial completo em article.record; relações são adicionais e não substituem o conteúdo original."
+    note: "O grafo mantém referências e relações; o conteúdo editorial integral existe somente em index.html:DATA.pubs."
   },
-  sourceData: DATA,
   nodes,
   edges
 };
