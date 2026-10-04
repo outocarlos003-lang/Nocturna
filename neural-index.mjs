@@ -1,5 +1,6 @@
 // Gera uma camada semântica completa para rastrear o conteúdo da Nocturna por relações, não apenas por palavras-chave.
-// Fonte canônica: DATA editorial de index.html. Nenhum campo de DATA é descartado.
+// Fonte canônica e única: DATA editorial de index.html. Nenhum campo de DATA é descartado.
+// As páginas geradas, o sitemap e o grafo são projeções dessa fonte, nunca fontes editoriais paralelas.
 import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { join } from "node:path";
 import vm from "node:vm";
@@ -10,6 +11,14 @@ const source = readFileSync(join(root, "index.html"), "utf8");
 const m = source.match(/const DATA=(\{[\s\S]*?\});\s*\/\*END DATA\*\//);
 if (!m) throw new Error("DATA editorial não encontrada em index.html");
 const DATA = vm.runInNewContext("(" + m[1] + ")");
+if (!Array.isArray(DATA.pubs) || !Array.isArray(DATA.cats)) {
+  throw new Error("DATA editorial inválida: pubs e cats precisam existir em index.html");
+}
+for (const p of DATA.pubs) {
+  if (!p?.id || !p?.title || typeof p?.content !== "string") {
+    throw new Error("Publicação inválida em index.html: cada DATA.pubs precisa de id, title e content.");
+  }
+}
 const abs = p => base.replace(/\/$/, "") + "/" + p.replace(/^\//, "");
 const esc = s => String(s ?? "").replace(/[&<>\"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c]));
 
@@ -101,7 +110,7 @@ for (const [id, label, path, type] of pages) {
 const graph = {
   schema: "nocturna-neural-graph/v1",
   generatedAt: new Date().toISOString(),
-  source: { file: "index.html", selector: "DATA", principle: "lossless-record-preservation" },
+  source: { file: "index.html", selector: "DATA", principle: "single-source-of-truth", preservation: "lossless-record-preservation" },
   semantics: {
     nodeTypes: ["site", "page", "category", "article", "tag", "image", "date", "contact"],
     edgeRelations: ["contains", "identifies", "has-contact", "has-category", "publishes", "dated", "classified-as", "uses-tag", "tagged-with", "illustrated-by", "semantically-related", "has-publication-date", "has-page"],
