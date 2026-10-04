@@ -51,6 +51,6 @@ jobs:
           if git diff --cached --quiet; then
             echo "Nenhuma alteração."
           else
-            git commit -m "Remove Explorar acervo da interface pública [skip ci]"
+            git commit -m "Atualiza páginas públicas e índice rastreável"
             git push
           fi
