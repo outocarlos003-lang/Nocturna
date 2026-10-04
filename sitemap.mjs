@@ -14,6 +14,19 @@ const source = readFileSync(join(root, "index.html"), "utf8");
 const m = source.match(/const DATA=(\{[\s\S]*?\});\s*\/\*END DATA\*\//);
 if (!m) throw new Error("DATA editorial não encontrada em index.html");
 const DATA = vm.runInNewContext("(" + m[1] + ")");
+const editorialSource = {
+  file: "index.html",
+  selector: "DATA",
+  principle: "single-source-of-truth"
+};
+if (!Array.isArray(DATA.pubs) || !Array.isArray(DATA.cats)) {
+  throw new Error("DATA editorial inválida: pubs e cats precisam existir em index.html");
+}
+for (const p of DATA.pubs) {
+  if (!p?.id || !p?.title || typeof p?.content !== "string") {
+    throw new Error("Publicação inválida em index.html: cada DATA.pubs precisa de id, title e content.");
+  }
+}
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[c]));
 const abs = p => base + p.replace(/^\//,"");
 const catPath = c => "/categorias/" + encodeURIComponent(c.slug) + "/";
@@ -122,4 +135,5 @@ const xml='<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sit
   all.map(u=>'  <url><loc>'+esc(abs(u))+'</loc><lastmod>'+today+'</lastmod></url>').join("\n")+"\n</urlset>\n";
 writeFileSync(join(root,"sitemap.xml"),xml,"utf8");
 writeFileSync(join(root,"robots.txt"),"User-agent: *\nAllow: /\nSitemap: "+abs("/sitemap.xml")+"\n","utf8");
+console.log("Fonte editorial única: "+editorialSource.file+" ("+editorialSource.selector+").");
 console.log("Rastreamento/indexação: "+all.length+" URLs públicas no sitemap.");
