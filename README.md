@@ -1,5 +1,24 @@
 # Nocturna
 
+> **Estado atual (fonte operacional):** a versão corrente do projeto é a branch `main`. A branch `rastreabilidade-site` é histórica e não deve ser usada para descrever o estado atual do site. O GitHub Pages é implantado a partir de `main` por `.github/workflows/pages.yml`; o workflow pode transformar o conteúdo antes de gerar o artifact publicado. O conteúdo deste repositório e o conteúdo efetivamente servido pelo Pages são, portanto, fontes distintas e devem ser comparados separadamente.
+
+## Estado de publicação atual
+
+- **Branch de origem do deploy:** `main`.
+- **Workflow de publicação:** [`.github/workflows/pages.yml`](./.github/workflows/pages.yml).
+- **URL pública:** <https://outocarlos003-lang.github.io/Nocturna/>.
+- **Referência histórica:** `rastreabilidade-site` é uma branch antiga e não representa o estado operacional atual.
+- **Regra de diagnóstico:** para descrever o site publicado, não substitua a verificação da URL pública pelo conteúdo de uma branch ou commit histórico. Quando a URL não puder ser consultada, declare essa limitação.
+
+## Relação entre Git e GitHub Pages
+
+O Pages não publica necessariamente os bytes brutos do checkout de `main`. O workflow faz checkout de `main`, aplica a etapa de padronização do rodapé e só então envia o diretório como artifact para o GitHub Pages. Por isso, uma comparação rigorosa deve distinguir: (1) estado atual do Git, (2) transformações do workflow e (3) conteúdo efetivamente servido pelo Pages.
+
+## Referências históricas
+
+O histórico do Git e branches antigas preservam versões anteriores do projeto. Mensagens de commit, README antigos e a branch `rastreabilidade-site` descrevem estados que podem não corresponder ao estado atual. Para análise operacional, fixe explicitamente a referência `main` e trate o histórico apenas como evidência histórica.
+
+
 Publicação digital de leitura em Dark Romanticism. Por Riquelmi.
 
 © 2026 Nocturna. Todos os direitos reservados.
@@ -56,17 +75,17 @@ Por Riquelmi.
 
 | Arquivo | Função |
 |---|---|
-| `index.html` | Núcleo autocontido: CSS, JS e dados (`DATA`) internos. Sem `fetch()`, módulos, bibliotecas ou CSS externo. |
+| `index.html` | Núcleo autocontido: CSS, JS e dados (`DATA`) internos. O conteúdo editorial principal está no próprio arquivo; há `fetch()` same-origin para recursos de rastreabilidade (`dados-neurais/grafo.json` e `sitemap.xml`). |
 | `manifest.webmanifest` | Manifesto referenciado em `index.html`; ícone global em `icon.svg`. |
 | `assets/global/` · `assets/editorial/` | Recursos da identidade · imagens das publicações (nunca alteradas automaticamente). |
 | `social-card.svg` | Card social global. Muitas plataformas não aceitam SVG em `og:image`; se for o caso, exporte PNG com o mesmo nome-base. |
 | `robots.txt` | Permite rastreamento (não é controle de segurança). |
-| `sitemap.mjs` | Gera `sitemap.xml` a partir de uma URL pública real. Sem URL real não há sitemap. |
-| `validate.mjs` | Valida categorias, IDs, relações, manifesto, assets e ausência de dependências externas. |
+| `sitemap.mjs` | Gera `sitemap.xml` a partir da URL pública configurada. |
+| `validate.mjs` | Valida categorias, IDs, relações, manifesto e assets conforme as regras atuais do projeto. |
 
 ## Executar
 
-Abra `index.html` direto (`file://`) ou sirva por HTTP/HTTPS (ex.: GitHub Pages). A aplicação aceita rotas por hash (`#/categorias/metafisica`) e também reconhece as rotas estáticas correspondentes no GitHub Pages. Manifesto, canonical e armazenamento dependem de HTTP(S); a canonical só é emitida nesse caso. Não há Service Worker.
+Abra `index.html` direto (`file://`) ou sirva por HTTP/HTTPS (ex.: GitHub Pages). A aplicação aceita rotas por hash (`#/categorias/metafisica`) e também reconhece as rotas estáticas correspondentes no GitHub Pages. Parte da camada de rastreabilidade é carregada em tempo de execução por recursos same-origin; portanto, HTML bruto inicial e interface renderizada não são necessariamente equivalentes. Manifesto, canonical e armazenamento dependem de HTTP(S); a canonical só é emitida nesse caso. Não há Service Worker.
 
 ## Modelo editorial (fonte única)
 
