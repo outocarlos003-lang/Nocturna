@@ -27,6 +27,18 @@ jobs:
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
 
+      - name: Padronizar rodapé
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          old = "Nocturna. Todos os direitos reservados.<br>By Riquelmi."
+          new = '© 2026 Nocturna. Todos os direitos reservados.<br><span class="footer-credit">Por Riquelmi</span>'
+          for path in Path(".").rglob("*.html"):
+              text = path.read_text(encoding="utf-8")
+              if old in text:
+                  path.write_text(text.replace(old, new), encoding="utf-8")
+          PY
+
       - name: Upload site artifact
         uses: actions/upload-pages-artifact@v3
         with:
