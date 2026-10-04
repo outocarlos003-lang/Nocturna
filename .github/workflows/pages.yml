@@ -5,6 +5,8 @@ on:
   push:
     branches: ["main"]
   workflow_dispatch:
+  schedule:
+    - cron: "17 * * * *"
 
 permissions:
   contents: read
@@ -39,6 +41,14 @@ jobs:
               if old in text:
                   path.write_text(text.replace(old, new), encoding="utf-8")
           PY
+
+      - name: Validar estrutura pública
+        run: |
+          test -f index.html
+          test -f .nojekyll
+          test -f robots.txt
+          test -f sitemap.xml
+          test -f artigos/a-dupla-dinamica-da-santificacao/index.html
 
       - name: Upload site artifact
         uses: actions/upload-pages-artifact@v3
