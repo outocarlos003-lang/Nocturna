@@ -4,20 +4,20 @@
 
 ## Conteúdo principal
 
-- [A Dupla Dinâmica da Santificação: O Domínio Próprio no Ímpio e a Transformação da Fonte no Eleito (Perspectiva Calvinista)](https://outocarlos003-lang.github.io/Nocturna/artigos/a-dupla-dinamica-da-santificacao/)
-- [A Espada de Dois Gumes e o Último Refúgio do Eu: Por Que a Compreensão Reformada Expressa Mais Profundamente o Corte da Palavra](https://outocarlos003-lang.github.io/Nocturna/artigos/a-espada-de-dois-gumes-e-o-ultimo-refugio-do-eu/)
-- [A METAFÍSICA DO PECADO COMO FRATURA TELEOLÓGICA DA CRIATURA](https://outocarlos003-lang.github.io/Nocturna/artigos/metafisica-do-pecado-como-fratura-teleologica-da-criatura/)
-- [A Heresia que Nunca Foi Conhecida: A Refutação Pré-Consciente como Figura da Perseverança Ontológica](https://outocarlos003-lang.github.io/Nocturna/artigos/a-heresia-que-nunca-foi-conhecida/)
-- [O LIVRO BRANCO E O AUTOR VIVO — A KENOSIS E A NECESSIDADE DA HABITAÇÃO](https://outocarlos003-lang.github.io/Nocturna/artigos/o-livro-branco-e-o-autor-vivo/)
-- [O LIVRO, A CASA E O SEPULCRO • O AUTOR, O MORADOR E A VIDA](https://outocarlos003-lang.github.io/Nocturna/artigos/o-livro-a-casa-e-o-sepulcro/)
-- [A PROJEÇÃO NARRATIVA, A REVELAÇÃO DIVINA E A REESCRITA DA IDENTIDADE: POR QUE SOMENTE QUEM É REFORMADO PELA PALAVRA PODE RECONHECER E ADORAR O DEUS VERDADEIRO](https://outocarlos003-lang.github.io/Nocturna/artigos/arquiteto-da-correspondencia-ontologica/)
-- [QUANDO A ETERNIDADE JULGA A CAUSALIDADE: DEUS É SANTO PORQUE É SOBERANO, OU SOBERANO PORQUE É SANTO — E Se Ambas Apenas Revelam a Coerência do EU SOU Onde Causa, Verdade, Poder, Vida e Ser Coincidem Eternamente?](https://outocarlos003-lang.github.io/Nocturna/artigos/quando-a-eternidade-julga-a-causalidade/)
-- [“SE A LEI APENAS TORNA O DESVIO VISÍVEL, O QUE EXPLICA O PRÓPRIO DESVIO SENÃO UMA LEI REAL — E, NÃO ESTARÍAMOS DIANTE DESTA, ISTO É, DE UM DESENHO INTELIGENTE ONTOLÓGICO IMPOSSÍVEL DE DESVER?”](https://outocarlos003-lang.github.io/Nocturna/artigos/metafisica-do-pecado-a-lei-como-antitese-operativa/)
-- [SE A SERENIDADE É A PROVA DA PAZ, POR QUE ELA SE PARECE TANTO COM A PRISÃO DAQUILO QUE JAMAIS DEIXOU DE TENTAR REINAR?](https://outocarlos003-lang.github.io/Nocturna/artigos/a-ontologia-da-marca-invisivel/)
+- [A Dupla Dinâmica da Santificação: O Domínio Próprio no Ímpio e a Transformação da Fonte no Eleito (Perspectiva Calvinista)](https://outocarlos003-lang.github.io/Nocturna/#/artigos/a-dupla-dinamica-da-santificacao/)
+- [A Espada de Dois Gumes e o Último Refúgio do Eu: Por Que a Compreensão Reformada Expressa Mais Profundamente o Corte da Palavra](https://outocarlos003-lang.github.io/Nocturna/#/artigos/a-espada-de-dois-gumes-e-o-ultimo-refugio-do-eu/)
+- [A METAFÍSICA DO PECADO COMO FRATURA TELEOLÓGICA DA CRIATURA](https://outocarlos003-lang.github.io/Nocturna/#/artigos/metafisica-do-pecado-como-fratura-teleologica-da-criatura/)
+- [A Heresia que Nunca Foi Conhecida: A Refutação Pré-Consciente como Figura da Perseverança Ontológica](https://outocarlos003-lang.github.io/Nocturna/#/artigos/a-heresia-que-nunca-foi-conhecida/)
+- [O LIVRO BRANCO E O AUTOR VIVO — A KENOSIS E A NECESSIDADE DA HABITAÇÃO](https://outocarlos003-lang.github.io/Nocturna/#/artigos/o-livro-branco-e-o-autor-vivo/)
+- [O LIVRO, A CASA E O SEPULCRO • O AUTOR, O MORADOR E A VIDA](https://outocarlos003-lang.github.io/Nocturna/#/artigos/o-livro-a-casa-e-o-sepulcro/)
+- [A PROJEÇÃO NARRATIVA, A REVELAÇÃO DIVINA E A REESCRITA DA IDENTIDADE: POR QUE SOMENTE QUEM É REFORMADO PELA PALAVRA PODE RECONHECER E ADORAR O DEUS VERDADEIRO](https://outocarlos003-lang.github.io/Nocturna/#/artigos/arquiteto-da-correspondencia-ontologica/)
+- [QUANDO A ETERNIDADE JULGA A CAUSALIDADE: DEUS É SANTO PORQUE É SOBERANO, OU SOBERANO PORQUE É SANTO — E Se Ambas Apenas Revelam a Coerência do EU SOU Onde Causa, Verdade, Poder, Vida e Ser Coincidem Eternamente?](https://outocarlos003-lang.github.io/Nocturna/#/artigos/quando-a-eternidade-julga-a-causalidade/)
+- [“SE A LEI APENAS TORNA O DESVIO VISÍVEL, O QUE EXPLICA O PRÓPRIO DESVIO SENÃO UMA LEI REAL — E, NÃO ESTARÍAMOS DIANTE DESTA, ISTO É, DE UM DESENHO INTELIGENTE ONTOLÓGICO IMPOSSÍVEL DE DESVER?”](https://outocarlos003-lang.github.io/Nocturna/#/artigos/metafisica-do-pecado-a-lei-como-antitese-operativa/)
+- [SE A SERENIDADE É A PROVA DA PAZ, POR QUE ELA SE PARECE TANTO COM A PRISÃO DAQUILO QUE JAMAIS DEIXOU DE TENTAR REINAR?](https://outocarlos003-lang.github.io/Nocturna/#/artigos/a-ontologia-da-marca-invisivel/)
 
 ## Navegação
 
-- [Artigos](https://outocarlos003-lang.github.io/Nocturna/artigos/)
+- [Artigos](https://outocarlos003-lang.github.io/Nocturna/#/artigos/)
 - [Publicações](https://outocarlos003-lang.github.io/Nocturna/publicacoes/)
 - [Categorias](https://outocarlos003-lang.github.io/Nocturna/categorias/)
 - [Tags](https://outocarlos003-lang.github.io/Nocturna/tags/)
