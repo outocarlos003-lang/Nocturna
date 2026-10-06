@@ -34,6 +34,11 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: node scripts/bootstrap-root-comment.mjs
 
+      - name: Remove duplicate materialized nodes
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: node scripts/dedupe-genealogy-comments.mjs
+
       - name: Publish site genealogy to Issue #1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
