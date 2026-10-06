@@ -10,7 +10,7 @@ const ids=new Set();
 
 if(data.schema!=="nocturna.comment-tree/v1") fail("schema invalido");
 if(data.repository!=="outocarlos003-lang/Nocturna") fail("repository invalido");
-if(data.issue?.number!==5) fail("issue invalida");
+if(data.issue?.number!==1) fail("issue invalida");
 if(!data.issue?.url) fail("issue.url ausente");
 if(!data.issue?.rootNodeId) fail("issue.rootNodeId ausente");
 if(nodes.length===0) fail("nenhum no canonico");
