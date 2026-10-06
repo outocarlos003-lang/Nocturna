@@ -56,9 +56,9 @@ const load=async()=>{
   if(!res.ok)throw new Error("projecao HTTP "+res.status);
   const data=await res.json(),nodes=data.nodes||[];
   const byParent=new Map();
-  nodes.forEach(n=>{const k=n.parentNodeId===null?"root":String(n.parentNodeId);if(!byParent.has(k))byParent.set(k,[]);byParent.get(k).push(n)});
+  nodes.forEach((n,index)=>{n.__order=n.order??index+1;const k=n.parentNodeId===null?"root":String(n.parentNodeId);if(!byParent.has(k))byParent.set(k,[]);byParent.get(k).push(n)});
   const ordered=[];
-  const visit=(id)=>{(byParent.get(id)||[]).sort((a,b)=>a.order-b.order).forEach(n=>{ordered.push(n);visit(String(n.nodeId))})};
+  const visit=(id)=>{(byParent.get(id)||[]).sort((a,b)=>a.__order-b.__order).forEach(n=>{ordered.push(n);visit(String(n.nodeId))})};
   visit("root");
   if(ordered.length!==nodes.length)throw new Error("a árvore não pode ser reconstruída integralmente");
   ordered.forEach(n=>{
