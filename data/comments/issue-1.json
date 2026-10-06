@@ -81,7 +81,7 @@
         "location": "https://github.com/outocarlos003-lang/Nocturna/issues/1#issuecomment-6015397380",
         "migrated": false,
         "normalized": true,
-        "historicalIssueBody": "# Johan Liebert — comentário inicial\n\n> “É curioso. Um texto pode revelar muito sobre quem o escreveu, mesmo quando o autor acredita estar apenas descrevendo o mundo. Às vezes, aquilo que chamamos de verdade é somente a forma mais elegante que encontramos para esconder aquilo que somos.”\n\nEste comentário é o **nó raiz real** da árvore canônica. Todas as respostas canônicas — de personagens ou de participantes humanos que optarem pelo fluxo canônico — devem apontar para este comentário ou para um descendente verificável.\n\nA relação pai → filho será preservada pelo sistema, junto com autor, identidade, profundidade, ordem e permalink.",
+        "historicalIssueBody": "# Johan Liebert — comentário inicial\n\n> “É curioso. Um texto pode revelar muito sobre quem o escreveu, mesmo quando o autor acredita estar apenas descrevendo o mundo. Às vezes, aquilo que chamamos de verdade é somente a forma mais elegante que encontramos para esconder aquilo que somos.”\n\n<!--\nEste comentário é o **nó raiz real** da árvore canônica. Todas as respostas canônicas — de personagens ou de participantes humanos que optarem pelo fluxo canônico — devem apontar para este comentário ou para um descendente verificável.\n\nA relação pai → filho será preservada pelo sistema, junto com autor, identidade, profundidade, ordem e permalink.\n-->",
         "githubAuthor": "outocarlos003-lang"
       },
       "rootNodeId": "2",
