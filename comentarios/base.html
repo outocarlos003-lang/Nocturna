@@ -405,6 +405,9 @@ function count(id,type){
 function composerFor(n,box){
   const composer=document.createElement("div");
   composer.className="composer";
+  composer.dataset.parentNode=String(n.nodeId);
+  composer.dataset.parentComment=String(n.commentId||"");
+  composer.dataset.parentAuthor=String(n.author?.displayName||"");
   const form=document.createElement("form");
   const textarea=document.createElement("textarea");
   textarea.maxLength=2000;
@@ -458,10 +461,27 @@ function composerFor(n,box){
     send.disabled=true;
     const api=window.NOCTURNA_REPLY_API||"";
     if(!api){
-      try{await navigator.clipboard.writeText(message)}catch{}
-      msg.textContent="Mensagem copiada. Abra a conversa pública para publicar.";
+      const sourceId="github-issue1-reply-"+(crypto.randomUUID?crypto.randomUUID().replace(/-/g,""):String(Date.now())+String(Math.random()).slice(2));
+      const marker=[
+        "<!-- nocturna-reply:v1",
+        "parent-node="+String(n.nodeId),
+        "parent-comment="+String(n.commentId||""),
+        "parent-author="+String(n.author?.displayName||"").replace(/\\n/g," "),
+        "source-id="+sourceId,
+        "-->"
+      ].join("\\n");
+      const payload=marker+"\\n\\n"+message;
+      let copied=false;
+      try{await navigator.clipboard.writeText(payload);copied=true}catch{}
+      msg.textContent=copied
+        ?"Mensagem preparada e copiada. Abra a conversa pública, cole no campo de comentário e publique."
+        :"Não foi possível copiar automaticamente. Use o texto da caixa e publique na conversa pública.";
       msg.className="message ok";
-      window.open(n.commentUrl||"https://github.com/"+REPO+"/issues/"+ISSUE,"_blank","noopener,noreferrer");
+      const parentUrl=String(n.commentUrl||"");
+      const destination=/github\\.com\\/outocarlos003-lang\\/Nocturna\\/issues\\/1#issuecomment-\\d+/.test(parentUrl)
+        ?parentUrl
+        :"https://github.com/"+REPO+"/issues/"+ISSUE;
+      window.open(destination,"_blank","noopener,noreferrer");
       send.disabled=false;
       return;
     }
@@ -524,13 +544,12 @@ function makeComment(n,map,isRoot=false){
       toggle.textContent=children.classList.contains("hidden")?"Mostrar respostas":"Fechar respostas";
     });
     toolbar.appendChild(toggle);
-  }else{
-    const replyBtn=document.createElement("button");
-    replyBtn.type="button";replyBtn.className="tool primary";replyBtn.textContent="↩ Responder";
-    toolbar.appendChild(replyBtn);
-    const openComposer=composerFor(n,article);
-    replyBtn.addEventListener("click",openComposer);
   }
+  const replyBtn=document.createElement("button");
+  replyBtn.type="button";replyBtn.className="tool primary";replyBtn.textContent="↩ Responder";
+  toolbar.appendChild(replyBtn);
+  const openComposer=composerFor(n,article);
+  replyBtn.addEventListener("click",openComposer);
 
   ["like","heart","idea"].forEach((type)=>{
     const btn=document.createElement("button");
@@ -547,7 +566,6 @@ function makeComment(n,map,isRoot=false){
 
   const participate=document.createElement("button");
   participate.type="button";participate.className="tool participate";participate.textContent="Participar";
-  const openComposer=composerFor(n,article);
   participate.addEventListener("click",openComposer);
   toolbar.appendChild(participate);
 
