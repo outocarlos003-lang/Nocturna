@@ -18,7 +18,7 @@ for (const p of DATA.pubs) {
   if (!p?.id || !p?.title || typeof p?.content !== "string") throw new Error("Publicação inválida em index.html.");
 }
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-const abs = p => base + p.replace(/^\//, "");
+const abs = p => base.replace(/\/$/, "") + "/" + p.replace(/^\//, "");
 const catPath = c => "/categorias/" + encodeURIComponent(c.slug) + "/";
 const tagPath = t => "/tags/" + encodeURIComponent(t) + "/";
 const pubPath = p => "/artigos/" + encodeURIComponent(p.id) + "/";
