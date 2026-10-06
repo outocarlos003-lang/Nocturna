@@ -463,33 +463,29 @@ function composerFor(n,box){
     const message=textarea.value.trim();
     if(!message){msg.textContent="Escreva sua mensagem antes de enviar.";msg.className="message err";return}
     send.disabled=true;
-    const api=window.NOCTURNA_REPLY_API||"";
-    if(!api){
-      msg.textContent="O mecanismo de publicação no GitHub ainda não está configurado.";
+    const parentComment=String(n.commentId||"").trim();
+    if(!/^\\d+$/.test(parentComment)){
+      msg.textContent="Este comentário ainda não possui um identificador do GitHub.";
       msg.className="message err";
       send.disabled=false;
       return;
     }
     try{
       const requestId=crypto.randomUUID?crypto.randomUUID().replace(/-/g,""):String(Date.now());
-      const response=await fetch(api,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({
-        message,
-        parentNode:String(n.nodeId),
-        parentComment:String(n.commentId),
-        parentAuthor:n.author?.displayName||"",
-        requestId
-      })});
-      const result=await response.json().catch(()=>({}));
-      if(!response.ok)throw new Error(result.error||"Não foi possível enviar.");
-      const parentUrl=String(result.parent_url||"");
-      if(!COMMENT_URL_RE.test(parentUrl)) throw new Error("O GitHub não retornou um permalink válido do comentário respondido.");
-      try{localStorage.removeItem(draftKey(n.nodeId))}catch{}
-      // O fragment #issuecomment-ID é o permalink nativo do GitHub e faz o
-      // GitHub posicionar/destacar exatamente o comentário respondido.
-      window.location.href=parentUrl;
-
+      try{
+        localStorage.setItem(pendingReplyKey(n.nodeId),JSON.stringify({
+          parentNode:String(n.nodeId),
+          parentComment,
+          message,
+          requestId
+        }));
+      }catch{}
+      // Sem backend: o próprio GitHub recebe a resposta. O fragmento aponta
+      // para o comentário exato e reply_to abre o contexto de resposta.
+      const githubReplyUrl=ISSUE_URL+"?reply_to="+encodeURIComponent(parentComment)+"#issuecomment-"+encodeURIComponent(parentComment);
+      window.location.href=githubReplyUrl;
       return;
-    }catch(err){msg.textContent=err.message||"Não foi possível enviar.";msg.className="message err"}
+    }catch(err){msg.textContent=err.message||"Não foi possível abrir o GitHub.";msg.className="message err"}
     finally{send.disabled=false}
   });
   return {open,element:composer};
