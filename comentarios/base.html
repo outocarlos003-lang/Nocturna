@@ -3,106 +3,128 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="index,follow">
 <title>Comentários — Nocturna</title>
 <style>
-:root{color-scheme:light;--ink:#211c18;--muted:#756b63;--paper:#f7f3ed;--card:#fffdf9;--line:#d9d0c5;--accent:#6b3f35}
+:root{color-scheme:dark;--bg:#121212;--panel:#1c1b1d;--ink:#e9e1cf;--muted:#b2aa98;--line:#38333c;--wine:#7a1f35;--wine2:#9c2d49;--hi:#e0bfae;--serif:Georgia,"Times New Roman",serif;--sans:system-ui,-apple-system,"Segoe UI",sans-serif}
 *{box-sizing:border-box}
-html{overflow-x:hidden}
-body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.65 Georgia,serif;overflow-x:hidden}
-main{width:min(980px,calc(100% - 32px));margin:0 auto;padding:48px 0 72px}
-header{margin-bottom:32px;border-bottom:1px solid var(--line);padding-bottom:24px}
-h1{margin:0 0 8px;font-size:clamp(2rem,5vw,3.2rem);font-weight:500}
+html{overflow-x:hidden;scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:1rem/1.7 var(--sans);overflow-x:hidden}
+main{width:min(980px,calc(100% - 32px));margin:0 auto;padding:clamp(2rem,6vw,4.5rem) 0 5rem}
+header{margin-bottom:2rem;border-bottom:1px solid var(--line);padding-bottom:1.5rem}
+h1,h2{font-family:var(--serif);line-height:1.2;font-weight:600}
+h1{margin:0 0 .55rem;font-size:clamp(2rem,5vw,3.2rem)}
+h2{margin:0 0 .7rem;font-size:1.45rem}
 .lead{margin:0;color:var(--muted)}
-#tree{display:grid;gap:14px;min-width:0}
-.node{position:relative;min-width:0;width:100%;margin-inline-start:min(calc(var(--depth)*28px),180px);padding:18px 20px;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 2px 10px #0000000a;overflow:hidden}
+#tree{display:grid;gap:.8rem;min-width:0}
+.node{position:relative;min-width:0;width:100%;margin-inline-start:min(calc(var(--depth)*28px),180px);padding:1.05rem 1.15rem;background:var(--panel);border:1px solid var(--line);border-radius:8px;box-shadow:0 4px 18px #0004;overflow:hidden}
 .node:before{content:"";position:absolute;left:-15px;top:0;bottom:0;border-left:1px solid var(--line)}
 .node[data-depth="0"]:before{display:none}
-.meta{display:flex;gap:10px;flex-wrap:wrap;align-items:baseline;color:var(--muted);font-size:.88rem}
+.meta{display:flex;gap:.6rem;flex-wrap:wrap;align-items:baseline;color:var(--muted);font-size:.88rem}
 .author{font-weight:700;color:var(--ink)}
-.depth{font-variant-numeric:tabular-nums}
-.content{margin:10px 0 12px;white-space:pre-wrap;overflow-wrap:anywhere;word-break:break-word;min-width:0}
-.actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center;min-width:0}
-button,.native{border:1px solid var(--line);background:transparent;color:var(--accent);padding:7px 10px;border-radius:7px;text-decoration:none;cursor:pointer;font:inherit;font-size:.9rem;line-height:1.35;max-width:100%;overflow-wrap:anywhere}
+.role{color:var(--hi)}
+.content{margin:.7rem 0 .85rem;white-space:pre-wrap;overflow-wrap:anywhere;word-break:break-word;min-width:0;font-family:var(--serif);font-size:1.04rem;line-height:1.75}
+.actions{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center;min-width:0}
+button,.native{min-height:42px;border:1px solid var(--line);background:transparent;color:var(--hi);padding:.55rem .75rem;border-radius:6px;text-decoration:none;cursor:pointer;font:inherit;font-size:.9rem;line-height:1.35;max-width:100%;overflow-wrap:anywhere}
+button:hover,.native:hover{background:var(--wine);border-color:var(--wine2);color:#fff}
 button[disabled]{opacity:.55;cursor:not-allowed}
-.reply-box{display:none;margin-top:14px;padding-top:14px;border-top:1px solid var(--line)}
+.reply-box{display:none;margin-top:1rem;padding-top:1rem;border-top:1px solid var(--line)}
 .reply-box.open{display:block}
-textarea{display:block;width:100%;min-height:100px;max-width:100%;padding:10px;border:1px solid var(--line);border-radius:7px;background:#fff;color:var(--ink);font:inherit;resize:vertical;overflow-wrap:anywhere}
-.status{color:var(--muted);font-size:.9rem;margin-top:8px}
-.external{margin-top:42px;padding-top:24px;border-top:1px solid var(--line)}
-@media(max-width:620px){main{width:min(100% - 20px,980px)}.node{margin-inline-start:min(calc(var(--depth)*10px),72px);padding:15px}.node:before{left:-1px}.actions{display:grid;grid-template-columns:1fr}.actions>*{width:100%;text-align:center}.reply-controls{align-items:stretch}.reply-controls label{width:100%}}
+.reply-form{display:grid;gap:.7rem}
+.reply-form textarea{display:block;width:100%;min-height:110px;max-width:100%;padding:.7rem .8rem;border:1px solid var(--line);border-radius:6px;background:#121212;color:var(--ink);font:inherit;resize:vertical}
+.reply-controls{display:flex;gap:.6rem;flex-wrap:wrap;align-items:center}
+.reply-controls label{display:flex;gap:.5rem;align-items:center;color:var(--muted);font-size:.9rem}
+select{min-height:42px;border:1px solid var(--line);border-radius:6px;background:var(--panel);color:var(--ink);padding:.45rem .6rem;font:inherit}
+.status{color:var(--muted);font-size:.9rem;margin-top:.7rem}
+.status:empty{display:none}
+.status.ok{color:#b7d7b0}
+.status.err{color:#e0a0a0}
+.external{margin-top:2.6rem;padding-top:1.5rem;border-top:1px solid var(--line)}
+.external p{margin:.35rem 0;color:var(--muted)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+:focus-visible{outline:3px solid var(--hi);outline-offset:2px}
+@media(max-width:620px){
+ main{width:min(100% - 20px,980px)}
+ .node{margin-inline-start:min(calc(var(--depth)*10px),72px);padding:.9rem}
+ .node:before{left:-1px}
+ .actions{display:grid;grid-template-columns:1fr}
+ .actions>*{width:100%;text-align:center}
+ .reply-controls{align-items:stretch}
+ .reply-controls label{width:100%}
+ .reply-controls select{flex:1}
+}
 </style>
 </head>
 <body>
 <main>
 <header>
 <h1>Comentários</h1>
-<p class="lead">Issue #1 é a origem. Cada resposta canônica preserva seu pai, profundidade, identidade e origem.</p>
-<p id="status" class="status">Carregando a projeção canônica…</p>
-<p class="status"><a class="native" target="_blank" rel="noopener" href="https://github.com/outocarlos003-lang/Nocturna/issues/1">Comentar como pessoa no GitHub</a> · <span>respostas humanas canônicas exigem publicação autenticada em nome da pessoa.</span></p>
+<p class="lead">Uma conversa preservada em sua sequência original, com respostas encadeadas e leitura contínua.</p>
+<p id="status" class="status" aria-live="polite"></p>
 </header>
-<section id="tree" aria-live="polite"></section>
+<section id="tree" aria-live="polite" aria-label="Conversa"></section>
 <section class="external">
-<h2>Participações públicas externas</h2>
-<p class="lead">Comentários do GitHub sem metadados canônicos permanecem públicos, mas não são inseridos artificialmente na árvore.</p>
+<h2>Participações</h2>
+<p>Você também pode continuar a conversa pela página pública de participação.</p>
+<p><a class="native" target="_blank" rel="noopener noreferrer" href="https://github.com/outocarlos003-lang/Nocturna/issues/1">Participar da conversa</a></p>
 </section>
 </main>
 <script>
 (()=>{"use strict";
 const REPO="outocarlos003-lang/Nocturna",ISSUE=1;
 const status=document.querySelector("#status"),tree=document.querySelector("#tree");
-const esc=s=>String(s??"");
-const githubIssue=n=>`https://github.com/${REPO}/issues/${ISSUE}#issuecomment-${n}`;
 const load=async()=>{
  try{
   const res=await fetch("../data/comments/issue-1.json",{cache:"no-store"});
-  if(!res.ok)throw new Error("projecao HTTP "+res.status);
+  if(!res.ok)throw new Error("Não foi possível carregar a conversa.");
   const data=await res.json(),nodes=data.nodes||[];
   const byParent=new Map();
   nodes.forEach((n,index)=>{n.__order=n.order??index+1;const k=n.parentNodeId===null?"root":String(n.parentNodeId);if(!byParent.has(k))byParent.set(k,[]);byParent.get(k).push(n)});
   const ordered=[];
-  const visit=(id)=>{(byParent.get(id)||[]).sort((a,b)=>a.__order-b.__order).forEach(n=>{ordered.push(n);visit(String(n.nodeId))})};
+  const visit=id=>(byParent.get(id)||[]).sort((a,b)=>a.__order-b.__order).forEach(n=>{ordered.push(n);visit(String(n.nodeId))});
   visit("root");
-  if(ordered.length!==nodes.length)throw new Error("a árvore não pode ser reconstruída integralmente");
+  if(ordered.length!==nodes.length)throw new Error("Não foi possível preservar a sequência da conversa.");
   ordered.forEach(n=>{
    const article=document.createElement("article");
-   article.className="node";article.dataset.depth=n.depth;article.style.setProperty("--depth",n.depth);
-   article.id="node-"+n.nodeId;
-   article.innerHTML='<div class="meta"><span class="author"></span><span class="depth"></span></div><div class="content"></div><div class="actions"><a class="native" target="_blank" rel="noopener">Permalink</a><button type="button" class="prepare">Preparar resposta do personagem</button><a class="native human-reply" target="_blank" rel="noopener">Responder como pessoa</a></div><div class="reply-box"><textarea aria-label="Resposta"></textarea><label>Autor <select class="responder"><option>Akashi Seijuro</option><option>Johan Liebert</option><option>Ayanokoji Kiyotaka</option><option>Osamu Dazai</option><option>Light Yagami</option><option>L Lawliet</option><option>Sasuke Uchiha</option><option>Ranpo Edogawa</option><option>Itachi Uchiha</option><option>Satoru Gojo</option></select></label><button type="button" class="send">Publicar resposta canônica</button><div class="status reply-status"></div></div>';
+   article.className="node";article.dataset.depth=n.depth;article.style.setProperty("--depth",n.depth);article.id="node-"+n.nodeId;
+   article.innerHTML='<div class="meta"><span class="author"></span><span class="role"></span></div><div class="content"></div><div class="actions"><a class="native view-link" target="_blank" rel="noopener noreferrer">Ver referência</a><button type="button" class="prepare" aria-expanded="false">Responder</button></div><div class="reply-box" aria-hidden="true"><form class="reply-form"><textarea aria-label="Resposta" placeholder="Escreva sua resposta…"></textarea><div class="reply-controls"><label>Responder como <select class="responder"><option>Akashi Seijuro</option><option>Johan Liebert</option><option>Ayanokoji Kiyotaka</option><option>Osamu Dazai</option><option>Light Yagami</option><option>L Lawliet</option><option>Sasuke Uchiha</option><option>Ranpo Edogawa</option><option>Itachi Uchiha</option><option>Satoru Gojo</option></select></label><button type="submit" class="send">Enviar resposta</button></div><div class="status reply-status" aria-live="polite"></div></form></div>';
    article.querySelector(".author").textContent=n.author.displayName;
-   article.querySelector(".depth").textContent="nó "+n.nodeId+" · profundidade "+n.depth;
+   article.querySelector(".role").textContent=n.author.role||"";
    article.querySelector(".content").textContent=n.content;
-   article.querySelector(".native").href=n.origin?.migrated ? "#node-"+n.nodeId : n.commentUrl;
-   article.querySelector(".human-reply").href=n.origin?.migrated ? "https://github.com/"+REPO+"/issues/"+ISSUE : n.commentUrl;
-   const box=article.querySelector(".reply-box"),prepare=article.querySelector(".prepare"),send=article.querySelector(".send");
+   const view=article.querySelector(".view-link");
+   view.href=n.origin?.migrated?"#node-"+n.nodeId:(n.commentUrl||"https://github.com/"+REPO+"/issues/"+ISSUE);
+   const box=article.querySelector(".reply-box"),prepare=article.querySelector(".prepare"),form=article.querySelector(".reply-form"),out=article.querySelector(".reply-status");
    prepare.addEventListener("click",()=>{
     const open=!box.classList.contains("open");
-    box.classList.toggle("open",open);
-    prepare.setAttribute("aria-expanded",String(open));
-    box.setAttribute("aria-hidden",String(!open));
+    box.classList.toggle("open",open);prepare.setAttribute("aria-expanded",String(open));box.setAttribute("aria-hidden",String(!open));
     if(open)box.querySelector("textarea").focus();
    });
-   if(!window.NOCTURNA_REPLY_API){
-    send.disabled=true;
-    box.querySelector(".reply-status").textContent="Publicação canônica está temporariamente desativada; use “Responder como pessoa” para publicar diretamente no GitHub.";
-   }
-   send.addEventListener("click",async()=>{
-    const message=box.querySelector("textarea").value.trim(),out=box.querySelector(".reply-status");
-    if(!message){out.textContent="Escreva a resposta.";return}
-    out.textContent="A publicação canônica exige o mecanismo seguro configurado.";
+   form.addEventListener("submit",async event=>{
+    event.preventDefault();
+    const message=box.querySelector("textarea").value.trim();
+    if(!message){out.textContent="Escreva sua resposta.";out.className="status err";return}
     const api=window.NOCTURNA_REPLY_API||"";
-    if(!api){out.textContent="API de publicação ainda não configurada. Use o permalink para responder no GitHub.";window.open(n.commentUrl,"_blank","noopener");return}
+    if(!api){
+      out.textContent="Sua resposta está pronta. Para publicá-la, continue a conversa na página pública.";
+      out.className="status";
+      const target=n.commentUrl||"https://github.com/"+REPO+"/issues/"+ISSUE;
+      window.open(target,"_blank","noopener,noreferrer");
+      return;
+    }
     try{
-      const response=await fetch(api,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({message,parentNode:String(n.nodeId),parentComment:String(n.commentId),parentAuthor:n.author.displayName,responder:box.querySelector(".responder").value,requestId:(box.dataset.requestId ||= crypto.randomUUID().replace(/-/g,""))} )});
-      const result=await response.json();
-      if(!response.ok)throw new Error(result.error||"falha");
-      out.textContent="Resposta publicada; a projeção será normalizada pelo workflow.";
+      const requestId=box.dataset.requestId||=(crypto.randomUUID?crypto.randomUUID().replace(/-/g,""):String(Date.now()));
+      const response=await fetch(api,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({message,parentNode:String(n.nodeId),parentComment:String(n.commentId),parentAuthor:n.author.displayName,responder:box.querySelector(".responder").value,requestId})});
+      const result=await response.json().catch(()=>({}));
+      if(!response.ok)throw new Error(result.error||"Não foi possível enviar a resposta.");
+      out.textContent="Resposta enviada.";
+      out.className="status ok";
       box.querySelector("textarea").value="";
-    }catch(e){out.textContent=e.message||"Falha ao publicar."}
+    }catch(e){out.textContent=e.message||"Não foi possível enviar a resposta.";out.className="status err"}
    });
    tree.appendChild(article);
   });
-  status.textContent=nodes.length+" nós canônicos · reconstrução determinística concluída.";
- }catch(e){status.textContent="Falha ao reconstruir a árvore: "+e.message}
+  status.textContent="";
+ }catch(e){status.textContent=e.message;status.className="status err"}
 };
 const s=document.createElement("script");s.src="./reply-api-config.js";s.onload=load;s.onerror=load;document.head.appendChild(s);
 })();
