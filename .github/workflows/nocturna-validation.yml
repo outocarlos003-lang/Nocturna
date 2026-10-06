@@ -1,0 +1,29 @@
+name: Nocturna validation
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+
+      - name: Validate editorial data
+        run: node validate.mjs
+
+      - name: Validate canonical comments
+        run: node scripts/validate-comments.mjs
+
+      - name: Validate repository structure
+        run: node scripts/validate-system.mjs
