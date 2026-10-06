@@ -478,7 +478,7 @@ function composerFor(n,box){
         :"Não foi possível copiar automaticamente. Use o texto da caixa e publique na conversa pública.";
       msg.className="message ok";
       const parentUrl=String(n.commentUrl||"");
-      const destination=/github\\.com\\/outocarlos003-lang\\/Nocturna\\/issues\\/1#issuecomment-\\d+/.test(parentUrl)
+      const destination=/github\.com\/outocarlos003-lang\/Nocturna\/issues\/1#issuecomment-\d+/.test(parentUrl)
         ?parentUrl
         :"https://github.com/"+REPO+"/issues/"+ISSUE;
       window.open(destination,"_blank","noopener,noreferrer");
