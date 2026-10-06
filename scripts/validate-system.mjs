@@ -24,7 +24,7 @@ for(const file of htmlFiles){
   const html=fs.readFileSync(file,"utf8");
   for(const match of html.matchAll(/(?:href|src)=["']([^"']+)["']/gi)){
     const ref=match[1].trim();
-    if(!ref||ref.startsWith("#")||/^(?:https?:|mailto:|tel:|data:|javascript:|blob:)/i.test(ref)) continue;
+    if(!ref||ref.includes("${")||ref.startsWith("#")||/^(?:https?:|mailto:|tel:|data:|javascript:|blob:)/i.test(ref)) continue;
     const clean=ref.split(/[?#]/,1)[0];
     if(!clean) continue;
     let target;
