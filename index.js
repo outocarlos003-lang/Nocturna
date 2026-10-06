@@ -195,7 +195,7 @@ export default {
       const token = await installationToken(env);
       let parentLink = `https://github.com/${REPO}/issues/${ISSUE}`;
 
-      const canonicalFile = await ghGet(`/repos/${REPO}/contents/data/comments/issue-5.json`, token);
+      const canonicalFile = await ghGet(`/repos/${REPO}/contents/data/comments/issue-1.json`, token);
       const canonical = JSON.parse(atob(String(canonicalFile.content || "").replace(/\\s+/g, "")));
       const rootNode = (canonical.nodes || []).find(node => String(node.nodeId) === "2");
       if (!rootNode) throw new Error("Nó raiz 2 não existe na projeção canônica.");
