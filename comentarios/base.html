@@ -481,11 +481,8 @@ function composerFor(n,box){
       })});
       const result=await response.json().catch(()=>({}));
       if(!response.ok)throw new Error(result.error||"Não foi possível enviar.");
-      const candidateParentUrl=String(result.parent_url||n.commentUrl||"");
-      const parentUrl=COMMENT_URL_RE.test(candidateParentUrl)
-        ? candidateParentUrl
-        : `${ISSUE_URL}#issuecomment-${encodeURIComponent(String(result.parent_comment_id||""))}`;
-      if(!COMMENT_URL_RE.test(parentUrl)) throw new Error("O GitHub não retornou o permalink do comentário respondido.");
+      const parentUrl=String(result.parent_url||"");
+      if(!COMMENT_URL_RE.test(parentUrl)) throw new Error("O GitHub não retornou um permalink válido do comentário respondido.");
       try{localStorage.removeItem(draftKey(n.nodeId))}catch{}
       // O fragment #issuecomment-ID é o permalink nativo do GitHub e faz o
       // GitHub posicionar/destacar exatamente o comentário respondido.
