@@ -4,7 +4,7 @@ import fs from "node:fs";
 const OWNER="outocarlos003-lang";
 const REPO="Nocturna";
 const ISSUE=1;
-const PATH="data/comments/issue-5.json";
+const PATH="data/comments/issue-1.json";
 const token=process.env.GITHUB_TOKEN;
 if(!token) throw new Error("GITHUB_TOKEN obrigatorio");
 
@@ -26,7 +26,7 @@ const rootBody=[
 "",
 "# Nocturna — conversa canônica",
 "",
-"Este é o comentário raiz da conversa do Issue #5.",
+"Este é o comentário raiz da conversa do Issue #1.",
 "Todos os personagens e participantes humanos que responderem pela interface canônica formarão descendentes deste nó.",
 "Cada resposta deverá preservar pai, autor, identidade, profundidade, ordem e permalink.",
 "",
@@ -85,7 +85,7 @@ await api("/repos/"+OWNER+"/"+REPO+"/contents/"+PATH,{
   method:"PUT",
   headers:{"Content-Type":"application/json"},
   body:JSON.stringify({
-    message:"comments: materialize Issue #5 root comment",
+    message:"comments: materialize Issue #1 root comment",
     content:encoded,
     sha:current.sha
   })
