@@ -39,6 +39,75 @@ button,input,textarea,select{font:inherit}
 main{width:min(960px,calc(100% - 32px));margin:0 auto;padding:30px 0 72px}
 .topbar{padding:0 0 18px;margin-bottom:18px;border-bottom:1px solid var(--line)}
 .topbar h1{margin:0;font-size:1.7rem;font-weight:700}
+.topbar-search{
+  width:100%;
+  min-height:58px;
+  padding:0 20px;
+  border:1px solid var(--line);
+  border-radius:16px;
+  background:#0c0d0f;
+  color:var(--ink);
+  font-size:1.15rem;
+  outline:none;
+  margin-bottom:26px;
+}
+.topbar-search:focus{border-color:#555b63;box-shadow:0 0 0 2px #555b6320}
+.topbar-search::placeholder{color:#666970}
+.original-composer{
+  margin:0 0 34px;
+  padding:30px 34px 28px;
+  border:1px solid #30343a;
+  border-radius:18px;
+  background:var(--card);
+  box-shadow:0 7px 20px #0005;
+}
+.original-badge{
+  display:inline-flex;
+  align-items:center;
+  min-height:42px;
+  padding:0 20px;
+  border:1px solid #3c4249;
+  border-radius:24px;
+  color:#bcbcc0;
+  background:#15171a;
+  margin-bottom:22px;
+}
+.original-form textarea{
+  min-height:230px;
+  border-radius:14px;
+  background:#0c0d0f;
+  font-size:1.05rem;
+  padding:18px;
+}
+.original-meta{display:flex;justify-content:space-between;gap:12px;margin-top:10px;color:var(--soft);font-size:.9rem}
+.original-actions{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:28px;align-items:center}
+.original-clear{
+  border:0;
+  background:transparent;
+  color:#c5c1c2;
+  min-height:54px;
+  cursor:pointer;
+}
+.original-send{
+  min-height:54px;
+  border:1px solid #8f5268;
+  border-radius:10px;
+  background:#633547;
+  color:#eee;
+  cursor:pointer;
+  font-size:1.05rem;
+}
+.original-send:hover{background:#7b4359}
+.original-status{margin:14px 0 0;color:var(--muted);font-size:.88rem}
+@media(max-width:650px){
+  .topbar-search{border-radius:12px;margin-bottom:20px}
+  .original-composer{margin:0 0 24px;padding:22px 18px;border-radius:0;border-left:0;border-right:0}
+  .original-form textarea{min-height:220px}
+  .original-actions{grid-template-columns:1fr 1fr;gap:8px;margin-top:22px}
+}
+@media(max-width:390px){
+  .original-actions{grid-template-columns:1fr}
+}
 .topbar p{margin:4px 0 0;color:var(--muted)}
 #tree{display:block;min-width:0}
 .thread-root{position:relative}
@@ -283,9 +352,27 @@ select{
 <body>
 <main>
 <header class="topbar">
+  <input class="topbar-search" id="comment-search" type="search" placeholder="Pesquisar..." aria-label="Pesquisar comentários">
   <h1>Comentários</h1>
   <p>Uma conversa em sequência, com respostas e reações.</p>
 </header>
+
+<section class="original-composer" aria-label="Nova mensagem">
+  <div class="original-badge">Público</div>
+  <form class="original-form" id="original-form">
+    <textarea id="original-message" maxlength="2000" placeholder="Escreva sua mensagem..." aria-label="Mensagem"></textarea>
+    <div class="original-meta">
+      <span id="original-count">0 / 2000</span>
+      <span></span>
+    </div>
+    <div class="original-actions">
+      <button class="original-clear" id="original-clear" type="button">Limpar</button>
+      <button class="original-send" type="submit">Enviar ↗</button>
+    </div>
+    <div class="original-status" id="original-status" aria-live="polite"></div>
+  </form>
+</section>
+
 <section id="tree" aria-label="Conversa"></section>
 <section class="participation">
   <h2>Participações</h2>
@@ -517,6 +604,43 @@ async function load(){
     tree.textContent="Não foi possível carregar os comentários.";
   }
 }
+
+// Mensagem original: abre a criação de uma nova publicação no GitHub.
+const originalForm=document.querySelector("#original-form");
+const originalMessage=document.querySelector("#original-message");
+const originalCount=document.querySelector("#original-count");
+const originalClear=document.querySelector("#original-clear");
+const originalStatus=document.querySelector("#original-status");
+const search=document.querySelector("#comment-search");
+
+originalMessage.addEventListener("input",()=>{
+  originalCount.textContent=originalMessage.value.length+" / 2000";
+});
+originalClear.addEventListener("click",()=>{
+  originalMessage.value="";
+  originalCount.textContent="0 / 2000";
+  originalStatus.textContent="";
+  originalMessage.focus();
+});
+originalForm.addEventListener("submit",e=>{
+  e.preventDefault();
+  const message=originalMessage.value.trim();
+  if(!message){
+    originalMessage.focus();
+    return;
+  }
+  const url="https://github.com/"+REPO+"/issues/new?body="+encodeURIComponent(message);
+  window.location.href=url;
+});
+
+search.addEventListener("input",()=>{
+  const term=search.value.trim().toLocaleLowerCase();
+  document.querySelectorAll(".thread-node").forEach(node=>{
+    const text=node.textContent.toLocaleLowerCase();
+    node.style.display=!term||text.includes(term)?"":"none";
+  });
+});
+
 const config=document.createElement("script");
 config.src="./reply-api-config.js";config.onload=load;config.onerror=load;document.head.appendChild(config);
 })();
