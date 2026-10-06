@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">A Unidade da Consciência entre RUACH, Logos e Verdade</title>
+  <desc id="desc">Composição dark romanticism com uma consciência fragmentada convergindo para um eixo luminoso, traduzindo visualmente a passagem do ruído e da fragmentação para a integração e a direção segundo a Verdade.</desc>
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="46%" r="72%">
+      <stop offset="0" stop-color="#242033"/>
+      <stop offset="0.48" stop-color="#0d0c16"/>
+      <stop offset="1" stop-color="#030307"/>
+    </radialGradient>
+    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#fff6d2" stop-opacity="0.98"/>
+      <stop offset="0.2" stop-color="#c9b9ff" stop-opacity="0.62"/>
+      <stop offset="0.58" stop-color="#7668b7" stop-opacity="0.16"/>
+      <stop offset="1" stop-color="#7668b7" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="beam" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0" stop-color="#f5e6bd" stop-opacity="0"/>
+      <stop offset="0.45" stop-color="#e7d9ff" stop-opacity="0.5"/>
+      <stop offset="1" stop-color="#fff9df" stop-opacity="0.95"/>
+    </linearGradient>
+    <filter id="blur"><feGaussianBlur stdDeviation="24"/></filter>
+    <filter id="soft"><feGaussianBlur stdDeviation="7"/></filter>
+  </defs>
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <ellipse cx="800" cy="450" rx="430" ry="430" fill="url(#glow)" filter="url(#blur)"/>
+  <g fill="none" stroke="#b8a8d8" stroke-opacity="0.16">
+    <circle cx="800" cy="450" r="350"/>
+    <circle cx="800" cy="450" r="275"/>
+    <circle cx="800" cy="450" r="205"/>
+    <circle cx="800" cy="450" r="135"/>
+  </g>
+  <path d="M800 820 C770 690 772 570 800 450 C828 330 830 210 800 80" stroke="url(#beam)" stroke-width="18" opacity="0.48" filter="url(#soft)"/>
+  <path d="M800 835 C785 690 787 570 800 450 C813 330 815 205 800 65" stroke="#fff6d2" stroke-opacity="0.78" stroke-width="2"/>
+  <g stroke="#8e7cae" stroke-opacity="0.52" stroke-width="2">
+    <path d="M130 180 L420 350 L610 455"/>
+    <path d="M1470 170 L1180 350 L990 450"/>
+    <path d="M180 720 L470 560 L650 475"/>
+    <path d="M1420 720 L1130 560 L950 475"/>
+    <path d="M300 110 L510 310 L690 420"/>
+    <path d="M1300 110 L1090 310 L910 420"/>
+  </g>
+  <g fill="#11101a" stroke="#a08fbc" stroke-opacity="0.56" stroke-width="2">
+    <path d="M130 180 l155 18 -28 100 -135 -58z"/>
+    <path d="M1470 170 l-150 32 28 92 132 -55z"/>
+    <path d="M180 720 l170 -72 48 86 -155 78z"/>
+    <path d="M1420 720 l-170 -70 -48 85 154 78z"/>
+    <path d="M300 110 l120 46 15 100 -105 -54z"/>
+    <path d="M1300 110 l-120 46 -15 100 105 -54z"/>
+  </g>
+  <g fill="#05050a" stroke="#d5c8ee" stroke-opacity="0.65">
+    <path d="M800 235 C755 290 742 360 754 421 L768 490 L748 615 L800 690 L852 615 L832 490 L846 421 C858 360 845 290 800 235z"/>
+    <circle cx="800" cy="222" r="58"/>
+  </g>
+  <circle cx="800" cy="450" r="32" fill="#fff5cf" opacity="0.9" filter="url(#soft)"/>
+  <circle cx="800" cy="450" r="8" fill="#fffbe9"/>
+  <g fill="#d9cdef" font-family="Georgia,serif" text-anchor="middle">
+    <text x="800" y="52" font-size="25" letter-spacing="6">RUACH</text>
+    <text x="800" y="865" font-size="25" letter-spacing="6">LOGOS · VERDADE</text>
+  </g>
+  <text x="800" y="820" fill="#a99bbf" font-family="Georgia,serif" font-size="18" text-anchor="middle" letter-spacing="4">FLOW · INTEGRAÇÃO · DIREÇÃO</text>
+  <g fill="#fff5d4">
+    <circle cx="540" cy="250" r="2"/><circle cx="1060" cy="270" r="2"/><circle cx="430" cy="520" r="1.5"/><circle cx="1170" cy="500" r="1.5"/><circle cx="640" cy="150" r="1.5"/><circle cx="960" cy="160" r="1.5"/>
+  </g>
+</svg>

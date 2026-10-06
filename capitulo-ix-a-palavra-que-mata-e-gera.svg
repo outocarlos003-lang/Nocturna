@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" role="img" aria-labelledby="title desc">
+<title id="title">A Palavra que Mata é a Mesma Palavra que Gera</title>
+<desc id="desc">Uma espada de dois gumes e uma semente luminosa diante de um trono de pedra libertado, em estética dark romanticism.</desc>
+<defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#09090d"/><stop offset=".55" stop-color="#201b20"/><stop offset="1" stop-color="#050507"/></linearGradient>
+  <linearGradient id="steel" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#4b4b50"/><stop offset=".48" stop-color="#e0d9c9"/><stop offset="1" stop-color="#55515a"/></linearGradient>
+  <radialGradient id="seed"><stop stop-color="#fff5d8"/><stop offset=".25" stop-color="#d7bd82"/><stop offset="1" stop-color="#d7bd82" stop-opacity="0"/></radialGradient>
+  <filter id="glow"><feGaussianBlur stdDeviation="16"/></filter>
+</defs>
+<rect width="1200" height="700" fill="url(#bg)"/>
+<path d="M0 560 200 510 390 550 600 500 810 550 1000 500 1200 545V700H0Z" fill="#0b0a0d"/>
+<g opacity=".32" stroke="#777078" fill="none"><path d="M160 580V250L230 190H970L1040 250V580"/><path d="M225 580V280L280 230H920L975 280V580"/><path d="M280 580V350H920V580"/><path d="M340 580V420H860V580"/></g>
+<g transform="translate(600 365)">
+  <path d="M-185 170V-15L-145-60H145L185-15V170Z" fill="#17151a" stroke="#6d6262" stroke-width="4"/>
+  <path d="M-220 175H220L185 215H-185Z" fill="#282329" stroke="#766b6a" stroke-width="3"/>
+  <path d="M-150-60V-125L-100-165H100L150-125V-60" fill="#17151a" stroke="#71666a" stroke-width="5"/>
+  <path d="M-95-165V-215H95V-165" fill="#242027" stroke="#817779" stroke-width="4"/>
+  <path d="M0-280 15-230 0-210 -15-230Z" fill="#bba77e"/>
+</g>
+<g transform="translate(430 365) rotate(24)">
+  <path d="M0-230 16-165 7 55 0 85 -7 55 -16-165Z" fill="url(#steel)" stroke="#d2c7b7" stroke-width="2"/>
+  <path d="M-60-145H60L47-130H-47Z" fill="#a99a83" stroke="#ded2bc" stroke-width="3"/>
+  <rect x="-7" y="80" width="14" height="90" rx="4" fill="#403039" stroke="#a99a83" stroke-width="3"/>
+  <path d="M-35 170H35L25 185H-25Z" fill="#8b775e"/>
+</g>
+<circle cx="760" cy="470" r="100" fill="#cdb47c" opacity=".35" filter="url(#glow)"/>
+<g transform="translate(760 470)">
+  <ellipse rx="24" ry="34" fill="#d6c18e" stroke="#fff1c9" stroke-width="2" transform="rotate(28)"/>
+  <path d="M-3-22Q20-45 34-30Q22-8 2-5" fill="#9ba18b" stroke="#cbd0b5" stroke-width="2"/>
+  <path d="M0 18Q-4 42 12 55" fill="none" stroke="#b8a57d" stroke-width="3"/>
+</g>
+<path d="M760 530V610M760 575Q720 555 705 570M760 590Q800 565 815 582" fill="none" stroke="#8b927e" stroke-width="3" opacity=".8"/>
+<g fill="#d6c9b4" opacity=".9"><circle cx="760" cy="355" r="2"/><circle cx="710" cy="400" r="2"/><circle cx="820" cy="420" r="2"/><circle cx="680" cy="500" r="1.5"/><circle cx="850" cy="510" r="2"/></g>
+<text x="600" y="650" fill="#d8cbb8" font-family="Georgia,serif" font-size="25" letter-spacing="3" text-anchor="middle">A ESPADA • A SEMENTE • O VERBO</text>
+</svg>

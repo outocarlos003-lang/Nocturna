@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+<title id="title">A Crucificação do Trono Invisível</title>
+<desc id="desc">Composição em estética dark romanticism com um trono vazio, uma coroa de espinhos suspensa e uma cruz ao fundo.</desc>
+<defs>
+<radialGradient id="night" cx="50%" cy="38%" r="72%"><stop offset="0" stop-color="#3a292c"/><stop offset=".5" stop-color="#171216"/><stop offset="1" stop-color="#050507"/></radialGradient>
+<linearGradient id="iron" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#78645e"/><stop offset=".5" stop-color="#2b2326"/><stop offset="1" stop-color="#09090b"/></linearGradient>
+<linearGradient id="thorn" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#b89b8b"/><stop offset="1" stop-color="#59453f"/></linearGradient>
+<filter id="blur"><feGaussianBlur stdDeviation="22"/></filter><filter id="soft"><feGaussianBlur stdDeviation="7"/></filter>
+</defs>
+<rect width="1600" height="900" fill="url(#night)"/>
+<ellipse cx="800" cy="760" rx="650" ry="90" fill="#000" opacity=".72" filter="url(#soft)"/>
+<circle cx="800" cy="275" r="210" fill="#c6a79a" opacity=".08" filter="url(#blur)"/>
+<g opacity=".72" stroke="#a98e83" stroke-width="7" fill="none"><path d="M800 90V520M620 305H980"/></g>
+<g opacity=".92"><path d="M690 670V385H910V670L990 735H610Z" fill="url(#iron)" stroke="#8c746c" stroke-opacity=".38" stroke-width="5"/><path d="M675 385L735 315H865L925 385Z" fill="#211b1e" stroke="#9a8077" stroke-opacity=".32" stroke-width="5"/><path d="M650 675H950" stroke="#a28a80" stroke-opacity=".18" stroke-width="10"/><path d="M705 470H895M720 550H880" stroke="#a28a80" stroke-opacity=".16" stroke-width="9"/></g>
+<g fill="none" stroke="url(#thorn)" stroke-width="12" stroke-linecap="round"><path d="M565 205C620 130 720 150 800 225C880 150 980 130 1035 205"/><path d="M600 205C620 265 685 280 735 250"/><path d="M1000 205C980 265 915 280 865 250"/><path d="M645 173l-15-48M700 180l8-55M900 180l-8-55M955 173l15-48"/></g>
+<g opacity=".35" fill="none" stroke="#d2b9aa"><circle cx="800" cy="545" r="300" stroke-width="2"/><circle cx="800" cy="545" r="355" stroke-width="2"/><path d="M250 820Q520 690 800 790T1350 820" stroke-width="3"/></g>
+<g fill="#d7c0b3" opacity=".42"><circle cx="180" cy="150" r="2"/><circle cx="305" cy="250" r="3"/><circle cx="1260" cy="140" r="2"/><circle cx="1410" cy="290" r="3"/></g>
+<path d="M0 835Q350 740 800 815T1600 835V900H0Z" fill="#040406"/>
+</svg>

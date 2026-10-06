@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+<title id="title">Palavra, fé e regeneração</title>
+<desc id="desc">Ilustração em estética dark romanticism com livro aberto, arquitetura sombria e um feixe de luz atravessando a escuridão em direção a uma figura humana.</desc>
+<defs>
+  <radialGradient id="bg" cx="58%" cy="42%" r="75%"><stop offset="0" stop-color="#30283a"/><stop offset=".48" stop-color="#15131b"/><stop offset="1" stop-color="#050507"/></radialGradient>
+  <linearGradient id="beam" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#eee4c7" stop-opacity=".92"/><stop offset="1" stop-color="#b9a77b" stop-opacity=".08"/></linearGradient>
+  <filter id="glow"><feGaussianBlur stdDeviation="18"/></filter>
+  <filter id="soft"><feGaussianBlur stdDeviation="5"/></filter>
+</defs>
+<rect width="1600" height="900" fill="url(#bg)"/>
+<circle cx="1170" cy="205" r="126" fill="#e6dcc0" opacity=".13" filter="url(#soft)"/>
+<circle cx="1170" cy="205" r="76" fill="#eee7d0" opacity=".18"/>
+<path d="M0 760 Q360 620 690 700 T1600 650 V900 H0Z" fill="#07070a"/>
+<g opacity=".72" fill="#09090d">
+  <path d="M110 710V365h80v-72h55v72h82v345z"/>
+  <path d="M225 350l42-88 42 88z"/>
+  <path d="M1310 700V390h92v-74h58v74h92v310z"/>
+  <path d="M1400 375l40-92 40 92z"/>
+</g>
+<path d="M1040 0 L1210 0 L910 720 L690 720 Z" fill="url(#beam)" opacity=".55" filter="url(#glow)"/>
+<path d="M1075 0 L1165 0 L855 710 L755 710 Z" fill="url(#beam)" opacity=".34"/>
+<g transform="translate(800 610)">
+  <path d="M-245 95 Q-125 10 0 65 Q125 10 245 95 L0 145 Z" fill="#1a1720" stroke="#85775b" stroke-width="3"/>
+  <path d="M-225 88 Q-115 22 0 72 L0 124 Q-110 76 -225 105Z" fill="#25202b"/>
+  <path d="M225 88 Q115 22 0 72 L0 124 Q110 76 225 105Z" fill="#25202b"/>
+  <path d="M-4 42 C-18 0 -12 -42 0 -74 C12 -42 18 0 4 42Z" fill="#d9cfb0" opacity=".5"/>
+</g>
+<g transform="translate(800 430)">
+  <ellipse cx="0" cy="190" rx="72" ry="120" fill="#09090c"/>
+  <circle cx="0" cy="54" r="38" fill="#0b0a0e"/>
+  <path d="M-38 54 Q0 24 38 54" fill="none" stroke="#b9aa82" stroke-width="2" opacity=".55"/>
+  <path d="M0 90 C-12 145 -10 205 0 270" fill="none" stroke="#cfc3a3" stroke-width="3" opacity=".55"/>
+</g>
+<g opacity=".8">
+  <path d="M520 210 C650 330 720 380 800 430" fill="none" stroke="#d8cda9" stroke-width="2"/>
+  <path d="M1080 210 C950 330 880 380 800 430" fill="none" stroke="#d8cda9" stroke-width="2"/>
+  <circle cx="520" cy="210" r="5" fill="#e9dfc2"/><circle cx="1080" cy="210" r="5" fill="#e9dfc2"/>
+</g>
+<g fill="#d8cda9" opacity=".22">
+  <circle cx="370" cy="150" r="3"/><circle cx="440" cy="280" r="4"/><circle cx="1260" cy="330" r="3"/><circle cx="1320" cy="180" r="4"/><circle cx="610" cy="120" r="2"/>
+</g>
+<text x="800" y="835" text-anchor="middle" fill="#d8cda9" opacity=".7" font-family="Georgia,serif" font-size="28" letter-spacing="5">PALAVRA · FÉ · REVELAÇÃO · VIDA</text>
+</svg>

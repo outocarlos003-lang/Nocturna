@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+<title id="title">A Morte da Guarda Precede a Queda do Rei</title>
+<desc id="desc">Composição dark romanticism de um trono sombrio isolado, uma espada luminosa atravessando as defesas ao redor da coroa e figuras de guarda depostas na penumbra.</desc>
+<defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#08070b"/><stop offset="0.55" stop-color="#15101a"/><stop offset="1" stop-color="#030305"/></linearGradient>
+  <radialGradient id="halo"><stop offset="0" stop-color="#eee7d2" stop-opacity=".42"/><stop offset=".28" stop-color="#cfc6ad" stop-opacity=".16"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
+  <linearGradient id="steel" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fffdf0"/><stop offset=".35" stop-color="#d8d0bb"/><stop offset=".55" stop-color="#6f6a61"/><stop offset=".75" stop-color="#f4eedb"/><stop offset="1" stop-color="#8b8578"/></linearGradient>
+  <filter id="glow"><feGaussianBlur stdDeviation="10" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  <filter id="soft"><feGaussianBlur stdDeviation="45"/></filter>
+</defs>
+<rect width="1600" height="900" fill="url(#bg)"/>
+<ellipse cx="800" cy="390" rx="560" ry="470" fill="url(#halo)" filter="url(#soft)"/>
+<g opacity=".22" fill="none" stroke="#8e877a">
+  <path d="M170 710 Q260 430 440 310 Q600 205 800 190 Q1000 205 1160 310 Q1340 430 1430 710"/>
+  <path d="M260 740 Q330 500 500 380 Q640 280 800 270 Q960 280 1100 380 Q1270 500 1340 740"/>
+  <path d="M360 770 Q410 570 560 465 Q675 385 800 380 Q925 385 1040 465 Q1190 570 1240 770"/>
+</g>
+<g fill="#100c12" stroke="#514b47" stroke-width="7">
+  <path d="M610 705 L610 455 L690 385 L735 305 L865 305 L910 385 L990 455 L990 705 Z"/>
+  <path d="M540 705 L540 520 L610 455 L610 705 Z"/>
+  <path d="M1060 705 L1060 520 L990 455 L990 705 Z"/>
+  <path d="M700 305 L735 220 L800 165 L865 220 L900 305 Z"/>
+  <path d="M705 705 L705 535 L755 480 L845 480 L895 535 L895 705 Z"/>
+</g>
+<g fill="none" stroke="#8f8779" stroke-width="5" opacity=".5">
+  <path d="M650 690 L650 480 L715 420"/>
+  <path d="M950 690 L950 480 L885 420"/>
+  <path d="M748 685 L748 555 L800 505 L852 555 L852 685"/>
+</g>
+<g opacity=".75" fill="#09080b" stroke="#625b53" stroke-width="5">
+  <path d="M410 710 L440 500 L485 445 L530 500 L560 710 Z"/>
+  <circle cx="485" cy="420" r="35"/>
+  <path d="M1040 710 L1070 500 L1115 445 L1160 500 L1190 710 Z"/>
+  <circle cx="1115" cy="420" r="35"/>
+  <path d="M275 710 L300 555 L335 510 L370 555 L395 710 Z"/>
+  <circle cx="335" cy="488" r="28"/>
+  <path d="M1205 710 L1230 555 L1265 510 L1300 555 L1325 710 Z"/>
+  <circle cx="1265" cy="488" r="28"/>
+</g>
+<g filter="url(#glow)">
+  <path d="M800 105 L800 610" stroke="url(#steel)" stroke-width="15"/>
+  <path d="M748 190 L852 190" stroke="#e8e0cb" stroke-width="13"/>
+  <path d="M768 205 L832 205" stroke="#a49d8e" stroke-width="8"/>
+  <path d="M800 105 L775 150 L825 150 Z" fill="#f7f0dd"/>
+</g>
+<g fill="none" stroke="#b8af9d" opacity=".45">
+  <path d="M800 105 L800 650"/>
+  <path d="M650 610 Q800 700 950 610"/>
+  <path d="M585 650 Q800 785 1015 650"/>
+</g>
+<path d="M0 760 Q320 700 540 780 T1080 780 T1600 760 V900 H0 Z" fill="#020204"/>
+<text x="800" y="825" text-anchor="middle" fill="#bcb3a1" opacity=".65" font-family="serif" font-size="30" letter-spacing="7">A MORTE DA GUARDA PRECEDE A QUEDA DO REI</text>
+</svg>

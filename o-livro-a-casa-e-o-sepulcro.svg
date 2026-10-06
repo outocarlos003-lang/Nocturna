@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+<title id="title">O Livro, a Casa e o Sepulcro</title>
+<desc id="desc">Composição dark romanticism com um livro aberto, uma casa em arco e um sepulcro sob uma luz vertical.</desc>
+<defs>
+ <radialGradient id="bg" cx="50%" cy="35%" r="75%"><stop offset="0" stop-color="#34252d"/><stop offset=".55" stop-color="#171318"/><stop offset="1" stop-color="#08080a"/></radialGradient>
+ <linearGradient id="light" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e8d8b9" stop-opacity=".92"/><stop offset=".55" stop-color="#b99b72" stop-opacity=".3"/><stop offset="1" stop-color="#7a1f35" stop-opacity="0"/></linearGradient>
+ <linearGradient id="paper" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#d9ccb3"/><stop offset="1" stop-color="#81735e"/></linearGradient>
+ <filter id="glow"><feGaussianBlur stdDeviation="22"/></filter>
+</defs>
+<rect width="1600" height="900" fill="url(#bg)"/>
+<circle cx="800" cy="225" r="190" fill="#cdbb99" opacity=".12" filter="url(#glow)"/>
+<path d="M710 70 Q800 15 890 70 L1015 620 L585 620 Z" fill="url(#light)" opacity=".65"/>
+<path d="M610 595 Q800 525 990 595 L1050 675 L550 675 Z" fill="#0a090b" opacity=".95"/>
+<path d="M645 590 V365 Q645 250 800 205 Q955 250 955 365 V590" fill="none" stroke="#4c3a42" stroke-width="22"/>
+<path d="M675 575 V370 Q675 285 800 250 Q925 285 925 370 V575" fill="#0d0c0f" stroke="#72505c" stroke-width="5"/>
+<path d="M735 575 V410 Q735 335 800 305 Q865 335 865 410 V575" fill="#171318"/>
+<path d="M800 305 V575" stroke="#a78370" stroke-width="3" opacity=".5"/>
+<path d="M390 760 Q530 650 800 720 Q1070 650 1210 760 L1170 805 Q1010 750 800 790 Q590 750 430 805 Z" fill="#0b0a0c"/>
+<path d="M515 690 L800 620 L1085 690 L800 750 Z" fill="#1e181c" stroke="#806b58" stroke-width="5"/>
+<path d="M515 690 L800 620 L800 750 L515 690 Z" fill="url(#paper)" opacity=".88"/>
+<path d="M800 620 L1085 690 L800 750 Z" fill="#a99a7e" opacity=".72"/>
+<path d="M565 684 L785 638 M560 701 L785 655 M835 641 L1045 691 M835 660 L1030 705" stroke="#5d5145" stroke-width="4" opacity=".7"/>
+<path d="M800 750 Q800 790 800 820" stroke="#8f745d" stroke-width="6" opacity=".6"/>
+<path d="M650 815 H950 L910 735 H690 Z" fill="#242027" stroke="#715664" stroke-width="5"/>
+<path d="M690 735 Q800 690 910 735" fill="#2b2228" stroke="#8a6672" stroke-width="5"/>
+<path d="M750 810 V765 Q750 745 770 745 H830 Q850 745 850 765 V810" fill="#09090b"/>
+<path d="M315 760 Q345 710 375 760 T435 760 T495 760" fill="none" stroke="#4d343e" stroke-width="7" opacity=".8"/>
+<path d="M1105 760 Q1135 710 1165 760 T1225 760 T1285 760" fill="none" stroke="#4d343e" stroke-width="7" opacity=".8"/>
+<g fill="#c9b28f" opacity=".35">
+ <circle cx="280" cy="170" r="2"/><circle cx="340" cy="240" r="3"/><circle cx="1240" cy="185" r="2"/><circle cx="1320" cy="290" r="3"/><circle cx="1170" cy="120" r="2"/>
+</g>
+<text x="800" y="858" text-anchor="middle" fill="#d0b69e" opacity=".62" font-family="Georgia,serif" font-size="28" letter-spacing="7">A VIDA RECEBIDA · A RESPOSTA · A FONTE</text>
+</svg>

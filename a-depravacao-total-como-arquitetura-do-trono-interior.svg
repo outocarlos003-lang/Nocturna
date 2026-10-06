@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="t d">
+<title id="t">A Depravação Total Como Arquitetura do Trono Interior</title>
+<desc id="d">Composição artística em dark romanticism com um trono vazio, uma coroa de espinhos, uma cruz distante e uma atmosfera de sombras profundas.</desc>
+<defs>
+  <radialGradient id="sky" cx="50%" cy="38%" r="70%"><stop offset="0" stop-color="#3b1b28"/><stop offset=".42" stop-color="#171217"/><stop offset="1" stop-color="#070609"/></radialGradient>
+  <linearGradient id="floor" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#1a1116"/><stop offset="1" stop-color="#030304"/></linearGradient>
+  <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#d0a779"/><stop offset=".45" stop-color="#76563e"/><stop offset="1" stop-color="#2a1d19"/></linearGradient>
+  <filter id="glow"><feGaussianBlur stdDeviation="18"/></filter>
+  <filter id="shadow"><feGaussianBlur stdDeviation="8"/></filter>
+</defs>
+<rect width="1600" height="900" fill="url(#sky)"/>
+<circle cx="800" cy="285" r="190" fill="#8a2b42" opacity=".18" filter="url(#glow)"/>
+<circle cx="800" cy="285" r="112" fill="#b04a5b" opacity=".16"/>
+<path d="M0 690 Q310 575 610 690 T1240 670 T1600 700 V900 H0Z" fill="url(#floor)"/>
+<g opacity=".42" fill="none" stroke="#8b6a59">
+  <path d="M165 690 Q800 470 1435 690"/>
+  <path d="M270 725 Q800 550 1330 725"/>
+  <path d="M380 760 Q800 625 1220 760"/>
+</g>
+<g transform="translate(530 210)">
+  <path d="M80 475 L120 110 Q126 72 165 55 L225 30 L285 55 Q324 72 330 110 L370 475Z" fill="#151116" stroke="#7d5a4a" stroke-width="9"/>
+  <path d="M105 120 Q205 180 305 120 L285 420 Q205 470 125 420Z" fill="#241922" stroke="#5c3f38" stroke-width="7"/>
+  <path d="M120 95 Q205 15 290 95" fill="none" stroke="#9d765b" stroke-width="11"/>
+  <path d="M95 465 L55 535 L92 550 L120 515 L150 555 L180 520 L205 555 L235 520 L265 555 L295 515 L325 550 L362 535 L322 465" fill="#111015" stroke="#725242" stroke-width="7"/>
+  <path d="M115 465 Q205 410 295 465" fill="none" stroke="#a17a5d" stroke-width="6" opacity=".75"/>
+</g>
+<g transform="translate(770 350)" opacity=".8">
+  <path d="M30 210 V0 H75 V210 M0 55 H105 V100 H0Z" fill="#c9b6a0"/>
+  <path d="M0 210 Q52 175 105 210" fill="none" stroke="#e0bfae" stroke-width="5"/>
+</g>
+<g transform="translate(620 185)">
+  <path d="M0 72 L38 22 L78 55 L118 8 L153 58 L196 25 L214 90 L170 122 L118 105 L65 130 L18 112Z" fill="none" stroke="url(#gold)" stroke-width="12"/>
+  <path d="M15 93 Q105 145 200 91" fill="none" stroke="#a35a4f" stroke-width="8"/>
+</g>
+<g fill="#070609" opacity=".92">
+  <path d="M0 900 V790 Q70 725 145 790 V900Z"/>
+  <path d="M1455 900 V790 Q1530 725 1600 790 V900Z"/>
+</g>
+<g stroke="#5e1f2e" stroke-width="4" opacity=".75">
+  <path d="M800 900 C760 820 835 760 790 685"/>
+  <path d="M815 900 C860 825 785 770 830 700"/>
+  <path d="M785 900 C735 850 755 800 720 750"/>
+</g>
+<text x="800" y="815" text-anchor="middle" fill="#d9c7b6" opacity=".82" font-family="Georgia,serif" font-size="31" letter-spacing="5">O TRONO INTERIOR</text>
+</svg>

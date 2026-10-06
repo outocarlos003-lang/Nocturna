@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-labelledby="t d">
+<title id="t">A espada de dois gumes e o julgamento do reino interior</title>
+<desc id="d">Composição dark romanticism com uma espada luminosa atravessando um trono sombrio e camadas de muralhas interiores.</desc>
+<defs>
+<radialGradient id="bg" cx="70%" cy="42%" r="75%"><stop offset="0" stop-color="#3a2730"/><stop offset=".48" stop-color="#19151a"/><stop offset="1" stop-color="#07080a"/></radialGradient>
+<linearGradient id="steel" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f3e4d1"/><stop offset=".48" stop-color="#b09aa0"/><stop offset="1" stop-color="#312b32"/></linearGradient>
+<linearGradient id="stone" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#362b33"/><stop offset="1" stop-color="#101014"/></linearGradient>
+<filter id="glow"><feGaussianBlur stdDeviation="11" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+<filter id="soft"><feGaussianBlur stdDeviation="34"/></filter>
+</defs>
+<rect width="1200" height="675" fill="url(#bg)"/>
+<ellipse cx="785" cy="310" rx="320" ry="255" fill="#8a5260" opacity=".12" filter="url(#soft)"/>
+<g fill="url(#stone)" stroke="#4c3b45" stroke-width="3">
+<path d="M0 480L90 400 160 435 235 350 310 410 385 335 455 425 530 355 600 445 675 390 745 455 825 365 900 430 980 350 1060 410 1200 325V675H0Z"/>
+<path d="M0 0H220L155 92H0ZM1200 0H980L1045 92H1200Z" opacity=".72"/>
+</g>
+<g fill="none" stroke="#70505d" stroke-width="4" opacity=".58">
+<ellipse cx="610" cy="360" rx="270" ry="205"/>
+<ellipse cx="610" cy="360" rx="205" ry="150"/>
+<ellipse cx="610" cy="360" rx="140" ry="98"/>
+</g>
+<g fill="#0b0b0f" stroke="#5c4651" stroke-width="4">
+<path d="M450 515V302L520 245H700L770 302V515Z"/>
+<path d="M500 302V220H720V302"/>
+<path d="M520 220L570 140H650L700 220Z"/>
+<path d="M405 515H815L770 558H450Z"/>
+<path d="M480 558H740L692 610H528Z"/>
+</g>
+<g stroke="#a23855" stroke-width="5" opacity=".62">
+<path d="M450 324H770"/><path d="M462 382H758"/><path d="M478 438H742"/>
+</g>
+<g transform="translate(830 92) rotate(18)">
+<path d="M0 0L34 382L0 440L-34 382Z" fill="url(#steel)" stroke="#f0dcc7" stroke-width="3" filter="url(#glow)"/>
+<path d="M-50 382H50L28 408H-28Z" fill="#9f7883" stroke="#ead5c4" stroke-width="3"/>
+<path d="M-8 408V488H8V408Z" fill="#5a3b46"/>
+<path d="M-58 488H58" stroke="#d8b8ae" stroke-width="12"/>
+</g>
+<g fill="#d9b9ad" opacity=".76">
+<circle cx="935" cy="118" r="2"/><circle cx="1010" cy="166" r="3"/><circle cx="900" cy="210" r="2"/><circle cx="1060" cy="252" r="2"/><circle cx="948" cy="315" r="3"/><circle cx="1005" cy="360" r="2"/>
+</g>
+<g stroke="#d9b9ad" stroke-width="2" opacity=".35">
+<path d="M185 140L300 250"/><path d="M300 140L185 250"/><path d="M900 450L1015 565"/><path d="M1015 450L900 565"/>
+</g>
+<rect x="38" y="38" width="1124" height="599" fill="none" stroke="#55404a" stroke-width="2"/>
+</svg>

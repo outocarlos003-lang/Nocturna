@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="t d">
+<title id="t">A Dupla Dinâmica da Santificação</title>
+<desc id="d">Arte dark romanticism com uma esfera dividida entre contenção exterior e renovação interior, atravessada por luz espiritual.</desc>
+<defs>
+<radialGradient id="b"><stop stop-color="#38242d"/><stop offset=".55" stop-color="#171118"/><stop offset="1" stop-color="#050509"/></radialGradient>
+<radialGradient id="s"><stop stop-color="#e7c99f" stop-opacity=".9"/><stop offset=".45" stop-color="#9c5965" stop-opacity=".5"/><stop offset="1" stop-color="#28161e" stop-opacity="0"/></radialGradient>
+<linearGradient id="l"><stop stop-color="#f2dfbd"/><stop offset=".5" stop-color="#bd8d6f"/><stop offset="1" stop-color="#684552"/></linearGradient>
+<filter id="g"><feGaussianBlur stdDeviation="24"/></filter>
+</defs>
+<rect width="1600" height="900" fill="url(#b)"/>
+<circle cx="800" cy="450" r="300" fill="url(#s)" filter="url(#g)"/>
+<circle cx="800" cy="450" r="250" fill="none" stroke="#76505b" stroke-width="5" opacity=".65"/>
+<circle cx="800" cy="450" r="188" fill="#100d12" stroke="#b17c78" stroke-width="3"/>
+<path d="M800 235 A215 215 0 0 0 800 665" fill="none" stroke="#6c414d" stroke-width="48" opacity=".65"/>
+<path d="M800 235 A215 215 0 0 1 800 665" fill="none" stroke="#d2b58e" stroke-width="48" opacity=".78"/>
+<path d="M800 210 L800 690" stroke="url(#l)" stroke-width="8"/>
+<path d="M800 450 C680 370 610 300 480 275 C590 370 650 450 700 530 C610 595 555 655 470 705 C625 675 720 585 800 490" fill="none" stroke="#8c5864" stroke-width="12" opacity=".48"/>
+<path d="M800 450 C920 370 990 300 1120 275 C1010 370 950 450 900 530 C990 595 1045 655 1130 705 C975 675 880 585 800 490" fill="none" stroke="#cda983" stroke-width="12" opacity=".55"/>
+<path d="M800 290 L800 610" stroke="#fff0d2" stroke-width="2" opacity=".85"/>
+<g fill="#cbb08f" opacity=".45"><circle cx="190" cy="150" r="3"/><circle cx="1370" cy="160" r="4"/><circle cx="230" cy="760" r="4"/><circle cx="1380" cy="745" r="3"/></g>
+<g fill="none" stroke="#5c3e49" stroke-width="4" opacity=".55">
+<path d="M120 250 Q330 110 530 220"/><path d="M1480 250 Q1270 110 1070 220"/><path d="M110 650 Q320 790 540 680"/><path d="M1490 650 Q1280 790 1060 680"/>
+</g>
+<rect x="35" y="35" width="1530" height="830" fill="none" stroke="#6b4652" stroke-width="2" opacity=".55"/>
+</svg>

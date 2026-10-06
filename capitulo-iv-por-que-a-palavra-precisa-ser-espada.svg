@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-labelledby="t d">
+<title id="t">A espada diante do trono e da semente</title>
+<desc id="d">Uma composição dark romanticism com trono sombrio, espada luminosa, muralhas e uma pequena semente diante da luz.</desc>
+<defs>
+<radialGradient id="bg" cx="68%" cy="42%" r="72%"><stop offset="0" stop-color="#3b2630"/><stop offset=".45" stop-color="#181419"/><stop offset="1" stop-color="#08090b"/></radialGradient>
+<linearGradient id="steel" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f0dfc7"/><stop offset=".5" stop-color="#9d8b91"/><stop offset="1" stop-color="#332d35"/></linearGradient>
+<linearGradient id="stone" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#322932"/><stop offset="1" stop-color="#111116"/></linearGradient>
+<filter id="glow"><feGaussianBlur stdDeviation="10" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+<filter id="soft"><feGaussianBlur stdDeviation="32"/></filter>
+</defs>
+<rect width="1200" height="675" fill="url(#bg)"/>
+<ellipse cx="830" cy="270" rx="270" ry="220" fill="#8a5260" opacity=".12" filter="url(#soft)"/>
+<g fill="url(#stone)" stroke="#4a3b45" stroke-width="3"><path d="M0 475 L95 395 165 430 235 345 315 410 380 330 455 420 520 360 590 450 660 390 740 455 820 370 900 430 980 350 1060 410 1200 330 V675 H0Z"/><path d="M0 0H210L150 85H0ZM1200 0H990L1050 85H1200Z" opacity=".75"/></g>
+<g fill="#0b0b0f" stroke="#5a4650" stroke-width="4"><path d="M455 510V300L520 245H680L745 300V510Z"/><path d="M500 300V220H700V300"/><path d="M520 220L565 145H635L680 220Z"/><path d="M410 510H790L750 555H450Z"/><path d="M485 555H715L675 605H525Z"/></g>
+<g stroke="#9c2d49" stroke-width="5" opacity=".65"><path d="M455 320H745"/><path d="M470 375H730"/><path d="M485 430H715"/></g>
+<g transform="translate(800 105) rotate(17)"><path d="M0 0L34 382L0 430L-34 382Z" fill="url(#steel)" stroke="#e7d6c2" stroke-width="3" filter="url(#glow)"/><path d="M-48 382H48L28 405H-28Z" fill="#a37a83" stroke="#e7d6c2" stroke-width="3"/><path d="M-8 405V480H8V405Z" fill="#5e3d49"/><path d="M-52 480H52" stroke="#d5b7ad" stroke-width="12"/></g>
+<g transform="translate(805 548)"><ellipse cx="0" cy="12" rx="65" ry="15" fill="#000" opacity=".6"/><path d="M0 0C-12 -18 -13 -36 0 -49C13 -36 12 -18 0 0Z" fill="#b59a82" stroke="#e0bfae" stroke-width="3"/><path d="M0 -49C4 -70 20 -82 36 -86C34 -64 22 -49 0 -49Z" fill="#6f4c59" stroke="#b58a96" stroke-width="3"/></g>
+<g fill="#e0bfae" opacity=".7"><circle cx="910" cy="140" r="2"/><circle cx="980" cy="190" r="3"/><circle cx="865" cy="235" r="2"/><circle cx="1040" cy="275" r="2"/><circle cx="930" cy="335" r="3"/></g>
+<rect x="38" y="38" width="1124" height="599" fill="none" stroke="#55404a" stroke-width="2"/>
+</svg>

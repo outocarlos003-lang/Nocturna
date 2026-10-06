@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-labelledby="t d">
+<title id="t">O Velho Homem como Rei Deposto</title>
+<desc id="d">Trono sombrio, espada luminosa e coroa deposta em uma composição de romantismo sombrio.</desc>
+<defs>
+ <radialGradient id="bg" cx="50%" cy="45%" r="70%"><stop offset="0" stop-color="#33232a"/><stop offset=".55" stop-color="#171316"/><stop offset="1" stop-color="#08090b"/></radialGradient>
+ <linearGradient id="steel" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff4df"/><stop offset=".45" stop-color="#d9c9b5"/><stop offset="1" stop-color="#766b62"/></linearGradient>
+ <linearGradient id="stone" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#393036"/><stop offset="1" stop-color="#100f12"/></linearGradient>
+ <filter id="glow"><feGaussianBlur stdDeviation="14" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+</defs>
+<rect width="1200" height="800" fill="url(#bg)"/>
+<g opacity=".35" fill="none" stroke="#80606a"><path d="M70 690Q190 510 330 680T590 650T860 675T1140 610"/><path d="M110 170Q270 70 390 170T680 150T1080 190"/></g>
+<g transform="translate(350 170)">
+ <path d="M110 510V225Q110 120 250 90Q390 120 390 225V510" fill="url(#stone)" stroke="#6c5961" stroke-width="7"/>
+ <path d="M85 520h330l-32 72H117z" fill="#17151a" stroke="#705d64" stroke-width="7"/>
+ <path d="M145 305h200v180H145z" fill="#0b0b0e" stroke="#67535c" stroke-width="6"/>
+ <path d="M170 315v170M320 315v170M145 355h200M145 425h200" stroke="#493b42" stroke-width="5"/>
+ <path d="M92 230Q250 70 408 230" fill="none" stroke="#5b4750" stroke-width="8"/>
+</g>
+<g transform="rotate(-17 620 390)" filter="url(#glow)">
+ <path d="M620 115L648 500L600 500Z" fill="url(#steel)"/>
+ <path d="M600 500h48l-24 62z" fill="#bcae9d"/>
+ <path d="M555 520h140" stroke="#cdbda9" stroke-width="18" stroke-linecap="round"/>
+ <path d="M590 500h80" stroke="#f4eadb" stroke-width="6"/>
+</g>
+<g transform="translate(780 560) rotate(-8)">
+ <path d="M0 90l35-75 35 75 55-58 5 92H-20l5-92z" fill="none" stroke="#bca98f" stroke-width="12"/>
+ <path d="M-10 124h120" stroke="#6b5660" stroke-width="10"/>
+</g>
+<g fill="#cbb8a1" opacity=".72" font-family="Georgia,serif" text-anchor="middle">
+ <text x="600" y="735" font-size="34" letter-spacing="7">O VELHO HOMEM COMO REI DEPOSTO</text>
+</g>
+</svg>
