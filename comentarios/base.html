@@ -413,6 +413,7 @@ function composerFor(n,box){
   composer.dataset.parentNode=String(n.nodeId);
   composer.dataset.parentComment=String(n.commentId||"");
   composer.dataset.parentAuthor=String(n.author?.displayName||"");
+
   const form=document.createElement("form");
   const textarea=document.createElement("textarea");
   textarea.maxLength=2000;
@@ -431,13 +432,19 @@ function composerFor(n,box){
 
   const bottom=document.createElement("div");
   bottom.className="composer-bottom";
-
   const actions=document.createElement("div");
   actions.className="composer-actions";
+
   const cancel=document.createElement("button");
-  cancel.type="button";cancel.className="action";cancel.textContent="Cancelar";
+  cancel.type="button";
+  cancel.className="action";
+  cancel.textContent="Cancelar";
+
   const send=document.createElement("button");
-  send.type="submit";send.className="action send";send.textContent="Enviar";
+  send.type="submit";
+  send.className="action send";
+  send.textContent="Responder no GitHub ↗";
+
   actions.append(cancel,send);
   bottom.appendChild(actions);
   form.appendChild(bottom);
@@ -448,25 +455,38 @@ function composerFor(n,box){
   form.appendChild(msg);
   composer.appendChild(form);
 
-  const open=()=>{composer.classList.add("open");setTimeout(()=>textarea.focus(),0)};
+  const open=()=>{
+    composer.classList.add("open");
+    setTimeout(()=>textarea.focus(),0);
+  };
   composerOpeners.set(String(n.nodeId),open);
-  const close=()=>{composer.classList.remove("open");msg.textContent="";msg.className="message"};
+
+  const close=()=>{
+    composer.classList.remove("open");
+    msg.textContent="";
+    msg.className="message";
+  };
+
   textarea.addEventListener("input",()=>{
     counter.textContent=textarea.value.length+" / 2000";
     try{localStorage.setItem(draftKey(n.nodeId),textarea.value)}catch{}
   });
+
   textarea.addEventListener("keydown",e=>{
     if((e.ctrlKey||e.metaKey)&&e.key==="Enter"){e.preventDefault();form.requestSubmit()}
   });
+
   cancel.addEventListener("click",close);
+
   form.addEventListener("submit",async e=>{
     e.preventDefault();
     const message=textarea.value.trim();
-    if(!message){msg.textContent="Escreva sua mensagem antes de enviar.";msg.className="message err";return}
-    send.disabled=true;
+    if(!message){
+      msg.textContent="Escreva sua mensagem antes de responder.";
+      msg.className="message err";
+      return;
+    }
 
-    // O ID canônico vem da projeção do GitHub. Como proteção contra projeções antigas,
-    // também aceitamos o ID presente no permalink do comentário.
     const rawCommentId=String(n.commentId||"").trim();
     const urlMatch=String(n.commentUrl||"").match(/#issuecomment-(\d+)$/);
     const parentComment=/^\d+$/.test(rawCommentId)?rawCommentId:(urlMatch?.[1]||"");
@@ -476,60 +496,67 @@ function composerFor(n,box){
     if(!/^\d+$/.test(parentComment)){
       msg.textContent="Este comentário não possui um identificador válido do GitHub.";
       msg.className="message err";
-      send.disabled=false;
       return;
     }
-    if(!parentNode||!parentAuthor){
+    if(!/^\d+$/.test(parentNode)||!parentAuthor){
       msg.textContent="Não foi possível determinar a identidade canônica deste comentário.";
       msg.className="message err";
-      send.disabled=false;
-      return;
-    }
-    if(!REPLY_API){
-      msg.textContent="O mecanismo de respostas não está configurado neste domínio. Configure NOCTURNA_REPLY_API para publicar diretamente no GitHub.";
-      msg.className="message err";
-      send.disabled=false;
       return;
     }
 
+    const requestId=crypto.randomUUID
+      ?crypto.randomUUID().replace(/-/g,"")
+      :String(Date.now())+String(Math.random()).slice(2);
+    const sourceId="github-issue1-reply-"+requestId;
+    const marker=[
+      "<!-- nocturna-reply:v1",
+      "parent-node="+parentNode,
+      "parent-comment="+parentComment,
+      "parent-author="+parentAuthor,
+      "source-id="+sourceId,
+      "-->",
+      "",
+      message
+    ].join("\n");
+
+    send.disabled=true;
+    const target=COMMENT_URL_RE.test(String(n.commentUrl||""))
+      ?String(n.commentUrl)
+      :ISSUE_URL;
+
     try{
-      const requestId=crypto.randomUUID?crypto.randomUUID().replace(/-/g,""):String(Date.now())+String(Math.random()).slice(2);
+      await navigator.clipboard.writeText(marker);
       try{
         localStorage.setItem(pendingReplyKey(n.nodeId),JSON.stringify({
-          parentNode,
-          parentComment,
-          parentAuthor,
-          message,
-          requestId
+          parentNode,parentComment,parentAuthor,message,requestId
         }));
       }catch{}
 
-      const response=await fetch(REPLY_API,{
-        method:"POST",
-        headers:{"Content-Type":"application/json"},
-        body:JSON.stringify({parentNode,parentComment,parentAuthor,message,requestId})
-      });
-      let data=null;
-      try{data=await response.json()}catch{}
-      if(!response.ok||!data?.ok){
-        throw new Error(data?.error||`Falha ao publicar resposta (HTTP ${response.status}).`);
-      }
-
-      try{localStorage.removeItem(pendingReplyKey(n.nodeId));localStorage.removeItem(draftKey(n.nodeId))}catch{}
-      textarea.value="";
-      counter.textContent="0 / 2000";
-      msg.textContent=data.message||"Resposta publicada no GitHub. A árvore canônica será atualizada pelo workflow.";
+      msg.textContent="Resposta copiada. O GitHub será aberto; cole o conteúdo no campo de comentário e publique.";
       msg.className="message ok";
+
+      window.open(target,"_blank","noopener,noreferrer");
     }catch(err){
-      msg.textContent=err.message||"Não foi possível publicar a resposta.";
+      msg.textContent="Não foi possível copiar a resposta automaticamente. Copie o texto abaixo e publique no GitHub.";
       msg.className="message err";
+
+      const fallback=document.createElement("textarea");
+      fallback.value=marker;
+      fallback.setAttribute("aria-label","Texto da resposta para o GitHub");
+      fallback.style.marginTop="10px";
+      fallback.style.width="100%";
+      fallback.style.minHeight="180px";
+      composer.appendChild(fallback);
+      fallback.focus();
+      fallback.select();
+      window.open(target,"_blank","noopener,noreferrer");
     }finally{
       send.disabled=false;
     }
   });
+
   return {open,element:composer};
 }
-
 function makeComment(n,map,isRoot=false){
   const wrap=document.createElement("div");
   wrap.className="thread-node";
