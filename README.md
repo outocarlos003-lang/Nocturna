@@ -126,3 +126,21 @@ nó filho ancorado ao comentário-pai
 ```
 
 Nenhum Personal Access Token, installation token ou private key fica no `index.html` ou no código público do GitHub Pages.
+
+
+## Comentários canônicos
+
+A conversa da Nocturna é uma árvore, não uma lista.
+
+- A Issue #5 é a autoridade histórica.
+- A projeção canônica é `data/comments/issue-5.json`.
+- A interface `comentarios/index.html` somente lê essa projeção e reconstrói a árvore.
+- `site-comments-export.json` é preservado como evidência de migração histórica; não é consumidor da interface.
+- Os IDs históricos 1..23 são preservados. O próximo ID canônico é 24.
+- Cada descendente guarda `parentNodeId`, `parentCommentId`, `parentAuthor`, `depth`, `order`, autoria, conteúdo e origem.
+- `scripts/validate-comments.mjs` rejeita duplicidade, pai ausente, auto-pai, profundidade incoerente e lacunas de identidade.
+- `scripts/normalize-comments.mjs` aceita somente o envelope `nocturna-reply:v1` produzido pelo mecanismo de resposta e por comentário de bot; a operação é idempotente pela identidade `source-id`.
+- `.github/workflows/nocturna-comments.yml` normaliza, valida e publica o artefato Pages com a projeção viajando junto do site.
+- Comentários públicos sem o envelope canônico permanecem públicos, mas não entram artificialmente na genealogia.
+
+O conteúdo editorial da resposta continua limpo. Os metadados de parentesco ficam no envelope técnico oculto do comentário publicado e são usados somente para reconstrução e validação.
