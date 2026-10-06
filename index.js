@@ -221,7 +221,7 @@ export default {
         parentLink = `https://github.com/${REPO}/issues/${ISSUE}#issuecomment-${input.parentComment}`;
       }
 
-      const sourceId = `github-issue5-reply-${input.requestId}`;
+      const sourceId = `github-issue1-reply-${input.requestId}`;
       const allComments = await ghGet(`/repos/${REPO}/issues/${ISSUE}/comments?per_page=100`, token);
       const existing = allComments.find(comment => String(comment.body || "").includes(`source-id=${sourceId}`));
       if (existing) {
