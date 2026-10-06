@@ -199,25 +199,25 @@ export default {
           throw new Error("A raiz do nó 2 é inválida.");
         }
       } else {
-        if (input.parentComment === "issue-root") throw new Error("Somente o nó 2 pode apontar para a raiz.");
+        if (!/^[0-9]+$/.test(input.parentNode)) throw new Error("Somente nós canônicos podem receber respostas canônicas.");
+        if (input.parentComment === "issue-root") throw new Error("Somente o nó raiz pode apontar para a Issue.");
         const parent = await ghGet(`/repos/${REPO}/issues/comments/${input.parentComment}`, token);
         const parentBody = String(parent.body || "");
-        const parentLogin = String(parent.user?.login || "");
-
-        if (/^[0-9]+$/.test(input.parentNode)) {
-          if (!parentBody.includes(`nocturna-node:${input.parentNode} `)) throw new Error("Comentário pai não corresponde ao nó informado.");
-          if (!parentBody.includes(`**${input.parentAuthor}**`)) throw new Error("Comentário pai não corresponde ao personagem informado.");
-        } else if (input.parentNode.startsWith("external-")) {
-          if (parentLogin !== input.parentAuthor) throw new Error("Autor externo do comentário pai não corresponde.");
-        }
+        if (!parentBody.includes(`nocturna-node: ${input.parentNode}`)) throw new Error("Comentário pai não carrega a identidade canônica esperada.");
+        if (!parentBody.includes(`nocturna-reply-author: ${input.parentAuthor}`)) throw new Error("Comentário pai não corresponde ao autor canônico.");
         parentLink = `https://github.com/${REPO}/issues/${ISSUE}#issuecomment-${input.parentComment}`;
       }
 
+      const sourceId = `github-issue5-comment-${Date.now()}-${crypto.randomUUID()}`;
       const body = [
-        `<!-- nocturna-parent-node: ${input.parentNode} -->`,
-        `<!-- nocturna-parent-comment: ${input.parentComment} -->`,
-        `<!-- nocturna-parent-author: ${input.parentAuthor} -->`,
-        `<!-- nocturna-reply-author: ${input.responder} -->`,
+        `<!-- nocturna-reply:v1`,
+        `parent-node=${input.parentNode}`,
+        `parent-comment=${input.parentComment}`,
+        `parent-author=${input.parentAuthor}`,
+        `reply-author=${input.responder}`,
+        `source-id=${sourceId}`,
+        "-->",
+        `<!-- nocturna-node-pending: ${sourceId} -->`,
         "",
         input.message.trim()
       ].join("\n");
