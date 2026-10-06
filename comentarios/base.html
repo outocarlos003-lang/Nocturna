@@ -373,6 +373,8 @@ textarea::placeholder{color:#66676d}
 <script>
 (()=>{"use strict";
 const REPO="outocarlos003-lang/Nocturna",ISSUE=1;
+const ISSUE_URL=`https://github.com/${REPO}/issues/${ISSUE}`;
+const COMMENT_URL_RE=/^https:\/\/github\.com\/outocarlos003-lang\/Nocturna\/issues\/1#issuecomment-\d+$/;
 const tree=document.querySelector("#tree");
 const key=(type,id)=>"nocturna-"+type+"-"+id;
 const draftKey=id=>key("draft",id);
@@ -479,9 +481,16 @@ function composerFor(n,box){
       })});
       const result=await response.json().catch(()=>({}));
       if(!response.ok)throw new Error(result.error||"Não foi possível enviar.");
-      const parentUrl=String(result.parent_url||n.commentUrl||"https://github.com/"+REPO+"/issues/"+ISSUE);
+      const candidateParentUrl=String(result.parent_url||n.commentUrl||"");
+      const parentUrl=COMMENT_URL_RE.test(candidateParentUrl)
+        ? candidateParentUrl
+        : `${ISSUE_URL}#issuecomment-${encodeURIComponent(String(result.parent_comment_id||""))}`;
+      if(!COMMENT_URL_RE.test(parentUrl)) throw new Error("O GitHub não retornou o permalink do comentário respondido.");
       try{localStorage.removeItem(draftKey(n.nodeId))}catch{}
-      window.location.assign(parentUrl);
+      // O fragment #issuecomment-ID é o permalink nativo do GitHub e faz o
+      // GitHub posicionar/destacar exatamente o comentário respondido.
+      window.location.href=parentUrl;
+
       return;
     }catch(err){msg.textContent=err.message||"Não foi possível enviar.";msg.className="message err"}
     finally{send.disabled=false}
