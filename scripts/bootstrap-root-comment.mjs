@@ -3,7 +3,7 @@ import fs from "node:fs";
 
 const OWNER="outocarlos003-lang";
 const REPO="Nocturna";
-const ISSUE=5;
+const ISSUE=1;
 const PATH="data/comments/issue-5.json";
 const token=process.env.GITHUB_TOKEN;
 if(!token) throw new Error("GITHUB_TOKEN obrigatorio");
