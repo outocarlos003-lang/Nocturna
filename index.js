@@ -1,6 +1,6 @@
 const GITHUB_API = "https://api.github.com";
 const REPO = "outocarlos003-lang/Nocturna";
-const ISSUE = 5;
+const ISSUE = 1;
 const ALLOWED_ORIGIN = "https://outocarlos003-lang.github.io";
 const ALLOWED_AUTHORS = new Set([
   "Akashi Seijuro",
