@@ -544,13 +544,6 @@ function makeComment(n,map,isRoot=false){
     toolbar.appendChild(btn);
   });
 
-  const more=document.createElement("button");
-  more.type="button";more.className="tool";more.textContent="•••";more.setAttribute("aria-label","Mais opções");
-  more.addEventListener("click",()=>{
-    const target=n.commentUrl||"https://github.com/"+REPO+"/issues/"+ISSUE;
-    window.open(target,"_blank","noopener,noreferrer");
-  });
-  toolbar.appendChild(more);
   article.appendChild(toolbar);
   composerRef.element.id="reply-composer-"+n.nodeId;
   composerRef.element.setAttribute("aria-label","Responder ao comentário");
