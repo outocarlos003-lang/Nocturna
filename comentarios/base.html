@@ -374,6 +374,7 @@ textarea::placeholder{color:#66676d}
 (()=>{"use strict";
 const REPO="outocarlos003-lang/Nocturna",ISSUE=1;
 const ISSUE_URL=`https://github.com/${REPO}/issues/${ISSUE}`;
+const REPLY_API=String(window.NOCTURNA_REPLY_API||"").trim().replace(/\/+$/,"");
 const COMMENT_URL_RE=/^https:\/\/github\.com\/outocarlos003-lang\/Nocturna\/issues\/1#issuecomment-\d+$/;
 const tree=document.querySelector("#tree");
 const key=(type,id)=>"nocturna-"+type+"-"+id;
@@ -463,30 +464,68 @@ function composerFor(n,box){
     const message=textarea.value.trim();
     if(!message){msg.textContent="Escreva sua mensagem antes de enviar.";msg.className="message err";return}
     send.disabled=true;
-    const parentComment=String(n.commentId||"").trim();
-    if(!/^\\d+$/.test(parentComment)){
-      msg.textContent="Este comentário ainda não possui um identificador do GitHub.";
+
+    // O ID canônico vem da projeção do GitHub. Como proteção contra projeções antigas,
+    // também aceitamos o ID presente no permalink do comentário.
+    const rawCommentId=String(n.commentId||"").trim();
+    const urlMatch=String(n.commentUrl||"").match(/#issuecomment-(\d+)$/);
+    const parentComment=/^\d+$/.test(rawCommentId)?rawCommentId:(urlMatch?.[1]||"");
+    const parentNode=String(n.nodeId||"").trim();
+    const parentAuthor=String(n.author?.displayName||"").trim();
+
+    if(!/^\d+$/.test(parentComment)){
+      msg.textContent="Este comentário não possui um identificador válido do GitHub.";
       msg.className="message err";
       send.disabled=false;
       return;
     }
+    if(!parentNode||!parentAuthor){
+      msg.textContent="Não foi possível determinar a identidade canônica deste comentário.";
+      msg.className="message err";
+      send.disabled=false;
+      return;
+    }
+    if(!REPLY_API){
+      msg.textContent="O mecanismo de respostas não está configurado neste domínio. Configure NOCTURNA_REPLY_API para publicar diretamente no GitHub.";
+      msg.className="message err";
+      send.disabled=false;
+      return;
+    }
+
     try{
-      const requestId=crypto.randomUUID?crypto.randomUUID().replace(/-/g,""):String(Date.now());
+      const requestId=crypto.randomUUID?crypto.randomUUID().replace(/-/g,""):String(Date.now())+String(Math.random()).slice(2);
       try{
         localStorage.setItem(pendingReplyKey(n.nodeId),JSON.stringify({
-          parentNode:String(n.nodeId),
+          parentNode,
           parentComment,
+          parentAuthor,
           message,
           requestId
         }));
       }catch{}
-      // Sem backend: o próprio GitHub recebe a resposta. O fragmento aponta
-      // para o comentário exato e reply_to abre o contexto de resposta.
-      const githubReplyUrl=ISSUE_URL+"?reply_to="+encodeURIComponent(parentComment)+"#issuecomment-"+encodeURIComponent(parentComment);
-      window.location.href=githubReplyUrl;
-      return;
-    }catch(err){msg.textContent=err.message||"Não foi possível abrir o GitHub.";msg.className="message err"}
-    finally{send.disabled=false}
+
+      const response=await fetch(REPLY_API,{
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({parentNode,parentComment,parentAuthor,message,requestId})
+      });
+      let data=null;
+      try{data=await response.json()}catch{}
+      if(!response.ok||!data?.ok){
+        throw new Error(data?.error||`Falha ao publicar resposta (HTTP ${response.status}).`);
+      }
+
+      try{localStorage.removeItem(pendingReplyKey(n.nodeId));localStorage.removeItem(draftKey(n.nodeId))}catch{}
+      textarea.value="";
+      counter.textContent="0 / 2000";
+      msg.textContent=data.message||"Resposta publicada no GitHub. A árvore canônica será atualizada pelo workflow.";
+      msg.className="message ok";
+    }catch(err){
+      msg.textContent=err.message||"Não foi possível publicar a resposta.";
+      msg.className="message err";
+    }finally{
+      send.disabled=false;
+    }
   });
   return {open,element:composer};
 }
