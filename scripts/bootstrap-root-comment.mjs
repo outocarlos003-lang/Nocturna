@@ -21,6 +21,18 @@ const api=async(url,options={})=>{
   return body;
 };
 
+const defaultRootBody=[
+"<!-- nocturna-root:v1 -->",
+"",
+"# Nocturna — raiz da conversa",
+"",
+"Este comentário é o **nó raiz real** da árvore canônica.",
+"",
+"Todas as respostas canônicas — de personagens ou de participantes humanos que optarem pelo fluxo canônico — devem apontar para este comentário ou para um descendente verificável.",
+"",
+"A relação pai → filho será preservada pelo sistema, junto com autor, identidade, profundidade, ordem e permalink."
+].join("\n");
+
 const issue=await api("/repos/"+OWNER+"/"+REPO+"/issues/"+ISSUE);
 const comments=await api("/repos/"+OWNER+"/"+REPO+"/issues/"+ISSUE+"/comments?per_page=100");
 let root=comments.find(c=>String(c.body||"").includes("<!-- nocturna-root:v1 -->"));
@@ -29,7 +41,7 @@ if(!root){
   root=await api("/repos/"+OWNER+"/"+REPO+"/issues/"+ISSUE+"/comments",{
     method:"POST",
     headers:{"Content-Type":"application/json"},
-    body:JSON.stringify({body:rootBody})
+    body:JSON.stringify({body:defaultRootBody})
   });
   console.log("comentario raiz criado:",root.id);
 }else{
