@@ -13,7 +13,7 @@ permissions:
 
 jobs:
   normalize:
-    if: ${{ github.event_name == 'workflow_dispatch' || (github.event.issue.number == 5 && !github.event.issue.pull_request && contains(github.event.comment.body, '<!-- nocturna-reply:v1')) }}
+    if: ${{ github.event_name == 'workflow_dispatch' || (github.event.issue.number == 5 && !github.event.issue.pull_request && github.event.comment.user.type == 'Bot' && contains(github.event.comment.body, '<!-- nocturna-reply:v1')) }}
     runs-on: ubuntu-latest
     environment:
       name: github-pages
