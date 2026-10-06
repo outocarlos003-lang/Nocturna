@@ -8,7 +8,7 @@ on:
     types: [created, edited, deleted]
 
 concurrency:
-  group: nocturna-canonical-comments-${{ github.ref }}
+  group: nocturna-canonical-comments-issue-1
   cancel-in-progress: false
 
 permissions:
@@ -29,6 +29,9 @@ jobs:
         with:
           ref: main
 
+      - name: Test genealogical invariants
+        run: node scripts/test-genealogy.mjs
+
       - name: Materialize root comment when Issue #1 exists
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -39,21 +42,26 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: node scripts/dedupe-genealogy-comments.mjs
 
+      - name: Validate projection before normalization
+        run: node scripts/validate-comments.mjs
+
+      - name: Normalize canonical replies and genealogy
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: node scripts/normalize-comments.mjs
+
+      - name: Validate normalized projection
+        run: node scripts/validate-comments.mjs
+
       - name: Publish site genealogy to Issue #1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: node scripts/publish-genealogy-to-github.mjs
 
-      - name: Validate before normalization
-        run: node scripts/validate-comments.mjs
-
-      - name: Normalize canonical replies
+      - name: Verify live GitHub genealogy
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: node scripts/normalize-comments.mjs
-
-      - name: Validate after normalization
-        run: node scripts/validate-comments.mjs
+        run: node scripts/verify-github-genealogy.mjs
 
       - name: Persist projection
         run: |

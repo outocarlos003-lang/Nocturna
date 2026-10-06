@@ -22,9 +22,15 @@ const api=async(url,options={})=>{
 };
 
 await api("/repos/"+OWNER+"/"+REPO+"/issues/"+ISSUE);
-const comments=await api("/repos/"+OWNER+"/"+REPO+"/issues/"+ISSUE+"/comments?per_page=100");
-const root=comments.find(c=>String(c.body||"").includes("<!-- nocturna-root:v1 -->"));
-if(!root) throw new Error("comentario raiz Johan Liebert nao encontrado; nenhuma nova origem sera criada");
+const comments=[];
+for(let page=1;;page++){
+  const batch=await api("/repos/"+OWNER+"/"+REPO+"/issues/"+ISSUE+"/comments?per_page=100&page="+page);
+  comments.push(...batch);
+  if(batch.length<100) break;
+}
+const roots=comments.filter(c=>String(c.body||"").includes("<!-- nocturna-root:v1 -->"));
+if(roots.length!==1) throw new Error("deve existir exatamente um comentario raiz Johan Liebert");
+const root=roots[0];
 
 const data=JSON.parse(fs.readFileSync(PATH,"utf8"));
 const rootNode=data.nodes.find(n=>String(n.nodeId)===String(data.issue?.rootNodeId||"2"));
