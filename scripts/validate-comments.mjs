@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import fs from "node:fs";
 
-const path=process.argv[2]||"data/comments/issue-5.json";
+const path=process.argv[2]||"data/comments/issue-1.json";
 const data=JSON.parse(fs.readFileSync(path,"utf8"));
 const errors=[];
 const fail=(message)=>errors.push(message);
