@@ -466,11 +466,11 @@ function composerFor(n,box){
         "<!-- nocturna-reply:v1",
         "parent-node="+String(n.nodeId),
         "parent-comment="+String(n.commentId||""),
-        "parent-author="+String(n.author?.displayName||"").replace(/\\n/g," "),
+        "parent-author="+String(n.author?.displayName||"").replace(/\n/g," "),
         "source-id="+sourceId,
         "-->"
-      ].join("\\n");
-      const payload=marker+"\\n\\n"+message;
+      ].join("\n");
+      const payload=marker+"\n\n"+message;
       let copied=false;
       try{await navigator.clipboard.writeText(payload);copied=true}catch{}
       msg.textContent=copied
