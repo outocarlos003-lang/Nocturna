@@ -13,7 +13,7 @@ permissions:
 
 jobs:
   normalize:
-    if: ${{ github.event_name == 'workflow_dispatch' || (github.event.issue.number == 5 && !github.event.issue.pull_request && contains(github.event.comment.body, '<!-- nocturna-reply:v1')) }}
+    if: ${{ github.event_name == 'workflow_dispatch' || (github.event.issue.number == 1 && !github.event.issue.pull_request && contains(github.event.comment.body, '<!-- nocturna-reply:v1')) }}
     runs-on: ubuntu-latest
     environment:
       name: github-pages
@@ -23,7 +23,7 @@ jobs:
         with:
           ref: main
 
-      - name: Materialize root comment when Issue #5 exists
+      - name: Materialize root comment when Issue #1 exists
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: node scripts/bootstrap-root-comment.mjs
@@ -48,7 +48,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data/comments/issue-5.json
-          git commit -m "comments: normalize Issue #5 reply"
+          git commit -m "comments: normalize Issue #1 reply"
           git push origin HEAD:main
 
       - name: Configure Pages
