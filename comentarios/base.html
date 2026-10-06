@@ -7,27 +7,29 @@
 <style>
 :root{color-scheme:light;--ink:#211c18;--muted:#756b63;--paper:#f7f3ed;--card:#fffdf9;--line:#d9d0c5;--accent:#6b3f35}
 *{box-sizing:border-box}
-body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.65 Georgia,serif}
+html{overflow-x:hidden}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.65 Georgia,serif;overflow-x:hidden}
 main{width:min(980px,calc(100% - 32px));margin:0 auto;padding:48px 0 72px}
 header{margin-bottom:32px;border-bottom:1px solid var(--line);padding-bottom:24px}
 h1{margin:0 0 8px;font-size:clamp(2rem,5vw,3.2rem);font-weight:500}
 .lead{margin:0;color:var(--muted)}
-#tree{display:grid;gap:14px}
-.node{position:relative;margin-left:calc(var(--depth)*28px);padding:18px 20px;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 2px 10px #0000000a}
+#tree{display:grid;gap:14px;min-width:0}
+.node{position:relative;min-width:0;width:100%;margin-inline-start:min(calc(var(--depth)*28px),180px);padding:18px 20px;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 2px 10px #0000000a;overflow:hidden}
 .node:before{content:"";position:absolute;left:-15px;top:0;bottom:0;border-left:1px solid var(--line)}
 .node[data-depth="0"]:before{display:none}
 .meta{display:flex;gap:10px;flex-wrap:wrap;align-items:baseline;color:var(--muted);font-size:.88rem}
 .author{font-weight:700;color:var(--ink)}
 .depth{font-variant-numeric:tabular-nums}
-.content{margin:10px 0 12px;white-space:pre-wrap}
-.actions{display:flex;gap:10px;flex-wrap:wrap}
-button,.native{border:1px solid var(--line);background:transparent;color:var(--accent);padding:6px 10px;border-radius:7px;text-decoration:none;cursor:pointer;font:inherit;font-size:.9rem}
+.content{margin:10px 0 12px;white-space:pre-wrap;overflow-wrap:anywhere;word-break:break-word;min-width:0}
+.actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center;min-width:0}
+button,.native{border:1px solid var(--line);background:transparent;color:var(--accent);padding:7px 10px;border-radius:7px;text-decoration:none;cursor:pointer;font:inherit;font-size:.9rem;line-height:1.35;max-width:100%;overflow-wrap:anywhere}
+button[disabled]{opacity:.55;cursor:not-allowed}
 .reply-box{display:none;margin-top:14px;padding-top:14px;border-top:1px solid var(--line)}
 .reply-box.open{display:block}
-textarea{width:100%;min-height:100px;padding:10px;border:1px solid var(--line);border-radius:7px;background:#fff;color:var(--ink);font:inherit}
+textarea{display:block;width:100%;min-height:100px;max-width:100%;padding:10px;border:1px solid var(--line);border-radius:7px;background:#fff;color:var(--ink);font:inherit;resize:vertical;overflow-wrap:anywhere}
 .status{color:var(--muted);font-size:.9rem;margin-top:8px}
 .external{margin-top:42px;padding-top:24px;border-top:1px solid var(--line)}
-@media(max-width:620px){.node{margin-left:calc(var(--depth)*14px);padding:15px}.node:before{left:-8px}}
+@media(max-width:620px){main{width:min(100% - 20px,980px)}.node{margin-inline-start:min(calc(var(--depth)*10px),72px);padding:15px}.node:before{left:-1px}.actions{display:grid;grid-template-columns:1fr}.actions>*{width:100%;text-align:center}.reply-controls{align-items:stretch}.reply-controls label{width:100%}}
 </style>
 </head>
 <body>
@@ -65,14 +67,24 @@ const load=async()=>{
    const article=document.createElement("article");
    article.className="node";article.dataset.depth=n.depth;article.style.setProperty("--depth",n.depth);
    article.id="node-"+n.nodeId;
-   article.innerHTML='<div class="meta"><span class="author"></span><span class="depth"></span></div><div class="content"></div><div class="actions"><a class="native" target="_blank" rel="noopener">Permalink</a><button type="button" class="prepare">Preparar resposta do personagem</button><a class="native human-reply" target="_blank" rel="noopener">Responder como pessoa</a></div><div class="reply-box"><textarea aria-label="Resposta"></textarea><label>Autor <select class="responder"><option>Akashi Seijuro</option><option>Johan Liebert</option><option>Ayanokoji Kiyotaka</option><option>Osamu Dazai</option><option>Light Yagami</option><option>L Lawliet</option><option>Sasuke Uchiha</option><option>Ranpo Edogawa</option><option>Itachi Uchiha</option><option>Satoru Gojo</option></select></label><button type="button" class="send">Publicar resposta</button><div class="status reply-status"></div></div>';
+   article.innerHTML='<div class="meta"><span class="author"></span><span class="depth"></span></div><div class="content"></div><div class="actions"><a class="native" target="_blank" rel="noopener">Permalink</a><button type="button" class="prepare">Preparar resposta do personagem</button><a class="native human-reply" target="_blank" rel="noopener">Responder como pessoa</a></div><div class="reply-box"><textarea aria-label="Resposta"></textarea><label>Autor <select class="responder"><option>Akashi Seijuro</option><option>Johan Liebert</option><option>Ayanokoji Kiyotaka</option><option>Osamu Dazai</option><option>Light Yagami</option><option>L Lawliet</option><option>Sasuke Uchiha</option><option>Ranpo Edogawa</option><option>Itachi Uchiha</option><option>Satoru Gojo</option></select></label><button type="button" class="send">Publicar resposta canônica</button><div class="status reply-status"></div></div>';
    article.querySelector(".author").textContent=n.author.displayName;
    article.querySelector(".depth").textContent="nó "+n.nodeId+" · profundidade "+n.depth;
    article.querySelector(".content").textContent=n.content;
    article.querySelector(".native").href=n.origin?.migrated ? "#node-"+n.nodeId : n.commentUrl;
    article.querySelector(".human-reply").href=n.origin?.migrated ? "https://github.com/"+REPO+"/issues/"+ISSUE : n.commentUrl;
    const box=article.querySelector(".reply-box"),prepare=article.querySelector(".prepare"),send=article.querySelector(".send");
-   prepare.addEventListener("click",()=>{box.classList.toggle("open");if(box.classList.contains("open"))box.querySelector("textarea").focus()});
+   prepare.addEventListener("click",()=>{
+    const open=!box.classList.contains("open");
+    box.classList.toggle("open",open);
+    prepare.setAttribute("aria-expanded",String(open));
+    box.setAttribute("aria-hidden",String(!open));
+    if(open)box.querySelector("textarea").focus();
+   });
+   if(!window.NOCTURNA_REPLY_API){
+    send.disabled=true;
+    box.querySelector(".reply-status").textContent="Publicação canônica está temporariamente desativada; use “Responder como pessoa” para publicar diretamente no GitHub.";
+   }
    send.addEventListener("click",async()=>{
     const message=box.querySelector("textarea").value.trim(),out=box.querySelector(".reply-status");
     if(!message){out.textContent="Escreva a resposta.";return}
@@ -100,7 +112,7 @@ const s=document.createElement("script");s.src="./reply-api-config.js";s.onload=
 if(new URLSearchParams(location.search).get("embed")!=="1")return;
 const send=()=>{if(window.parent!==window)window.parent.postMessage({type:"nocturna-comments-height",height:document.documentElement.scrollHeight},location.origin)};
 addEventListener("load",()=>{send();setTimeout(send,100);setTimeout(send,500)});
-new ResizeObserver(send).observe(document.documentElement);
+if("ResizeObserver" in window)new ResizeObserver(send).observe(document.documentElement);
 })();
 </script>
 </body>
