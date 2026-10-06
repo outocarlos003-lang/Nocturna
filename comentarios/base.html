@@ -146,6 +146,18 @@ main{width:min(960px,calc(100% - 32px));margin:0 auto;padding:30px 0 72px}
   border-top:2px solid #2c3137;
 }
 .comment.reply:last-child:before{bottom:calc(100% - 58px)}
+.comment.reply.reply-target,
+.comment.reply.reply-target:before{
+  border-color:#b36a85;
+}
+.comment.reply-target{
+  background:linear-gradient(90deg,#3b263022,transparent);
+  box-shadow:inset 4px 0 0 #b36a85,0 0 0 2px #8f526833;
+  border-radius:10px;
+  scroll-margin-top:24px;
+}
+.comment.reply-target .content{color:#fff}
+.comment.reply-target .composer.open{border-color:#b36a85;box-shadow:0 0 0 2px #8f526825}
 .comment-head{
   display:grid;
   grid-template-columns:50px minmax(0,1fr) auto;
@@ -376,6 +388,8 @@ const REPO="outocarlos003-lang/Nocturna",ISSUE=1;
 const tree=document.querySelector("#tree");
 const key=(type,id)=>"nocturna-"+type+"-"+id;
 const draftKey=id=>key("draft",id);
+const pendingReplyKey=id=>key("pending-reply",id);
+const composerOpeners=new Map();
 
 function initials(name){
   return (name||"?").trim().split(/\s+/).slice(0,2).map(x=>x[0]).join("").toUpperCase();
@@ -412,7 +426,7 @@ function composerFor(n,box){
   const textarea=document.createElement("textarea");
   textarea.maxLength=2000;
   textarea.placeholder="Escreva sua mensagem...";
-  textarea.setAttribute("aria-label","Resposta para "+(n.author?.displayName||"este comentário"));
+  textarea.setAttribute("aria-label","Mensagem");
   try{textarea.value=localStorage.getItem(draftKey(n.nodeId))||""}catch{}
   form.appendChild(textarea);
 
@@ -445,6 +459,7 @@ function composerFor(n,box){
   box.appendChild(composer);
 
   const open=()=>{composer.classList.add("open");setTimeout(()=>textarea.focus(),0)};
+  composerOpeners.set(String(n.nodeId),open);
   const close=()=>{composer.classList.remove("open");msg.textContent="";msg.className="message"};
   textarea.addEventListener("input",()=>{
     counter.textContent=textarea.value.length+" / 2000";
@@ -478,9 +493,17 @@ function composerFor(n,box){
         :"Não foi possível copiar automaticamente. Use o texto da caixa e publique na conversa pública.";
       msg.className="message ok";
       const parentUrl=String(n.commentUrl||"");
-      const destination=/github\.com\/outocarlos003-lang\/Nocturna\/issues\/1#issuecomment-\d+/.test(parentUrl)
-        ?parentUrl
-        :"https://github.com/"+REPO+"/issues/"+ISSUE;
+      try{
+        localStorage.setItem(pendingReplyKey(sourceId),JSON.stringify({
+          sourceId,
+          parentNode:String(n.nodeId),
+          parentComment:String(n.commentId||""),
+          parentAuthor:n.author?.displayName||"",
+          message,
+          createdAt:new Date().toISOString()
+        }));
+      }catch{}
+      const destination="./base.html?embed=1&replyTo="+encodeURIComponent(String(n.nodeId))+"&replySource="+encodeURIComponent(sourceId);
       window.open(destination,"_blank","noopener,noreferrer");
       send.disabled=false;
       return;
@@ -594,6 +617,33 @@ async function load(){
     const roots=map.get("root")||[];
     roots.sort((a,b)=>(a.order??0)-(b.order??0));
     roots.forEach(n=>tree.appendChild(makeComment(n,map,true)));
+
+    const params=new URLSearchParams(location.search);
+    const replyTo=params.get("replyTo");
+    const replySource=params.get("replySource");
+    if(replyTo){
+      const target=document.getElementById("node-"+replyTo);
+      if(target){
+        target.classList.add("reply-target");
+        setTimeout(()=>target.scrollIntoView({behavior:"smooth",block:"center"}),60);
+        const pendingKey=replySource?pendingReplyKey(replySource):"";
+        let pending=null;
+        try{
+          if(pendingKey)pending=JSON.parse(localStorage.getItem(pendingKey)||"null");
+        }catch{}
+        if(pending && String(pending.parentNode)===String(replyTo)){
+          const composer=target.querySelector(".composer");
+          const textarea=composer?.querySelector("textarea");
+          if(textarea){
+            textarea.value=String(pending.message||"");
+            textarea.dispatchEvent(new Event("input",{bubbles:true}));
+            const open=composerOpeners.get(String(replyTo));
+            if(open)open();
+            try{localStorage.removeItem(pendingKey)}catch{}
+          }
+        }
+      }
+    }
   }catch{
     tree.textContent="Não foi possível carregar os comentários.";
   }
