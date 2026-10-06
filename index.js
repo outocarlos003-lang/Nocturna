@@ -213,12 +213,12 @@ export default {
         if (!parentNode) throw new Error("Nó pai não existe na projeção canônica.");
         if (String(parentNode.commentId) !== input.parentComment) throw new Error("Comentário pai não corresponde ao nó canônico.");
         if (parentNode.author?.displayName !== input.parentAuthor) throw new Error("Autor pai não corresponde ao nó canônico.");
-        const parent = await ghGet(`/repos/${REPO}/issues/comments/${input.parentComment}`, token);
-        if (String(parent.id) !== input.parentComment) throw new Error("Comentário pai não existe.");
-        if (String(parent.user?.login || "") && String(parent.html_url || "") !== String(parentNode.commentUrl || "")) {
-          throw new Error("Origem do comentário pai diverge da projeção canônica.");
-        }
-        parentLink = `https://github.com/${REPO}/issues/${ISSUE}#issuecomment-${input.parentComment}`;
+        // Histórico migrado pode apontar para uma Issue antiga indisponível.
+        // A projeção canônica é a fonte de verdade para o vínculo pai; a nova resposta
+        // sempre é publicada na Issue #1 e recebe sua identidade canônica no workflow.
+        parentLink = parentNode.commentUrl && !String(parentNode.origin?.migrated || false)
+          ? String(parentNode.commentUrl)
+          : `https://github.com/${REPO}/issues/${ISSUE}#node-${parentNode.nodeId}`;
       }
 
       const sourceId = `github-issue1-reply-${input.requestId}`;
