@@ -254,8 +254,6 @@ main{width:min(960px,calc(100% - 32px));margin:0 auto;padding:30px 0 72px}
   background:var(--card-2);
 }
 .composer.open{display:block}
-.composer-title{margin:0 0 10px;color:#ded9d4;font-size:1rem;font-weight:700}
-.composer-title span{color:var(--muted);font-weight:400}
 textarea{
   width:100%;
   min-height:145px;
@@ -271,15 +269,6 @@ textarea:focus{border-color:#8b6b77;box-shadow:0 0 0 2px #8b6b7725}
 textarea::placeholder{color:#66676d}
 .composer-meta{display:flex;justify-content:space-between;gap:10px;margin-top:8px;color:var(--soft);font-size:.88rem}
 .composer-bottom{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-top:12px}
-select{
-  min-height:40px;
-  max-width:100%;
-  border:1px solid #343940;
-  border-radius:7px;
-  background:#15171a;
-  color:var(--ink);
-  padding:7px 9px;
-}
 .composer-actions{display:flex;gap:8px}
 .action{
   min-height:42px;
@@ -336,7 +325,7 @@ select{
   .toolbar .tool.primary{order:0}
   .composer{border-radius:10px;margin-top:14px;padding:13px}
   .composer-bottom{display:grid;grid-template-columns:1fr}
-  select,.composer-actions,.composer-actions .action{width:100%}
+  .composer-actions,.composer-actions .action{width:100%}
   .composer-actions{display:grid;grid-template-columns:1fr 1fr}
 }
 @media(max-width:390px){
@@ -385,7 +374,6 @@ select{
 (()=>{"use strict";
 const REPO="outocarlos003-lang/Nocturna",ISSUE=1;
 const tree=document.querySelector("#tree");
-const characters=["Akashi Seijuro","Johan Liebert","Ayanokoji Kiyotaka","Osamu Dazai","Light Yagami","L Lawliet","Sasuke Uchiha","Ranpo Edogawa","Itachi Uchiha","Satoru Gojo"];
 const key=(type,id)=>"nocturna-"+type+"-"+id;
 const draftKey=id=>key("draft",id);
 
@@ -417,14 +405,6 @@ function count(id,type){
 function composerFor(n,box){
   const composer=document.createElement("div");
   composer.className="composer";
-  const title=document.createElement("p");
-  title.className="composer-title";
-  title.textContent="Sua resposta";
-  const span=document.createElement("span");
-  span.textContent=" · para "+(n.author?.displayName||"este comentário");
-  title.appendChild(span);
-  composer.appendChild(title);
-
   const form=document.createElement("form");
   const textarea=document.createElement("textarea");
   textarea.maxLength=2000;
@@ -443,10 +423,6 @@ function composerFor(n,box){
 
   const bottom=document.createElement("div");
   bottom.className="composer-bottom";
-  const select=document.createElement("select");
-  select.setAttribute("aria-label","Responder como");
-  characters.forEach(c=>{const o=document.createElement("option");o.value=c;o.textContent="Responder como "+c;select.appendChild(o)});
-  bottom.appendChild(select);
 
   const actions=document.createElement("div");
   actions.className="composer-actions";
@@ -493,7 +469,7 @@ function composerFor(n,box){
       const requestId=crypto.randomUUID?crypto.randomUUID().replace(/-/g,""):String(Date.now());
       const response=await fetch(api,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({
         message,parentNode:String(n.nodeId),parentComment:String(n.commentId),
-        parentAuthor:n.author?.displayName||"",responder:select.value,requestId
+        parentAuthor:n.author?.displayName||"",requestId
       })});
       const result=await response.json().catch(()=>({}));
       if(!response.ok)throw new Error(result.error||"Não foi possível enviar.");
