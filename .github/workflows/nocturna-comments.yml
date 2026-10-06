@@ -41,13 +41,13 @@ jobs:
 
       - name: Persist projection
         run: |
-          if git diff --quiet -- data/comments/issue-5.json; then
+          if git diff --quiet -- data/comments/issue-1.json; then
             echo "projection unchanged"
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/comments/issue-5.json
+          git add data/comments/issue-1.json
           git commit -m "comments: normalize Issue #1 reply"
           git push origin HEAD:main
 
