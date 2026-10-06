@@ -13,7 +13,7 @@ permissions:
 
 jobs:
   normalize:
-    if: \${{ github.event_name == 'workflow_dispatch' || (github.event.issue.number == 5 && !github.event.issue.pull_request && contains(github.event.comment.body, '<!-- nocturna-reply:v1')) }}
+    if: ${{ github.event_name == 'workflow_dispatch' || (github.event.issue.number == 5 && !github.event.issue.pull_request && contains(github.event.comment.body, '<!-- nocturna-reply:v1')) }}
     runs-on: ubuntu-latest
     environment:
       name: github-pages
@@ -25,7 +25,7 @@ jobs:
 
       - name: Materialize root comment when Issue #5 exists
         env:
-          GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: node scripts/bootstrap-root-comment.mjs
 
       - name: Validate before normalization
