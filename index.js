@@ -195,15 +195,20 @@ export default {
       const token = await installationToken(env);
       let parentLink = `https://github.com/${REPO}/issues/${ISSUE}`;
 
+      const canonicalFile = await ghGet(`/repos/${REPO}/contents/data/comments/issue-5.json`, token);
+      const canonical = JSON.parse(atob(String(canonicalFile.content || "").replace(/\\s+/g, "")));
+      const rootNode = (canonical.nodes || []).find(node => String(node.nodeId) === "2");
+      if (!rootNode) throw new Error("Nó raiz 2 não existe na projeção canônica.");
+
       if (input.parentNode === "2") {
-        if (input.parentComment !== "issue-root" || input.parentAuthor !== "Johan Liebert") {
-          throw new Error("A raiz do nó 2 é inválida.");
+        if (input.parentComment !== String(rootNode.commentId) || input.parentAuthor !== rootNode.author?.displayName) {
+          throw new Error("A raiz do nó 2 não corresponde à projeção canônica.");
         }
+        parentLink = String(rootNode.commentUrl || `https://github.com/${REPO}/issues/${ISSUE}`);
       } else {
         if (!/^[0-9]+$/.test(input.parentNode)) throw new Error("Somente nós canônicos podem receber respostas canônicas.");
         if (input.parentComment === "issue-root") throw new Error("Somente o nó raiz pode apontar para a Issue.");
-        const canonicalFile = await ghGet(`/repos/${REPO}/contents/data/comments/issue-5.json`, token);
-        const canonical = JSON.parse(atob(String(canonicalFile.content || "").replace(/\\s+/g, "")));
+
         const parentNode = (canonical.nodes || []).find(node => String(node.nodeId) === input.parentNode);
         if (!parentNode) throw new Error("Nó pai não existe na projeção canônica.");
         if (String(parentNode.commentId) !== input.parentComment) throw new Error("Comentário pai não corresponde ao nó canônico.");
