@@ -8,8 +8,8 @@
 <style>
 :root{color-scheme:light}
 html,body{margin:0;min-height:100%;background:#f7f3ed}
-body{overflow:hidden}
-.frame{width:100%;min-height:100vh;border:0;display:block;background:#f7f3ed}
+body{overflow-y:auto;overflow-x:hidden}
+.frame{width:100%;height:100vh;min-height:720px;border:0;display:block;background:#f7f3ed}
 </style>
 </head>
 <body>
@@ -17,7 +17,7 @@ body{overflow:hidden}
 <script>
 (()=>{"use strict";
 const frame=document.querySelector("#comments-frame");
-const resize=(height)=>{if(Number.isFinite(height)&&height>0)frame.style.height=Math.max(height,720)+"px"};
+const resize=(height)=>{const value=Number(height);if(Number.isFinite(value)&&value>0)frame.style.height=Math.max(value,720)+"px"};
 addEventListener("message",event=>{
   if(event.origin!==location.origin||event.source!==frame.contentWindow||event.data?.type!=="nocturna-comments-height")return;
   resize(event.data.height);
