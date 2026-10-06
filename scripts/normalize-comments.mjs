@@ -41,12 +41,13 @@ for(const c of comments){
     const i=line.indexOf("=");
     return i<0?[line,""]:[line.slice(0,i),line.slice(i+1)];
   }));
-  const required=["parent-node","parent-comment","parent-author","reply-author","source-id"];
+  const required=["parent-node","parent-comment","parent-author","source-id"];
   if(required.some(k=>!meta[k])) continue;
-  const isBotCharacter=c.user?.type==="Bot" && ["Akashi Seijuro","Johan Liebert","Ayanokoji Kiyotaka","Osamu Dazai","Light Yagami","L Lawliet","Sasuke Uchiha","Ranpo Edogawa","Itachi Uchiha","Satoru Gojo"].includes(meta["reply-author"]);
-  const isHuman=c.user?.type==="User" && String(c.user?.login||"")===meta["reply-author"];
-  if(!isBotCharacter && !isHuman) continue;
-  if(!/^github-issue1-reply-[A-Za-z0-9_-]{16,80}$/.test(meta["source-id"])) continue;
+  // A identidade de quem responde vem do próprio autor real do comentário no GitHub.
+  // A interface do Nocturna não escolhe personagem nem usuário em nome do respondente.
+  const replyAuthor=String(c.user?.login||c.user?.name||"").trim();
+  if(!replyAuthor) continue;
+  if(!/^github-issue1-reply-[A-Za-z0-9_-]{16,100}$/.test(meta["source-id"])) continue;
 
   const commentId=String(c.id);
   const sourceId=meta["source-id"];
@@ -74,8 +75,8 @@ for(const c of comments){
     commentId:c.id,
     commentUrl:c.html_url,
     author:{
-      displayName:meta["reply-author"],
-      role:isHuman?"Participação humana":"Resposta canônica"
+      displayName:replyAuthor,
+      role:c.user?.type==="Bot"?"Resposta canônica":"Participação humana"
     },
     content:body.replace(m[0],"").trim(),
     origin:{
