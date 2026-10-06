@@ -64,7 +64,7 @@ const load=async()=>{
    const article=document.createElement("article");
    article.className="node";article.dataset.depth=n.depth;article.style.setProperty("--depth",n.depth);
    article.id="node-"+n.nodeId;
-   article.innerHTML='<div class="meta"><span class="author"></span><span class="depth"></span></div><div class="content"></div><div class="actions"><a class="native" target="_blank" rel="noopener">Permalink</a><button type="button" class="prepare">Preparar resposta</button></div><div class="reply-box"><textarea aria-label="Resposta"></textarea><button type="button" class="send">Publicar resposta</button><div class="status reply-status"></div></div>';
+   article.innerHTML='<div class="meta"><span class="author"></span><span class="depth"></span></div><div class="content"></div><div class="actions"><a class="native" target="_blank" rel="noopener">Permalink</a><button type="button" class="prepare">Preparar resposta</button></div><div class="reply-box"><textarea aria-label="Resposta"></textarea><label>Autor <select class="responder"><option>Akashi Seijuro</option><option>Johan Liebert</option><option>Ayanokoji Kiyotaka</option><option>Osamu Dazai</option><option>Light Yagami</option><option>L Lawliet</option><option>Sasuke Uchiha</option><option>Ranpo Edogawa</option><option>Itachi Uchiha</option><option>Satoru Gojo</option></select></label><button type="button" class="send">Publicar resposta</button><div class="status reply-status"></div></div>';
    article.querySelector(".author").textContent=n.author.displayName;
    article.querySelector(".depth").textContent="nó "+n.nodeId+" · profundidade "+n.depth;
    article.querySelector(".content").textContent=n.content;
@@ -78,7 +78,7 @@ const load=async()=>{
     const api=window.NOCTURNA_REPLY_API||"";
     if(!api){out.textContent="API de publicação ainda não configurada. Use o permalink para responder no GitHub.";window.open(n.commentUrl,"_blank","noopener");return}
     try{
-      const response=await fetch(api,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({message,parentNode:String(n.nodeId),parentComment:String(n.commentId),parentAuthor:n.author.displayName,responder:""} )});
+      const response=await fetch(api,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({message,parentNode:String(n.nodeId),parentComment:String(n.commentId),parentAuthor:n.author.displayName,responder:box.querySelector(".responder").value,requestId:(box.dataset.requestId ||= crypto.randomUUID().replace(/-/g,""))} )});
       const result=await response.json();
       if(!response.ok)throw new Error(result.error||"falha");
       out.textContent="Resposta publicada; a projeção será normalizada pelo workflow.";
