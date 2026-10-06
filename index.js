@@ -1,11 +1,14 @@
 const GITHUB_API = "https://api.github.com";
 const REPO = "outocarlos003-lang/Nocturna";
 const ISSUE = 1;
-const ALLOWED_ORIGIN = "https://outocarlos003-lang.github.io";
+const ALLOWED_ORIGINS = new Set([
+  "https://outocarlos003-lang.github.io",
+  "https://03-lang.github.io"
+]);
 function corsHeaders(origin) {
-  const allowed = origin === ALLOWED_ORIGIN;
+  const allowed = ALLOWED_ORIGINS.has(origin);
   return {
-    "Access-Control-Allow-Origin": allowed ? ALLOWED_ORIGIN : "null",
+    "Access-Control-Allow-Origin": allowed ? origin : "null",
     "Access-Control-Allow-Methods": "POST, OPTIONS",
     "Access-Control-Allow-Headers": "Content-Type",
     "Access-Control-Max-Age": "86400",
