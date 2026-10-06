@@ -463,50 +463,26 @@ function composerFor(n,box){
     send.disabled=true;
     const api=window.NOCTURNA_REPLY_API||"";
     if(!api){
-      const sourceId="github-issue1-reply-"+(crypto.randomUUID?crypto.randomUUID().replace(/-/g,""):String(Date.now())+String(Math.random()).slice(2));
-      const marker=[
-        "<!-- nocturna-reply:v1",
-        "parent-node="+String(n.nodeId),
-        "parent-comment="+String(n.commentId||""),
-        "parent-author="+String(n.author?.displayName||"").replace(/\n/g," "),
-        "source-id="+sourceId,
-        "-->"
-      ].join("\n");
-      const payload=marker+"\n\n"+message;
-      let copied=false;
-      try{await navigator.clipboard.writeText(payload);copied=true}catch{}
-      msg.textContent=copied
-        ?"Mensagem preparada e copiada."
-        :"Não foi possível copiar automaticamente.";
-      msg.className="message ok";
-      const parentUrl=String(n.commentUrl||"");
-      try{
-        localStorage.setItem(pendingReplyKey(sourceId),JSON.stringify({
-          sourceId,
-          parentNode:String(n.nodeId),
-          parentComment:String(n.commentId||""),
-          parentAuthor:n.author?.displayName||"",
-          message,
-          createdAt:new Date().toISOString()
-        }));
-      }catch{}
-      const destination="./base.html?embed=1&replyTo="+encodeURIComponent(String(n.nodeId))+"&replySource="+encodeURIComponent(sourceId);
-      window.open(destination,"_blank","noopener,noreferrer");
+      msg.textContent="O mecanismo de publicação no GitHub ainda não está configurado.";
+      msg.className="message err";
       send.disabled=false;
       return;
     }
     try{
       const requestId=crypto.randomUUID?crypto.randomUUID().replace(/-/g,""):String(Date.now());
       const response=await fetch(api,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({
-        message,parentNode:String(n.nodeId),parentComment:String(n.commentId),
-        parentAuthor:n.author?.displayName||"",requestId
+        message,
+        parentNode:String(n.nodeId),
+        parentComment:String(n.commentId),
+        parentAuthor:n.author?.displayName||"",
+        requestId
       })});
       const result=await response.json().catch(()=>({}));
       if(!response.ok)throw new Error(result.error||"Não foi possível enviar.");
-      msg.textContent="Resposta enviada.";
-      msg.className="message ok";
-      textarea.value="";counter.textContent="0 / 2000";
+      const parentUrl=String(result.parent_url||n.commentUrl||"https://github.com/"+REPO+"/issues/"+ISSUE);
       try{localStorage.removeItem(draftKey(n.nodeId))}catch{}
+      window.location.assign(parentUrl);
+      return;
     }catch(err){msg.textContent=err.message||"Não foi possível enviar.";msg.className="message err"}
     finally{send.disabled=false}
   });
