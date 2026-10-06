@@ -174,6 +174,7 @@ function validateRequest(input) {
   if (typeof input.parentComment !== "string" || !/^(?:issue-root|[0-9]+)$/.test(input.parentComment)) throw new Error("Comentário pai inválido.");
   if (typeof input.parentAuthor !== "string" || !input.parentAuthor.trim()) throw new Error("Autor pai inválido.");
   if (typeof input.responder !== "string" || !ALLOWED_AUTHORS.has(input.responder)) throw new Error("Personagem que responde não autorizado.");
+  if (typeof input.requestId !== "string" || !/^[A-Za-z0-9_-]{16,80}$/.test(input.requestId)) throw new Error("requestId inválido.");
 }
 
 export default {
@@ -201,14 +202,33 @@ export default {
       } else {
         if (!/^[0-9]+$/.test(input.parentNode)) throw new Error("Somente nós canônicos podem receber respostas canônicas.");
         if (input.parentComment === "issue-root") throw new Error("Somente o nó raiz pode apontar para a Issue.");
+        const canonicalFile = await ghGet(`/repos/${REPO}/contents/data/comments/issue-5.json`, token);
+        const canonical = JSON.parse(atob(String(canonicalFile.content || "").replace(/\\n/g, "")));
+        const parentNode = (canonical.nodes || []).find(node => String(node.nodeId) === input.parentNode);
+        if (!parentNode) throw new Error("Nó pai não existe na projeção canônica.");
+        if (String(parentNode.commentId) !== input.parentComment) throw new Error("Comentário pai não corresponde ao nó canônico.");
+        if (parentNode.author?.displayName !== input.parentAuthor) throw new Error("Autor pai não corresponde ao nó canônico.");
         const parent = await ghGet(`/repos/${REPO}/issues/comments/${input.parentComment}`, token);
-        const parentBody = String(parent.body || "");
-        if (!parentBody.includes(`nocturna-node: ${input.parentNode}`)) throw new Error("Comentário pai não carrega a identidade canônica esperada.");
-        if (!parentBody.includes(`nocturna-reply-author: ${input.parentAuthor}`)) throw new Error("Comentário pai não corresponde ao autor canônico.");
+        if (String(parent.id) !== input.parentComment) throw new Error("Comentário pai não existe.");
+        if (String(parent.user?.login || "") && String(parent.html_url || "") !== String(parentNode.commentUrl || "")) {
+          throw new Error("Origem do comentário pai diverge da projeção canônica.");
+        }
         parentLink = `https://github.com/${REPO}/issues/${ISSUE}#issuecomment-${input.parentComment}`;
       }
 
-      const sourceId = `github-issue5-comment-${Date.now()}-${crypto.randomUUID()}`;
+      const sourceId = `github-issue5-reply-${input.requestId}`;
+      const allComments = await ghGet(`/repos/${REPO}/issues/${ISSUE}/comments?per_page=100`, token);
+      const existing = allComments.find(comment => String(comment.body || "").includes(`source-id=${sourceId}`));
+      if (existing) {
+        return json({
+          ok: true,
+          comment_id: existing.id,
+          comment_url: existing.html_url,
+          parent_url: parentLink,
+          message: "Resposta já publicada; nenhuma nova identidade foi criada."
+        }, 200, origin);
+      }
+
       const body = [
         `<!-- nocturna-reply:v1`,
         `parent-node=${input.parentNode}`,
@@ -217,7 +237,7 @@ export default {
         `reply-author=${input.responder}`,
         `source-id=${sourceId}`,
         "-->",
-        `<!-- nocturna-node-pending: ${sourceId} -->`,
+        `<!-- nocturna-node: pending -->`,
         "",
         input.message.trim()
       ].join("\n");
