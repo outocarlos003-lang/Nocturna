@@ -8,249 +8,288 @@
 <style>
 :root{
   color-scheme:dark;
-  --bg:#101011;
-  --panel:#1a191b;
-  --panel-2:#201f21;
-  --panel-3:#151416;
-  --ink:#eee7d8;
-  --muted:#b9b0a5;
-  --soft:#8f8881;
-  --line:#39353d;
-  --line-strong:#514b55;
-  --wine:#74233a;
-  --wine-strong:#9c304e;
-  --wine-soft:#351b25;
-  --hi:#d9b9aa;
-  --ok:#b9d5b2;
-  --err:#e4a5a5;
+  --bg:#0d0e10;
+  --card:#15171a;
+  --card-2:#191b1f;
+  --field:#111316;
+  --ink:#eeeae4;
+  --muted:#9d9ca1;
+  --soft:#77777d;
+  --line:#30343a;
+  --line-2:#24272c;
+  --accent:#8f5268;
+  --accent-2:#b36a85;
+  --accent-bg:#3b2630;
+  --like:#f0b73d;
+  --heart:#ef5a62;
+  --idea:#ffd83d;
   --serif:Georgia,"Times New Roman",serif;
-  --sans:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --sans:Arial,Helvetica,sans-serif;
 }
 *{box-sizing:border-box}
 html{overflow-x:hidden;scroll-behavior:smooth}
 body{
   margin:0;
-  min-width:0;
-  background:
-    radial-gradient(circle at 50% -10%,#2a1820 0,#101011 34rem),
-    var(--bg);
+  background:var(--bg);
   color:var(--ink);
-  font:16px/1.65 var(--sans);
+  font:16px/1.55 var(--sans);
   overflow-x:hidden;
 }
 button,input,textarea,select{font:inherit}
-main{width:min(900px,calc(100% - 24px));margin:0 auto;padding:32px 0 64px}
-header{
-  margin-bottom:22px;
-  padding:0 4px 18px;
-  border-bottom:1px solid var(--line);
-}
-h1,h2{font-family:var(--serif);font-weight:600;line-height:1.15}
-h1{margin:0 0 8px;font-size:clamp(2rem,7vw,3rem)}
-h2{margin:0 0 8px;font-size:1.55rem}
-.lead{margin:0;color:var(--muted);max-width:700px}
-.status{min-height:0;color:var(--muted);font-size:.9rem;margin:8px 0 0}
-.status:empty{display:none}
-.status.err{color:var(--err)}
-.status.ok{color:var(--ok)}
-#tree{display:grid;gap:14px;min-width:0}
-.node{
-  --indent:0px;
+main{width:min(960px,calc(100% - 32px));margin:0 auto;padding:30px 0 72px}
+.topbar{padding:0 0 18px;margin-bottom:18px;border-bottom:1px solid var(--line)}
+.topbar h1{margin:0;font-size:1.7rem;font-weight:700}
+.topbar p{margin:4px 0 0;color:var(--muted)}
+#tree{display:block;min-width:0}
+.thread-root{position:relative}
+.comment{
   position:relative;
-  width:100%;
   min-width:0;
-  margin-left:var(--indent);
-  width:calc(100% - var(--indent));
-  padding:18px;
-  background:linear-gradient(180deg,var(--panel-2),var(--panel));
-  border:1px solid var(--line);
-  border-radius:12px;
-  box-shadow:0 8px 24px #0005;
-  overflow:visible;
+  padding:20px 22px 18px;
+  background:var(--card);
+  border:1px solid #30343a;
+  border-radius:17px;
+  box-shadow:0 7px 20px #0005;
 }
-.node[data-depth="0"]{border-color:var(--line-strong)}
-.node[data-depth]:not([data-depth="0"]):before{
+.comment.reply{
+  margin-left:42px;
+  margin-top:0;
+  border-width:0 0 1px 1px;
+  border-radius:0;
+  background:transparent;
+  box-shadow:none;
+  padding:18px 20px 18px 25px;
+}
+.comment.reply:before{
   content:"";
   position:absolute;
-  left:-9px;
-  top:-15px;
-  height:calc(100% + 15px);
-  border-left:1px solid var(--line);
-  opacity:.75;
+  left:-1px;
+  top:0;
+  bottom:0;
+  border-left:2px solid #2c3137;
 }
-.meta{
-  display:flex;
-  gap:8px;
-  align-items:baseline;
-  flex-wrap:wrap;
-  min-width:0;
+.comment.reply:after{
+  content:"";
+  position:absolute;
+  left:-1px;
+  top:57px;
+  width:23px;
+  border-top:2px solid #2c3137;
 }
+.comment.reply:last-child:before{bottom:calc(100% - 58px)}
+.comment-head{
+  display:grid;
+  grid-template-columns:50px minmax(0,1fr) auto;
+  gap:13px;
+  align-items:center;
+}
+.avatar{
+  width:50px;
+  height:50px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  background:#171b20;
+  border:1px solid #20252b;
+  color:#ddd;
+  font-weight:700;
+  font-size:1.05rem;
+}
+.author-wrap{min-width:0}
 .author{
+  display:block;
   color:var(--ink);
-  font-weight:750;
-  letter-spacing:.01em;
+  font-size:1.05rem;
+  font-weight:700;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
 }
-.role{
-  color:var(--hi);
-  font-size:.9rem;
+.context{
+  display:block;
+  margin-top:3px;
+  color:var(--accent-2);
+  font-size:.92rem;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
 }
-.reply-context{
-  margin:4px 0 0;
-  color:var(--muted);
-  font-size:.9rem;
+.corner{
+  color:var(--soft);
+  font-size:.82rem;
+  white-space:nowrap;
 }
-.reply-context strong{color:var(--hi);font-weight:500}
+.corner a{color:var(--accent-2);text-decoration:none}
 .content{
-  margin:14px 0 16px;
-  color:#eee8da;
-  font-family:var(--serif);
-  font-size:clamp(1.06rem,2.5vw,1.22rem);
+  margin:17px 0 17px;
+  color:#eeeae4;
+  font-size:clamp(1.05rem,2.2vw,1.28rem);
   line-height:1.72;
   white-space:pre-wrap;
   overflow-wrap:anywhere;
   word-break:break-word;
 }
-.comment-actions{
+.reply .content{font-size:clamp(1rem,2vw,1.16rem);margin-top:14px}
+.toolbar{
   display:flex;
+  align-items:center;
+  gap:18px;
   flex-wrap:wrap;
-  gap:8px;
   padding-top:12px;
-  border-top:1px solid #302d33;
+  border-top:1px solid var(--line-2);
 }
-.action{
-  min-height:42px;
+.tool{
+  border:0;
+  background:none;
+  color:#b6b5b8;
+  padding:5px 0;
+  cursor:pointer;
+  font-size:.98rem;
+  text-decoration:none;
+}
+.tool:hover{color:#fff}
+.tool.primary{
+  padding:9px 14px;
+  border:1px solid var(--line);
+  border-radius:7px;
+  background:#17191c;
+}
+.tool.primary:hover{background:var(--accent-bg);border-color:var(--accent)}
+.reaction{
   display:inline-flex;
   align-items:center;
-  justify-content:center;
-  border:1px solid var(--line);
-  border-radius:7px;
-  background:transparent;
-  color:var(--hi);
-  padding:8px 13px;
-  text-decoration:none;
-  cursor:pointer;
-  font-size:.92rem;
-  transition:background .15s ease,border-color .15s ease,transform .15s ease;
+  gap:5px;
 }
-.action:hover{background:var(--wine-soft);border-color:var(--wine-strong)}
-.action:active{transform:translateY(1px)}
-.action.primary{background:var(--wine);border-color:var(--wine);color:#fff}
-.action.primary:hover{background:var(--wine-strong);border-color:var(--wine-strong)}
-.action[disabled]{opacity:.55;cursor:not-allowed;transform:none}
-.reply-box{
+.reaction .emoji{font-size:1.05rem}
+.reaction.active{color:#fff}
+.reaction.like.active{color:var(--like)}
+.reaction.heart.active{color:var(--heart)}
+.reaction.idea.active{color:var(--idea)}
+.participate{
+  color:#c4c1c3;
+  text-decoration:underline;
+  text-underline-offset:3px;
+}
+.participate:before{content:"💬 "}
+.children{
+  margin-left:42px;
+  padding-left:0;
+}
+.children.hidden{display:none}
+.composer{
   display:none;
-  margin-top:14px;
-  padding:15px;
-  border:1px solid var(--line);
-  border-radius:10px;
-  background:var(--panel-3);
+  margin-top:17px;
+  padding:18px;
+  border:1px solid #30353b;
+  border-radius:13px;
+  background:var(--card-2);
 }
-.reply-box.open{display:block}
-.reply-title{
-  margin:0 0 10px;
-  color:var(--ink);
-  font-weight:650;
-}
-.reply-to{color:var(--muted);font-weight:400}
-.reply-form{display:grid;gap:10px}
-.reply-form textarea{
-  display:block;
+.composer.open{display:block}
+.composer-title{margin:0 0 10px;color:#ded9d4;font-size:1rem;font-weight:700}
+.composer-title span{color:var(--muted);font-weight:400}
+textarea{
   width:100%;
-  min-height:124px;
-  max-height:360px;
-  padding:12px 13px;
-  border:1px solid var(--line-strong);
-  border-radius:8px;
-  outline:none;
-  background:#111012;
+  min-height:145px;
+  padding:15px;
+  border:1px solid #343940;
+  border-radius:10px;
+  background:var(--field);
   color:var(--ink);
+  outline:none;
   resize:vertical;
-  line-height:1.55;
 }
-.reply-form textarea:focus{border-color:var(--hi);box-shadow:0 0 0 2px #d9b9aa22}
-.reply-form textarea::placeholder{color:#756e69}
-.reply-foot{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:10px;
-  flex-wrap:wrap;
-}
-.reply-foot small{color:var(--soft)}
-.reply-tools{display:flex;gap:7px;flex-wrap:wrap}
-.reply-tools select{
+textarea:focus{border-color:#8b6b77;box-shadow:0 0 0 2px #8b6b7725}
+textarea::placeholder{color:#66676d}
+.composer-meta{display:flex;justify-content:space-between;gap:10px;margin-top:8px;color:var(--soft);font-size:.88rem}
+.composer-bottom{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-top:12px}
+select{
   min-height:40px;
   max-width:100%;
-  border:1px solid var(--line);
+  border:1px solid #343940;
   border-radius:7px;
-  background:#171618;
+  background:#15171a;
   color:var(--ink);
   padding:7px 9px;
 }
-.reply-actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.composer-actions{display:flex;gap:8px}
+.action{
+  min-height:42px;
+  padding:8px 16px;
+  border:1px solid #3b3f46;
+  border-radius:7px;
+  background:transparent;
+  color:#c9c4c0;
+  cursor:pointer;
+}
+.action:hover{background:var(--accent-bg);border-color:var(--accent)}
+.action.send{background:#704052;border-color:#8f5268;color:#fff}
+.action.send:hover{background:#8f5268}
+.action:disabled{opacity:.5;cursor:not-allowed}
+.message{margin-top:9px;color:var(--muted);font-size:.88rem}
+.message.ok{color:#b9d7b1}
+.message.err{color:#e1a0a0}
 .participation{
-  margin-top:28px;
-  padding:22px 4px 0;
+  margin-top:30px;
+  padding:24px 4px;
   border-top:1px solid var(--line);
 }
-.participation p{color:var(--muted);margin:6px 0 14px}
-.native{
-  display:inline-flex;
-  align-items:center;
-  min-height:42px;
-  padding:8px 13px;
-  border:1px solid var(--line);
-  border-radius:7px;
-  color:var(--hi);
-  text-decoration:none;
-}
-.native:hover{background:var(--wine-soft);border-color:var(--wine-strong)}
-.sr{
-  position:absolute!important;
-  width:1px!important;height:1px!important;
-  padding:0!important;margin:-1px!important;
-  overflow:hidden!important;clip:rect(0,0,0,0)!important;
-  white-space:nowrap!important;border:0!important;
-}
-:focus-visible{outline:3px solid var(--hi);outline-offset:2px}
-@media(max-width:620px){
-  main{width:calc(100% - 16px);padding:22px 0 44px}
-  header{padding-left:2px;padding-right:2px}
-  .node{
-    padding:14px;
-    margin-left:0;
-    width:100%;
-    border-radius:10px;
+.participation h2{margin:0;font-family:var(--serif);font-size:1.7rem}
+.participation p{color:var(--muted)}
+.native{color:#c4c1c3;text-decoration:underline;text-underline-offset:3px}
+:focus-visible{outline:3px solid #d2b5aa;outline-offset:3px}
+.sr{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
+
+@media(max-width:650px){
+  main{width:100%;padding:0 0 45px}
+  .topbar{padding:18px 18px 15px;margin-bottom:0}
+  .topbar h1{font-size:1.35rem}
+  .comment{
+    border-radius:0;
+    border-left:0;
+    border-right:0;
+    padding:18px 18px 16px;
+    box-shadow:none;
   }
-  .node[data-depth]:not([data-depth="0"]):before{display:none}
-  .content{margin-top:12px;font-size:1.08rem;line-height:1.72}
-  .comment-actions{display:grid;grid-template-columns:1fr}
-  .comment-actions .action{width:100%}
-  .reply-box{padding:12px;margin-top:12px}
-  .reply-foot{align-items:stretch}
-  .reply-tools,.reply-actions{width:100%}
-  .reply-tools select,.reply-actions .action{width:100%}
-  .reply-actions{display:grid;grid-template-columns:1fr 1fr}
+  .comment.reply{
+    margin-left:40px;
+    padding:16px 16px 17px 23px;
+    border-left:0;
+    border-right:0;
+  }
+  .comment.reply:after{width:20px;top:52px}
+  .children{margin-left:0}
+  .comment-head{grid-template-columns:48px minmax(0,1fr) auto;gap:11px}
+  .avatar{width:48px;height:48px}
+  .corner{font-size:.75rem}
+  .content{font-size:1.05rem;line-height:1.65;margin:15px 0}
+  .reply .content{font-size:1rem}
+  .toolbar{gap:16px}
+  .toolbar .tool.primary{order:0}
+  .composer{border-radius:10px;margin-top:14px;padding:13px}
+  .composer-bottom{display:grid;grid-template-columns:1fr}
+  select,.composer-actions,.composer-actions .action{width:100%}
+  .composer-actions{display:grid;grid-template-columns:1fr 1fr}
 }
 @media(max-width:390px){
-  .reply-actions{grid-template-columns:1fr}
-  .node{padding:12px}
+  .comment.reply{margin-left:28px;padding-left:18px}
+  .comment-head{grid-template-columns:42px minmax(0,1fr)}
+  .avatar{width:42px;height:42px}
+  .corner{grid-column:2}
+  .toolbar{gap:12px}
+  .reaction{font-size:.9rem}
 }
 </style>
 </head>
 <body>
 <main>
-<header>
-<h1>Comentários</h1>
-<p class="lead">Leia a conversa e responda diretamente ao comentário que quiser continuar.</p>
-<p id="status" class="status" aria-live="polite"></p>
+<header class="topbar">
+  <h1>Comentários</h1>
+  <p>Uma conversa em sequência, com respostas e reações.</p>
 </header>
-
-<section id="tree" aria-live="polite" aria-label="Conversa"></section>
-
+<section id="tree" aria-label="Conversa"></section>
 <section class="participation">
   <h2>Participações</h2>
-  <p>Você também pode continuar a conversa pela página pública.</p>
+  <p>Continue a conversa pela página pública.</p>
   <a class="native" target="_blank" rel="noopener noreferrer" href="https://github.com/outocarlos003-lang/Nocturna/issues/1">Abrir conversa</a>
 </section>
 </main>
@@ -258,271 +297,229 @@ h2{margin:0 0 8px;font-size:1.55rem}
 <script>
 (()=>{"use strict";
 const REPO="outocarlos003-lang/Nocturna",ISSUE=1;
-const status=document.querySelector("#status"),tree=document.querySelector("#tree");
-const characters=[
-  "Akashi Seijuro","Johan Liebert","Ayanokoji Kiyotaka","Osamu Dazai",
-  "Light Yagami","L Lawliet","Sasuke Uchiha","Ranpo Edogawa",
-  "Itachi Uchiha","Satoru Gojo"
-];
-const draftKey=id=>"nocturna-comment-draft-"+id;
-const escapeTarget=(n)=>n.commentUrl||"https://github.com/"+REPO+"/issues/"+ISSUE;
+const tree=document.querySelector("#tree");
+const characters=["Akashi Seijuro","Johan Liebert","Ayanokoji Kiyotaka","Osamu Dazai","Light Yagami","L Lawliet","Sasuke Uchiha","Ranpo Edogawa","Itachi Uchiha","Satoru Gojo"];
+const key=(type,id)=>"nocturna-"+type+"-"+id;
+const draftKey=id=>key("draft",id);
 
-function makeNode(n){
-  const article=document.createElement("article");
-  article.className="node";
-  article.dataset.depth=n.depth;
-  article.style.setProperty("--indent",Math.min(Number(n.depth||0)*22,132)+"px");
-  article.id="node-"+n.nodeId;
-
-  const meta=document.createElement("div");
-  meta.className="meta";
-  const author=document.createElement("span");
-  author.className="author";
-  author.textContent=n.author?.displayName||"Participante";
-  meta.appendChild(author);
-  if(n.author?.role){
-    const role=document.createElement("span");
-    role.className="role";
-    role.textContent=n.author.role;
-    meta.appendChild(role);
-  }
-  article.appendChild(meta);
-
-  if(n.parentNodeId!==null){
-    const context=document.createElement("p");
-    context.className="reply-context";
-    context.append("Respondendo a ");
-    const strong=document.createElement("strong");
-    strong.textContent=n.parentAuthor?.displayName||"outro comentário";
-    context.appendChild(strong);
-    article.appendChild(context);
-  }
-
-  const content=document.createElement("div");
-  content.className="content";
-  content.textContent=n.content||"";
-  article.appendChild(content);
-
-  const actions=document.createElement("div");
-  actions.className="comment-actions";
-
-  const reply=document.createElement("button");
-  reply.type="button";
-  reply.className="action primary";
-  reply.textContent="Responder";
-  reply.setAttribute("aria-expanded","false");
-  actions.appendChild(reply);
-
-  const copy=document.createElement("button");
-  copy.type="button";
-  copy.className="action";
-  copy.textContent="Copiar";
-  actions.appendChild(copy);
-
-  const reference=document.createElement("a");
-  reference.className="action";
-  reference.textContent="Ver referência";
-  reference.target="_blank";
-  reference.rel="noopener noreferrer";
-  reference.href=escapeTarget(n);
-  actions.appendChild(reference);
-  article.appendChild(actions);
-
-  const box=document.createElement("div");
-  box.className="reply-box";
-  box.setAttribute("aria-hidden","true");
-
+function initials(name){
+  return (name||"?").trim().split(/\s+/).slice(0,2).map(x=>x[0]).join("").toUpperCase();
+}
+function childrenMap(nodes){
+  const map=new Map();
+  nodes.forEach(n=>{
+    const p=n.parentNodeId===null?"root":String(n.parentNodeId);
+    if(!map.has(p))map.set(p,[]);
+    map.get(p).push(n);
+  });
+  return map;
+}
+function savedReactions(id){
+  try{return JSON.parse(localStorage.getItem(key("reactions",id))||"{}")}catch{return{}}
+}
+function setReaction(id,type){
+  const r=savedReactions(id);
+  r[type]=!r[type];
+  try{localStorage.setItem(key("reactions",id),JSON.stringify(r))}catch{}
+  return r;
+}
+function count(id,type){
+  const r=savedReactions(id);
+  return r[type]?1:0;
+}
+function composerFor(n,box){
+  const composer=document.createElement("div");
+  composer.className="composer";
   const title=document.createElement("p");
-  title.className="reply-title";
+  title.className="composer-title";
   title.textContent="Sua resposta";
-  const to=document.createElement("span");
-  to.className="reply-to";
-  to.textContent="  ·  para "+(n.author?.displayName||"este comentário");
-  title.appendChild(to);
-  box.appendChild(title);
+  const span=document.createElement("span");
+  span.textContent=" · para "+(n.author?.displayName||"este comentário");
+  title.appendChild(span);
+  composer.appendChild(title);
 
   const form=document.createElement("form");
-  form.className="reply-form";
-
   const textarea=document.createElement("textarea");
-  textarea.maxLength=4000;
-  textarea.placeholder="Escreva sua resposta…";
+  textarea.maxLength=2000;
+  textarea.placeholder="Escreva sua mensagem...";
   textarea.setAttribute("aria-label","Resposta para "+(n.author?.displayName||"este comentário"));
   try{textarea.value=localStorage.getItem(draftKey(n.nodeId))||""}catch{}
   form.appendChild(textarea);
 
-  const foot=document.createElement("div");
-  foot.className="reply-foot";
+  const meta=document.createElement("div");
+  meta.className="composer-meta";
+  const counter=document.createElement("span");
+  counter.textContent=textarea.value.length+" / 2000";
+  meta.appendChild(counter);
+  meta.appendChild(document.createElement("span"));
+  form.appendChild(meta);
 
-  const tools=document.createElement("div");
-  tools.className="reply-tools";
+  const bottom=document.createElement("div");
+  bottom.className="composer-bottom";
   const select=document.createElement("select");
-  select.className="responder";
-  select.setAttribute("aria-label","Escolha quem responde");
-  characters.forEach(name=>{
-    const option=document.createElement("option");
-    option.value=name;
-    option.textContent="Responder como "+name;
-    select.appendChild(option);
-  });
-  tools.appendChild(select);
-  foot.appendChild(tools);
+  select.setAttribute("aria-label","Responder como");
+  characters.forEach(c=>{const o=document.createElement("option");o.value=c;o.textContent="Responder como "+c;select.appendChild(o)});
+  bottom.appendChild(select);
 
-  const counter=document.createElement("small");
-  counter.textContent=textarea.value.length+"/4000";
-  foot.appendChild(counter);
-  form.appendChild(foot);
-
-  const actions2=document.createElement("div");
-  actions2.className="reply-actions";
-
+  const actions=document.createElement("div");
+  actions.className="composer-actions";
   const cancel=document.createElement("button");
-  cancel.type="button";
-  cancel.className="action";
-  cancel.textContent="Cancelar";
-  actions2.appendChild(cancel);
-
+  cancel.type="button";cancel.className="action";cancel.textContent="Cancelar";
   const send=document.createElement("button");
-  send.type="submit";
-  send.className="action primary";
-  send.textContent="Enviar resposta";
-  actions2.appendChild(send);
+  send.type="submit";send.className="action send";send.textContent="Enviar";
+  actions.append(cancel,send);
+  bottom.appendChild(actions);
+  form.appendChild(bottom);
 
-  form.appendChild(actions2);
+  const msg=document.createElement("div");
+  msg.className="message";
+  msg.setAttribute("aria-live","polite");
+  form.appendChild(msg);
+  composer.appendChild(form);
+  box.appendChild(composer);
 
-  const out=document.createElement("div");
-  out.className="status reply-status";
-  out.setAttribute("aria-live","polite");
-  form.appendChild(out);
-
-  box.appendChild(form);
-  article.appendChild(box);
-
-  const openBox=()=>{
-    box.classList.add("open");
-    box.setAttribute("aria-hidden","false");
-    reply.setAttribute("aria-expanded","true");
-    setTimeout(()=>textarea.focus(),0);
-  };
-  const closeBox=()=>{
-    box.classList.remove("open");
-    box.setAttribute("aria-hidden","true");
-    reply.setAttribute("aria-expanded","false");
-  };
-
-  reply.addEventListener("click",()=>box.classList.contains("open")?closeBox():openBox());
-  cancel.addEventListener("click",()=>{
-    try{localStorage.removeItem(draftKey(n.nodeId))}catch{}
-    textarea.value="";
-    counter.textContent="0/4000";
-    out.textContent="";
-    out.className="status reply-status";
-    closeBox();
-  });
+  const open=()=>{composer.classList.add("open");setTimeout(()=>textarea.focus(),0)};
+  const close=()=>{composer.classList.remove("open");msg.textContent="";msg.className="message"};
   textarea.addEventListener("input",()=>{
-    counter.textContent=textarea.value.length+"/4000";
+    counter.textContent=textarea.value.length+" / 2000";
     try{localStorage.setItem(draftKey(n.nodeId),textarea.value)}catch{}
   });
-  textarea.addEventListener("keydown",event=>{
-    if((event.ctrlKey||event.metaKey)&&event.key==="Enter"){
-      event.preventDefault();
-      form.requestSubmit();
-    }
+  textarea.addEventListener("keydown",e=>{
+    if((e.ctrlKey||e.metaKey)&&e.key==="Enter"){e.preventDefault();form.requestSubmit()}
   });
-  copy.addEventListener("click",async()=>{
-    const text=(n.author?.displayName||"")+"\n\n"+(n.content||"");
-    try{
-      await navigator.clipboard.writeText(text);
-      copy.textContent="Copiado";
-      setTimeout(()=>copy.textContent="Copiar",1400);
-    }catch{
-      copy.textContent="Selecione o texto";
-      setTimeout(()=>copy.textContent="Copiar",1600);
-    }
-  });
-
-  form.addEventListener("submit",async event=>{
-    event.preventDefault();
+  cancel.addEventListener("click",close);
+  form.addEventListener("submit",async e=>{
+    e.preventDefault();
     const message=textarea.value.trim();
-    if(!message){
-      out.textContent="Escreva sua resposta antes de enviar.";
-      out.className="status reply-status err";
-      textarea.focus();
-      return;
-    }
+    if(!message){msg.textContent="Escreva sua mensagem antes de enviar.";msg.className="message err";return}
     send.disabled=true;
     const api=window.NOCTURNA_REPLY_API||"";
     if(!api){
       try{await navigator.clipboard.writeText(message)}catch{}
-      out.textContent="Texto copiado. Abra a conversa pública para publicar sua resposta.";
-      out.className="status reply-status ok";
-      const target=escapeTarget(n);
-      window.open(target,"_blank","noopener,noreferrer");
+      msg.textContent="Mensagem copiada. Abra a conversa pública para publicar.";
+      msg.className="message ok";
+      window.open(n.commentUrl||"https://github.com/"+REPO+"/issues/"+ISSUE,"_blank","noopener,noreferrer");
       send.disabled=false;
       return;
     }
     try{
-      const requestId=box.dataset.requestId||=(crypto.randomUUID?crypto.randomUUID().replace(/-/g,""):String(Date.now()));
-      const response=await fetch(api,{
-        method:"POST",
-        headers:{"Content-Type":"application/json"},
-        body:JSON.stringify({
-          message,
-          parentNode:String(n.nodeId),
-          parentComment:String(n.commentId),
-          parentAuthor:n.author?.displayName||"",
-          responder:select.value,
-          requestId
-        })
-      });
+      const requestId=crypto.randomUUID?crypto.randomUUID().replace(/-/g,""):String(Date.now());
+      const response=await fetch(api,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({
+        message,parentNode:String(n.nodeId),parentComment:String(n.commentId),
+        parentAuthor:n.author?.displayName||"",responder:select.value,requestId
+      })});
       const result=await response.json().catch(()=>({}));
-      if(!response.ok)throw new Error(result.error||"Não foi possível enviar a resposta.");
-      out.textContent="Resposta enviada.";
-      out.className="status reply-status ok";
-      textarea.value="";
-      counter.textContent="0/4000";
+      if(!response.ok)throw new Error(result.error||"Não foi possível enviar.");
+      msg.textContent="Resposta enviada.";
+      msg.className="message ok";
+      textarea.value="";counter.textContent="0 / 2000";
       try{localStorage.removeItem(draftKey(n.nodeId))}catch{}
-    }catch(error){
-      out.textContent=error.message||"Não foi possível enviar a resposta.";
-      out.className="status reply-status err";
-    }finally{send.disabled=false}
+    }catch(err){msg.textContent=err.message||"Não foi possível enviar.";msg.className="message err"}
+    finally{send.disabled=false}
+  });
+  return open;
+}
+
+function makeComment(n,map,isRoot=false){
+  const wrap=document.createElement("div");
+  wrap.className="thread-node";
+  const article=document.createElement("article");
+  article.className="comment"+(isRoot?"":" reply");
+  article.id="node-"+n.nodeId;
+
+  const head=document.createElement("div");
+  head.className="comment-head";
+  const avatar=document.createElement("div");
+  avatar.className="avatar";avatar.textContent=initials(n.author?.displayName);
+  const authorWrap=document.createElement("div");
+  authorWrap.className="author-wrap";
+  const author=document.createElement("span");author.className="author";author.textContent=n.author?.displayName||"Participante";
+  const context=document.createElement("span");context.className="context";
+  context.textContent=isRoot?"Comentário inicial":(n.author?.role||"Respondendo à conversa");
+  authorWrap.append(author,context);
+  const corner=document.createElement("div");corner.className="corner";
+  if(isRoot){
+    const a=document.createElement("a");a.href=n.commentUrl||"#";a.target="_blank";a.rel="noopener noreferrer";a.textContent="Conversa ↗";corner.appendChild(a);
+  }else{
+    corner.textContent="↳";
+  }
+  head.append(avatar,authorWrap,corner);
+  article.appendChild(head);
+
+  const content=document.createElement("div");
+  content.className="content";content.textContent=n.content||"";
+  article.appendChild(content);
+
+  const toolbar=document.createElement("div");
+  toolbar.className="toolbar";
+  const hasChildren=(map.get(String(n.nodeId))||[]).length>0;
+  if(hasChildren){
+    const toggle=document.createElement("button");
+    toggle.type="button";toggle.className="tool primary";toggle.textContent="Fechar respostas";
+    toggle.addEventListener("click",()=>{
+      children.classList.toggle("hidden");
+      toggle.textContent=children.classList.contains("hidden")?"Mostrar respostas":"Fechar respostas";
+    });
+    toolbar.appendChild(toggle);
+  }else{
+    const replyBtn=document.createElement("button");
+    replyBtn.type="button";replyBtn.className="tool primary";replyBtn.textContent="↩ Responder";
+    toolbar.appendChild(replyBtn);
+    const openComposer=composerFor(n,article);
+    replyBtn.addEventListener("click",openComposer);
+  }
+
+  ["like","heart","idea"].forEach((type)=>{
+    const btn=document.createElement("button");
+    btn.type="button";btn.className="tool reaction "+type;
+    const emoji={like:"👍",heart:"❤️",idea:"💡"}[type];
+    btn.innerHTML='<span class="emoji">'+emoji+'</span> <span class="reaction-label">'+(type==="like"?"Curtir":"")+'</span> <span class="count">'+count(n.nodeId,type)+"</span>";
+    btn.addEventListener("click",()=>{
+      const active=setReaction(n.nodeId,type);
+      btn.classList.toggle("active",!!active[type]);
+      btn.querySelector(".count").textContent=active[type]?1:0;
+    });
+    toolbar.appendChild(btn);
   });
 
-  return article;
+  const participate=document.createElement("button");
+  participate.type="button";participate.className="tool participate";participate.textContent="Participar";
+  const openComposer=composerFor(n,article);
+  participate.addEventListener("click",openComposer);
+  toolbar.appendChild(participate);
+
+  const more=document.createElement("button");
+  more.type="button";more.className="tool";more.textContent="•••";more.setAttribute("aria-label","Mais opções");
+  more.addEventListener("click",()=>{
+    const target=n.commentUrl||"https://github.com/"+REPO+"/issues/"+ISSUE;
+    window.open(target,"_blank","noopener,noreferrer");
+  });
+  toolbar.appendChild(more);
+  article.appendChild(toolbar);
+
+  const children=document.createElement("div");
+  children.className="children";
+  (map.get(String(n.nodeId))||[]).forEach(child=>children.appendChild(makeComment(child,map,false)));
+  wrap.append(article,children);
+  return wrap;
 }
 
 async function load(){
   try{
     const res=await fetch("../data/comments/issue-1.json",{cache:"no-store"});
-    if(!res.ok)throw new Error("Não foi possível carregar a conversa.");
+    if(!res.ok)throw new Error();
     const data=await res.json(),nodes=data.nodes||[];
-    const byParent=new Map();
-    nodes.forEach((n,index)=>{
-      n.__order=n.order??index+1;
-      const key=n.parentNodeId===null?"root":String(n.parentNodeId);
-      if(!byParent.has(key))byParent.set(key,[]);
-      byParent.get(key).push(n);
-    });
-    const ordered=[];
-    const visit=id=>(byParent.get(id)||[])
-      .sort((a,b)=>a.__order-b.__order)
-      .forEach(n=>{ordered.push(n);visit(String(n.nodeId))});
-    visit("root");
-    if(ordered.length!==nodes.length)throw new Error("Não foi possível preservar a sequência da conversa.");
-    ordered.forEach(n=>tree.appendChild(makeNode(n)));
-  }catch(error){
-    status.textContent=error.message||"Não foi possível carregar a conversa.";
-    status.className="status err";
+    const map=childrenMap(nodes);
+    const roots=map.get("root")||[];
+    roots.sort((a,b)=>(a.order??0)-(b.order??0));
+    roots.forEach(n=>tree.appendChild(makeComment(n,map,true)));
+  }catch{
+    tree.textContent="Não foi possível carregar os comentários.";
   }
 }
-
 const config=document.createElement("script");
-config.src="./reply-api-config.js";
-config.onload=load;
-config.onerror=load;
-document.head.appendChild(config);
+config.src="./reply-api-config.js";config.onload=load;config.onerror=load;document.head.appendChild(config);
 })();
-
 (()=>{"use strict";
 if(new URLSearchParams(location.search).get("embed")!=="1")return;
 const send=()=>{if(window.parent!==window)window.parent.postMessage({type:"nocturna-comments-height",height:document.documentElement.scrollHeight},location.origin)};
