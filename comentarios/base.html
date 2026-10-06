@@ -548,7 +548,7 @@ function composerFor(n,box){
       composer.appendChild(fallback);
       fallback.focus();
       fallback.select();
-      window.open(target,"_blank","noopener,noreferrer");
+      window.location.assign(target);
     }finally{
       send.disabled=false;
     }
