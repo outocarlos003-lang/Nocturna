@@ -2,19 +2,6 @@ const GITHUB_API = "https://api.github.com";
 const REPO = "outocarlos003-lang/Nocturna";
 const ISSUE = 1;
 const ALLOWED_ORIGIN = "https://outocarlos003-lang.github.io";
-const ALLOWED_AUTHORS = new Set([
-  "Akashi Seijuro",
-  "Johan Liebert",
-  "Ayanokoji Kiyotaka",
-  "Osamu Dazai",
-  "Light Yagami",
-  "L Lawliet",
-  "Sasuke Uchiha",
-  "Ranpo Edogawa",
-  "Itachi Uchiha",
-  "Satoru Gojo"
-]);
-
 function corsHeaders(origin) {
   const allowed = origin === ALLOWED_ORIGIN;
   return {
@@ -173,7 +160,6 @@ function validateRequest(input) {
   if (typeof input.parentNode !== "string" || !/^(?:[0-9]+|external-[A-Za-z0-9_-]+)$/.test(input.parentNode)) throw new Error("Nó pai inválido.");
   if (typeof input.parentComment !== "string" || !/^(?:issue-root|[0-9]+)$/.test(input.parentComment)) throw new Error("Comentário pai inválido.");
   if (typeof input.parentAuthor !== "string" || !input.parentAuthor.trim()) throw new Error("Autor pai inválido.");
-  if (typeof input.responder !== "string" || !ALLOWED_AUTHORS.has(input.responder)) throw new Error("Personagem que responde não autorizado.");
   if (typeof input.requestId !== "string" || !/^[A-Za-z0-9_-]{16,80}$/.test(input.requestId)) throw new Error("requestId inválido.");
 }
 
@@ -216,9 +202,9 @@ export default {
         // Histórico migrado pode apontar para uma Issue antiga indisponível.
         // A projeção canônica é a fonte de verdade para o vínculo pai; a nova resposta
         // sempre é publicada na Issue #1 e recebe sua identidade canônica no workflow.
-        parentLink = parentNode.commentUrl && !String(parentNode.origin?.migrated || false)
+        parentLink = /^https:\/\/github\.com\/[^/]+\/[^/]+\/issues\/1#issuecomment-\d+$/.test(String(parentNode.commentUrl || ""))
           ? String(parentNode.commentUrl)
-          : `https://github.com/${REPO}/issues/${ISSUE}#node-${parentNode.nodeId}`;
+          : `https://github.com/${REPO}/issues/${ISSUE}`;
       }
 
       const sourceId = `github-issue1-reply-${input.requestId}`;
