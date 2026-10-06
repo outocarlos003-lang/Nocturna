@@ -534,7 +534,7 @@ function composerFor(n,box){
       msg.textContent="Resposta copiada. O GitHub será aberto; cole o conteúdo no campo de comentário e publique.";
       msg.className="message ok";
 
-      window.open(target,"_blank","noopener,noreferrer");
+      window.location.assign(target);
     }catch(err){
       msg.textContent="Não foi possível copiar a resposta automaticamente. Copie o texto abaixo e publique no GitHub.";
       msg.className="message err";
