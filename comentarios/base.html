@@ -2,56 +2,239 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="index,follow">
 <title>Comentários — Nocturna</title>
 <style>
-:root{color-scheme:dark;--bg:#121212;--panel:#1c1b1d;--ink:#e9e1cf;--muted:#b2aa98;--line:#38333c;--wine:#7a1f35;--wine2:#9c2d49;--hi:#e0bfae;--serif:Georgia,"Times New Roman",serif;--sans:system-ui,-apple-system,"Segoe UI",sans-serif}
+:root{
+  color-scheme:dark;
+  --bg:#101011;
+  --panel:#1a191b;
+  --panel-2:#201f21;
+  --panel-3:#151416;
+  --ink:#eee7d8;
+  --muted:#b9b0a5;
+  --soft:#8f8881;
+  --line:#39353d;
+  --line-strong:#514b55;
+  --wine:#74233a;
+  --wine-strong:#9c304e;
+  --wine-soft:#351b25;
+  --hi:#d9b9aa;
+  --ok:#b9d5b2;
+  --err:#e4a5a5;
+  --serif:Georgia,"Times New Roman",serif;
+  --sans:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+}
 *{box-sizing:border-box}
 html{overflow-x:hidden;scroll-behavior:smooth}
-body{margin:0;background:var(--bg);color:var(--ink);font:1rem/1.7 var(--sans);overflow-x:hidden}
-main{width:min(980px,calc(100% - 32px));margin:0 auto;padding:clamp(2rem,6vw,4.5rem) 0 5rem}
-header{margin-bottom:2rem;border-bottom:1px solid var(--line);padding-bottom:1.5rem}
-h1,h2{font-family:var(--serif);line-height:1.2;font-weight:600}
-h1{margin:0 0 .55rem;font-size:clamp(2rem,5vw,3.2rem)}
-h2{margin:0 0 .7rem;font-size:1.45rem}
-.lead{margin:0;color:var(--muted)}
-#tree{display:grid;gap:.8rem;min-width:0}
-.node{position:relative;min-width:0;width:100%;margin-inline-start:min(calc(var(--depth)*28px),180px);padding:1.05rem 1.15rem;background:var(--panel);border:1px solid var(--line);border-radius:8px;box-shadow:0 4px 18px #0004;overflow:hidden}
-.node:before{content:"";position:absolute;left:-15px;top:0;bottom:0;border-left:1px solid var(--line)}
-.node[data-depth="0"]:before{display:none}
-.meta{display:flex;gap:.6rem;flex-wrap:wrap;align-items:baseline;color:var(--muted);font-size:.88rem}
-.author{font-weight:700;color:var(--ink)}
-.role{color:var(--hi)}
-.content{margin:.7rem 0 .85rem;white-space:pre-wrap;overflow-wrap:anywhere;word-break:break-word;min-width:0;font-family:var(--serif);font-size:1.04rem;line-height:1.75}
-.actions{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center;min-width:0}
-button,.native{min-height:42px;border:1px solid var(--line);background:transparent;color:var(--hi);padding:.55rem .75rem;border-radius:6px;text-decoration:none;cursor:pointer;font:inherit;font-size:.9rem;line-height:1.35;max-width:100%;overflow-wrap:anywhere}
-button:hover,.native:hover{background:var(--wine);border-color:var(--wine2);color:#fff}
-button[disabled]{opacity:.55;cursor:not-allowed}
-.reply-box{display:none;margin-top:1rem;padding-top:1rem;border-top:1px solid var(--line)}
-.reply-box.open{display:block}
-.reply-form{display:grid;gap:.7rem}
-.reply-form textarea{display:block;width:100%;min-height:110px;max-width:100%;padding:.7rem .8rem;border:1px solid var(--line);border-radius:6px;background:#121212;color:var(--ink);font:inherit;resize:vertical}
-.reply-controls{display:flex;gap:.6rem;flex-wrap:wrap;align-items:center}
-.reply-controls label{display:flex;gap:.5rem;align-items:center;color:var(--muted);font-size:.9rem}
-select{min-height:42px;border:1px solid var(--line);border-radius:6px;background:var(--panel);color:var(--ink);padding:.45rem .6rem;font:inherit}
-.status{color:var(--muted);font-size:.9rem;margin-top:.7rem}
+body{
+  margin:0;
+  min-width:0;
+  background:
+    radial-gradient(circle at 50% -10%,#2a1820 0,#101011 34rem),
+    var(--bg);
+  color:var(--ink);
+  font:16px/1.65 var(--sans);
+  overflow-x:hidden;
+}
+button,input,textarea,select{font:inherit}
+main{width:min(900px,calc(100% - 24px));margin:0 auto;padding:32px 0 64px}
+header{
+  margin-bottom:22px;
+  padding:0 4px 18px;
+  border-bottom:1px solid var(--line);
+}
+h1,h2{font-family:var(--serif);font-weight:600;line-height:1.15}
+h1{margin:0 0 8px;font-size:clamp(2rem,7vw,3rem)}
+h2{margin:0 0 8px;font-size:1.55rem}
+.lead{margin:0;color:var(--muted);max-width:700px}
+.status{min-height:0;color:var(--muted);font-size:.9rem;margin:8px 0 0}
 .status:empty{display:none}
-.status.ok{color:#b7d7b0}
-.status.err{color:#e0a0a0}
-.external{margin-top:2.6rem;padding-top:1.5rem;border-top:1px solid var(--line)}
-.external p{margin:.35rem 0;color:var(--muted)}
-.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.status.err{color:var(--err)}
+.status.ok{color:var(--ok)}
+#tree{display:grid;gap:14px;min-width:0}
+.node{
+  --indent:0px;
+  position:relative;
+  width:100%;
+  min-width:0;
+  margin-left:var(--indent);
+  width:calc(100% - var(--indent));
+  padding:18px;
+  background:linear-gradient(180deg,var(--panel-2),var(--panel));
+  border:1px solid var(--line);
+  border-radius:12px;
+  box-shadow:0 8px 24px #0005;
+  overflow:visible;
+}
+.node[data-depth="0"]{border-color:var(--line-strong)}
+.node[data-depth]:not([data-depth="0"]):before{
+  content:"";
+  position:absolute;
+  left:-9px;
+  top:-15px;
+  height:calc(100% + 15px);
+  border-left:1px solid var(--line);
+  opacity:.75;
+}
+.meta{
+  display:flex;
+  gap:8px;
+  align-items:baseline;
+  flex-wrap:wrap;
+  min-width:0;
+}
+.author{
+  color:var(--ink);
+  font-weight:750;
+  letter-spacing:.01em;
+}
+.role{
+  color:var(--hi);
+  font-size:.9rem;
+}
+.reply-context{
+  margin:4px 0 0;
+  color:var(--muted);
+  font-size:.9rem;
+}
+.reply-context strong{color:var(--hi);font-weight:500}
+.content{
+  margin:14px 0 16px;
+  color:#eee8da;
+  font-family:var(--serif);
+  font-size:clamp(1.06rem,2.5vw,1.22rem);
+  line-height:1.72;
+  white-space:pre-wrap;
+  overflow-wrap:anywhere;
+  word-break:break-word;
+}
+.comment-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  padding-top:12px;
+  border-top:1px solid #302d33;
+}
+.action{
+  min-height:42px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  border:1px solid var(--line);
+  border-radius:7px;
+  background:transparent;
+  color:var(--hi);
+  padding:8px 13px;
+  text-decoration:none;
+  cursor:pointer;
+  font-size:.92rem;
+  transition:background .15s ease,border-color .15s ease,transform .15s ease;
+}
+.action:hover{background:var(--wine-soft);border-color:var(--wine-strong)}
+.action:active{transform:translateY(1px)}
+.action.primary{background:var(--wine);border-color:var(--wine);color:#fff}
+.action.primary:hover{background:var(--wine-strong);border-color:var(--wine-strong)}
+.action[disabled]{opacity:.55;cursor:not-allowed;transform:none}
+.reply-box{
+  display:none;
+  margin-top:14px;
+  padding:15px;
+  border:1px solid var(--line);
+  border-radius:10px;
+  background:var(--panel-3);
+}
+.reply-box.open{display:block}
+.reply-title{
+  margin:0 0 10px;
+  color:var(--ink);
+  font-weight:650;
+}
+.reply-to{color:var(--muted);font-weight:400}
+.reply-form{display:grid;gap:10px}
+.reply-form textarea{
+  display:block;
+  width:100%;
+  min-height:124px;
+  max-height:360px;
+  padding:12px 13px;
+  border:1px solid var(--line-strong);
+  border-radius:8px;
+  outline:none;
+  background:#111012;
+  color:var(--ink);
+  resize:vertical;
+  line-height:1.55;
+}
+.reply-form textarea:focus{border-color:var(--hi);box-shadow:0 0 0 2px #d9b9aa22}
+.reply-form textarea::placeholder{color:#756e69}
+.reply-foot{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  flex-wrap:wrap;
+}
+.reply-foot small{color:var(--soft)}
+.reply-tools{display:flex;gap:7px;flex-wrap:wrap}
+.reply-tools select{
+  min-height:40px;
+  max-width:100%;
+  border:1px solid var(--line);
+  border-radius:7px;
+  background:#171618;
+  color:var(--ink);
+  padding:7px 9px;
+}
+.reply-actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.participation{
+  margin-top:28px;
+  padding:22px 4px 0;
+  border-top:1px solid var(--line);
+}
+.participation p{color:var(--muted);margin:6px 0 14px}
+.native{
+  display:inline-flex;
+  align-items:center;
+  min-height:42px;
+  padding:8px 13px;
+  border:1px solid var(--line);
+  border-radius:7px;
+  color:var(--hi);
+  text-decoration:none;
+}
+.native:hover{background:var(--wine-soft);border-color:var(--wine-strong)}
+.sr{
+  position:absolute!important;
+  width:1px!important;height:1px!important;
+  padding:0!important;margin:-1px!important;
+  overflow:hidden!important;clip:rect(0,0,0,0)!important;
+  white-space:nowrap!important;border:0!important;
+}
 :focus-visible{outline:3px solid var(--hi);outline-offset:2px}
 @media(max-width:620px){
- main{width:min(100% - 20px,980px)}
- .node{margin-inline-start:min(calc(var(--depth)*10px),72px);padding:.9rem}
- .node:before{left:-1px}
- .actions{display:grid;grid-template-columns:1fr}
- .actions>*{width:100%;text-align:center}
- .reply-controls{align-items:stretch}
- .reply-controls label{width:100%}
- .reply-controls select{flex:1}
+  main{width:calc(100% - 16px);padding:22px 0 44px}
+  header{padding-left:2px;padding-right:2px}
+  .node{
+    padding:14px;
+    margin-left:0;
+    width:100%;
+    border-radius:10px;
+  }
+  .node[data-depth]:not([data-depth="0"]):before{display:none}
+  .content{margin-top:12px;font-size:1.08rem;line-height:1.72}
+  .comment-actions{display:grid;grid-template-columns:1fr}
+  .comment-actions .action{width:100%}
+  .reply-box{padding:12px;margin-top:12px}
+  .reply-foot{align-items:stretch}
+  .reply-tools,.reply-actions{width:100%}
+  .reply-tools select,.reply-actions .action{width:100%}
+  .reply-actions{display:grid;grid-template-columns:1fr 1fr}
+}
+@media(max-width:390px){
+  .reply-actions{grid-template-columns:1fr}
+  .node{padding:12px}
 }
 </style>
 </head>
@@ -59,77 +242,287 @@ select{min-height:42px;border:1px solid var(--line);border-radius:6px;background
 <main>
 <header>
 <h1>Comentários</h1>
-<p class="lead">Uma conversa preservada em sua sequência original, com respostas encadeadas e leitura contínua.</p>
+<p class="lead">Leia a conversa e responda diretamente ao comentário que quiser continuar.</p>
 <p id="status" class="status" aria-live="polite"></p>
 </header>
+
 <section id="tree" aria-live="polite" aria-label="Conversa"></section>
-<section class="external">
-<h2>Participações</h2>
-<p>Você também pode continuar a conversa pela página pública de participação.</p>
-<p><a class="native" target="_blank" rel="noopener noreferrer" href="https://github.com/outocarlos003-lang/Nocturna/issues/1">Participar da conversa</a></p>
+
+<section class="participation">
+  <h2>Participações</h2>
+  <p>Você também pode continuar a conversa pela página pública.</p>
+  <a class="native" target="_blank" rel="noopener noreferrer" href="https://github.com/outocarlos003-lang/Nocturna/issues/1">Abrir conversa</a>
 </section>
 </main>
+
 <script>
 (()=>{"use strict";
 const REPO="outocarlos003-lang/Nocturna",ISSUE=1;
 const status=document.querySelector("#status"),tree=document.querySelector("#tree");
-const load=async()=>{
- try{
-  const res=await fetch("../data/comments/issue-1.json",{cache:"no-store"});
-  if(!res.ok)throw new Error("Não foi possível carregar a conversa.");
-  const data=await res.json(),nodes=data.nodes||[];
-  const byParent=new Map();
-  nodes.forEach((n,index)=>{n.__order=n.order??index+1;const k=n.parentNodeId===null?"root":String(n.parentNodeId);if(!byParent.has(k))byParent.set(k,[]);byParent.get(k).push(n)});
-  const ordered=[];
-  const visit=id=>(byParent.get(id)||[]).sort((a,b)=>a.__order-b.__order).forEach(n=>{ordered.push(n);visit(String(n.nodeId))});
-  visit("root");
-  if(ordered.length!==nodes.length)throw new Error("Não foi possível preservar a sequência da conversa.");
-  ordered.forEach(n=>{
-   const article=document.createElement("article");
-   article.className="node";article.dataset.depth=n.depth;article.style.setProperty("--depth",n.depth);article.id="node-"+n.nodeId;
-   article.innerHTML='<div class="meta"><span class="author"></span><span class="role"></span></div><div class="content"></div><div class="actions"><a class="native view-link" target="_blank" rel="noopener noreferrer">Ver referência</a><button type="button" class="prepare" aria-expanded="false">Responder</button></div><div class="reply-box" aria-hidden="true"><form class="reply-form"><textarea aria-label="Resposta" placeholder="Escreva sua resposta…"></textarea><div class="reply-controls"><label>Responder como <select class="responder"><option>Akashi Seijuro</option><option>Johan Liebert</option><option>Ayanokoji Kiyotaka</option><option>Osamu Dazai</option><option>Light Yagami</option><option>L Lawliet</option><option>Sasuke Uchiha</option><option>Ranpo Edogawa</option><option>Itachi Uchiha</option><option>Satoru Gojo</option></select></label><button type="submit" class="send">Enviar resposta</button></div><div class="status reply-status" aria-live="polite"></div></form></div>';
-   article.querySelector(".author").textContent=n.author.displayName;
-   article.querySelector(".role").textContent=n.author.role||"";
-   article.querySelector(".content").textContent=n.content;
-   const view=article.querySelector(".view-link");
-   view.href=n.origin?.migrated?"#node-"+n.nodeId:(n.commentUrl||"https://github.com/"+REPO+"/issues/"+ISSUE);
-   const box=article.querySelector(".reply-box"),prepare=article.querySelector(".prepare"),form=article.querySelector(".reply-form"),out=article.querySelector(".reply-status");
-   prepare.addEventListener("click",()=>{
-    const open=!box.classList.contains("open");
-    box.classList.toggle("open",open);prepare.setAttribute("aria-expanded",String(open));box.setAttribute("aria-hidden",String(!open));
-    if(open)box.querySelector("textarea").focus();
-   });
-   form.addEventListener("submit",async event=>{
+const characters=[
+  "Akashi Seijuro","Johan Liebert","Ayanokoji Kiyotaka","Osamu Dazai",
+  "Light Yagami","L Lawliet","Sasuke Uchiha","Ranpo Edogawa",
+  "Itachi Uchiha","Satoru Gojo"
+];
+const draftKey=id=>"nocturna-comment-draft-"+id;
+const escapeTarget=(n)=>n.commentUrl||"https://github.com/"+REPO+"/issues/"+ISSUE;
+
+function makeNode(n){
+  const article=document.createElement("article");
+  article.className="node";
+  article.dataset.depth=n.depth;
+  article.style.setProperty("--indent",Math.min(Number(n.depth||0)*22,132)+"px");
+  article.id="node-"+n.nodeId;
+
+  const meta=document.createElement("div");
+  meta.className="meta";
+  const author=document.createElement("span");
+  author.className="author";
+  author.textContent=n.author?.displayName||"Participante";
+  meta.appendChild(author);
+  if(n.author?.role){
+    const role=document.createElement("span");
+    role.className="role";
+    role.textContent=n.author.role;
+    meta.appendChild(role);
+  }
+  article.appendChild(meta);
+
+  if(n.parentNodeId!==null){
+    const context=document.createElement("p");
+    context.className="reply-context";
+    context.append("Respondendo a ");
+    const strong=document.createElement("strong");
+    strong.textContent=n.parentAuthor?.displayName||"outro comentário";
+    context.appendChild(strong);
+    article.appendChild(context);
+  }
+
+  const content=document.createElement("div");
+  content.className="content";
+  content.textContent=n.content||"";
+  article.appendChild(content);
+
+  const actions=document.createElement("div");
+  actions.className="comment-actions";
+
+  const reply=document.createElement("button");
+  reply.type="button";
+  reply.className="action primary";
+  reply.textContent="Responder";
+  reply.setAttribute("aria-expanded","false");
+  actions.appendChild(reply);
+
+  const copy=document.createElement("button");
+  copy.type="button";
+  copy.className="action";
+  copy.textContent="Copiar";
+  actions.appendChild(copy);
+
+  const reference=document.createElement("a");
+  reference.className="action";
+  reference.textContent="Ver referência";
+  reference.target="_blank";
+  reference.rel="noopener noreferrer";
+  reference.href=escapeTarget(n);
+  actions.appendChild(reference);
+  article.appendChild(actions);
+
+  const box=document.createElement("div");
+  box.className="reply-box";
+  box.setAttribute("aria-hidden","true");
+
+  const title=document.createElement("p");
+  title.className="reply-title";
+  title.textContent="Sua resposta";
+  const to=document.createElement("span");
+  to.className="reply-to";
+  to.textContent="  ·  para "+(n.author?.displayName||"este comentário");
+  title.appendChild(to);
+  box.appendChild(title);
+
+  const form=document.createElement("form");
+  form.className="reply-form";
+
+  const textarea=document.createElement("textarea");
+  textarea.maxLength=4000;
+  textarea.placeholder="Escreva sua resposta…";
+  textarea.setAttribute("aria-label","Resposta para "+(n.author?.displayName||"este comentário"));
+  try{textarea.value=localStorage.getItem(draftKey(n.nodeId))||""}catch{}
+  form.appendChild(textarea);
+
+  const foot=document.createElement("div");
+  foot.className="reply-foot";
+
+  const tools=document.createElement("div");
+  tools.className="reply-tools";
+  const select=document.createElement("select");
+  select.className="responder";
+  select.setAttribute("aria-label","Escolha quem responde");
+  characters.forEach(name=>{
+    const option=document.createElement("option");
+    option.value=name;
+    option.textContent="Responder como "+name;
+    select.appendChild(option);
+  });
+  tools.appendChild(select);
+  foot.appendChild(tools);
+
+  const counter=document.createElement("small");
+  counter.textContent=textarea.value.length+"/4000";
+  foot.appendChild(counter);
+  form.appendChild(foot);
+
+  const actions2=document.createElement("div");
+  actions2.className="reply-actions";
+
+  const cancel=document.createElement("button");
+  cancel.type="button";
+  cancel.className="action";
+  cancel.textContent="Cancelar";
+  actions2.appendChild(cancel);
+
+  const send=document.createElement("button");
+  send.type="submit";
+  send.className="action primary";
+  send.textContent="Enviar resposta";
+  actions2.appendChild(send);
+
+  form.appendChild(actions2);
+
+  const out=document.createElement("div");
+  out.className="status reply-status";
+  out.setAttribute("aria-live","polite");
+  form.appendChild(out);
+
+  box.appendChild(form);
+  article.appendChild(box);
+
+  const openBox=()=>{
+    box.classList.add("open");
+    box.setAttribute("aria-hidden","false");
+    reply.setAttribute("aria-expanded","true");
+    setTimeout(()=>textarea.focus(),0);
+  };
+  const closeBox=()=>{
+    box.classList.remove("open");
+    box.setAttribute("aria-hidden","true");
+    reply.setAttribute("aria-expanded","false");
+  };
+
+  reply.addEventListener("click",()=>box.classList.contains("open")?closeBox():openBox());
+  cancel.addEventListener("click",()=>{
+    try{localStorage.removeItem(draftKey(n.nodeId))}catch{}
+    textarea.value="";
+    counter.textContent="0/4000";
+    out.textContent="";
+    out.className="status reply-status";
+    closeBox();
+  });
+  textarea.addEventListener("input",()=>{
+    counter.textContent=textarea.value.length+"/4000";
+    try{localStorage.setItem(draftKey(n.nodeId),textarea.value)}catch{}
+  });
+  textarea.addEventListener("keydown",event=>{
+    if((event.ctrlKey||event.metaKey)&&event.key==="Enter"){
+      event.preventDefault();
+      form.requestSubmit();
+    }
+  });
+  copy.addEventListener("click",async()=>{
+    const text=(n.author?.displayName||"")+"\n\n"+(n.content||"");
+    try{
+      await navigator.clipboard.writeText(text);
+      copy.textContent="Copiado";
+      setTimeout(()=>copy.textContent="Copiar",1400);
+    }catch{
+      copy.textContent="Selecione o texto";
+      setTimeout(()=>copy.textContent="Copiar",1600);
+    }
+  });
+
+  form.addEventListener("submit",async event=>{
     event.preventDefault();
-    const message=box.querySelector("textarea").value.trim();
-    if(!message){out.textContent="Escreva sua resposta.";out.className="status err";return}
+    const message=textarea.value.trim();
+    if(!message){
+      out.textContent="Escreva sua resposta antes de enviar.";
+      out.className="status reply-status err";
+      textarea.focus();
+      return;
+    }
+    send.disabled=true;
     const api=window.NOCTURNA_REPLY_API||"";
     if(!api){
-      out.textContent="Sua resposta está pronta. Para publicá-la, continue a conversa na página pública.";
-      out.className="status";
-      const target=n.commentUrl||"https://github.com/"+REPO+"/issues/"+ISSUE;
+      try{await navigator.clipboard.writeText(message)}catch{}
+      out.textContent="Texto copiado. Abra a conversa pública para publicar sua resposta.";
+      out.className="status reply-status ok";
+      const target=escapeTarget(n);
       window.open(target,"_blank","noopener,noreferrer");
+      send.disabled=false;
       return;
     }
     try{
       const requestId=box.dataset.requestId||=(crypto.randomUUID?crypto.randomUUID().replace(/-/g,""):String(Date.now()));
-      const response=await fetch(api,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({message,parentNode:String(n.nodeId),parentComment:String(n.commentId),parentAuthor:n.author.displayName,responder:box.querySelector(".responder").value,requestId})});
+      const response=await fetch(api,{
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({
+          message,
+          parentNode:String(n.nodeId),
+          parentComment:String(n.commentId),
+          parentAuthor:n.author?.displayName||"",
+          responder:select.value,
+          requestId
+        })
+      });
       const result=await response.json().catch(()=>({}));
       if(!response.ok)throw new Error(result.error||"Não foi possível enviar a resposta.");
       out.textContent="Resposta enviada.";
-      out.className="status ok";
-      box.querySelector("textarea").value="";
-    }catch(e){out.textContent=e.message||"Não foi possível enviar a resposta.";out.className="status err"}
-   });
-   tree.appendChild(article);
+      out.className="status reply-status ok";
+      textarea.value="";
+      counter.textContent="0/4000";
+      try{localStorage.removeItem(draftKey(n.nodeId))}catch{}
+    }catch(error){
+      out.textContent=error.message||"Não foi possível enviar a resposta.";
+      out.className="status reply-status err";
+    }finally{send.disabled=false}
   });
-  status.textContent="";
- }catch(e){status.textContent=e.message;status.className="status err"}
-};
-const s=document.createElement("script");s.src="./reply-api-config.js";s.onload=load;s.onerror=load;document.head.appendChild(s);
+
+  return article;
+}
+
+async function load(){
+  try{
+    const res=await fetch("../data/comments/issue-1.json",{cache:"no-store"});
+    if(!res.ok)throw new Error("Não foi possível carregar a conversa.");
+    const data=await res.json(),nodes=data.nodes||[];
+    const byParent=new Map();
+    nodes.forEach((n,index)=>{
+      n.__order=n.order??index+1;
+      const key=n.parentNodeId===null?"root":String(n.parentNodeId);
+      if(!byParent.has(key))byParent.set(key,[]);
+      byParent.get(key).push(n);
+    });
+    const ordered=[];
+    const visit=id=>(byParent.get(id)||[])
+      .sort((a,b)=>a.__order-b.__order)
+      .forEach(n=>{ordered.push(n);visit(String(n.nodeId))});
+    visit("root");
+    if(ordered.length!==nodes.length)throw new Error("Não foi possível preservar a sequência da conversa.");
+    ordered.forEach(n=>tree.appendChild(makeNode(n)));
+  }catch(error){
+    status.textContent=error.message||"Não foi possível carregar a conversa.";
+    status.className="status err";
+  }
+}
+
+const config=document.createElement("script");
+config.src="./reply-api-config.js";
+config.onload=load;
+config.onerror=load;
+document.head.appendChild(config);
 })();
-</script>
-<script>
+
 (()=>{"use strict";
 if(new URLSearchParams(location.search).get("embed")!=="1")return;
 const send=()=>{if(window.parent!==window)window.parent.postMessage({type:"nocturna-comments-height",height:document.documentElement.scrollHeight},location.origin)};
