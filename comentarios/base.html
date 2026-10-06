@@ -52,13 +52,13 @@ const esc=s=>String(s??"");
 const githubIssue=n=>`https://github.com/${REPO}/issues/${ISSUE}#issuecomment-${n}`;
 const load=async()=>{
  try{
-  const res=await fetch("../data/comments/issue-5.json",{cache:"no-store"});
+  const res=await fetch("../data/comments/issue-1.json",{cache:"no-store"});
   if(!res.ok)throw new Error("projecao HTTP "+res.status);
   const data=await res.json(),nodes=data.nodes||[];
   const byParent=new Map();
-  nodes.forEach(n=>{const k=n.parentNodeId===null?"root":String(n.parentNodeId);if(!byParent.has(k))byParent.set(k,[]);byParent.get(k).push(n)});
+  nodes.forEach((n,index)=>{n.__order=n.order??index+1;const k=n.parentNodeId===null?"root":String(n.parentNodeId);if(!byParent.has(k))byParent.set(k,[]);byParent.get(k).push(n)});
   const ordered=[];
-  const visit=(id)=>{(byParent.get(id)||[]).sort((a,b)=>a.order-b.order).forEach(n=>{ordered.push(n);visit(String(n.nodeId))})};
+  const visit=(id)=>{(byParent.get(id)||[]).sort((a,b)=>a.__order-b.__order).forEach(n=>{ordered.push(n);visit(String(n.nodeId))})};
   visit("root");
   if(ordered.length!==nodes.length)throw new Error("a árvore não pode ser reconstruída integralmente");
   ordered.forEach(n=>{
@@ -69,8 +69,8 @@ const load=async()=>{
    article.querySelector(".author").textContent=n.author.displayName;
    article.querySelector(".depth").textContent="nó "+n.nodeId+" · profundidade "+n.depth;
    article.querySelector(".content").textContent=n.content;
-   article.querySelector(".native").href=n.commentUrl;
-   article.querySelector(".human-reply").href=n.commentUrl;
+   article.querySelector(".native").href=n.origin?.migrated ? "#node-"+n.nodeId : n.commentUrl;
+   article.querySelector(".human-reply").href=n.origin?.migrated ? "https://github.com/"+REPO+"/issues/"+ISSUE : n.commentUrl;
    const box=article.querySelector(".reply-box"),prepare=article.querySelector(".prepare"),send=article.querySelector(".send");
    prepare.addEventListener("click",()=>{box.classList.toggle("open");if(box.classList.contains("open"))box.querySelector("textarea").focus()});
    send.addEventListener("click",async()=>{

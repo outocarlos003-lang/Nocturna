@@ -24,7 +24,7 @@ for(const n of nodes){
   if(typeof n.content!=="string") fail("content ausente em "+n.nodeId);
   if(!n.author?.displayName) fail("autoria ausente em "+n.nodeId);
   if(!Number.isInteger(n.depth)||n.depth<0) fail("depth invalido em "+n.nodeId);
-  if(!Number.isInteger(n.order)||n.order<1) fail("order invalido em "+n.nodeId);
+  if(n.order!==undefined && (!Number.isInteger(n.order)||n.order<1)) fail("order invalido em "+n.nodeId);
 }
 const root=nodes.filter(n=>String(n.nodeId)===String(data.issue.rootNodeId));
 if(root.length!==1) fail("raiz deve existir exatamente uma vez");
@@ -43,8 +43,18 @@ for(const n of nodes){
     if(n.parentAuthor!==p.author.displayName) fail("parentAuthor incoerente: "+n.nodeId);
   }
 }
-const sorted=nodes.slice().sort((a,b)=>a.order-b.order);
-for(let i=1;i<sorted.length;i++) if(sorted[i].order!==sorted[i-1].order+1) fail("ordem nao monotona entre "+sorted[i-1].nodeId+" e "+sorted[i].nodeId);
+const childrenByParent=new Map();
+for(const n of nodes){
+  const key=String(n.parentNodeId===null?"root":n.parentNodeId);
+  if(!childrenByParent.has(key)) childrenByParent.set(key,[]);
+  childrenByParent.get(key).push(n);
+}
+for(const [parentId,children] of childrenByParent){
+  const withOrder=children.filter(n=>Number.isInteger(n.order));
+  if(withOrder.length && withOrder.length!==children.length) fail("ordem parcial entre irmaos do pai "+parentId);
+  const sorted=withOrder.slice().sort((a,b)=>a.order-b.order);
+  for(let i=1;i<sorted.length;i++) if(sorted[i].order===sorted[i-1].order) fail("ordem duplicada entre "+sorted[i-1].nodeId+" e "+sorted[i].nodeId);
+}
 const numeric=nodes.map(n=>Number(n.nodeId)).sort((a,b)=>a-b);
 for(let i=0;i<numeric.length;i++) if(numeric[i]!==i+1) fail("IDs historicos devem formar serie 1..N; encontrado "+numeric.join(","));
 
