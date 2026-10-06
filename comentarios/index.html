@@ -3,94 +3,26 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="index,follow">
 <title>Comentários — Nocturna</title>
 <style>
-:root{color-scheme:light;--ink:#211c18;--muted:#756b63;--paper:#f7f3ed;--card:#fffdf9;--line:#d9d0c5;--accent:#6b3f35}
-*{box-sizing:border-box}
-body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.65 Georgia,serif}
-main{width:min(980px,calc(100% - 32px));margin:0 auto;padding:48px 0 72px}
-header{margin-bottom:32px;border-bottom:1px solid var(--line);padding-bottom:24px}
-h1{margin:0 0 8px;font-size:clamp(2rem,5vw,3.2rem);font-weight:500}
-.lead{margin:0;color:var(--muted)}
-#tree{display:grid;gap:14px}
-.node{position:relative;margin-left:calc(var(--depth)*28px);padding:18px 20px;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 2px 10px #0000000a}
-.node:before{content:"";position:absolute;left:-15px;top:0;bottom:0;border-left:1px solid var(--line)}
-.node[data-depth="0"]:before{display:none}
-.meta{display:flex;gap:10px;flex-wrap:wrap;align-items:baseline;color:var(--muted);font-size:.88rem}
-.author{font-weight:700;color:var(--ink)}
-.depth{font-variant-numeric:tabular-nums}
-.content{margin:10px 0 12px;white-space:pre-wrap}
-.actions{display:flex;gap:10px;flex-wrap:wrap}
-button,.native{border:1px solid var(--line);background:transparent;color:var(--accent);padding:6px 10px;border-radius:7px;text-decoration:none;cursor:pointer;font:inherit;font-size:.9rem}
-.reply-box{display:none;margin-top:14px;padding-top:14px;border-top:1px solid var(--line)}
-.reply-box.open{display:block}
-textarea{width:100%;min-height:100px;padding:10px;border:1px solid var(--line);border-radius:7px;background:#fff;color:var(--ink);font:inherit}
-.status{color:var(--muted);font-size:.9rem;margin-top:8px}
-.external{margin-top:42px;padding-top:24px;border-top:1px solid var(--line)}
-@media(max-width:620px){.node{margin-left:calc(var(--depth)*14px);padding:15px}.node:before{left:-8px}}
+:root{color-scheme:light}
+html,body{margin:0;min-height:100%;background:#f7f3ed}
+body{overflow:hidden}
+.frame{width:100%;min-height:100vh;border:0;display:block;background:#f7f3ed}
 </style>
 </head>
 <body>
-<main>
-<header>
-<h1>Comentários</h1>
-<p class="lead">Issue #5 é a origem. Cada resposta canônica preserva seu pai, profundidade, identidade e origem.</p>
-<p id="status" class="status">Carregando a projeção canônica…</p>
-</header>
-<section id="tree" aria-live="polite"></section>
-<section class="external">
-<h2>Participações públicas externas</h2>
-<p class="lead">Comentários do GitHub sem metadados canônicos permanecem públicos, mas não são inseridos artificialmente na árvore.</p>
-</section>
-</main>
+<iframe id="comments-frame" class="frame" src="./base.html?embed=1" title="Discussão canônica da Nocturna" loading="eager"></iframe>
 <script>
 (()=>{"use strict";
-const REPO="outocarlos003-lang/Nocturna",ISSUE=5;
-const status=document.querySelector("#status"),tree=document.querySelector("#tree");
-const esc=s=>String(s??"");
-const githubIssue=n=>`https://github.com/${REPO}/issues/${ISSUE}#issuecomment-${n}`;
-const load=async()=>{
- try{
-  const res=await fetch("../data/comments/issue-5.json",{cache:"no-store"});
-  if(!res.ok)throw new Error("projecao HTTP "+res.status);
-  const data=await res.json(),nodes=data.nodes||[];
-  const byParent=new Map();
-  nodes.forEach(n=>{const k=n.parentNodeId===null?"root":String(n.parentNodeId);if(!byParent.has(k))byParent.set(k,[]);byParent.get(k).push(n)});
-  const ordered=[];
-  const visit=(id)=>{(byParent.get(id)||[]).sort((a,b)=>a.order-b.order).forEach(n=>{ordered.push(n);visit(String(n.nodeId))})};
-  visit("root");
-  if(ordered.length!==nodes.length)throw new Error("a árvore não pode ser reconstruída integralmente");
-  ordered.forEach(n=>{
-   const article=document.createElement("article");
-   article.className="node";article.dataset.depth=n.depth;article.style.setProperty("--depth",n.depth);
-   article.id="node-"+n.nodeId;
-   article.innerHTML='<div class="meta"><span class="author"></span><span class="depth"></span></div><div class="content"></div><div class="actions"><a class="native" target="_blank" rel="noopener">Permalink</a><button type="button" class="prepare">Preparar resposta</button></div><div class="reply-box"><textarea aria-label="Resposta"></textarea><label>Autor <select class="responder"><option>Akashi Seijuro</option><option>Johan Liebert</option><option>Ayanokoji Kiyotaka</option><option>Osamu Dazai</option><option>Light Yagami</option><option>L Lawliet</option><option>Sasuke Uchiha</option><option>Ranpo Edogawa</option><option>Itachi Uchiha</option><option>Satoru Gojo</option></select></label><button type="button" class="send">Publicar resposta</button><div class="status reply-status"></div></div>';
-   article.querySelector(".author").textContent=n.author.displayName;
-   article.querySelector(".depth").textContent="nó "+n.nodeId+" · profundidade "+n.depth;
-   article.querySelector(".content").textContent=n.content;
-   article.querySelector(".native").href=n.commentUrl;
-   const box=article.querySelector(".reply-box"),prepare=article.querySelector(".prepare"),send=article.querySelector(".send");
-   prepare.addEventListener("click",()=>{box.classList.toggle("open");if(box.classList.contains("open"))box.querySelector("textarea").focus()});
-   send.addEventListener("click",async()=>{
-    const message=box.querySelector("textarea").value.trim(),out=box.querySelector(".reply-status");
-    if(!message){out.textContent="Escreva a resposta.";return}
-    out.textContent="A publicação canônica exige o mecanismo seguro configurado.";
-    const api=window.NOCTURNA_REPLY_API||"";
-    if(!api){out.textContent="API de publicação ainda não configurada. Use o permalink para responder no GitHub.";window.open(n.commentUrl,"_blank","noopener");return}
-    try{
-      const response=await fetch(api,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({message,parentNode:String(n.nodeId),parentComment:String(n.commentId),parentAuthor:n.author.displayName,responder:box.querySelector(".responder").value,requestId:(box.dataset.requestId ||= crypto.randomUUID().replace(/-/g,""))} )});
-      const result=await response.json();
-      if(!response.ok)throw new Error(result.error||"falha");
-      out.textContent="Resposta publicada; a projeção será normalizada pelo workflow.";
-      box.querySelector("textarea").value="";
-    }catch(e){out.textContent=e.message||"Falha ao publicar."}
-   });
-   tree.appendChild(article);
-  });
-  status.textContent=nodes.length+" nós canônicos · reconstrução determinística concluída.";
- }catch(e){status.textContent="Falha ao reconstruir a árvore: "+e.message}
-};
-const s=document.createElement("script");s.src="./reply-api-config.js";s.onload=load;s.onerror=load;document.head.appendChild(s);
+const frame=document.querySelector("#comments-frame");
+const resize=(height)=>{if(Number.isFinite(height)&&height>0)frame.style.height=Math.max(height,720)+"px"};
+addEventListener("message",event=>{
+  if(event.origin!==location.origin||event.source!==frame.contentWindow||event.data?.type!=="nocturna-comments-height")return;
+  resize(event.data.height);
+});
+frame.addEventListener("load",()=>{try{resize(frame.contentDocument.documentElement.scrollHeight)}catch{}});
 })();
 </script>
 </body>
