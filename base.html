@@ -168,7 +168,7 @@ body.embed-mode h1{font-size:1.35rem;margin:.2rem 0 .8rem}
 </head>
 <body>
 <header><div class="wrap">
-<div class="kicker">Nocturna · Issue #5</div>
+<div class="kicker">Nocturna · Issue #1</div>
 <h1>Discussão encadeada</h1>
 <a class="back" href="/Nocturna/">← Voltar à Nocturna</a>
 </div></header>
@@ -176,7 +176,7 @@ body.embed-mode h1{font-size:1.35rem;margin:.2rem 0 .8rem}
 
 <div class="comment-tools" aria-label="Ferramentas de discussão">
   <div class="comment-tools-top">
-    <div class="comment-count">23 Nós <small>Issue #5 · Johan Liebert como raiz</small></div>
+    <div class="comment-count">23 Nós <small>Issue #1 · Johan Liebert como raiz</small></div>
     <div class="comment-controls">
       <input class="comment-search" id="comment-search" type="search" placeholder="Pesquisar..." aria-label="Pesquisar">
     </div>
@@ -195,7 +195,7 @@ body.embed-mode h1{font-size:1.35rem;margin:.2rem 0 .8rem}
       <button class="pt-publish" id="pt-publish-comment" type="button">Enviar</button>
     </div>
   </div>
-  <p class="comment-compose-note">Mensagem original: abre uma nova Issue. Resposta: usa a Issue #5 existente e ancora no comentário pai.</p>
+  <p class="comment-compose-note">Mensagem original: abre uma nova Issue. Resposta: usa a Issue #1 existente e ancora no comentário pai.</p>
 <template id="comment-ui-template">
 <div class="comment-actions">
 <button class="reply-button" type="button" aria-expanded="false">↩ Responder</button>
@@ -218,9 +218,9 @@ body.embed-mode h1{font-size:1.35rem;margin:.2rem 0 .8rem}
 </section>
 
 <article class="comment depth-0" data-thread="2" data-parent="" data-github-issue="5">
-<div class="author"><div class="avatar">J</div><div><div class="name">Johan Liebert</div><div class="role">Comentário inicial · Issue #5</div></div><div class="reply"><a class="issue-root-link" href="https://github.com/outocarlos003-lang/Nocturna/issues/5" target="_blank" rel="noopener">Issue #5 ↗</a></div></div>
+<div class="author"><div class="avatar">J</div><div><div class="name">Johan Liebert</div><div class="role">Comentário inicial · Issue #1</div></div><div class="reply"><a class="issue-root-link" href="https://github.com/outocarlos003-lang/Nocturna/issues/1" target="_blank" rel="noopener">Issue #1 ↗</a></div></div>
 <p>“É curioso. Um texto pode revelar muito sobre quem o escreveu, mesmo quando o autor acredita estar apenas descrevendo o mundo. Às vezes, aquilo que chamamos de verdade é somente a forma mais elegante que encontramos para esconder aquilo que somos.”</p>
-<div class="comment-actions"><a class="reply-button issue-root-action" href="https://github.com/outocarlos003-lang/Nocturna/issues/5" target="_blank" rel="noopener">↗ Abrir Issue #5</a><button class="reaction-button" type="button" data-reaction="👍">Curtir 👍 <span>0</span></button><button class="reaction-button" type="button" data-reaction="❤️">❤️ <span>0</span></button><button class="reaction-button" type="button" data-reaction="💡">💡 <span>0</span></button><a class="react-button" href="#reader-comments">💬 Participar</a></div>
+<div class="comment-actions"><a class="reply-button issue-root-action" href="https://github.com/outocarlos003-lang/Nocturna/issues/1" target="_blank" rel="noopener">↗ Abrir Issue #1</a><button class="reaction-button" type="button" data-reaction="👍">Curtir 👍 <span>0</span></button><button class="reaction-button" type="button" data-reaction="❤️">❤️ <span>0</span></button><button class="reaction-button" type="button" data-reaction="💡">💡 <span>0</span></button><a class="react-button" href="#reader-comments">💬 Participar</a></div>
 </article>
 
 <article class="comment depth-1" data-thread="1" data-parent="2" data-github-comment-id="5991291912">
@@ -362,7 +362,7 @@ body.embed-mode h1{font-size:1.35rem;margin:.2rem 0 .8rem}
     </div>
     <button class="tool-button" id="refresh-github-comments" type="button">↻ Atualizar</button>
   </div>
-  <p class="live-comments-note" id="live-comments-note">Carregando comentários publicados diretamente na Issue #5…</p>
+  <p class="live-comments-note" id="live-comments-note">Carregando comentários publicados diretamente na Issue #1…</p>
   <div class="live-comments-list" id="live-comments-list"></div>
 </section>
 
@@ -409,7 +409,7 @@ body.embed-mode h1{font-size:1.35rem;margin:.2rem 0 .8rem}
   function buildParentCommentUrl(parentComment){
     // Abre a Issue sem ancorar no comentário pai. Assim o editor do GitHub
     // entra como um comentário novo e não carrega automaticamente a citação.
-    return "https://github.com/"+repo+"/issues/5";
+    return "https://github.com/"+repo+"/issues/1";
   }
 
   function buildOriginalIssueUrl(message){
@@ -559,7 +559,7 @@ body.embed-mode h1{font-size:1.35rem;margin:.2rem 0 .8rem}
     if(!list) return;
 
     try{
-      const response=await fetch("https://api.github.com/repos/"+repo+"/issues/5/comments?per_page=100",{
+      const response=await fetch("https://api.github.com/repos/"+repo+"/issues/1/comments?per_page=100",{
         headers:{Accept:"application/vnd.github+json"}
       });
       if(!response.ok) throw new Error("GitHub respondeu HTTP "+response.status);
