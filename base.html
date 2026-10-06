@@ -738,8 +738,12 @@ body.embed-mode h1{font-size:1.35rem;margin:.2rem 0 .8rem}
   }
 
   function buildParentCommentUrl(parentComment){
-    // Abre a Issue sem ancorar no comentário pai. Assim o editor do GitHub
-    // entra como um comentário novo e não carrega automaticamente a citação.
+    // Respostas devem voltar ao comentário do GitHub que originou a resposta.
+    // O comentário raiz continua apontando apenas para a Issue #5.
+    const commentId=String(parentComment||"").trim();
+    if(/^\\d+$/.test(commentId)){
+      return "https://github.com/"+repo+"/issues/5#issuecomment-"+commentId;
+    }
     return "https://github.com/"+repo+"/issues/5";
   }
 
