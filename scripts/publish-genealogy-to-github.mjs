@@ -37,8 +37,10 @@ const api = async (url, options = {}) => {
       ...(options.headers || {})
     }
   });
-  const body = await response.json();
-  if (!response.ok) throw new Error(`GitHub ${response.status}: ${body.message || "erro"}`);
+  const text = await response.text();
+  let body = {};
+  try { body = JSON.parse(text); } catch {}
+  if (!response.ok) throw new Error(`GitHub ${response.status}: ${body.message || text}`);
   return body;
 };
 
@@ -67,7 +69,7 @@ const parseNodeMarker = (body) => {
   try { return JSON.parse(match[1]); } catch { return null; }
 };
 
-let comments = [];
+const comments = [];
 for (let page = 1; ; page += 1) {
   const batch = await api(`/repos/${OWNER}/${REPO}/issues/${ISSUE}/comments?per_page=100&page=${page}`);
   comments.push(...batch);
@@ -79,16 +81,13 @@ const liveBySource = new Map();
 for (const comment of comments) {
   const marker = parseNodeMarker(comment.body);
   if (!marker) continue;
-  if (marker.nodeId) {
-    const key = String(marker.nodeId);
-    if (liveByNode.has(key)) throw new Error(`mais de um comentario GitHub materializa o node ${key}`);
-    liveByNode.set(key, comment);
-  }
-  if (marker.sourceId) {
-    const key = String(marker.sourceId);
-    if (liveBySource.has(key)) throw new Error(`mais de um comentario GitHub materializa o sourceId ${key}`);
-    liveBySource.set(key, comment);
-  }
+  if (!marker.nodeId || !marker.sourceId) throw new Error(`marker de genealogia incompleto no comentario ${comment.id}`);
+  const nodeKey = String(marker.nodeId);
+  const sourceKey = String(marker.sourceId);
+  if (liveByNode.has(nodeKey)) throw new Error(`mais de um comentario GitHub materializa o node ${nodeKey}`);
+  if (liveBySource.has(sourceKey)) throw new Error(`mais de um comentario GitHub materializa o sourceId ${sourceKey}`);
+  liveByNode.set(nodeKey, comment);
+  liveBySource.set(sourceKey, comment);
 }
 
 const pending = nodes
@@ -102,7 +101,12 @@ let reconciled = 0;
 for (const node of pending) {
   const nodeId = String(node.nodeId);
   const sourceId = String(node.sourceId);
-  let comment = liveByNode.get(nodeId) || liveBySource.get(sourceId);
+  const byNodeComment = liveByNode.get(nodeId);
+  const bySourceComment = liveBySource.get(sourceId);
+  if (byNodeComment && bySourceComment && String(byNodeComment.id) !== String(bySourceComment.id)) {
+    throw new Error(`identidade GitHub conflitante para node ${nodeId} / sourceId ${sourceId}`);
+  }
+  let comment = byNodeComment || bySourceComment;
 
   if (!comment) {
     const parent = byNode.get(String(node.parentNodeId));
@@ -115,6 +119,11 @@ for (const node of pending) {
       body: JSON.stringify({ body: expectedBody(node, parent) })
     });
     published += 1;
+  }
+
+  const marker = parseNodeMarker(comment.body);
+  if (marker && (String(marker.nodeId) !== nodeId || String(marker.sourceId) !== sourceId)) {
+    throw new Error(`marker GitHub não corresponde ao node ${nodeId}`);
   }
 
   const expectedUrl = comment.html_url || `https://github.com/${OWNER}/${REPO}/issues/${ISSUE}#issuecomment-${comment.id}`;
@@ -159,7 +168,5 @@ data.issue.rootCommentUrl = rootNode.commentUrl;
 data.issue.rootAuthor = "Johan Liebert";
 data.issue.authority = "github";
 
-if (changed) {
-  fs.writeFileSync(PATH, `${JSON.stringify(data, null, 2)}\n`);
-}
+if (changed) fs.writeFileSync(PATH, `${JSON.stringify(data, null, 2)}\n`);
 console.log(`genealogia reconciliada: ${published} publicado(s), ${reconciled} comentario(s) atualizado(s)`);
