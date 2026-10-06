@@ -3,11 +3,14 @@
   "version": 1,
   "repository": "outocarlos003-lang/Nocturna",
   "issue": {
-    "number": 5,
-    "title": "Johan Liebert · Comentário inicial",
-    "url": "https://github.com/outocarlos003-lang/Nocturna/issues/5",
+    "number": 1,
+    "title": "Nocturna — conversa canônica",
+    "url": "https://github.com/outocarlos003-lang/Nocturna/issues/1",
     "authority": "github",
-    "rootNodeId": "2"
+    "rootNodeId": "2",
+    "rootCommentId": 6015397380,
+    "rootCommentUrl": "https://github.com/outocarlos003-lang/Nocturna/issues/1#issuecomment-6015397380",
+    "rootAuthor": "outocarlos003-lang"
   },
   "identity": {
     "policy": "historical nodeId is preserved; new canonical nodes use next unused positive integer",
@@ -37,8 +40,8 @@
       "parentNodeId": "2",
       "parentThreadKey": "2",
       "depth": 1,
-      "parentCommentId": "issue-root",
-      "parentAuthor": "Johan Liebert",
+      "parentCommentId": 6015397380,
+      "parentAuthor": "outocarlos003-lang",
       "commentId": 5991291912,
       "commentUrl": "https://github.com/outocarlos003-lang/Nocturna/issues/5#issuecomment-5991291912",
       "author": {
@@ -61,20 +64,21 @@
       "parentNodeId": null,
       "parentThreadKey": null,
       "depth": 0,
-      "parentCommentId": "issue-root",
+      "parentCommentId": null,
       "parentAuthor": null,
-      "commentId": "issue-root",
-      "commentUrl": "https://github.com/outocarlos003-lang/Nocturna/issues/5",
+      "commentId": 6015397380,
+      "commentUrl": "https://github.com/outocarlos003-lang/Nocturna/issues/1#issuecomment-6015397380",
       "author": {
-        "displayName": "Johan Liebert",
-        "role": "Comentário inicial"
+        "displayName": "outocarlos003-lang",
+        "role": "Raiz canônica"
       },
       "content": "“É curioso. Um texto pode revelar muito sobre quem o escreveu, mesmo quando o autor acredita estar apenas descrevendo o mundo. Às vezes, aquilo que chamamos de verdade é somente a forma mais elegante que encontramos para esconder aquilo que somos.”",
       "origin": {
-        "kind": "github-issue-body",
-        "location": "github:issue/5",
-        "migratedFrom": "comentarios/index.html",
-        "migrated": true
+        "kind": "github-issue-comment",
+        "location": "https://github.com/outocarlos003-lang/Nocturna/issues/1#issuecomment-6015397380",
+        "migrated": false,
+        "normalized": true,
+        "historicalIssueNumber": 5
       }
     },
     {
@@ -85,8 +89,8 @@
       "parentNodeId": "2",
       "parentThreadKey": "2",
       "depth": 1,
-      "parentCommentId": "issue-root",
-      "parentAuthor": "Johan Liebert",
+      "parentCommentId": 6015397380,
+      "parentAuthor": "outocarlos003-lang",
       "commentId": 5991292435,
       "commentUrl": "https://github.com/outocarlos003-lang/Nocturna/issues/5#issuecomment-5991292435",
       "author": {
@@ -541,8 +545,8 @@
       "parentNodeId": "2",
       "parentThreadKey": "2",
       "depth": 1,
-      "parentCommentId": "issue-root",
-      "parentAuthor": "Johan Liebert",
+      "parentCommentId": 6015397380,
+      "parentAuthor": "outocarlos003-lang",
       "commentId": 5991301540,
       "commentUrl": "https://github.com/outocarlos003-lang/Nocturna/issues/5#issuecomment-5991301540",
       "author": {
@@ -581,5 +585,9 @@
         "migrated": true
       }
     }
-  ]
+  ],
+  "legacy": {
+    "historicalIssueNumber": 5,
+    "historicalRootSource": "Issue #5 não está disponível neste repositório; preservado apenas como referência histórica."
+  }
 }
