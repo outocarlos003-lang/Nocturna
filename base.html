@@ -1,0 +1,712 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Participação · Nocturna</title>
+<meta name="description" content="Participação dos leitores da Nocturna.">
+<style>:root{
+  --bg:#0d0e10;--surface:#141619;--surface-2:#191c1f;--line:#292d31;
+  --line-strong:#3a4045;--text:#ece9e3;--muted:#8e949a;--accent:#9f4a62;
+  --accent-strong:#bd617c;--accent-soft:rgba(159,74,98,.12);
+  --sans:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;min-height:100vh;background:var(--bg);color:var(--text);font:14px/1.55 var(--sans)}
+a{color:inherit}
+button,input,select,textarea{font:inherit}
+button,a,input,select,textarea{outline-color:var(--accent)}
+.wrap{width:min(820px,calc(100% - 32px));margin-inline:auto}
+
+header{border-bottom:1px solid var(--line);padding:28px 0 22px;background:var(--bg)}
+.kicker{margin-bottom:.35rem;color:var(--muted);font-size:.68rem;letter-spacing:.12em;text-transform:uppercase}
+h1,h2,h3{line-height:1.2}
+h1{margin:.1rem 0 .45rem;font-size:clamp(1.8rem,5vw,2.5rem);font-weight:650;letter-spacing:-.02em}
+.lead{max-width:620px;margin:0;color:var(--muted);font-size:.9rem}
+.back{display:inline-flex;margin-top:14px;color:var(--muted);font-size:.8rem;text-decoration:none}
+.back:hover{color:var(--text)}
+
+.comments{padding:22px 0 56px}
+.comment-tools{margin-bottom:18px;padding-bottom:14px;border-bottom:1px solid var(--line)}
+.comment-tools-top{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.comment-count{font-size:.92rem;font-weight:650}
+.comment-count small{margin-left:5px;color:var(--muted);font-size:.72rem;font-weight:400}
+.comment-controls{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.comment-search,.comment-select,.tool-button{
+  min-height:34px;padding:6px 9px;border:1px solid var(--line);border-radius:6px;
+  background:transparent;color:var(--text);font-size:.74rem
+}
+.comment-search{width:210px}
+.comment-search:focus,.comment-select:focus,.tool-button:focus{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-soft)}
+.tool-button{cursor:pointer}
+.tool-button:hover,.comment-select:hover{border-color:var(--line-strong);background:var(--surface)}
+.comment-meta{display:flex;justify-content:space-between;gap:12px;margin-top:8px;color:var(--muted);font-size:.68rem}
+.comment-empty{display:none;padding:18px;margin:10px 0;border:1px dashed var(--line-strong);border-radius:7px;text-align:center;color:var(--muted)}
+.comment.is-hidden{display:none}
+
+.comment{margin:0;padding:15px 0;border:0;border-bottom:1px solid var(--line);background:transparent}
+.comment:first-of-type{border-top:1px solid var(--line)}
+.comment.depth-1{margin-left:22px}.comment.depth-2{margin-left:44px}.comment.depth-3{margin-left:66px}
+.comment.depth-4{margin-left:88px}.comment.depth-5{margin-left:110px}.comment.depth-6{margin-left:132px}
+.comment[data-parent]:not([data-parent=""]){position:relative;border-left:1px solid var(--line-strong);padding-left:12px}
+.comment[data-parent]:not([data-parent=""])::before{content:"";position:absolute;left:-1px;top:31px;width:12px;border-top:1px solid var(--line-strong)}
+.comment[data-github-issue="5"]{padding:18px 14px;margin-bottom:8px;border:1px solid var(--line-strong);border-radius:8px;background:var(--surface)}
+.comment[data-github-issue="5"] .role{color:var(--accent-strong)}
+.issue-root-link{color:var(--accent-strong);text-decoration:none;font-size:.64rem}
+.issue-root-action{display:inline-flex;align-items:center;min-height:28px;padding:4px 7px;border:1px solid var(--line);border-radius:5px;color:var(--muted);text-decoration:none;font-size:.68rem;font-weight:600}
+.issue-root-action:hover{border-color:var(--line-strong);background:var(--surface-2);color:var(--text)}
+.node-link{color:var(--muted);text-decoration:none;font-size:.62rem}
+.author{display:flex;align-items:center;gap:8px;min-height:32px;margin-bottom:6px}
+.avatar{width:28px;height:28px;flex:0 0 28px;display:grid;place-items:center;border-radius:50%;background:var(--surface-2);color:var(--text);font-size:.68rem;font-weight:700}
+.name{font-size:.78rem;font-weight:700}.role{margin-top:1px;color:var(--muted);font-size:.66rem}.reply{margin-left:auto;color:var(--muted);font-size:.64rem}
+.comment p{margin:5px 0 0;color:#dedfdd;font-size:.86rem;line-height:1.58}
+.comment-actions{display:flex;align-items:center;gap:3px;flex-wrap:wrap;margin-top:9px}
+.reaction-button,.comment-actions .react-button{
+  min-height:28px;padding:4px 7px;border:1px solid transparent;border-radius:5px;
+  background:transparent;color:var(--muted);font-size:.68rem;font-weight:600;cursor:pointer
+}
+.reaction-button:hover,.reaction-button.is-active,.comment-actions .react-button:hover{
+  border-color:rgba(159,74,98,.35);background:var(--accent-soft);color:#f0dce2
+}
+.thread{display:none;margin-top:10px;padding-top:10px;border-top:1px solid var(--line)}
+.thread.is-open{display:block}.thread-note{margin:0 0 9px;color:var(--muted);font-size:.68rem}
+.reply-github-box{padding:11px;border:1px solid var(--line);border-radius:6px;background:var(--surface-2)}
+.reply-quoted{
+  margin-bottom:9px;padding:9px 10px;border:1px solid var(--line);
+  border-radius:5px;background:var(--bg)
+}
+.reply-quoted-label{
+  margin-bottom:6px;color:var(--muted);font-size:.62rem;
+  letter-spacing:.08em;text-transform:uppercase;font-weight:650
+}
+.reply-quoted-text{
+  margin:0;padding-left:10px;border-left:3px solid var(--line-strong);
+  color:#c9cbc9;font:.78rem/1.5 var(--sans);
+  user-select:text;white-space:pre-wrap
+}
+.reply-compose-label{
+  display:block;margin-bottom:6px;color:var(--muted);font-size:.66rem;
+  letter-spacing:.08em;text-transform:uppercase
+}
+.reply-compose label{display:block;margin-bottom:6px;color:var(--muted);font-size:.66rem;letter-spacing:.08em;text-transform:uppercase}
+.reply-compose textarea{display:block;width:100%;min-height:92px;resize:vertical;border:1px solid var(--line);border-radius:5px;outline:0;background:var(--surface);color:var(--text);padding:9px 10px;font:.8rem/1.5 var(--sans)}
+.reply-compose textarea:focus{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-soft)}
+.reply-compose-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:7px}
+.reply-compose-count,.reply-compose-note{color:var(--muted);font-size:.63rem}
+.reply-send-button{min-height:31px;padding:6px 10px;border:1px solid var(--accent);border-radius:5px;background:var(--accent);color:#fff;font:600 .7rem var(--sans);cursor:pointer}
+.reply-send-button:hover{background:var(--accent-strong);border-color:var(--accent-strong)}
+.reply-send-button:disabled{opacity:.45;cursor:not-allowed}
+.reply-compose-note{margin:7px 0 0}
+
+.comment-menu{position:relative;margin-left:auto}
+.comment-menu summary{list-style:none;padding:4px 6px;border-radius:5px;color:var(--muted);font-size:.9rem;cursor:pointer}
+.comment-menu summary::-webkit-details-marker{display:none}
+.comment-menu summary:hover{background:var(--surface-2);color:var(--text)}
+.comment-menu-panel{position:absolute;right:0;top:27px;z-index:10;min-width:150px;padding:5px;border:1px solid var(--line-strong);border-radius:7px;background:var(--surface-2);box-shadow:0 8px 20px rgba(0,0,0,.28)}
+.comment-menu-panel button{display:block;width:100%;padding:8px 9px;border:0;border-radius:5px;background:none;color:var(--text);text-align:left;font:.76rem var(--sans);cursor:pointer}
+.comment-menu-panel button:hover{background:var(--surface)}
+
+.comment-compose{
+  margin:0 0 24px;padding:14px;border:1px solid var(--line);border-radius:8px;
+  background:var(--surface)
+}
+.comment-compose-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}
+.compose-eyebrow{display:block;color:var(--muted);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase}
+.comment-compose h2{margin:.15rem 0 0;font-size:.96rem}
+.compose-status{padding:3px 7px;border:1px solid var(--line-strong);border-radius:999px;color:var(--muted);font-size:.62rem}
+.comment-compose .compose-label{display:block;margin-bottom:5px;color:var(--muted);font-size:.64rem;letter-spacing:.08em;text-transform:uppercase}
+.comment-compose textarea{
+  display:block;width:100%;min-height:92px;resize:vertical;border:1px solid var(--line);
+  border-radius:6px;outline:0;background:var(--bg);color:var(--text);padding:10px;
+  font:.82rem/1.55 var(--sans)
+}
+.comment-compose textarea:focus{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-soft)}
+.comment-compose-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:8px}
+.comment-compose-foot>span{color:var(--muted);font-size:.62rem}
+.comment-compose-actions{display:flex;gap:6px}
+.pt-clear,.pt-publish{min-height:30px;padding:5px 9px;border-radius:5px;cursor:pointer;font:600 .68rem var(--sans)}
+.pt-clear{border:1px solid transparent;background:transparent;color:var(--muted)}
+.pt-publish{border:1px solid var(--accent);background:var(--accent);color:#fff}
+.pt-publish:hover{background:var(--accent-strong);border-color:var(--accent-strong)}
+.pt-publish:disabled{opacity:.45;cursor:not-allowed}
+.comment-compose-note{margin:7px 0 0;color:var(--muted);font-size:.62rem}
+.comment-highlight{outline:2px solid rgba(159,74,98,.5);outline-offset:1px}
+footer{border-top:1px solid var(--line);padding:22px 0;color:var(--muted);font-size:.78rem}
+
+.live-comments{
+  margin-top:28px;padding-top:22px;border-top:1px solid var(--line)
+}
+.live-comments-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.live-comments-head h2{margin:.15rem 0 0;font-size:1rem}
+.live-comments-note{margin:7px 0 12px;color:var(--muted);font-size:.68rem}
+.live-comments-list{display:grid;gap:8px}
+.live-comment{padding:13px;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
+.live-comment .comment-source{margin-top:7px;color:var(--muted);font-size:.62rem}
+@media(max-width:700px){
+  .wrap{width:min(100% - 22px,820px)}
+  .comment-controls{width:100%}.comment-search{width:100%}.comment-select,.tool-button{flex:1}
+  .comment-meta{display:block}.comment-meta span+span{display:block;margin-top:3px}
+}
+@media(max-width:620px){
+  .wrap{width:min(100% - 18px,820px)}
+  .comment{padding:12px}.comment.depth-1,.comment.depth-2,.comment.depth-3,.comment.depth-4,.comment.depth-5,.comment.depth-6{margin-left:12px}
+  .comment p{font-size:.84rem}.reply-compose-foot{align-items:stretch;flex-direction:column}.reply-send-button{width:100%}
+  .comment-compose-foot{align-items:stretch;flex-direction:column}.comment-compose-actions{width:100%}.pt-clear,.pt-publish{flex:1}
+}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+
+<style id="nocturna-comments-embed-style">
+body.embed-mode{background:transparent;min-height:0}
+body.embed-mode header,body.embed-mode footer{display:none}
+body.embed-mode .comments{padding:0 0 1rem}
+body.embed-mode .wrap{width:min(820px,100%)}
+body.embed-mode .back{display:none}
+body.embed-mode h1{font-size:1.35rem;margin:.2rem 0 .8rem}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+<div class="kicker">Nocturna · Issue #5</div>
+<h1>Discussão encadeada</h1>
+<a class="back" href="/Nocturna/">← Voltar à Nocturna</a>
+</div></header>
+<main class="wrap comments">
+
+<div class="comment-tools" aria-label="Ferramentas de discussão">
+  <div class="comment-tools-top">
+    <div class="comment-count">23 Nós <small>Issue #5 · Johan Liebert como raiz</small></div>
+    <div class="comment-controls">
+      <input class="comment-search" id="comment-search" type="search" placeholder="Pesquisar..." aria-label="Pesquisar">
+    </div>
+  </div>
+</div>
+<div class="comment-empty" id="comment-empty">Nenhuma mensagem corresponde à sua pesquisa.</div>
+<section class="comment-compose" id="reader-comments">
+  <div class="comment-compose-head">
+    <span class="compose-status">Público</span>
+  </div>
+  <textarea id="pt-comment-text" maxlength="2000" placeholder="Escreva sua mensagem..." aria-label="Escreva sua mensagem"></textarea>
+  <div class="comment-compose-foot">
+    <span id="pt-char-count">0 / 2000</span>
+    <div class="comment-compose-actions">
+      <button class="pt-clear" id="pt-clear-comment" type="button">Limpar</button>
+      <button class="pt-publish" id="pt-publish-comment" type="button">Enviar</button>
+    </div>
+  </div>
+  <p class="comment-compose-note">Mensagem original: abre uma nova Issue. Resposta: usa a Issue #5 existente e ancora no comentário pai.</p>
+<template id="comment-ui-template">
+<div class="comment-actions">
+<button class="reply-button" type="button" aria-expanded="false">↩ Responder</button>
+<button class="reaction-button" type="button" data-reaction="👍">Curtir 👍 <span>0</span></button>
+<button class="reaction-button" type="button" data-reaction="❤️">❤️ <span>0</span></button>
+<button class="reaction-button" type="button" data-reaction="💡">💡 <span>0</span></button>
+<a class="react-button" href="#reader-comments">💬 Participar</a>
+<details class="comment-menu">
+<summary aria-label="Mais opções">⋯</summary>
+<div class="comment-menu-panel">
+<button type="button" data-copy-comment>🔗 Copiar link</button>
+<button type="button" data-focus-comment>↩ Responder</button>
+<button type="button" data-report-comment>⚑ Abrir denúncia</button>
+</div>
+</details>
+</div>
+<div class="thread" aria-hidden="true"><p class="thread-note"></p><div class="utterances-host"></div></div>
+</template>
+
+</section>
+
+<article class="comment depth-0" data-thread="2" data-parent="" data-github-issue="5">
+<div class="author"><div class="avatar">J</div><div><div class="name">Johan Liebert</div><div class="role">Comentário inicial · Issue #5</div></div><div class="reply"><a class="issue-root-link" href="https://github.com/outocarlos003-lang/Nocturna/issues/5" target="_blank" rel="noopener">Issue #5 ↗</a></div></div>
+<p>“É curioso. Um texto pode revelar muito sobre quem o escreveu, mesmo quando o autor acredita estar apenas descrevendo o mundo. Às vezes, aquilo que chamamos de verdade é somente a forma mais elegante que encontramos para esconder aquilo que somos.”</p>
+<div class="comment-actions"><a class="reply-button issue-root-action" href="https://github.com/outocarlos003-lang/Nocturna/issues/5" target="_blank" rel="noopener">↗ Abrir Issue #5</a><button class="reaction-button" type="button" data-reaction="👍">Curtir 👍 <span>0</span></button><button class="reaction-button" type="button" data-reaction="❤️">❤️ <span>0</span></button><button class="reaction-button" type="button" data-reaction="💡">💡 <span>0</span></button><a class="react-button" href="#reader-comments">💬 Participar</a></div>
+</article>
+
+<article class="comment depth-1" data-thread="1" data-parent="2" data-github-comment-id="5991291912">
+<div class="author"><div class="avatar">A</div><div><div class="name">Akashi Seijuro</div><div class="role">Respondendo a Johan Liebert</div></div><div class="reply">↳ Nó 2</div></div>
+<p>“A autoridade não nasce da necessidade de impor uma resposta. Ela nasce da capacidade de enxergar o conjunto antes que os demais percebam que estão apenas reagindo às partes.”</p>
+<div class="comment-actions"><button class="reply-button" type="button" aria-expanded="false">↩ Responder</button><button class="reaction-button" type="button" data-reaction="👍">Curtir 👍 <span>0</span></button><button class="reaction-button" type="button" data-reaction="❤️">❤️ <span>0</span></button><button class="reaction-button" type="button" data-reaction="💡">💡 <span>0</span></button><a class="react-button" href="#reader-comments">💬 Participar</a><details class="comment-menu"><summary aria-label="Mais opções">⋯</summary><div class="comment-menu-panel"><button type="button" data-copy-comment>🔗 Copiar link</button><button type="button" data-focus-comment>↩ Responder</button><button type="button" data-report-comment>⚑ Abrir denúncia</button></div></details></div><div class="thread" aria-hidden="true"><p class="thread-note"></p><div class="utterances-host"></div></div>
+</article>
+
+<article class="comment depth-1" data-thread="3" data-parent="2" data-github-comment-id="5991292435">
+<div class="author"><div class="avatar">A</div><div><div class="name">Ayanokoji Kiyotaka</div><div class="role">Respondendo a Johan Liebert</div></div><div class="reply">↳ Nó 2</div></div>
+<p>“Ou talvez não seja necessário esconder nada. Pessoas revelam suas estruturas involuntariamente. Basta observar o que escolhem enfatizar, omitir e defender.”</p>
+<div class="comment-actions"><button class="reply-button" type="button" aria-expanded="false">↩ Responder</button><button class="reaction-button" type="button" data-reaction="👍">Curtir 👍 <span>0</span></button><button class="reaction-button" type="button" data-reaction="❤️">❤️ <span>0</span></button><button class="reaction-button" type="button" data-reaction="💡">💡 <span>0</span></button><a class="react-button" href="#reader-comments">💬 Participar</a><details class="comment-menu"><summary aria-label="Mais opções">⋯</summary><div class="comment-menu-panel"><button type="button" data-copy-comment>🔗 Copiar link</button><button type="button" data-focus-comment>↩ Responder</button><button type="button" data-report-comment>⚑ Abrir denúncia</button></div></details></div><div class="thread" aria-hidden="true"><p class="thread-note"></p><div class="utterances-host"></div></div>
+</article>
+
+<article class="comment depth-2" data-thread="4" data-parent="3" data-github-comment-id="5991292938">
+<div class="author"><div class="avatar">D</div><div><div class="name">Osamu Dazai</div><div class="role">Respondendo a Ayanokoji Kiyotaka</div></div><div class="reply">↳ Nó 3</div></div>
+<p>“Que observação deprimente. Você transforma pessoas em mecanismos e ainda parece surpreso quando elas continuam sendo imprevisíveis.”</p>
+<div class="comment-actions"><button class="reply-button" type="button" aria-expanded="false">↩ Responder</button><button class="reaction-button" type="button" data-reaction="👍">Curtir 👍 <span>0</span></button><button class="reaction-button" type="button" data-reaction="❤️">❤️ <span>0</span></button><button class="reaction-button" type="button" data-reaction="💡">💡 <span>0</span></button><a class="react-button" href="#reader-comments">💬 Participar</a><details class="comment-menu"><summary aria-label="Mais opções">⋯</summary><div class="comment-menu-panel"><button type="button" data-copy-comment>🔗 Copiar link</button><button type="button" data-focus-comment>↩ Responder</button><button type="button" data-report-comment>⚑ Abrir denúncia</button></div></details></div><div class="thread" aria-hidden="true"><p class="thread-note"></p><div class="utterances-host"></div></div>
+</article>
+
+<article class="comment depth-3" data-thread="5" data-parent="4" data-github-comment-id="5991293386">
+<div class="author"><div class="avatar">L</div><div><div class="name">Light Yagami</div><div class="role">Respondendo a Osamu Dazai</div></div><div class="reply">↳ Nó 4</div></div>
+<p>“Imprevisibilidade não significa ausência de estrutura. Significa apenas que você ainda não encontrou a variável correta.”</p>
+<div class="comment-actions"><button class="reply-button" type="button" aria-expanded="false">↩ Responder</button><button class="reaction-button" type="button" data-reaction="👍">Curtir 👍 <span>0</span></button><button class="reaction-button" type="button" data-reaction="❤️">❤️ <span>0</span></button><button class="reaction-button" type="button" data-reaction="💡">💡 <span>0</span></button><a class="react-button" href="#reader-comments">💬 Participar</a><details class="comment-menu"><summary aria-label="Mais opções">⋯</summary><div class="comment-menu-panel"><button type="button" data-copy-comment>🔗 Copiar link</button><button type="button" data-focus-comment>↩ Responder</button><button type="button" data-report-comment>⚑ Abrir denúncia</button></div></details></div><div class="thread" aria-hidden="true"><p class="thread-note"></p><div class="utterances-host"></div></div>
+</article>
+
+<article class="comment depth-4" data-thread="6" data-parent="5" data-github-comment-id="5991293906">
+<div class="author"><div class="avatar">L</div><div><div class="name">L Lawliet</div><div class="role">Respondendo a Light Yagami</div></div><div class="reply">↳ Nó 5</div></div>
+<p>“Essa afirmação é precisamente o tipo de coisa que alguém diria quando acredita possuir a variável correta.”</p>
+<div class="comment-actions"><button class="reply-button" type="button" aria-expanded="false">↩ Responder</button><button class="reaction-button" type="button" data-reaction="👍">Curtir 👍 <span>0</span></button><button class="reaction-button" type="button" data-reaction="❤️">❤️ <span>0</span></button><button class="reaction-button" type="button" data-reaction="💡">💡 <span>0</span></button><a class="react-button" href="#reader-comments">💬 Participar</a><details class="comment-menu"><summary aria-label="Mais opções">⋯</summary><div class="comment-menu-panel"><button type="button" data-copy-comment>🔗 Copiar link</button><button type="button" data-focus-comment>↩ Responder</button><button type="button" data-report-comment>⚑ Abrir denúncia</button></div></details></div><div class="thread" aria-hidden="true"><p class="thread-note"></p><div class="utterances-host"></div></div>
+</article>
+
+<article class="comment depth-5" data-thread="7" data-parent="6" data-github-comment-id="5991294338">
+<div class="author"><div class="avatar">S</div><div><div class="name">Sasuke Uchiha</div><div class="role">Respondendo a L Lawliet</div></div><div class="reply">↳ Nó 6</div></div>
+<p>“Vocês procuram padrões porque precisam acreditar que tudo pode ser compreendido. Algumas verdades só aparecem depois que alguém atravessa aquilo que tentou evitar.”</p>
+<div class="comment-actions"><button class="reply-button" type="button" aria-expanded="false">↩ Responder</button><button class="reaction-button" type="button" data-reaction="👍">Curtir 👍 <span>0</span></button><button class="reaction-button" type="button" data-reaction="❤️">❤️ <span>0</span></button><button class="reaction-button" type="button" data-reaction="💡">💡 <span>0</span></button><a class="react-button" href="#reader-comments">💬 Participar</a><details class="comment-menu"><summary aria-label="Mais opções">⋯</summary><div class="comment-menu-panel"><button type="button" data-copy-comment>🔗 Copiar link</button><button type="button" data-focus-comment>↩ Responder</button><button type="button" data-report-comment>⚑ Abrir denúncia</button></div></details></div><div class="thread" aria-hidden="true"><p class="thread-note"></p><div class="utterances-host"></div></div>
+</article>
+
+<article class="comment depth-6" data-thread="8" data-parent="7" data-github-comment-id="5991294753">
+<div class="author"><div class="avatar">R</div><div><div class="name">Ranpo Edogawa</div><div class="role">Respondendo a Sasuke Uchiha</div></div><div class="reply">↳ Nó 7</div></div>
+<p>“Não. Se a verdade só aparece depois, isso não significa que ela era incompreensível antes. Significa apenas que vocês estavam olhando para o lugar errado.”</p>
+<div class="comment-actions"><button class="reply-button" type="button" aria-expanded="false">↩ Responder</button><button class="reaction-button" type="button" data-reaction="👍">Curtir 👍 <span>0</span></button><button class="reaction-button" type="button" data-reaction="❤️">❤️ <span>0</span></button><button class="reaction-button" type="button" data-reaction="💡">💡 <span>0</span></button><a class="react-button" href="#reader-comments">💬 Participar</a><details class="comment-menu"><summary aria-label="Mais opções">⋯</summary><div class="comment-menu-panel"><button type="button" data-copy-comment>🔗 Copiar link</button><button type="button" data-focus-comment>↩ Responder</button><button type="button" data-report-comment>⚑ Abrir denúncia</button></div></details></div><div class="thread" aria-hidden="true"><p class="thread-note"></p><div class="utterances-host"></div></div>
+</article>
+
+<article class="comment depth-7" data-thread="9" data-parent="8" data-github-comment-id="5991295198">
+<div class="author"><div class="avatar">J</div><div><div class="name">Johan Liebert</div><div class="role">Respondendo a Ranpo Edogawa</div></div><div class="reply">↳ Nó 8</div></div>
+<p>“E se o lugar errado tiver sido escolhido deliberadamente?”</p>
+<div class="comment-actions"><button class="reply-button" type="button" aria-expanded="false">↩ Responder</button><button class="reaction-button" type="button" data-reaction="👍">Curtir 👍 <span>0</span></button><button class="reaction-button" type="button" data-reaction="❤️">❤️ <span>0</span></button><button class="reaction-button" type="button" data-reaction="💡">💡 <span>0</span></button><a class="react-button" href="#reader-comments">💬 Participar</a><details class="comment-menu"><summary aria-label="Mais opções">⋯</summary><div class="comment-menu-panel"><button type="button" data-copy-comment>🔗 Copiar link</button><button type="button" data-focus-comment>↩ Responder</button><button type="button" data-report-comment>⚑ Abrir denúncia</button></div></details></div><div class="thread" aria-hidden="true"><p class="thread-note"></p><div class="utterances-host"></div></div>
+</article>
+
+<article class="comment depth-8" data-thread="10" data-parent="9" data-github-comment-id="5991295695">
+<div class="author"><div class="avatar">R</div><div><div class="name">Ranpo Edogawa</div><div class="role">Respondendo a Johan Liebert</div></div><div class="reply">↳ Nó 9</div></div>
+<p>“Então fica ainda mais fácil. Quem constrói uma distração sempre deixa marcas.”</p>
+<div class="comment-actions"><button class="reply-button" type="button" aria-expanded="false">↩ Responder</button><button class="reaction-button" type="button" data-reaction="👍">Curtir 👍 <span>0</span></button><button class="reaction-button" type="button" data-reaction="❤️">❤️ <span>0</span></button><button class="reaction-button" type="button" data-reaction="💡">💡 <span>0</span></button><a class="react-button" href="#reader-comments">💬 Participar</a><details class="comment-menu"><summary aria-label="Mais opções">⋯</summary><div class="comment-menu-panel"><button type="button" data-copy-comment>🔗 Copiar link</button><button type="button" data-focus-comment>↩ Responder</button><button type="button" data-report-comment>⚑ Abrir denúncia</button></div></details></div><div class="thread" aria-hidden="true"><p class="thread-note"></p><div class="utterances-host"></div></div>
+</article>
+
+<article class="comment depth-9" data-thread="11" data-parent="10" data-github-comment-id="5991296121">
+<div class="author"><div class="avatar">L</div><div><div class="name">L Lawliet</div><div class="role">Respondendo a Ranpo Edogawa</div></div><div class="reply">↳ Nó 10</div></div>
+<p>“Concordo. E as marcas mais interessantes geralmente estão naquilo que a pessoa considera irrelevante.”</p>
+<div class="comment-actions"><button class="reply-button" type="button" aria-expanded="false">↩ Responder</button><button class="reaction-button" type="button" data-reaction="👍">Curtir 👍 <span>0</span></button><button class="reaction-button" type="button" data-reaction="❤️">❤️ <span>0</span></button><button class="reaction-button" type="button" data-reaction="💡">💡 <span>0</span></button><a class="react-button" href="#reader-comments">💬 Participar</a><details class="comment-menu"><summary aria-label="Mais opções">⋯</summary><div class="comment-menu-panel"><button type="button" data-copy-comment>🔗 Copiar link</button><button type="button" data-focus-comment>↩ Responder</button><button type="button" data-report-comment>⚑ Abrir denúncia</button></div></details></div><div class="thread" aria-hidden="true"><p class="thread-note"></p><div class="utterances-host"></div></div>
+</article>
+
+<article class="comment depth-10" data-thread="12" data-parent="11" data-github-comment-id="5991296508">
+<div class="author"><div class="avatar">L</div><div><div class="name">Light Yagami</div><div class="role">Respondendo a L Lawliet</div></div><div class="reply">↳ Nó 11</div></div>
+<p>“Vocês estão confundindo interpretação com conhecimento.”</p>
+<div class="comment-actions"><button class="reply-button" type="button" aria-expanded="false">↩ Responder</button><button class="reaction-button" type="button" data-reaction="👍">Curtir 👍 <span>0</span></button><button class="reaction-button" type="button" data-reaction="❤️">❤️ <span>0</span></button><button class="reaction-button" type="button" data-reaction="💡">💡 <span>0</span></button><a class="react-button" href="#reader-comments">💬 Participar</a><details class="comment-menu"><summary aria-label="Mais opções">⋯</summary><div class="comment-menu-panel"><button type="button" data-copy-comment>🔗 Copiar link</button><button type="button" data-focus-comment>↩ Responder</button><button type="button" data-report-comment>⚑ Abrir denúncia</button></div></details></div><div class="thread" aria-hidden="true"><p class="thread-note"></p><div class="utterances-host"></div></div>
+</article>
+
+<article class="comment depth-11" data-thread="13" data-parent="12" data-github-comment-id="5991296919">
+<div class="author"><div class="avatar">A</div><div><div class="name">Ayanokoji Kiyotaka</div><div class="role">Respondendo a Light Yagami</div></div><div class="reply">↳ Nó 12</div></div>
+<p>“E você está confundindo confiança com certeza.”</p>
+<div class="comment-actions"><button class="reply-button" type="button" aria-expanded="false">↩ Responder</button><button class="reaction-button" type="button" data-reaction="👍">Curtir 👍 <span>0</span></button><button class="reaction-button" type="button" data-reaction="❤️">❤️ <span>0</span></button><button class="reaction-button" type="button" data-reaction="💡">💡 <span>0</span></button><a class="react-button" href="#reader-comments">💬 Participar</a><details class="comment-menu"><summary aria-label="Mais opções">⋯</summary><div class="comment-menu-panel"><button type="button" data-copy-comment>🔗 Copiar link</button><button type="button" data-focus-comment>↩ Responder</button><button type="button" data-report-comment>⚑ Abrir denúncia</button></div></details></div><div class="thread" aria-hidden="true"><p class="thread-note"></p><div class="utterances-host"></div></div>
+</article>
+
+<article class="comment depth-12" data-thread="14" data-parent="13" data-github-comment-id="5991297391">
+<div class="author"><div class="avatar">D</div><div><div class="name">Osamu Dazai</div><div class="role">Respondendo a Ayanokoji Kiyotaka</div></div><div class="reply">↳ Nó 13</div></div>
+<p>“Que bela reunião. Um quer controlar a verdade, outro quer deduzi-la, outro quer observá-la, e o restante parece querer descobrir se existe alguma razão para continuar aqui.”</p>
+<div class="comment-actions"><button class="reply-button" type="button" aria-expanded="false">↩ Responder</button><button class="reaction-button" type="button" data-reaction="👍">Curtir 👍 <span>0</span></button><button class="reaction-button" type="button" data-reaction="❤️">❤️ <span>0</span></button><button class="reaction-button" type="button" data-reaction="💡">💡 <span>0</span></button><a class="react-button" href="#reader-comments">💬 Participar</a><details class="comment-menu"><summary aria-label="Mais opções">⋯</summary><div class="comment-menu-panel"><button type="button" data-copy-comment>🔗 Copiar link</button><button type="button" data-focus-comment>↩ Responder</button><button type="button" data-report-comment>⚑ Abrir denúncia</button></div></details></div><div class="thread" aria-hidden="true"><p class="thread-note"></p><div class="utterances-host"></div></div>
+</article>
+
+<article class="comment depth-13" data-thread="15" data-parent="14" data-github-comment-id="5991297824">
+<div class="author"><div class="avatar">S</div><div><div class="name">Sasuke Uchiha</div><div class="role">Respondendo a Osamu Dazai</div></div><div class="reply">↳ Nó 14</div></div>
+<p>“Existe.”</p>
+<div class="comment-actions"><button class="reply-button" type="button" aria-expanded="false">↩ Responder</button><button class="reaction-button" type="button" data-reaction="👍">Curtir 👍 <span>0</span></button><button class="reaction-button" type="button" data-reaction="❤️">❤️ <span>0</span></button><button class="reaction-button" type="button" data-reaction="💡">💡 <span>0</span></button><a class="react-button" href="#reader-comments">💬 Participar</a><details class="comment-menu"><summary aria-label="Mais opções">⋯</summary><div class="comment-menu-panel"><button type="button" data-copy-comment>🔗 Copiar link</button><button type="button" data-focus-comment>↩ Responder</button><button type="button" data-report-comment>⚑ Abrir denúncia</button></div></details></div><div class="thread" aria-hidden="true"><p class="thread-note"></p><div class="utterances-host"></div></div>
+</article>
+
+<article class="comment depth-14" data-thread="16" data-parent="15" data-github-comment-id="5991298254">
+<div class="author"><div class="avatar">D</div><div><div class="name">Osamu Dazai</div><div class="role">Respondendo a Sasuke Uchiha</div></div><div class="reply">↳ Nó 15</div></div>
+<p>“Qual?”</p>
+<div class="comment-actions"><button class="reply-button" type="button" aria-expanded="false">↩ Responder</button><button class="reaction-button" type="button" data-reaction="👍">Curtir 👍 <span>0</span></button><button class="reaction-button" type="button" data-reaction="❤️">❤️ <span>0</span></button><button class="reaction-button" type="button" data-reaction="💡">💡 <span>0</span></button><a class="react-button" href="#reader-comments">💬 Participar</a><details class="comment-menu"><summary aria-label="Mais opções">⋯</summary><div class="comment-menu-panel"><button type="button" data-copy-comment>🔗 Copiar link</button><button type="button" data-focus-comment>↩ Responder</button><button type="button" data-report-comment>⚑ Abrir denúncia</button></div></details></div><div class="thread" aria-hidden="true"><p class="thread-note"></p><div class="utterances-host"></div></div>
+</article>
+
+<article class="comment depth-15" data-thread="17" data-parent="16" data-github-comment-id="5991298691">
+<div class="author"><div class="avatar">S</div><div><div class="name">Sasuke Uchiha</div><div class="role">Respondendo a Osamu Dazai</div></div><div class="reply">↳ Nó 16</div></div>
+<p>“Descobrir quem está mentindo.”</p>
+<div class="comment-actions"><button class="reply-button" type="button" aria-expanded="false">↩ Responder</button><button class="reaction-button" type="button" data-reaction="👍">Curtir 👍 <span>0</span></button><button class="reaction-button" type="button" data-reaction="❤️">❤️ <span>0</span></button><button class="reaction-button" type="button" data-reaction="💡">💡 <span>0</span></button><a class="react-button" href="#reader-comments">💬 Participar</a><details class="comment-menu"><summary aria-label="Mais opções">⋯</summary><div class="comment-menu-panel"><button type="button" data-copy-comment>🔗 Copiar link</button><button type="button" data-focus-comment>↩ Responder</button><button type="button" data-report-comment>⚑ Abrir denúncia</button></div></details></div><div class="thread" aria-hidden="true"><p class="thread-note"></p><div class="utterances-host"></div></div>
+</article>
+
+<article class="comment depth-16" data-thread="18" data-parent="17" data-github-comment-id="5991299119">
+<div class="author"><div class="avatar">J</div><div><div class="name">Johan Liebert</div><div class="role">Respondendo a Sasuke Uchiha</div></div><div class="reply">↳ Nó 17</div></div>
+<p>“Talvez a pergunta mais interessante seja outra.”</p>
+<div class="comment-actions"><button class="reply-button" type="button" aria-expanded="false">↩ Responder</button><button class="reaction-button" type="button" data-reaction="👍">Curtir 👍 <span>0</span></button><button class="reaction-button" type="button" data-reaction="❤️">❤️ <span>0</span></button><button class="reaction-button" type="button" data-reaction="💡">💡 <span>0</span></button><a class="react-button" href="#reader-comments">💬 Participar</a><details class="comment-menu"><summary aria-label="Mais opções">⋯</summary><div class="comment-menu-panel"><button type="button" data-copy-comment>🔗 Copiar link</button><button type="button" data-focus-comment>↩ Responder</button><button type="button" data-report-comment>⚑ Abrir denúncia</button></div></details></div><div class="thread" aria-hidden="true"><p class="thread-note"></p><div class="utterances-host"></div></div>
+</article>
+
+<article class="comment depth-17" data-thread="19" data-parent="18" data-github-comment-id="5991299581">
+<div class="author"><div class="avatar">L</div><div><div class="name">L Lawliet</div><div class="role">Respondendo a Johan Liebert</div></div><div class="reply">↳ Nó 18</div></div>
+<p>“Qual?”</p>
+<div class="comment-actions"><button class="reply-button" type="button" aria-expanded="false">↩ Responder</button><button class="reaction-button" type="button" data-reaction="👍">Curtir 👍 <span>0</span></button><button class="reaction-button" type="button" data-reaction="❤️">❤️ <span>0</span></button><button class="reaction-button" type="button" data-reaction="💡">💡 <span>0</span></button><a class="react-button" href="#reader-comments">💬 Participar</a><details class="comment-menu"><summary aria-label="Mais opções">⋯</summary><div class="comment-menu-panel"><button type="button" data-copy-comment>🔗 Copiar link</button><button type="button" data-focus-comment>↩ Responder</button><button type="button" data-report-comment>⚑ Abrir denúncia</button></div></details></div><div class="thread" aria-hidden="true"><p class="thread-note"></p><div class="utterances-host"></div></div>
+</article>
+
+<article class="comment depth-18" data-thread="20" data-parent="19" data-github-comment-id="5991299979">
+<div class="author"><div class="avatar">J</div><div><div class="name">Johan Liebert</div><div class="role">Respondendo a L Lawliet</div></div><div class="reply">↳ Nó 19</div></div>
+<p>“Quem precisa que a mentira seja descoberta?”</p>
+<div class="comment-actions"><button class="reply-button" type="button" aria-expanded="false">↩ Responder</button><button class="reaction-button" type="button" data-reaction="👍">Curtir 👍 <span>0</span></button><button class="reaction-button" type="button" data-reaction="❤️">❤️ <span>0</span></button><button class="reaction-button" type="button" data-reaction="💡">💡 <span>0</span></button><a class="react-button" href="#reader-comments">💬 Participar</a><details class="comment-menu"><summary aria-label="Mais opções">⋯</summary><div class="comment-menu-panel"><button type="button" data-copy-comment>🔗 Copiar link</button><button type="button" data-focus-comment>↩ Responder</button><button type="button" data-report-comment>⚑ Abrir denúncia</button></div></details></div><div class="thread" aria-hidden="true"><p class="thread-note"></p><div class="utterances-host"></div></div>
+</article>
+
+<article class="comment depth-19" data-thread="21" data-parent="20" data-github-comment-id="5991300557">
+<div class="author"><div class="avatar">R</div><div><div class="name">Ranpo Edogawa</div><div class="role">Última resposta</div></div><div class="reply">↳ Nó 20</div></div>
+<p>“Finalmente. Uma pergunta útil.”</p>
+<div class="comment-actions"><button class="reply-button" type="button" aria-expanded="false">↩ Responder</button><button class="reaction-button" type="button" data-reaction="👍">Curtir 👍 <span>0</span></button><button class="reaction-button" type="button" data-reaction="❤️">❤️ <span>0</span></button><button class="reaction-button" type="button" data-reaction="💡">💡 <span>0</span></button><a class="react-button" href="#reader-comments">💬 Participar</a><details class="comment-menu"><summary aria-label="Mais opções">⋯</summary><div class="comment-menu-panel"><button type="button" data-copy-comment>🔗 Copiar link</button><button type="button" data-focus-comment>↩ Responder</button><button type="button" data-report-comment>⚑ Abrir denúncia</button></div></details></div><div class="thread" aria-hidden="true"><p class="thread-note"></p><div class="utterances-host"></div></div>
+</article>
+
+<article class="comment depth-1" data-thread="22" data-parent="2" data-github-comment-id="5991301540">
+<div class="author"><div class="avatar">I</div><div><div class="name">Itachi Uchiha</div><div class="role">Respondendo a Johan Liebert</div></div><div class="reply">↳ Nó 2</div></div>
+<p>“A verdade não se torna menos verdadeira porque alguém não consegue suportá-la. Mas revelar tudo sem discernimento também pode ferir aqueles que tentamos proteger. Às vezes, o peso de uma escolha só é compreendido por quem aceita carregar suas consequências em silêncio.”</p>
+<div class="comment-actions"><button class="reply-button" type="button" aria-expanded="false">↩ Responder</button><button class="reaction-button" type="button" data-reaction="👍">Curtir 👍 <span>0</span></button><button class="reaction-button" type="button" data-reaction="❤️">❤️ <span>0</span></button><button class="reaction-button" type="button" data-reaction="💡">💡 <span>0</span></button><a class="react-button" href="#reader-comments">💬 Participar</a><details class="comment-menu"><summary aria-label="Mais opções">⋯</summary><div class="comment-menu-panel"><button type="button" data-copy-comment>🔗 Copiar link</button><button type="button" data-focus-comment>↩ Responder</button><button type="button" data-report-comment>⚑ Abrir denúncia</button></div></details></div><div class="thread" aria-hidden="true"><p class="thread-note"></p><div class="utterances-host"></div></div>
+</article>
+
+<article class="comment depth-2" data-thread="23" data-parent="22" data-github-comment-id="5991301989">
+<div class="author"><div class="avatar">S</div><div><div class="name">Satoru Gojo</div><div class="role">Respondendo a Itachi Uchiha</div></div><div class="reply">↳ Nó 22</div></div>
+<p>“Interessante. Todo mundo fala da verdade como se ela fosse suficiente por si só. Mas enxergar o que está diante de você não significa que já entendeu tudo. O difícil não é apenas perceber os limites dos outros — é saber o que fazer com aquilo que só você consegue ver.”</p>
+<div class="comment-actions"><button class="reply-button" type="button" aria-expanded="false">↩ Responder</button><button class="reaction-button" type="button" data-reaction="👍">Curtir 👍 <span>0</span></button><button class="reaction-button" type="button" data-reaction="❤️">❤️ <span>0</span></button><button class="reaction-button" type="button" data-reaction="💡">💡 <span>0</span></button><a class="react-button" href="#reader-comments">💬 Participar</a><details class="comment-menu"><summary aria-label="Mais opções">⋯</summary><div class="comment-menu-panel"><button type="button" data-copy-comment>🔗 Copiar link</button><button type="button" data-focus-comment>↩ Responder</button><button type="button" data-report-comment>⚑ Abrir denúncia</button></div></details></div><div class="thread" aria-hidden="true"><p class="thread-note"></p><div class="utterances-host"></div></div>
+</article>
+<section class="live-comments" id="live-comments" aria-label="Comentários recentes do GitHub">
+  <div class="live-comments-head">
+    <div>
+      <div class="kicker">GitHub · comentários recentes</div>
+      <h2>Participação ao vivo</h2>
+    </div>
+    <button class="tool-button" id="refresh-github-comments" type="button">↻ Atualizar</button>
+  </div>
+  <p class="live-comments-note" id="live-comments-note">Carregando comentários publicados diretamente na Issue #5…</p>
+  <div class="live-comments-list" id="live-comments-list"></div>
+</section>
+
+</main>
+<footer><div class="wrap">Nocturna · diálogo editorial e participação dos leitores · estética dark romanticism</div></footer>
+<script>
+(function(){
+  const commentTemplate=document.querySelector("#comment-ui-template");
+  // Garante que nenhum seletor/nome de personagem apareça na caixa de resposta.
+  document.querySelectorAll('.reply-character, label[for^="reply-character-"]').forEach(el=>el.remove());
+
+  document.querySelectorAll(".comment[data-thread]").forEach(card=>{
+    const mount=card.querySelector(".comment-ui");
+    if(mount&&commentTemplate) mount.replaceWith(commentTemplate.content.cloneNode(true));
+  });
+
+  const repo="outocarlos003-lang/Nocturna";
+  const theme="github-dark";
+  function getReaderId(){
+    const key="nocturna-reader-id";
+    let id=localStorage.getItem(key);
+    if(!id){id=crypto.randomUUID();localStorage.setItem(key,id);}
+    return id;
+  }
+  const ISSUE_URL="https://github.com/"+repo+"/issues/new";
+
+  function buildIssueUrl({title,body}){
+    return ISSUE_URL
+      +"?title="+encodeURIComponent(title)
+      +"&body="+encodeURIComponent(body);
+  }
+
+  function buildReplyCommentPayload(message,responder,parentNode,parentComment,parentAuthor){
+    return [
+      "<!-- nocturna-parent-node: "+parentNode+" -->",
+      "<!-- nocturna-parent-comment: "+parentComment+" -->",
+      "<!-- nocturna-parent-author: "+parentAuthor+" -->",
+      "<!-- nocturna-reply-author: "+responder+" -->",
+      "",
+      message
+    ].join("\n");
+  }
+
+  function buildParentCommentUrl(parentComment){
+    // Abre a Issue sem ancorar no comentário pai. Assim o editor do GitHub
+    // entra como um comentário novo e não carrega automaticamente a citação.
+    return "https://github.com/"+repo+"/issues/5";
+  }
+
+  function buildOriginalIssueUrl(message){
+    return ISSUE_URL+"?body="+encodeURIComponent(message);
+  }
+
+  function loadThread(container){
+    const host=container.querySelector(".utterances-host");
+    const card=container.closest(".comment");
+    const threadId=card?.dataset.thread||"0";
+    if(!host || host.dataset.loaded) return;
+    host.dataset.loaded="1";
+
+    const parentAuthor=card?.querySelector(".name")?.textContent?.trim()||"";
+    const parentComment=card?.dataset.githubCommentId||"issue-root";
+    host.innerHTML=
+      '<div class="reply-github-box">'+
+        '<div class="reply-compose">'+
+          '<textarea id="reply-message-'+threadId+'" rows="4" maxlength="2000" autocomplete="off" spellcheck="true" placeholder="Escreva sua mensagem..." aria-label="Escreva sua mensagem"></textarea>'+
+          '<div class="reply-compose-foot">'+
+            '<span class="reply-compose-count">0 / 2000</span>'+
+            '<button type="button" class="reply-send-button" aria-label="Enviar">Enviar</button>'+
+          '</div>'+
+        '</div>'+
+      '</div>';
+
+    const textarea=host.querySelector(".reply-compose textarea");
+    const count=host.querySelector(".reply-compose-count");
+    const send=host.querySelector(".reply-send-button");
+    textarea.value="";
+
+    const updateReplyState=()=>{
+      count.textContent=textarea.value.length+" / 2000";
+      send.disabled=!textarea.value.trim();
+    };
+
+    textarea.addEventListener("input",updateReplyState);
+    updateReplyState();
+
+    send.addEventListener("click",async()=>{
+      const message=textarea.value.trim();
+      if(!message) return;
+
+      send.disabled=true;
+      const responder=parentAuthor;
+      const payload=buildReplyCommentPayload(
+        message,
+        responder,
+        card?.dataset.thread||"0",
+        parentComment,
+        parentAuthor
+      );
+      const parentUrl=buildParentCommentUrl(parentComment);
+
+      // Não copia nem injeta o conteúdo do comentário pai no editor do GitHub.
+      // A resposta começa sempre com a caixa vazia.
+      const opened=window.open(parentUrl,"_blank","noopener");
+      if(!opened) window.location.href=parentUrl;
+      textarea.value="";
+      updateReplyState();
+    });
+  }
+  // Cada comentário precisa ter sua própria caixa de resposta visível.
+  // O comentário raiz não possuía .thread nem botão de resposta, por isso ficava sem caixa.
+  document.querySelectorAll(".comment[data-thread]").forEach(card=>{
+    const actions=card.querySelector(".comment-actions");
+    if(!actions) return;
+
+    let button=actions.querySelector(".reply-button");
+    if(!button){
+      button=document.createElement("button");
+      button.className="reply-button";
+      button.type="button";
+      button.setAttribute("aria-expanded","true");
+      button.textContent="Fechar respostas";
+      actions.insertBefore(button,actions.firstChild);
+    }
+
+    let thread=card.querySelector(".thread");
+    if(!thread){
+      thread=document.createElement("div");
+      thread.className="thread is-open";
+      thread.setAttribute("aria-hidden","false");
+      thread.innerHTML='<p class="thread-note"></p><div class="utterances-host"></div>';
+      actions.insertAdjacentElement("afterend",thread);
+    }else{
+      thread.classList.add("is-open");
+      thread.setAttribute("aria-hidden","false");
+    }
+
+    button.setAttribute("aria-expanded","true");
+    button.textContent="Fechar respostas";
+    loadThread(thread);
+  });
+
+  document.querySelectorAll(".comment[data-thread]").forEach(card=>{
+    const button=card.querySelector(".reply-button");
+    const thread=card.querySelector(".thread");
+    if(!button||!thread) return;
+    button.addEventListener("click",()=>{
+      const open=thread.classList.toggle("is-open");
+      button.setAttribute("aria-expanded",String(open));
+      thread.setAttribute("aria-hidden",String(!open));
+      button.textContent=open?"Fechar respostas":"↩ Responder";
+      if(open){ loadThread(thread); }
+    });
+  });
+  const composeText=document.querySelector("#pt-comment-text");
+  const charCount=document.querySelector("#pt-char-count");
+  const clearComment=document.querySelector("#pt-clear-comment");
+  const publishComment=document.querySelector("#pt-publish-comment");
+  if(composeText){
+    const updateCompose=()=>{
+      const n=composeText.value.length;
+      if(charCount) charCount.textContent=n+" / 2000";
+      if(publishComment) publishComment.disabled=!composeText.value.trim();
+    };
+    composeText.addEventListener("input",updateCompose);
+    clearComment?.addEventListener("click",()=>{composeText.value="";updateCompose();composeText.focus();});
+    publishComment?.addEventListener("click",async()=>{
+      const text=composeText.value.trim();
+      if(!text)return;
+      publishComment.disabled=true;
+      const previous=publishComment.textContent;
+      publishComment.textContent="Enviando…";
+      try{
+        window.open(buildOriginalIssueUrl(text),"_blank","noopener");
+        composeText.value="";
+        updateCompose();
+      }catch(error){
+        window.alert("Não foi possível preparar o envio ao GitHub: "+(error?.message||"erro desconhecido."));
+      }finally{
+        publishComment.textContent=previous;
+        updateCompose();
+      }
+    });
+    updateCompose();
+  }
+
+  const search=document.querySelector("#comment-search");
+  const empty=document.querySelector("#comment-empty");
+  let commentList=[...document.querySelectorAll(".comment[data-thread]")];
+
+  async function syncGithubComments(){
+    const list=document.querySelector("#live-comments-list");
+    const note=document.querySelector("#live-comments-note");
+    if(!list) return;
+
+    try{
+      const response=await fetch("https://api.github.com/repos/"+repo+"/issues/5/comments?per_page=100",{
+        headers:{Accept:"application/vnd.github+json"}
+      });
+      if(!response.ok) throw new Error("GitHub respondeu HTTP "+response.status);
+      const comments=await response.json();
+
+      const existingIds=new Set(
+        [...document.querySelectorAll(".comment[data-github-comment-id]")]
+          .map(card=>String(card.dataset.githubCommentId))
+      );
+
+      list.innerHTML="";
+      const external=comments.filter(comment=>!existingIds.has(String(comment.id)));
+
+      if(!external.length){
+        note.textContent="Nenhum comentário novo fora da árvore editorial.";
+        return;
+      }
+
+      external.forEach(comment=>{
+        const card=document.createElement("article");
+        card.className="comment live-comment";
+        card.dataset.thread="external-"+comment.id;
+        card.dataset.parent="";
+        card.dataset.githubCommentId=String(comment.id);
+
+        const author=document.createElement("div");
+        author.className="author";
+        author.innerHTML=
+          '<div class="avatar">'+(comment.user?.login?.slice(0,1)||"?").toUpperCase()+'</div>'+
+          '<div><div class="name"></div><div class="role">Comentário do GitHub</div></div>'+
+          '<div class="reply">#'+comment.id+'</div>';
+        author.querySelector(".name").textContent=comment.user?.login||"Participante";
+
+        const text=document.createElement("p");
+        text.textContent=comment.body||"";
+
+        const actions=document.createElement("div");
+        actions.className="comment-actions";
+        actions.innerHTML='<button class="reply-button" type="button" aria-expanded="false">↩ Responder</button>';
+
+        const thread=document.createElement("div");
+        thread.className="thread";
+        thread.setAttribute("aria-hidden","true");
+        thread.innerHTML='<p class="thread-note"></p><div class="utterances-host"></div>';
+
+        card.append(author,text,actions,thread);
+        list.appendChild(card);
+
+        const button=actions.querySelector(".reply-button");
+        button.addEventListener("click",()=>{
+          const open=thread.classList.toggle("is-open");
+          button.setAttribute("aria-expanded",String(open));
+          button.textContent=open?"Fechar resposta":"↩ Responder";
+          thread.setAttribute("aria-hidden",String(!open));
+          if(open) loadThread(thread);
+        });
+      });
+
+      note.textContent=external.length+" comentário(s) do GitHub carregado(s).";
+      updateComments();
+    }catch(error){
+      note.textContent="Não foi possível atualizar os comentários do GitHub: "+(error?.message||"erro desconhecido.");
+    }
+  }
+
+  function updateComments(){
+    commentList=[...document.querySelectorAll(".comment[data-thread]")];
+    const term=(search?.value||"").trim().toLowerCase();
+    const visible=commentList.filter(card=>card.textContent.toLowerCase().includes(term));
+    commentList.forEach(card=>card.classList.toggle("is-hidden", !visible.includes(card)));
+    if(empty) empty.style.display=visible.length?"none":"block";
+  }
+
+  search?.addEventListener("input",updateComments);
+  document.querySelectorAll(".reaction-button").forEach((button,index)=>{
+    const card=button.closest(".comment");
+    const key="nocturna-reaction-"+(card?.dataset.thread||index)+"-"+button.dataset.reaction;
+    const count=button.querySelector("span");
+    const saved=localStorage.getItem(key)==="1";
+    button.classList.toggle("is-active",saved);
+    count.textContent=saved?"1":"0";
+    button.setAttribute("aria-pressed",String(saved));
+    button.addEventListener("click",()=>{
+      const active=!button.classList.contains("is-active");
+      button.classList.toggle("is-active",active);
+      count.textContent=active?"1":"0";
+      button.setAttribute("aria-pressed",String(active));
+      localStorage.setItem(key,active?"1":"0");
+    });
+  });
+
+  document.querySelectorAll("[data-copy-comment]").forEach(button=>{
+    button.addEventListener("click",async()=>{
+      const card=button.closest(".comment");
+      if(!card) return;
+      const url=location.href.split("#")[0]+"#thread-"+card.dataset.thread;
+      card.id="thread-"+card.dataset.thread;
+      try{
+        await navigator.clipboard.writeText(url);
+        button.textContent="✓ Link copiado";
+        setTimeout(()=>button.textContent="🔗 Copiar link",1600);
+      }catch{
+        location.hash="thread-"+card.dataset.thread;
+      }
+    });
+  });
+
+  document.querySelectorAll("[data-focus-comment]").forEach(button=>{
+    button.addEventListener("click",()=>{
+      const card=button.closest(".comment");
+      const reply=card?.querySelector(".reply-button");
+      if(reply) reply.click();
+    });
+  });
+
+  document.querySelectorAll("[data-report-comment]").forEach(button=>{
+    button.addEventListener("click",()=>{
+      const card=button.closest(".comment");
+      const name=card?.querySelector(".name")?.textContent||"mensagem";
+      const subject=encodeURIComponent("Denúncia de mensagem · "+name);
+      const body=encodeURIComponent("Mensagem: "+location.href+"#thread-"+(card?.dataset.thread||"") + "\n\nMotivo da denúncia:");
+      window.open("https://github.com/outocarlos003-lang/Nocturna/issues/new?title="+subject+"&body="+body,"_blank","noopener");
+    });
+  });
+
+  const refreshGithubComments=document.querySelector("#refresh-github-comments");
+  refreshGithubComments?.addEventListener("click",syncGithubComments);
+  updateComments();
+  syncGithubComments();
+
+})();
+</script>
+
+/* NOCTURNA_EMBED_MODE */
+<script>
+(()=>{"use strict";
+const p=new URLSearchParams(location.search);
+if(p.get("embed")!=="1")return;
+document.body.classList.add("embed-mode");
+const send=()=>parent!==window&&parent.postMessage({type:"nocturna-comments-height",height:document.documentElement.scrollHeight},location.origin);
+addEventListener("load",()=>{send();setTimeout(send,100);setTimeout(send,500)});
+new ResizeObserver(send).observe(document.documentElement);
+addEventListener("message",e=>{
+  if(e.origin!==location.origin||e.data?.type!=="nocturna-comments-context")return;
+  document.documentElement.dataset.contextUrl=e.data.url||"";
+});
+})();
+</script>
+</body>
+</html>

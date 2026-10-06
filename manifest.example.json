@@ -1,0 +1,46 @@
+{
+  "version": 1,
+  "repository": "outocarlos003-lang/Nocturna",
+  "policy": {
+    "mode": "dry-run",
+    "preserveSource": true,
+    "preserveContent": true,
+    "preserveAuthorMetadata": true,
+    "preserveTimestamps": true,
+    "deduplicateBy": ["source.id", "source.url", "content.sha256"],
+    "markerPrefix": "nocturna-migration:v1"
+  },
+  "records": [
+    {
+      "thread": {
+        "key": "EXEMPLO-THREAD-001",
+        "title": "Título original da conversa",
+        "sourceType": "publication",
+        "publicationId": "publicacao-id",
+        "chapterId": null
+      },
+      "source": {
+        "kind": "comment",
+        "id": "source-comment-id",
+        "url": "https://example.invalid/origem",
+        "author": {
+          "login": "autor-original",
+          "displayName": "Nome original"
+        },
+        "createdAt": "2026-01-01T00:00:00Z",
+        "updatedAt": "2026-01-01T00:00:00Z"
+      },
+      "content": {
+        "markdown": "Conteúdo integral do comentário, preservado exatamente como recebido.",
+        "sha256": "PREENCHER_PELO_EXPORTADOR"
+      },
+      "replyToSourceId": null,
+      "destination": {
+        "categorySlug": "general",
+        "discussionNodeId": null,
+        "discussionNumber": null,
+        "commentNodeId": null
+      }
+    }
+  ]
+}
