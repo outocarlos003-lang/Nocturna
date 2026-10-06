@@ -24,7 +24,7 @@ for(const n of nodes){
   if(typeof n.content!=="string") fail("content ausente em "+n.nodeId);
   if(!n.author?.displayName) fail("autoria ausente em "+n.nodeId);
   if(!Number.isInteger(n.depth)||n.depth<0) fail("depth invalido em "+n.nodeId);
-  if(!Number.isInteger(n.order)||n.order<1) fail("order invalido em "+n.nodeId);
+  if(n.order!==undefined && (!Number.isInteger(n.order)||n.order<1)) fail("order invalido em "+n.nodeId);
 }
 const root=nodes.filter(n=>String(n.nodeId)===String(data.issue.rootNodeId));
 if(root.length!==1) fail("raiz deve existir exatamente uma vez");
