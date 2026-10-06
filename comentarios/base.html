@@ -297,14 +297,6 @@ textarea::placeholder{color:#66676d}
 .message{margin-top:9px;color:var(--muted);font-size:.88rem}
 .message.ok{color:#b9d7b1}
 .message.err{color:#e1a0a0}
-.participation{
-  margin-top:30px;
-  padding:24px 4px;
-  border-top:1px solid var(--line);
-}
-.participation h2{margin:0;font-family:var(--serif);font-size:1.7rem}
-.participation p{color:var(--muted)}
-.native{color:#c4c1c3;text-decoration:underline;text-underline-offset:3px}
 :focus-visible{outline:3px solid #d2b5aa;outline-offset:3px}
 .sr{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
 
@@ -483,8 +475,8 @@ function composerFor(n,box){
       let copied=false;
       try{await navigator.clipboard.writeText(payload);copied=true}catch{}
       msg.textContent=copied
-        ?"Mensagem preparada e copiada. Abra a conversa pública, cole no campo de comentário e publique."
-        :"Não foi possível copiar automaticamente. Use o texto da caixa e publique na conversa pública.";
+        ?"Mensagem preparada e copiada."
+        :"Não foi possível copiar automaticamente.";
       msg.className="message ok";
       const parentUrl=String(n.commentUrl||"");
       try{
@@ -538,11 +530,7 @@ function makeComment(n,map,isRoot=false){
   context.textContent=isRoot?"Comentário inicial":(n.author?.role||"Respondendo à conversa");
   authorWrap.append(author,context);
   const corner=document.createElement("div");corner.className="corner";
-  if(isRoot){
-    const a=document.createElement("a");a.href=n.commentUrl||"#";a.target="_blank";a.rel="noopener noreferrer";a.textContent="Conversa ↗";corner.appendChild(a);
-  }else{
-    corner.textContent="↳";
-  }
+  if(!isRoot)corner.textContent="↳";
   head.append(avatar,authorWrap,corner);
   article.appendChild(head);
 
@@ -552,8 +540,7 @@ function makeComment(n,map,isRoot=false){
 
   const toolbar=document.createElement("div");
   toolbar.className="toolbar";
-  const openComposer=composerFor(n,article);
-  replyBtn.addEventListener("click",openComposer);
+  composerFor(n,article);
 
   ["like","heart","idea"].forEach((type)=>{
     const btn=document.createElement("button");
