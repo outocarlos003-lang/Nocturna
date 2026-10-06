@@ -19,6 +19,7 @@ GitHub Pages
                                               │
                                               └── nocturna-comments.yml
                                                    ├── bootstrap root
+                                                   ├── publish genealogy
                                                    ├── normalize + genealogy
                                                    └── validate
 ```
@@ -103,7 +104,12 @@ node sitemap.mjs https://outocarlos003-lang.github.io/Nocturna/
 - Cada descendente guarda `parentNodeId`, `parentCommentId`, `parentAuthor`, `depth`, `order`, autoria, conteúdo, origem e, após a reconciliação, a raiz e o ramo a que pertence.
 - `scripts/validate-comments.mjs` rejeita duplicidade, pai ausente, auto-pai, ciclo, profundidade incoerente, origem divergente e lacunas de identidade.
 - `scripts/normalize-comments.mjs` aceita somente o envelope `nocturna-reply:v1` produzido pelo mecanismo de resposta e por comentário de bot; a operação é idempotente pela identidade `source-id` e reconcilia a genealogia existente antes de incorporar novos nós.
-- `.github/workflows/nocturna-comments.yml` normaliza, valida e publica o artefato Pages com a projeção viajando junto do site.
+- `scripts/publish-genealogy-to-github.mjs` materializa nós sem comentário real no Issue #1, usando `nocturna-node:v1` como identidade técnica idempotente e atualizando os permalinks reais na projeção.
+- `.github/workflows/nocturna-comments.yml` normaliza, publica, valida e implanta o artefato Pages; o fluxo também é acionado por alterações na `main` para reconciliar a projeção histórica.
 - Comentários públicos sem o envelope canônico permanecem públicos, mas não entram artificialmente na genealogia.
 
 O conteúdo editorial da resposta continua limpo. Os metadados de parentesco ficam no envelope técnico oculto do comentário publicado e são usados somente para reconstrução e validação.
+
+### Publicação bidirecional
+
+O sentido GitHub → Nocturna continua sendo a entrada oficial para novos comentários canônicos. O sentido Nocturna → GitHub agora materializa os nós históricos que ainda não tinham um comentário real na Issue #1. A identidade semântica do personagem é preservada no envelope; a autoria técnica continua sendo a conta que publicou o comentário via GitHub API.
