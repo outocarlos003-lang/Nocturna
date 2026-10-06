@@ -29,6 +29,9 @@ jobs:
         with:
           ref: main
 
+      - name: Test genealogical invariants
+        run: node scripts/test-genealogy.mjs
+
       - name: Materialize root comment when Issue #1 exists
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
