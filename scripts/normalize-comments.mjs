@@ -21,7 +21,12 @@ const api=async(url,options={})=>{
   return body;
 };
 
-const comments=await api("/repos/"+OWNER+"/"+REPO+"/issues/"+ISSUE+"/comments?per_page=100");
+let comments=[];
+for(let page=1;;page++){
+  const batch=await api("/repos/"+OWNER+"/"+REPO+"/issues/"+ISSUE+"/comments?per_page=100&page="+page);
+  comments.push(...batch);
+  if(batch.length<100)break;
+}
 const byComment=new Map(data.nodes.map(n=>[String(n.commentId),n]));
 const ids=new Set(data.nodes.map(n=>String(n.nodeId)));
 const sourceIds=new Set(data.nodes.map(n=>n.sourceId));
@@ -38,9 +43,10 @@ for(const c of comments){
   }));
   const required=["parent-node","parent-comment","parent-author","reply-author","source-id"];
   if(required.some(k=>!meta[k])) continue;
-  if(c.user?.type!=="Bot") continue;
+  const isBotCharacter=c.user?.type==="Bot" && ["Akashi Seijuro","Johan Liebert","Ayanokoji Kiyotaka","Osamu Dazai","Light Yagami","L Lawliet","Sasuke Uchiha","Ranpo Edogawa","Itachi Uchiha","Satoru Gojo"].includes(meta["reply-author"]);
+  const isHuman=c.user?.type==="User" && String(c.user?.login||"")===meta["reply-author"];
+  if(!isBotCharacter && !isHuman) continue;
   if(!/^github-issue5-reply-[A-Za-z0-9_-]{16,80}$/.test(meta["source-id"])) continue;
-  if(!["Akashi Seijuro","Johan Liebert","Ayanokoji Kiyotaka","Osamu Dazai","Light Yagami","L Lawliet","Sasuke Uchiha","Ranpo Edogawa","Itachi Uchiha","Satoru Gojo"].includes(meta["reply-author"])) continue;
 
   const commentId=String(c.id);
   const sourceId=meta["source-id"];
@@ -69,7 +75,7 @@ for(const c of comments){
     commentUrl:c.html_url,
     author:{
       displayName:meta["reply-author"],
-      role:"Resposta canônica"
+      role:isHuman?"Participação humana":"Resposta canônica"
     },
     content:body.replace(m[0],"").trim(),
     origin:{
