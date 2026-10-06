@@ -43,8 +43,18 @@ for(const n of nodes){
     if(n.parentAuthor!==p.author.displayName) fail("parentAuthor incoerente: "+n.nodeId);
   }
 }
-const sorted=nodes.slice().sort((a,b)=>a.order-b.order);
-for(let i=1;i<sorted.length;i++) if(sorted[i].order!==sorted[i-1].order+1) fail("ordem nao monotona entre "+sorted[i-1].nodeId+" e "+sorted[i].nodeId);
+const childrenByParent=new Map();
+for(const n of nodes){
+  const key=String(n.parentNodeId===null?"root":n.parentNodeId);
+  if(!childrenByParent.has(key)) childrenByParent.set(key,[]);
+  childrenByParent.get(key).push(n);
+}
+for(const [parentId,children] of childrenByParent){
+  const withOrder=children.filter(n=>Number.isInteger(n.order));
+  if(withOrder.length && withOrder.length!==children.length) fail("ordem parcial entre irmaos do pai "+parentId);
+  const sorted=withOrder.slice().sort((a,b)=>a.order-b.order);
+  for(let i=1;i<sorted.length;i++) if(sorted[i].order===sorted[i-1].order) fail("ordem duplicada entre "+sorted[i-1].nodeId+" e "+sorted[i].nodeId);
+}
 const numeric=nodes.map(n=>Number(n.nodeId)).sort((a,b)=>a-b);
 for(let i=0;i<numeric.length;i++) if(numeric[i]!==i+1) fail("IDs historicos devem formar serie 1..N; encontrado "+numeric.join(","));
 
