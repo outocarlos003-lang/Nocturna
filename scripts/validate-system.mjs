@@ -49,7 +49,7 @@ for(const icon of manifest.icons||[]){
   if(!exists(p)) fail(`manifest: ícone ausente -> ${icon.src}`);
 }
 
-const wranglerText=fs.readFileSync(path.join(root,"wrangler.jsonc"),"utf8").replace(/\/\/.*$/gm,"");
+const wranglerText=fs.readFileSync(path.join(root,"wrangler.jsonc"),"utf8").replace(/^\s*\/\/.*$/gm,"");
 const wrangler=JSON.parse(wranglerText);
 if(wrangler.main&&!exists(wrangler.main)) fail(`wrangler: main ausente -> ${wrangler.main}`);
 
