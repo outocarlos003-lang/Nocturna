@@ -21,7 +21,7 @@ const api=async(url,options={})=>{
   return body;
 };
 
-const issue=await api("/repos/"+OWNER+"/"+REPO+"/issues/"+ISSUE);
+await api("/repos/"+OWNER+"/"+REPO+"/issues/"+ISSUE);
 const comments=await api("/repos/"+OWNER+"/"+REPO+"/issues/"+ISSUE+"/comments?per_page=100");
 const root=comments.find(c=>String(c.body||"").includes("<!-- nocturna-root:v1 -->"));
 if(!root) throw new Error("comentario raiz Johan Liebert nao encontrado; nenhuma nova origem sera criada");
@@ -64,15 +64,7 @@ data.issue.rootCommentUrl=root.html_url;
 data.issue.rootAuthor="Johan Liebert";
 data.issue.authority="github";
 
-const current=await api("/repos/"+OWNER+"/"+REPO+"/contents/"+PATH);
-const encoded=Buffer.from(JSON.stringify(data,null,2)+"\n","utf8").toString("base64");
-await api("/repos/"+OWNER+"/"+REPO+"/contents/"+PATH,{
-  method:"PUT",
-  headers:{"Content-Type":"application/json"},
-  body:JSON.stringify({
-    message:"comments: preserve canonical Johan root",
-    content:encoded,
-    sha:current.sha
-  })
-});
+// A bootstrap step only reconciles the checked-out projection. Persistence is
+// performed once, at the end of the workflow, to avoid racing the Git branch.
+fs.writeFileSync(PATH,JSON.stringify(data,null,2)+"\n");
 console.log("raiz canonica preservada",root.id,"autor GitHub:",githubAuthor);
