@@ -21,18 +21,6 @@ const api=async(url,options={})=>{
   return body;
 };
 
-const rootBody=[
-"<!-- nocturna-root:v1 -->",
-"",
-"# Nocturna — conversa canônica",
-"",
-"Este é o comentário raiz da conversa do Issue #1.",
-"Todos os personagens e participantes humanos que responderem pela interface canônica formarão descendentes deste nó.",
-"Cada resposta deverá preservar pai, autor, identidade, profundidade, ordem e permalink.",
-"",
-"Participações humanas continuam permitidas: uma pessoa pode iniciar um ramo diretamente na raiz ou responder a qualquer nó.",
-].join("\n");
-
 const issue=await api("/repos/"+OWNER+"/"+REPO+"/issues/"+ISSUE);
 const comments=await api("/repos/"+OWNER+"/"+REPO+"/issues/"+ISSUE+"/comments?per_page=100");
 let root=comments.find(c=>String(c.body||"").includes("<!-- nocturna-root:v1 -->"));
@@ -55,10 +43,12 @@ if(!rootNode) throw new Error("nodeId 2 (raiz historica) nao encontrado");
 const previousRootContent=rootNode.content;
 rootNode.commentId=root.id;
 rootNode.commentUrl=root.html_url;
-rootNode.author={displayName:"Nocturna",role:"Raiz canônica"};
+const rootBody=String(root.body||"");
+const rootAuthor=String(root.user?.login||root.user?.name||"github");
+rootNode.author={displayName:rootAuthor,role:"Raiz canônica"};
 rootNode.parentCommentId=null;
 rootNode.parentAuthor=null;
-rootNode.content=rootBody.replace("<!-- nocturna-root:v1 -->\n\n","");
+rootNode.content=rootBody.replace(/^<!-- nocturna-root:v1 -->\s*/,"").trim();
 rootNode.origin={
   kind:"github-issue-comment",
   location:root.html_url,
@@ -70,14 +60,14 @@ rootNode.origin={
 for(const node of data.nodes){
   if(String(node.nodeId)!=="2" && String(node.parentNodeId)==="2"){
     node.parentCommentId=root.id;
-    node.parentAuthor="Nocturna";
+    node.parentAuthor=rootAuthor;
   }
 }
 
 data.issue.rootNodeId="2";
 data.issue.rootCommentId=root.id;
 data.issue.rootCommentUrl=root.html_url;
-data.issue.rootAuthor="Nocturna";
+data.issue.rootAuthor=rootAuthor;
 
 const current=await api("/repos/"+OWNER+"/"+REPO+"/contents/"+PATH);
 const encoded=Buffer.from(JSON.stringify(data,null,2)+"\n","utf8").toString("base64");
