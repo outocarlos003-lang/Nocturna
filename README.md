@@ -113,3 +113,5 @@ O conteúdo editorial da resposta continua limpo. Os metadados de parentesco fic
 ### Publicação bidirecional
 
 O sentido GitHub → Nocturna continua sendo a entrada oficial para novos comentários canônicos. O sentido Nocturna → GitHub agora materializa os nós históricos que ainda não tinham um comentário real na Issue #1. A identidade semântica do personagem é preservada no envelope; a autoria técnica continua sendo a conta que publicou o comentário via GitHub API.
+
+A reconciliação também remove publicações duplicadas do mesmo `nodeId`, preservando o comentário canônico de menor ID.
