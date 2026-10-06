@@ -225,7 +225,6 @@ export default {
         `parent-node=${input.parentNode}`,
         `parent-comment=${input.parentComment}`,
         `parent-author=${input.parentAuthor}`,
-        `reply-author=${input.responder}`,
         `source-id=${sourceId}`,
         "-->",
         `<!-- nocturna-node: pending -->`,
@@ -240,6 +239,7 @@ export default {
         comment_id: created.id,
         comment_url: created.html_url,
         parent_url: parentLink,
+        parent_comment_id: String(input.parentComment),
         message: "Resposta publicada. O workflow da Nocturna fará a ancoragem do novo nó."
       }, 201, origin);
     } catch (error) {
