@@ -21,65 +21,48 @@ const api=async(url,options={})=>{
   return body;
 };
 
-const defaultRootBody=[
-"<!-- nocturna-root:v1 -->",
-"",
-"# Nocturna — raiz da conversa",
-"",
-"Este comentário é o **nó raiz real** da árvore canônica.",
-"",
-"Todas as respostas canônicas — de personagens ou de participantes humanos que optarem pelo fluxo canônico — devem apontar para este comentário ou para um descendente verificável.",
-"",
-"A relação pai → filho será preservada pelo sistema, junto com autor, identidade, profundidade, ordem e permalink."
-].join("\n");
-
 const issue=await api("/repos/"+OWNER+"/"+REPO+"/issues/"+ISSUE);
 const comments=await api("/repos/"+OWNER+"/"+REPO+"/issues/"+ISSUE+"/comments?per_page=100");
-let root=comments.find(c=>String(c.body||"").includes("<!-- nocturna-root:v1 -->"));
-
-if(!root){
-  root=await api("/repos/"+OWNER+"/"+REPO+"/issues/"+ISSUE+"/comments",{
-    method:"POST",
-    headers:{"Content-Type":"application/json"},
-    body:JSON.stringify({body:defaultRootBody})
-  });
-  console.log("comentario raiz criado:",root.id);
-}else{
-  console.log("comentario raiz ja existente:",root.id);
-}
+const root=comments.find(c=>String(c.body||"").includes("<!-- nocturna-root:v1 -->"));
+if(!root) throw new Error("comentario raiz Johan Liebert nao encontrado; nenhuma nova origem sera criada");
 
 const data=JSON.parse(fs.readFileSync(PATH,"utf8"));
-const rootNode=data.nodes.find(n=>String(n.nodeId)==="2");
-if(!rootNode) throw new Error("nodeId 2 (raiz historica) nao encontrado");
+const rootNode=data.nodes.find(n=>String(n.nodeId)===String(data.issue?.rootNodeId||"2"));
+if(!rootNode) throw new Error("no raiz canonica nao encontrado");
+if(rootNode.author?.displayName!=="Johan Liebert") throw new Error("a raiz canonica deve preservar Johan Liebert");
 
 const previousRootContent=rootNode.content;
+const githubAuthor=String(root.user?.login||root.user?.name||"github");
 rootNode.commentId=root.id;
 rootNode.commentUrl=root.html_url;
-const rootBody=String(root.body||"");
-const rootAuthor=String(root.user?.login||root.user?.name||"github");
-rootNode.author={displayName:rootAuthor,role:"Raiz canônica"};
+rootNode.author={displayName:"Johan Liebert",role:"Comentário inicial"};
+rootNode.parentNodeId=null;
+rootNode.parentThreadKey=null;
 rootNode.parentCommentId=null;
 rootNode.parentAuthor=null;
-rootNode.content=rootBody.replace(/^<!-- nocturna-root:v1 -->\s*/,"").trim();
+rootNode.depth=0;
+rootNode.content=String(root.body||"").replace(/^<!-- nocturna-root:v1 -->\s*/,"").trim();
 rootNode.origin={
   kind:"github-issue-comment",
   location:root.html_url,
   migrated:false,
   normalized:true,
-  historicalIssueBody:previousRootContent
+  historicalIssueBody:previousRootContent,
+  githubAuthor
 };
 
 for(const node of data.nodes){
-  if(String(node.nodeId)!=="2" && String(node.parentNodeId)==="2"){
+  if(String(node.nodeId)!==String(rootNode.nodeId) && String(node.parentNodeId)===String(rootNode.nodeId)){
     node.parentCommentId=root.id;
-    node.parentAuthor=rootAuthor;
+    node.parentAuthor="Johan Liebert";
   }
 }
 
-data.issue.rootNodeId="2";
+data.issue.rootNodeId=String(rootNode.nodeId);
 data.issue.rootCommentId=root.id;
 data.issue.rootCommentUrl=root.html_url;
-data.issue.rootAuthor=rootAuthor;
+data.issue.rootAuthor="Johan Liebert";
+data.issue.authority="github";
 
 const current=await api("/repos/"+OWNER+"/"+REPO+"/contents/"+PATH);
 const encoded=Buffer.from(JSON.stringify(data,null,2)+"\n","utf8").toString("base64");
@@ -87,9 +70,9 @@ await api("/repos/"+OWNER+"/"+REPO+"/contents/"+PATH,{
   method:"PUT",
   headers:{"Content-Type":"application/json"},
   body:JSON.stringify({
-    message:"comments: materialize Issue #1 root comment",
+    message:"comments: preserve canonical Johan root",
     content:encoded,
     sha:current.sha
   })
 });
-console.log("projecao relinkada ao comentario raiz",root.id);
+console.log("raiz canonica preservada",root.id,"autor GitHub:",githubAuthor);
