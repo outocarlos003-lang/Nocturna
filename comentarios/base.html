@@ -374,7 +374,6 @@ textarea::placeholder{color:#66676d}
 (()=>{"use strict";
 const REPO="outocarlos003-lang/Nocturna",ISSUE=1;
 const ISSUE_URL=`https://github.com/${REPO}/issues/${ISSUE}`;
-const REPLY_API=String(window.NOCTURNA_REPLY_API||"").trim().replace(/\/+$/,"");
 const COMMENT_URL_RE=/^https:\/\/github\.com\/outocarlos003-lang\/Nocturna\/issues\/1#issuecomment-\d+$/;
 const tree=document.querySelector("#tree");
 const key=(type,id)=>"nocturna-"+type+"-"+id;
@@ -701,8 +700,7 @@ search.addEventListener("input",()=>{
   });
 });
 
-const config=document.createElement("script");
-config.src="./reply-api-config.js";config.onload=load;config.onerror=load;document.head.appendChild(config);
+load();
 })();
 (()=>{"use strict";
 if(new URLSearchParams(location.search).get("embed")!=="1")return;
