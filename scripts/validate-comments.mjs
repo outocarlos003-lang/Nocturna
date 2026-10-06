@@ -7,6 +7,7 @@ const errors=[];
 const fail=(message)=>errors.push(message);
 const nodes=Array.isArray(data.nodes)?data.nodes:[];
 const ids=new Set();
+const sourceIds=new Set();
 const byId=new Map();
 
 if(data.schema!=="nocturna.comment-tree/v1") fail("schema invalido");
@@ -20,10 +21,13 @@ if(nodes.length===0) fail("nenhum no canonico");
 
 for(const n of nodes){
   const id=String(n.nodeId);
+  const sourceId=String(n.sourceId||"");
   if(!/^[0-9]+$/.test(id)) fail("nodeId invalido: "+n.nodeId);
   if(ids.has(id)) fail("nodeId duplicado: "+n.nodeId);
-  ids.add(id); byId.set(id,n);
-  if(!n.sourceId) fail("sourceId ausente em "+n.nodeId);
+  if(!sourceId) fail("sourceId ausente em "+n.nodeId);
+  if(sourceIds.has(sourceId)) fail("sourceId duplicado: "+sourceId);
+  ids.add(id); sourceIds.add(sourceId); byId.set(id,n);
+  if(!n.commentId) fail("commentId ausente em "+n.nodeId);
   if(!n.commentUrl) fail("commentUrl ausente em "+n.nodeId);
   if(typeof n.content!=="string") fail("content ausente em "+n.nodeId);
   if(!n.author?.displayName) fail("autoria ausente em "+n.nodeId);

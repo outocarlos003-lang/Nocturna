@@ -37,12 +37,25 @@ for (let page = 1; ; page += 1) {
 }
 
 const byNode = new Map();
+const bySource = new Map();
 for (const comment of comments) {
   const meta = marker(comment.body);
   if (!meta?.nodeId) continue;
-  const key = String(meta.nodeId);
-  if (!byNode.has(key)) byNode.set(key, []);
-  byNode.get(key).push(comment);
+  const nodeId = String(meta.nodeId);
+  const sourceId = meta.sourceId == null ? null : String(meta.sourceId);
+  if (!byNode.has(nodeId)) byNode.set(nodeId, []);
+  byNode.get(nodeId).push(comment);
+  if (sourceId) {
+    if (!bySource.has(sourceId)) bySource.set(sourceId, []);
+    bySource.get(sourceId).push({ comment, nodeId });
+  }
+}
+
+for (const [sourceId, matches] of bySource) {
+  const nodeIds = new Set(matches.map(({ nodeId }) => nodeId));
+  if (nodeIds.size > 1) {
+    throw new Error(`sourceId ${sourceId} aparece em nodes GitHub diferentes: ${[...nodeIds].join(", ")}`);
+  }
 }
 
 let removed = 0;
