@@ -404,7 +404,7 @@ function count(id,type){
 }
 function composerFor(n,box){
   const composer=document.createElement("div");
-  composer.className="composer open";
+  composer.className="composer";
   composer.dataset.parentNode=String(n.nodeId);
   composer.dataset.parentComment=String(n.commentId||"");
   composer.dataset.parentAuthor=String(n.author?.displayName||"");
@@ -442,7 +442,6 @@ function composerFor(n,box){
   msg.setAttribute("aria-live","polite");
   form.appendChild(msg);
   composer.appendChild(form);
-  box.appendChild(composer);
 
   const open=()=>{composer.classList.add("open");setTimeout(()=>textarea.focus(),0)};
   composerOpeners.set(String(n.nodeId),open);
@@ -509,7 +508,7 @@ function composerFor(n,box){
     }catch(err){msg.textContent=err.message||"Não foi possível enviar.";msg.className="message err"}
     finally{send.disabled=false}
   });
-  return open;
+  return {open,element:composer};
 }
 
 function makeComment(n,map,isRoot=false){
@@ -540,7 +539,19 @@ function makeComment(n,map,isRoot=false){
 
   const toolbar=document.createElement("div");
   toolbar.className="toolbar";
-  composerFor(n,article);
+  const composerRef=composerFor(n,article);
+
+  const replyButton=document.createElement("button");
+  replyButton.type="button";
+  replyButton.className="tool primary";
+  replyButton.textContent="↩ Responder";
+  replyButton.setAttribute("aria-expanded","false");
+  replyButton.setAttribute("aria-controls","reply-composer-"+n.nodeId);
+  replyButton.addEventListener("click",()=>{
+    composerRef.open();
+    replyButton.setAttribute("aria-expanded","true");
+  });
+  toolbar.appendChild(replyButton);
 
   ["like","heart","idea"].forEach((type)=>{
     const btn=document.createElement("button");
@@ -563,6 +574,9 @@ function makeComment(n,map,isRoot=false){
   });
   toolbar.appendChild(more);
   article.appendChild(toolbar);
+  composerRef.element.id="reply-composer-"+n.nodeId;
+  composerRef.element.setAttribute("aria-label","Responder ao comentário");
+  article.appendChild(composerRef.element);
 
   const children=document.createElement("div");
   children.className="children";
