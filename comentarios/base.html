@@ -417,7 +417,7 @@ function count(id,type){
 }
 function composerFor(n,box){
   const composer=document.createElement("div");
-  composer.className="composer";
+  composer.className="composer open";
   composer.dataset.parentNode=String(n.nodeId);
   composer.dataset.parentComment=String(n.commentId||"");
   composer.dataset.parentAuthor=String(n.author?.displayName||"");
@@ -557,9 +557,6 @@ function makeComment(n,map,isRoot=false){
 
   const toolbar=document.createElement("div");
   toolbar.className="toolbar";
-  const replyBtn=document.createElement("button");
-  replyBtn.type="button";replyBtn.className="tool primary";replyBtn.textContent="↩ Responder";
-  toolbar.appendChild(replyBtn);
   const openComposer=composerFor(n,article);
   replyBtn.addEventListener("click",openComposer);
 
