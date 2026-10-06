@@ -203,7 +203,7 @@ export default {
         if (!/^[0-9]+$/.test(input.parentNode)) throw new Error("Somente nós canônicos podem receber respostas canônicas.");
         if (input.parentComment === "issue-root") throw new Error("Somente o nó raiz pode apontar para a Issue.");
         const canonicalFile = await ghGet(`/repos/${REPO}/contents/data/comments/issue-5.json`, token);
-        const canonical = JSON.parse(atob(String(canonicalFile.content || "").replace(/\\n/g, "")));
+        const canonical = JSON.parse(atob(String(canonicalFile.content || "").replace(/\\s+/g, "")));
         const parentNode = (canonical.nodes || []).find(node => String(node.nodeId) === input.parentNode);
         if (!parentNode) throw new Error("Nó pai não existe na projeção canônica.");
         if (String(parentNode.commentId) !== input.parentComment) throw new Error("Comentário pai não corresponde ao nó canônico.");
