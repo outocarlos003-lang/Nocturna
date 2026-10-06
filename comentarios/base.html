@@ -93,5 +93,13 @@ const load=async()=>{
 const s=document.createElement("script");s.src="./reply-api-config.js";s.onload=load;s.onerror=load;document.head.appendChild(s);
 })();
 </script>
+<script>
+(()=>{"use strict";
+if(new URLSearchParams(location.search).get("embed")!=="1")return;
+const send=()=>{if(window.parent!==window)window.parent.postMessage({type:"nocturna-comments-height",height:document.documentElement.scrollHeight},location.origin)};
+addEventListener("load",()=>{send();setTimeout(send,100);setTimeout(send,500)});
+new ResizeObserver(send).observe(document.documentElement);
+})();
+</script>
 </body>
 </html>
