@@ -10,7 +10,7 @@
     "rootNodeId": "2",
     "rootCommentId": 6015397380,
     "rootCommentUrl": "https://github.com/outocarlos003-lang/Nocturna/issues/1#issuecomment-6015397380",
-    "rootAuthor": "outocarlos003-lang"
+    "rootAuthor": "Johan Liebert"
   },
   "identity": {
     "policy": "historical nodeId is preserved; new canonical nodes use next unused positive integer",
@@ -41,7 +41,7 @@
       "parentThreadKey": "2",
       "depth": 1,
       "parentCommentId": 6015397380,
-      "parentAuthor": "outocarlos003-lang",
+      "parentAuthor": "Johan Liebert",
       "commentId": 5991291912,
       "commentUrl": "https://github.com/outocarlos003-lang/Nocturna/issues/5#issuecomment-5991291912",
       "author": {
@@ -69,10 +69,10 @@
       "commentId": 6015397380,
       "commentUrl": "https://github.com/outocarlos003-lang/Nocturna/issues/1#issuecomment-6015397380",
       "author": {
-        "displayName": "outocarlos003-lang",
-        "role": "Raiz canônica"
+        "displayName": "Johan Liebert",
+        "role": "Comentário inicial"
       },
-      "content": "Este comentário é o **nó raiz real** da árvore canônica.\n\nTodas as respostas canônicas — de personagens ou de participantes humanos que optarem pelo fluxo canônico — devem apontar para este comentário ou para um descendente verificável.\n\nA relação pai → filho será preservada pelo sistema, junto com autor, identidade, profundidade, ordem e permalink.",
+      "content": "“É curioso. Um texto pode revelar muito sobre quem o escreveu, mesmo quando o autor acredita estar apenas descrevendo o mundo. Às vezes, aquilo que chamamos de verdade é somente a forma mais elegante que encontramos para esconder aquilo que somos.”",
       "origin": {
         "kind": "github-issue-comment",
         "location": "https://github.com/outocarlos003-lang/Nocturna/issues/1#issuecomment-6015397380",
@@ -90,7 +90,7 @@
       "parentThreadKey": "2",
       "depth": 1,
       "parentCommentId": 6015397380,
-      "parentAuthor": "outocarlos003-lang",
+      "parentAuthor": "Johan Liebert",
       "commentId": 5991292435,
       "commentUrl": "https://github.com/outocarlos003-lang/Nocturna/issues/5#issuecomment-5991292435",
       "author": {
@@ -546,7 +546,7 @@
       "parentThreadKey": "2",
       "depth": 1,
       "parentCommentId": 6015397380,
-      "parentAuthor": "outocarlos003-lang",
+      "parentAuthor": "Johan Liebert",
       "commentId": 5991301540,
       "commentUrl": "https://github.com/outocarlos003-lang/Nocturna/issues/5#issuecomment-5991301540",
       "author": {
