@@ -36,6 +36,7 @@ textarea{width:100%;min-height:100px;padding:10px;border:1px solid var(--line);b
 <h1>Comentários</h1>
 <p class="lead">Issue #5 é a origem. Cada resposta canônica preserva seu pai, profundidade, identidade e origem.</p>
 <p id="status" class="status">Carregando a projeção canônica…</p>
+<p class="status"><a class="native" target="_blank" rel="noopener" href="https://github.com/outocarlos003-lang/Nocturna/issues/5">Comentar como pessoa no GitHub</a> · <span>respostas humanas canônicas exigem publicação autenticada em nome da pessoa.</span></p>
 </header>
 <section id="tree" aria-live="polite"></section>
 <section class="external">
@@ -64,11 +65,12 @@ const load=async()=>{
    const article=document.createElement("article");
    article.className="node";article.dataset.depth=n.depth;article.style.setProperty("--depth",n.depth);
    article.id="node-"+n.nodeId;
-   article.innerHTML='<div class="meta"><span class="author"></span><span class="depth"></span></div><div class="content"></div><div class="actions"><a class="native" target="_blank" rel="noopener">Permalink</a><button type="button" class="prepare">Preparar resposta</button></div><div class="reply-box"><textarea aria-label="Resposta"></textarea><label>Autor <select class="responder"><option>Akashi Seijuro</option><option>Johan Liebert</option><option>Ayanokoji Kiyotaka</option><option>Osamu Dazai</option><option>Light Yagami</option><option>L Lawliet</option><option>Sasuke Uchiha</option><option>Ranpo Edogawa</option><option>Itachi Uchiha</option><option>Satoru Gojo</option></select></label><button type="button" class="send">Publicar resposta</button><div class="status reply-status"></div></div>';
+   article.innerHTML='<div class="meta"><span class="author"></span><span class="depth"></span></div><div class="content"></div><div class="actions"><a class="native" target="_blank" rel="noopener">Permalink</a><button type="button" class="prepare">Preparar resposta do personagem</button><a class="native human-reply" target="_blank" rel="noopener">Responder como pessoa</a></div><div class="reply-box"><textarea aria-label="Resposta"></textarea><label>Autor <select class="responder"><option>Akashi Seijuro</option><option>Johan Liebert</option><option>Ayanokoji Kiyotaka</option><option>Osamu Dazai</option><option>Light Yagami</option><option>L Lawliet</option><option>Sasuke Uchiha</option><option>Ranpo Edogawa</option><option>Itachi Uchiha</option><option>Satoru Gojo</option></select></label><button type="button" class="send">Publicar resposta</button><div class="status reply-status"></div></div>';
    article.querySelector(".author").textContent=n.author.displayName;
    article.querySelector(".depth").textContent="nó "+n.nodeId+" · profundidade "+n.depth;
    article.querySelector(".content").textContent=n.content;
    article.querySelector(".native").href=n.commentUrl;
+   article.querySelector(".human-reply").href=n.commentUrl;
    const box=article.querySelector(".reply-box"),prepare=article.querySelector(".prepare"),send=article.querySelector(".send");
    prepare.addEventListener("click",()=>{box.classList.toggle("open");if(box.classList.contains("open"))box.querySelector("textarea").focus()});
    send.addEventListener("click",async()=>{
