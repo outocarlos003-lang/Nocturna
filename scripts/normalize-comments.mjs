@@ -38,6 +38,9 @@ for(const c of comments){
   }));
   const required=["parent-node","parent-comment","parent-author","reply-author","source-id"];
   if(required.some(k=>!meta[k])) continue;
+  if(c.user?.type!=="Bot") continue;
+  if(!/^github-issue5-reply-[A-Za-z0-9_-]{16,80}$/.test(meta["source-id"])) continue;
+  if(!["Akashi Seijuro","Johan Liebert","Ayanokoji Kiyotaka","Osamu Dazai","Light Yagami","L Lawliet","Sasuke Uchiha","Ranpo Edogawa","Itachi Uchiha","Satoru Gojo"].includes(meta["reply-author"])) continue;
 
   const commentId=String(c.id);
   const sourceId=meta["source-id"];
