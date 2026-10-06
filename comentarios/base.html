@@ -256,7 +256,6 @@ main{width:min(960px,calc(100% - 32px));margin:0 auto;padding:30px 0 72px}
   margin-left:42px;
   padding-left:0;
 }
-.children.hidden{display:none}
 .composer{
   display:none;
   margin-top:17px;
@@ -558,16 +557,6 @@ function makeComment(n,map,isRoot=false){
 
   const toolbar=document.createElement("div");
   toolbar.className="toolbar";
-  const hasChildren=(map.get(String(n.nodeId))||[]).length>0;
-  if(hasChildren){
-    const toggle=document.createElement("button");
-    toggle.type="button";toggle.className="tool primary";toggle.textContent="Fechar respostas";
-    toggle.addEventListener("click",()=>{
-      children.classList.toggle("hidden");
-      toggle.textContent=children.classList.contains("hidden")?"Mostrar respostas":"Fechar respostas";
-    });
-    toolbar.appendChild(toggle);
-  }
   const replyBtn=document.createElement("button");
   replyBtn.type="button";replyBtn.className="tool primary";replyBtn.textContent="↩ Responder";
   toolbar.appendChild(replyBtn);
@@ -586,11 +575,6 @@ function makeComment(n,map,isRoot=false){
     });
     toolbar.appendChild(btn);
   });
-
-  const participate=document.createElement("button");
-  participate.type="button";participate.className="tool participate";participate.textContent="Participar";
-  participate.addEventListener("click",openComposer);
-  toolbar.appendChild(participate);
 
   const more=document.createElement("button");
   more.type="button";more.className="tool";more.textContent="•••";more.setAttribute("aria-label","Mais opções");
