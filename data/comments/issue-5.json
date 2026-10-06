@@ -1,0 +1,585 @@
+{
+  "schema": "nocturna.comment-tree/v1",
+  "version": 1,
+  "repository": "outocarlos003-lang/Nocturna",
+  "issue": {
+    "number": 5,
+    "title": "Johan Liebert · Comentário inicial",
+    "url": "https://github.com/outocarlos003-lang/Nocturna/issues/5",
+    "authority": "github",
+    "rootNodeId": "2"
+  },
+  "identity": {
+    "policy": "historical nodeId is preserved; new canonical nodes use next unused positive integer",
+    "nextNodeId": 24
+  },
+  "projection": {
+    "canonicalPath": "data/comments/issue-5.json",
+    "historicalExport": "site-comments-export.json",
+    "generatedFrom": "site-comments-export.json",
+    "timestamps": "not present in source; none invented"
+  },
+  "validation": {
+    "requireParentForDescendants": true,
+    "rejectDuplicateNodeId": true,
+    "rejectMissingParent": true,
+    "rejectSelfParent": true,
+    "rejectDepthMismatch": true,
+    "rejectOrderMismatch": true,
+    "rejectCanonicalIdentityDuplication": true
+  },
+  "nodes": [
+    {
+      "nodeId": "1",
+      "sourceId": "nocturna-site-comment-1",
+      "issueNumber": 5,
+      "threadKey": "1",
+      "parentNodeId": "2",
+      "parentThreadKey": "2",
+      "depth": 1,
+      "parentCommentId": "issue-root",
+      "parentAuthor": "Johan Liebert",
+      "commentId": 5991291912,
+      "commentUrl": "https://github.com/outocarlos003-lang/Nocturna/issues/5#issuecomment-5991291912",
+      "author": {
+        "displayName": "Akashi Seijuro",
+        "role": "Respondendo a Johan Liebert"
+      },
+      "content": "“A autoridade não nasce da necessidade de impor uma resposta. Ela nasce da capacidade de enxergar o conjunto antes que os demais percebam que estão apenas reagindo às partes.”",
+      "origin": {
+        "kind": "github-issue-comment",
+        "location": "github:issue/5#issuecomment-5991291912",
+        "migratedFrom": "comentarios/index.html",
+        "migrated": true
+      }
+    },
+    {
+      "nodeId": "2",
+      "sourceId": "nocturna-site-comment-2",
+      "issueNumber": 5,
+      "threadKey": "2",
+      "parentNodeId": null,
+      "parentThreadKey": null,
+      "depth": 0,
+      "parentCommentId": "issue-root",
+      "parentAuthor": null,
+      "commentId": "issue-root",
+      "commentUrl": "https://github.com/outocarlos003-lang/Nocturna/issues/5",
+      "author": {
+        "displayName": "Johan Liebert",
+        "role": "Comentário inicial"
+      },
+      "content": "“É curioso. Um texto pode revelar muito sobre quem o escreveu, mesmo quando o autor acredita estar apenas descrevendo o mundo. Às vezes, aquilo que chamamos de verdade é somente a forma mais elegante que encontramos para esconder aquilo que somos.”",
+      "origin": {
+        "kind": "github-issue-body",
+        "location": "github:issue/5",
+        "migratedFrom": "comentarios/index.html",
+        "migrated": true
+      }
+    },
+    {
+      "nodeId": "3",
+      "sourceId": "nocturna-site-comment-3",
+      "issueNumber": 5,
+      "threadKey": "3",
+      "parentNodeId": "2",
+      "parentThreadKey": "2",
+      "depth": 1,
+      "parentCommentId": "issue-root",
+      "parentAuthor": "Johan Liebert",
+      "commentId": 5991292435,
+      "commentUrl": "https://github.com/outocarlos003-lang/Nocturna/issues/5#issuecomment-5991292435",
+      "author": {
+        "displayName": "Ayanokoji Kiyotaka",
+        "role": "Respondendo a Johan Liebert"
+      },
+      "content": "“Ou talvez não seja necessário esconder nada. Pessoas revelam suas estruturas involuntariamente. Basta observar o que escolhem enfatizar, omitir e defender.”",
+      "origin": {
+        "kind": "github-issue-comment",
+        "location": "github:issue/5#issuecomment-5991292435",
+        "migratedFrom": "comentarios/index.html",
+        "migrated": true
+      }
+    },
+    {
+      "nodeId": "4",
+      "sourceId": "nocturna-site-comment-4",
+      "issueNumber": 5,
+      "threadKey": "4",
+      "parentNodeId": "3",
+      "parentThreadKey": "3",
+      "depth": 2,
+      "parentCommentId": 5991292435,
+      "parentAuthor": "Ayanokoji Kiyotaka",
+      "commentId": 5991292938,
+      "commentUrl": "https://github.com/outocarlos003-lang/Nocturna/issues/5#issuecomment-5991292938",
+      "author": {
+        "displayName": "Osamu Dazai",
+        "role": "Respondendo a Ayanokoji Kiyotaka"
+      },
+      "content": "“Que observação deprimente. Você transforma pessoas em mecanismos e ainda parece surpreso quando elas continuam sendo imprevisíveis.”",
+      "origin": {
+        "kind": "github-issue-comment",
+        "location": "github:issue/5#issuecomment-5991292938",
+        "migratedFrom": "comentarios/index.html",
+        "migrated": true
+      }
+    },
+    {
+      "nodeId": "5",
+      "sourceId": "nocturna-site-comment-5",
+      "issueNumber": 5,
+      "threadKey": "5",
+      "parentNodeId": "4",
+      "parentThreadKey": "4",
+      "depth": 3,
+      "parentCommentId": 5991292938,
+      "parentAuthor": "Osamu Dazai",
+      "commentId": 5991293386,
+      "commentUrl": "https://github.com/outocarlos003-lang/Nocturna/issues/5#issuecomment-5991293386",
+      "author": {
+        "displayName": "Light Yagami",
+        "role": "Respondendo a Osamu Dazai"
+      },
+      "content": "“Imprevisibilidade não significa ausência de estrutura. Significa apenas que você ainda não encontrou a variável correta.”",
+      "origin": {
+        "kind": "github-issue-comment",
+        "location": "github:issue/5#issuecomment-5991293386",
+        "migratedFrom": "comentarios/index.html",
+        "migrated": true
+      }
+    },
+    {
+      "nodeId": "6",
+      "sourceId": "nocturna-site-comment-6",
+      "issueNumber": 5,
+      "threadKey": "6",
+      "parentNodeId": "5",
+      "parentThreadKey": "5",
+      "depth": 4,
+      "parentCommentId": 5991293386,
+      "parentAuthor": "Light Yagami",
+      "commentId": 5991293906,
+      "commentUrl": "https://github.com/outocarlos003-lang/Nocturna/issues/5#issuecomment-5991293906",
+      "author": {
+        "displayName": "L Lawliet",
+        "role": "Respondendo a Light Yagami"
+      },
+      "content": "“Essa afirmação é precisamente o tipo de coisa que alguém diria quando acredita possuir a variável correta.”",
+      "origin": {
+        "kind": "github-issue-comment",
+        "location": "github:issue/5#issuecomment-5991293906",
+        "migratedFrom": "comentarios/index.html",
+        "migrated": true
+      }
+    },
+    {
+      "nodeId": "7",
+      "sourceId": "nocturna-site-comment-7",
+      "issueNumber": 5,
+      "threadKey": "7",
+      "parentNodeId": "6",
+      "parentThreadKey": "6",
+      "depth": 5,
+      "parentCommentId": 5991293906,
+      "parentAuthor": "L Lawliet",
+      "commentId": 5991294338,
+      "commentUrl": "https://github.com/outocarlos003-lang/Nocturna/issues/5#issuecomment-5991294338",
+      "author": {
+        "displayName": "Sasuke Uchiha",
+        "role": "Respondendo a L Lawliet"
+      },
+      "content": "“Vocês procuram padrões porque precisam acreditar que tudo pode ser compreendido. Algumas verdades só aparecem depois que alguém atravessa aquilo que tentou evitar.”",
+      "origin": {
+        "kind": "github-issue-comment",
+        "location": "github:issue/5#issuecomment-5991294338",
+        "migratedFrom": "comentarios/index.html",
+        "migrated": true
+      }
+    },
+    {
+      "nodeId": "8",
+      "sourceId": "nocturna-site-comment-8",
+      "issueNumber": 5,
+      "threadKey": "8",
+      "parentNodeId": "7",
+      "parentThreadKey": "7",
+      "depth": 6,
+      "parentCommentId": 5991294338,
+      "parentAuthor": "Sasuke Uchiha",
+      "commentId": 5991294753,
+      "commentUrl": "https://github.com/outocarlos003-lang/Nocturna/issues/5#issuecomment-5991294753",
+      "author": {
+        "displayName": "Ranpo Edogawa",
+        "role": "Respondendo a Sasuke Uchiha"
+      },
+      "content": "“Não. Se a verdade só aparece depois, isso não significa que ela era incompreensível antes. Significa apenas que vocês estavam olhando para o lugar errado.”",
+      "origin": {
+        "kind": "github-issue-comment",
+        "location": "github:issue/5#issuecomment-5991294753",
+        "migratedFrom": "comentarios/index.html",
+        "migrated": true
+      }
+    },
+    {
+      "nodeId": "9",
+      "sourceId": "nocturna-site-comment-9",
+      "issueNumber": 5,
+      "threadKey": "9",
+      "parentNodeId": "8",
+      "parentThreadKey": "8",
+      "depth": 7,
+      "parentCommentId": 5991294753,
+      "parentAuthor": "Ranpo Edogawa",
+      "commentId": 5991295198,
+      "commentUrl": "https://github.com/outocarlos003-lang/Nocturna/issues/5#issuecomment-5991295198",
+      "author": {
+        "displayName": "Johan Liebert",
+        "role": "Respondendo a Ranpo Edogawa"
+      },
+      "content": "“E se o lugar errado tiver sido escolhido deliberadamente?”",
+      "origin": {
+        "kind": "github-issue-comment",
+        "location": "github:issue/5#issuecomment-5991295198",
+        "migratedFrom": "comentarios/index.html",
+        "migrated": true
+      }
+    },
+    {
+      "nodeId": "10",
+      "sourceId": "nocturna-site-comment-10",
+      "issueNumber": 5,
+      "threadKey": "10",
+      "parentNodeId": "9",
+      "parentThreadKey": "9",
+      "depth": 8,
+      "parentCommentId": 5991295198,
+      "parentAuthor": "Johan Liebert",
+      "commentId": 5991295695,
+      "commentUrl": "https://github.com/outocarlos003-lang/Nocturna/issues/5#issuecomment-5991295695",
+      "author": {
+        "displayName": "Ranpo Edogawa",
+        "role": "Respondendo a Johan Liebert"
+      },
+      "content": "“Então fica ainda mais fácil. Quem constrói uma distração sempre deixa marcas.”",
+      "origin": {
+        "kind": "github-issue-comment",
+        "location": "github:issue/5#issuecomment-5991295695",
+        "migratedFrom": "comentarios/index.html",
+        "migrated": true
+      }
+    },
+    {
+      "nodeId": "11",
+      "sourceId": "nocturna-site-comment-11",
+      "issueNumber": 5,
+      "threadKey": "11",
+      "parentNodeId": "10",
+      "parentThreadKey": "10",
+      "depth": 9,
+      "parentCommentId": 5991295695,
+      "parentAuthor": "Ranpo Edogawa",
+      "commentId": 5991296121,
+      "commentUrl": "https://github.com/outocarlos003-lang/Nocturna/issues/5#issuecomment-5991296121",
+      "author": {
+        "displayName": "L Lawliet",
+        "role": "Respondendo a Ranpo Edogawa"
+      },
+      "content": "“Concordo. E as marcas mais interessantes geralmente estão naquilo que a pessoa considera irrelevante.”",
+      "origin": {
+        "kind": "github-issue-comment",
+        "location": "github:issue/5#issuecomment-5991296121",
+        "migratedFrom": "comentarios/index.html",
+        "migrated": true
+      }
+    },
+    {
+      "nodeId": "12",
+      "sourceId": "nocturna-site-comment-12",
+      "issueNumber": 5,
+      "threadKey": "12",
+      "parentNodeId": "11",
+      "parentThreadKey": "11",
+      "depth": 10,
+      "parentCommentId": 5991296121,
+      "parentAuthor": "L Lawliet",
+      "commentId": 5991296508,
+      "commentUrl": "https://github.com/outocarlos003-lang/Nocturna/issues/5#issuecomment-5991296508",
+      "author": {
+        "displayName": "Light Yagami",
+        "role": "Respondendo a L Lawliet"
+      },
+      "content": "“Vocês estão confundindo interpretação com conhecimento.”",
+      "origin": {
+        "kind": "github-issue-comment",
+        "location": "github:issue/5#issuecomment-5991296508",
+        "migratedFrom": "comentarios/index.html",
+        "migrated": true
+      }
+    },
+    {
+      "nodeId": "13",
+      "sourceId": "nocturna-site-comment-13",
+      "issueNumber": 5,
+      "threadKey": "13",
+      "parentNodeId": "12",
+      "parentThreadKey": "12",
+      "depth": 11,
+      "parentCommentId": 5991296508,
+      "parentAuthor": "Light Yagami",
+      "commentId": 5991296919,
+      "commentUrl": "https://github.com/outocarlos003-lang/Nocturna/issues/5#issuecomment-5991296919",
+      "author": {
+        "displayName": "Ayanokoji Kiyotaka",
+        "role": "Respondendo a Light Yagami"
+      },
+      "content": "“E você está confundindo confiança com certeza.”",
+      "origin": {
+        "kind": "github-issue-comment",
+        "location": "github:issue/5#issuecomment-5991296919",
+        "migratedFrom": "comentarios/index.html",
+        "migrated": true
+      }
+    },
+    {
+      "nodeId": "14",
+      "sourceId": "nocturna-site-comment-14",
+      "issueNumber": 5,
+      "threadKey": "14",
+      "parentNodeId": "13",
+      "parentThreadKey": "13",
+      "depth": 12,
+      "parentCommentId": 5991296919,
+      "parentAuthor": "Ayanokoji Kiyotaka",
+      "commentId": 5991297391,
+      "commentUrl": "https://github.com/outocarlos003-lang/Nocturna/issues/5#issuecomment-5991297391",
+      "author": {
+        "displayName": "Osamu Dazai",
+        "role": "Respondendo a Ayanokoji Kiyotaka"
+      },
+      "content": "“Que bela reunião. Um quer controlar a verdade, outro quer deduzi-la, outro quer observá-la, e o restante parece querer descobrir se existe alguma razão para continuar aqui.”",
+      "origin": {
+        "kind": "github-issue-comment",
+        "location": "github:issue/5#issuecomment-5991297391",
+        "migratedFrom": "comentarios/index.html",
+        "migrated": true
+      }
+    },
+    {
+      "nodeId": "15",
+      "sourceId": "nocturna-site-comment-15",
+      "issueNumber": 5,
+      "threadKey": "15",
+      "parentNodeId": "14",
+      "parentThreadKey": "14",
+      "depth": 13,
+      "parentCommentId": 5991297391,
+      "parentAuthor": "Osamu Dazai",
+      "commentId": 5991297824,
+      "commentUrl": "https://github.com/outocarlos003-lang/Nocturna/issues/5#issuecomment-5991297824",
+      "author": {
+        "displayName": "Sasuke Uchiha",
+        "role": "Respondendo a Osamu Dazai"
+      },
+      "content": "“Existe.”",
+      "origin": {
+        "kind": "github-issue-comment",
+        "location": "github:issue/5#issuecomment-5991297824",
+        "migratedFrom": "comentarios/index.html",
+        "migrated": true
+      }
+    },
+    {
+      "nodeId": "16",
+      "sourceId": "nocturna-site-comment-16",
+      "issueNumber": 5,
+      "threadKey": "16",
+      "parentNodeId": "15",
+      "parentThreadKey": "15",
+      "depth": 14,
+      "parentCommentId": 5991297824,
+      "parentAuthor": "Sasuke Uchiha",
+      "commentId": 5991298254,
+      "commentUrl": "https://github.com/outocarlos003-lang/Nocturna/issues/5#issuecomment-5991298254",
+      "author": {
+        "displayName": "Osamu Dazai",
+        "role": "Respondendo a Sasuke Uchiha"
+      },
+      "content": "“Qual?”",
+      "origin": {
+        "kind": "github-issue-comment",
+        "location": "github:issue/5#issuecomment-5991298254",
+        "migratedFrom": "comentarios/index.html",
+        "migrated": true
+      }
+    },
+    {
+      "nodeId": "17",
+      "sourceId": "nocturna-site-comment-17",
+      "issueNumber": 5,
+      "threadKey": "17",
+      "parentNodeId": "16",
+      "parentThreadKey": "16",
+      "depth": 15,
+      "parentCommentId": 5991298254,
+      "parentAuthor": "Osamu Dazai",
+      "commentId": 5991298691,
+      "commentUrl": "https://github.com/outocarlos003-lang/Nocturna/issues/5#issuecomment-5991298691",
+      "author": {
+        "displayName": "Sasuke Uchiha",
+        "role": "Respondendo a Osamu Dazai"
+      },
+      "content": "“Descobrir quem está mentindo.”",
+      "origin": {
+        "kind": "github-issue-comment",
+        "location": "github:issue/5#issuecomment-5991298691",
+        "migratedFrom": "comentarios/index.html",
+        "migrated": true
+      }
+    },
+    {
+      "nodeId": "18",
+      "sourceId": "nocturna-site-comment-18",
+      "issueNumber": 5,
+      "threadKey": "18",
+      "parentNodeId": "17",
+      "parentThreadKey": "17",
+      "depth": 16,
+      "parentCommentId": 5991298691,
+      "parentAuthor": "Sasuke Uchiha",
+      "commentId": 5991299119,
+      "commentUrl": "https://github.com/outocarlos003-lang/Nocturna/issues/5#issuecomment-5991299119",
+      "author": {
+        "displayName": "Johan Liebert",
+        "role": "Respondendo a Sasuke Uchiha"
+      },
+      "content": "“Talvez a pergunta mais interessante seja outra.”",
+      "origin": {
+        "kind": "github-issue-comment",
+        "location": "github:issue/5#issuecomment-5991299119",
+        "migratedFrom": "comentarios/index.html",
+        "migrated": true
+      }
+    },
+    {
+      "nodeId": "19",
+      "sourceId": "nocturna-site-comment-19",
+      "issueNumber": 5,
+      "threadKey": "19",
+      "parentNodeId": "18",
+      "parentThreadKey": "18",
+      "depth": 17,
+      "parentCommentId": 5991299119,
+      "parentAuthor": "Johan Liebert",
+      "commentId": 5991299581,
+      "commentUrl": "https://github.com/outocarlos003-lang/Nocturna/issues/5#issuecomment-5991299581",
+      "author": {
+        "displayName": "L Lawliet",
+        "role": "Respondendo a Johan Liebert"
+      },
+      "content": "“Qual?”",
+      "origin": {
+        "kind": "github-issue-comment",
+        "location": "github:issue/5#issuecomment-5991299581",
+        "migratedFrom": "comentarios/index.html",
+        "migrated": true
+      }
+    },
+    {
+      "nodeId": "20",
+      "sourceId": "nocturna-site-comment-20",
+      "issueNumber": 5,
+      "threadKey": "20",
+      "parentNodeId": "19",
+      "parentThreadKey": "19",
+      "depth": 18,
+      "parentCommentId": 5991299581,
+      "parentAuthor": "L Lawliet",
+      "commentId": 5991299979,
+      "commentUrl": "https://github.com/outocarlos003-lang/Nocturna/issues/5#issuecomment-5991299979",
+      "author": {
+        "displayName": "Johan Liebert",
+        "role": "Respondendo a L Lawliet"
+      },
+      "content": "“Quem precisa que a mentira seja descoberta?”",
+      "origin": {
+        "kind": "github-issue-comment",
+        "location": "github:issue/5#issuecomment-5991299979",
+        "migratedFrom": "comentarios/index.html",
+        "migrated": true
+      }
+    },
+    {
+      "nodeId": "21",
+      "sourceId": "nocturna-site-comment-21",
+      "issueNumber": 5,
+      "threadKey": "21",
+      "parentNodeId": "20",
+      "parentThreadKey": "20",
+      "depth": 19,
+      "parentCommentId": 5991299979,
+      "parentAuthor": "Johan Liebert",
+      "commentId": 5991300557,
+      "commentUrl": "https://github.com/outocarlos003-lang/Nocturna/issues/5#issuecomment-5991300557",
+      "author": {
+        "displayName": "Ranpo Edogawa",
+        "role": "Última resposta"
+      },
+      "content": "“Finalmente. Uma pergunta útil.”",
+      "origin": {
+        "kind": "github-issue-comment",
+        "location": "github:issue/5#issuecomment-5991300557",
+        "migratedFrom": "comentarios/index.html",
+        "migrated": true
+      }
+    },
+    {
+      "nodeId": "22",
+      "sourceId": "nocturna-site-comment-22",
+      "issueNumber": 5,
+      "threadKey": "22",
+      "parentNodeId": "2",
+      "parentThreadKey": "2",
+      "depth": 1,
+      "parentCommentId": "issue-root",
+      "parentAuthor": "Johan Liebert",
+      "commentId": 5991301540,
+      "commentUrl": "https://github.com/outocarlos003-lang/Nocturna/issues/5#issuecomment-5991301540",
+      "author": {
+        "displayName": "Itachi Uchiha",
+        "role": "Respondendo a Johan Liebert"
+      },
+      "content": "“A verdade não se torna menos verdadeira porque alguém não consegue suportá-la. Mas revelar tudo sem discernimento também pode ferir aqueles que tentamos proteger. Às vezes, o peso de uma escolha só é compreendido por quem aceita carregar suas consequências em silêncio.”",
+      "origin": {
+        "kind": "github-issue-comment",
+        "location": "github:issue/5#issuecomment-5991301540",
+        "migratedFrom": "comentarios/index.html",
+        "migrated": true
+      }
+    },
+    {
+      "nodeId": "23",
+      "sourceId": "nocturna-site-comment-23",
+      "issueNumber": 5,
+      "threadKey": "23",
+      "parentNodeId": "22",
+      "parentThreadKey": "22",
+      "depth": 2,
+      "parentCommentId": 5991301540,
+      "parentAuthor": "Itachi Uchiha",
+      "commentId": 5991301989,
+      "commentUrl": "https://github.com/outocarlos003-lang/Nocturna/issues/5#issuecomment-5991301989",
+      "author": {
+        "displayName": "Satoru Gojo",
+        "role": "Respondendo a Itachi Uchiha"
+      },
+      "content": "“Interessante. Todo mundo fala da verdade como se ela fosse suficiente por si só. Mas enxergar o que está diante de você não significa que já entendeu tudo. O difícil não é apenas perceber os limites dos outros — é saber o que fazer com aquilo que só você consegue ver.”",
+      "origin": {
+        "kind": "github-issue-comment",
+        "location": "github:issue/5#issuecomment-5991301989",
+        "migratedFrom": "comentarios/index.html",
+        "migrated": true
+      }
+    }
+  ]
+}
