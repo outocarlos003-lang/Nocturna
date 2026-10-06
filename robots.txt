@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://outocarlos003-lang.github.io/Nocturna/sitemap.xml
