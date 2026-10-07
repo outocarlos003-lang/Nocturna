@@ -64,7 +64,7 @@ const RP="nocturna-reading-progress-v1",RR="nocturna-reading-read-v1",LEGACY="no
 const readJson=(k,d)=>{try{const v=JSON.parse(localStorage.getItem(k));return v??d}catch{return d}};
 const writeJson=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch{}};
 const all=()=> (window.DATA?.series||[]).flatMap(s=>(s.blocks||[]).flatMap(b=>(b.chapters||[]).map(c=>({s,b,c,id:"series:"+s.id+":chapter:"+c.id,legacy:String(s.id||s.slug)+"/"+String(b.id||b.slug)+"/"+String(c.id||c.slug)}))));
-const progress=()=>readJson(RP,{}),reads=()=>new Set(readJson(RR,[]));
+const progress=()=>readJson(RP,{}),reads=()=>{const v=readJson(RR,[]);return new Set(Array.isArray(v)?v:Object.keys(v||{}).filter(k=>v[k]))};
 const done=id=>Math.round(progress()[id]?.percent||0)>=100||reads().has(id);
 const setDone=(id,on)=>{const q=progress(),r=reads();if(on){q[id]={...(q[id]||{}),percent:100,updatedAt:Date.now()};r.add(id)}else{delete q[id];r.delete(id)}writeJson(RP,q);writeJson(RR,[...r])};
 const migrate=()=>{const old=new Set(readJson(LEGACY,[])),q=progress(),r=reads(),now=Date.now();for(const x of all())if(old.has(x.legacy)){q[x.id]={...(q[x.id]||{}),percent:100,updatedAt:q[x.id]?.updatedAt||now};r.add(x.id)}writeJson(RP,q);writeJson(RR,[...r])};
