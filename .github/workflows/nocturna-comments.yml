@@ -19,7 +19,7 @@ permissions:
 
 jobs:
   normalize:
-    if: ${{ github.event_name != 'issue_comment' || (github.event.issue.number == 1 && !github.event.issue.pull_request && (github.event.action != 'created' || contains(github.event.comment.body, '<!-- nocturna-reply:v1'))) }}
+    if: \${{ github.event_name != 'issue_comment' || (github.event.issue.number == 1 && !github.event.issue.pull_request && (github.event.action != 'created' || contains(github.event.comment.body, '<!-- nocturna-reply:v1'))) }}
     runs-on: ubuntu-latest
     environment:
       name: github-pages
@@ -29,17 +29,22 @@ jobs:
         with:
           ref: main
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+
       - name: Test genealogical invariants
         run: node scripts/test-genealogy.mjs
 
       - name: Materialize root comment when Issue #1 exists
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
         run: node scripts/bootstrap-root-comment.mjs
 
       - name: Remove duplicate materialized nodes
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
         run: node scripts/dedupe-genealogy-comments.mjs
 
       - name: Validate projection before normalization
@@ -47,7 +52,7 @@ jobs:
 
       - name: Normalize canonical replies and genealogy
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
         run: node scripts/normalize-comments.mjs
 
       - name: Validate normalized projection
@@ -55,12 +60,12 @@ jobs:
 
       - name: Publish site genealogy to Issue #1
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
         run: node scripts/publish-genealogy-to-github.mjs
 
       - name: Verify live GitHub genealogy
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
         run: node scripts/verify-github-genealogy.mjs
 
       - name: Persist projection
@@ -74,6 +79,15 @@ jobs:
           git add data/comments/issue-1.json
           git commit -m "comments: reconcile GitHub genealogy"
           git push origin HEAD:main
+
+      - name: Generate public route shells and sitemap
+        run: node sitemap.mjs https://outocarlos003-lang.github.io/Nocturna/
+
+      - name: Validate generated publication structure
+        run: node validate.mjs
+
+      - name: Validate generated repository structure
+        run: node scripts/validate-system.mjs
 
       - name: Configure Pages
         uses: actions/configure-pages@v5
