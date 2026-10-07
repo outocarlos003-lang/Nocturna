@@ -78,3 +78,27 @@ addEventListener("storage",e=>{if([RP,RR,LEGACY].includes(e.key)){migrate();pain
 new MutationObserver(paint).observe(document.getElementById("main")||document.body,{childList:true,subtree:true});
 paint();
 })();
+
+/* NOCTURNA_NAV_ROUTE_FIX */
+(()=>{"use strict";
+/* O roteador usa hash (#/rota/). A árvore de navegação monta "#/#/rota/" a partir de "/Nocturna/#/rota/" e isso cai em "Página não encontrada" (menus Coleções e Publicações). Aqui o href é normalizado, e os links internos de rota dentro do conteúdo seguem direto pelo hash, sem passar pelo 404.html. */
+const ROOT="/Nocturna/",ROUTES=new Set(["artigos","postagens","series","colecoes","categorias","tags","arquivo","sobre","faq","contato","privacidade","buscar"]);
+const fixLink=a=>{const h=a.getAttribute("href")||"";if(h.startsWith("#/#/"))a.setAttribute("href",h.slice(2))};
+const tree=document.getElementById("tree");
+const fixTree=()=>document.querySelectorAll('#tree a[href^="#/#/"]').forEach(fixLink);
+fixTree();
+if(tree)new MutationObserver(fixTree).observe(tree,{childList:true,subtree:true});
+document.addEventListener("click",e=>{
+const a=e.target.closest&&e.target.closest("a[href]");
+if(!a)return;
+if(a.closest("#tree"))fixLink(a);
+if(e.defaultPrevented||e.button!==0||e.metaKey||e.ctrlKey||e.shiftKey||e.altKey||!a.closest("#main")||(a.target&&a.target!=="_self")||a.hasAttribute("download"))return;
+let u;try{u=new URL(a.getAttribute("href"),location.href)}catch{return}
+if(u.origin!==location.origin||u.hash||!u.pathname.startsWith(ROOT))return;
+const route=u.pathname.slice(ROOT.length-1);
+if(!ROUTES.has(route.split("/").filter(Boolean)[0]))return;
+e.preventDefault();
+const next="#"+route+u.search;
+if(location.hash===next)scrollTo(0,0);else location.hash=next;
+},true);
+})();
