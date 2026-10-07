@@ -110,7 +110,7 @@ footer{border-top:1px solid var(--line);padding:2rem 0;color:var(--mute)}
 </section>
 <section aria-labelledby="navegacao-acervo">
   <h2 id="navegacao-acervo">Acervo</h2>
-  <p><a class="btn" href="/Nocturna/publicacoes/">Publicações</a> <a class="btn alt" href="/Nocturna/#/series/">Séries</a> <a href="/Nocturna/categorias/">Categorias</a> · <a href="/Nocturna/tags/">Tags</a> · <a href="/Nocturna/arquivo/">Arquivo</a></p>
+  <p><a class="btn" href="/Nocturna/#/artigos/">Publicações</a> <a class="btn alt" href="/Nocturna/#/series/">Séries</a> <a href="/Nocturna/categorias/">Categorias</a> · <a href="/Nocturna/tags/">Tags</a> · <a href="/Nocturna/arquivo/">Arquivo</a></p>
 </section>
 </main>
 <footer><div class="wrap">
@@ -167,15 +167,19 @@ empty=m=>`<p class="empty" role="status">${m}</p>`,
  favoriteKey=(type,id)=>"nocturna:favorite:"+type+":"+id,readFavorites=()=>{try{return new Set(JSON.parse(localStorage.getItem("nocturna:favoritos")||"[]"))}catch(_){return new Set()}},writeFavorites=s=>{try{localStorage.setItem("nocturna:favoritos",JSON.stringify([...s]))}catch(_){}},collectionReadKey=(seriesId,blockId,chapterId)=>String(seriesId)+"/"+String(blockId)+"/"+String(chapterId),collectionChapters=x=>(x?.blocks||[]).flatMap(b=>(b.chapters||[]).map(c=>collectionReadKey(x.id||x.slug,b.id||b.slug,c.id||c.slug))),collectionReadSet=()=>{try{return new Set(JSON.parse(localStorage.getItem("nocturna:colecoes:lidas")||"[]"))}catch(_){return new Set()}},collectionProgress=x=>{const ids=collectionChapters(x),read=collectionReadSet(),total=ids.length,done=ids.filter(id=>read.has(id)).length;return{total,done,percent:total?Math.round(done*100/total):0}},collectionStatus=x=>`<span class="collection-status${(()=>{const p=collectionProgress(x);return p.total>0&&p.percent>=100?" is-complete":""})()}" data-collection-status="${esc(x.id||x.slug)}" aria-label="${collectionProgress(x).percent>=100?"Coleção lida":"Não lido"}">${collectionProgress(x).percent>=100?"✓ Lido":"Não lido"} · ${collectionProgress(x).percent}%</span>`,collectionReadButton=(seriesId,blockId,chapterId)=>`<button type="button" class="collection-read-btn" data-collection-read-id="${esc(collectionReadKey(seriesId,blockId,chapterId))}" aria-pressed="false">Marcar capítulo como lido</button>`,favoriteButton=(type,id,label)=>`<button type="button" class="favorite-btn" data-favorite-type="${esc(type)}" data-favorite-id="${esc(id)}" aria-pressed="false" aria-label="Favoritar ${esc(label)}"><span aria-hidden="true">♡</span><span class="sr">Favoritar ${esc(label)}</span></button>`,readCoverButton=(id)=>`<button type="button" class="read-cover-btn" data-read-id="${esc(id)}" aria-pressed="false">Marcar como lido</button>`,cards=(l,abbreviate=false,compact=false)=>l.length?`<ul class="grid">${l.map(p=>`<li class="card">${p.image?.src?`<div class="cover-frame"><img class="publication-cover" src="${esc(p.image.src.startsWith("/")?p.image.src:"/Nocturna/"+p.image.src.replace(/^\.\//,""))}" alt="${esc(p.image.alt||p.image.caption||p.title)}" loading="lazy">${favoriteButton("publication",p.id,p.title)}${readCoverButton(p.id)}</div>`:`<div class="cover-frame">${favoriteButton("publication",p.id,p.title)}${readCoverButton(p.id)}</div>`}<h3>${esc(abbreviate?cardTitle(p):p.title)}</h3>${catLinks(p.cats)}${compact?"":(p.summary?`<p>${esc(p.summary)}</p>`:"")+`<small>${p.date?esc(new Date(p.date+"T12:00:00").toLocaleDateString("pt-BR",{day:"2-digit",month:"long",year:"numeric"})):""}</small>`}<a class="btn alt" href="/Nocturna/#/artigos/${esc(p.id)}/">Abrir publicação</a></li>`).join("")}</ul>`:empty("Nenhuma publicação disponível.")
  PS=10;
 /* Árvore de navegação: cada destino aparece uma única vez na superfície; ramos de uma mesma raiz ficam agrupados sob ela. */
+const navHref=h=>{const s=String(h||"");return s.startsWith("/Nocturna/")?"#"+s.slice("/Nocturna".length):s};
 const TREE=[
+ {t:"Publicações",h:"/Nocturna/#/artigos/"},
+ {t:"Coleções",h:"/Nocturna/#/series/"},
+ {t:"Arquivo",h:"/Nocturna/arquivo/"},
  {t:"Tags",h:"/Nocturna/tags/"},
  {t:"Categorias",h:"/Nocturna/categorias/",all:"Todas as categorias",kids:()=>DATA.cats.map(c=>({t:c.name,h:catHref(c)}))},
  {t:"Institucional",kids:[{t:"Sobre",h:"/Nocturna/sobre/"},{t:"FAQ",h:"/Nocturna/faq/"},{t:"Contato",h:"/Nocturna/contato/"},{t:"Privacidade e cookies",h:"/Nocturna/privacidade/"}]}
 ];
 function navHtml(){return TREE.map((n,i)=>{
- if(!n.kids)return `<li><a href="${n.h}">${esc(n.t)}</a></li>`;
+ if(!n.kids)return `<li><a href="${navHref(n.h)}">${esc(n.t)}</a></li>`;
  const k=typeof n.kids==="function"?n.kids():n.kids,l=n.h?[{t:n.all,h:n.h},...k]:k;
- return `<li class="dd"><button type="button" data-g aria-expanded="false" aria-controls="m${i}">${esc(n.t)} ▾</button><ul id="m${i}" class="menu" hidden>${l.map(x=>`<li><a href="${x.h}">${esc(x.t)}</a></li>`).join("")}</ul></li>`}).join("")}
+ return `<li class="dd"><button type="button" data-g aria-expanded="false" aria-controls="m${i}">${esc(n.t)} ▾</button><ul id="m${i}" class="menu" hidden>${l.map(x=>`<li><a href="${navHref(x.h)}">${esc(x.t)}</a></li>`).join("")}</ul></li>`}).join("")}
 function pager(l,pg,base){const n=Math.max(1,Math.ceil(l.length/PS)),p=Math.min(Math.max(1,pg|0||1),n),u=x=>base+(base.includes("?")?"&":"?")+"p="+x;
  return{items:l.slice((p-1)*PS,p*PS),nav:n>1?`<nav class="pager" aria-label="Paginação">${p>1?`<a href="${u(p-1)}">← Anterior</a>`:""}<span>Página ${p} de ${n}</span>${p<n?`<a href="${u(p+1)}">Próxima →</a>`:""}</nav>`:""}}
 const P={
@@ -227,7 +231,7 @@ async function render(){
 function closeGroups(){document.querySelectorAll("#tree .menu").forEach(m=>m.hidden=true);document.querySelectorAll("#tree [data-g]").forEach(b=>b.setAttribute("aria-expanded","false"))}
 function closeMenus(){closeGroups();$("#nav").classList.remove("open");$("#mb").setAttribute("aria-expanded","false")}
 function mark(pt){
- document.querySelectorAll("#tree a").forEach(a=>{const h=a.getAttribute("href").slice(1),on=pt===h||(h==="/artigos"&&pt.startsWith("/artigos/"));if(on)a.setAttribute("aria-current","page");else a.removeAttribute("aria-current")});
+ document.querySelectorAll("#tree a").forEach(a=>{const h=a.getAttribute("href").slice(1),on=pt===h||(h==="/artigos"&&pt.startsWith("/artigos/"))||(h==="/series"&&pt.startsWith("/series/"));if(on)a.setAttribute("aria-current","page");else a.removeAttribute("aria-current")});
  document.querySelectorAll("#tree [data-g]").forEach(b=>b.classList.toggle("on",!!b.nextElementSibling.querySelector("[aria-current]")))}
 function bind(){
  const favoriteButtons=document.querySelectorAll("[data-favorite-type][data-favorite-id]");
