@@ -19,7 +19,7 @@ permissions:
 
 jobs:
   normalize:
-    if: \${{ github.event_name != 'issue_comment' || (github.event.issue.number == 1 && !github.event.issue.pull_request && (github.event.action != 'created' || contains(github.event.comment.body, '<!-- nocturna-reply:v1'))) }}
+    if: ${{ github.event_name != 'issue_comment' || (github.event.issue.number == 1 && !github.event.issue.pull_request && (github.event.action != 'created' || contains(github.event.comment.body, '<!-- nocturna-reply:v1'))) }}
     runs-on: ubuntu-latest
     environment:
       name: github-pages
@@ -39,12 +39,12 @@ jobs:
 
       - name: Materialize root comment when Issue #1 exists
         env:
-          GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ github.token }}
         run: node scripts/bootstrap-root-comment.mjs
 
       - name: Remove duplicate materialized nodes
         env:
-          GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ github.token }}
         run: node scripts/dedupe-genealogy-comments.mjs
 
       - name: Validate projection before normalization
@@ -52,7 +52,7 @@ jobs:
 
       - name: Normalize canonical replies and genealogy
         env:
-          GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ github.token }}
         run: node scripts/normalize-comments.mjs
 
       - name: Validate normalized projection
@@ -60,12 +60,12 @@ jobs:
 
       - name: Publish site genealogy to Issue #1
         env:
-          GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ github.token }}
         run: node scripts/publish-genealogy-to-github.mjs
 
       - name: Verify live GitHub genealogy
         env:
-          GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ github.token }}
         run: node scripts/verify-github-genealogy.mjs
 
       - name: Persist projection
