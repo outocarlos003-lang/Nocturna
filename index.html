@@ -255,6 +255,14 @@ function bind(){
  collectionReadButtons.forEach(button=>{
   const id=button.dataset.collectionReadId;
   const apply=()=>{const on=collectionReadSet().has(id);button.classList.toggle("is-read",on);button.setAttribute("aria-pressed",String(on));button.textContent=on?"✓ Capítulo lido":"Marcar capítulo como lido";button.setAttribute("aria-label",on?"Desmarcar capítulo como lido":"Marcar capítulo como lido")};
+  button.onclick=()=>{
+   const read=collectionReadSet();
+   if(read.has(id))read.delete(id);else read.add(id);
+   try{localStorage.setItem("nocturna:colecoes:lidas",JSON.stringify([...read]))}catch(_){}
+   apply();
+   applyCollectionProgress();
+   window.dispatchEvent(new CustomEvent("nocturna:reading-state"));
+  };
   apply();
  });
  applyCollectionProgress();

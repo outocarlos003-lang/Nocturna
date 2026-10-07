@@ -73,7 +73,7 @@ const paint=()=>{const q=progress(),r=reads();document.querySelectorAll("[data-c
 migrate();
 paint();
 dispatchEvent(new CustomEvent("nocturna:reading-state"));
-document.addEventListener("click",e=>{const b=e.target.closest("[data-collection-read-id]");if(!b)return;const x=all().find(y=>y.legacy===b.dataset.collectionReadId);if(!x)return;const on=!done(x.id);setDone(x.id,on);setTimeout(()=>{syncLegacyChapter(x);paint();dispatchEvent(new CustomEvent("nocturna:reading-state"))},0)},true);
+
 addEventListener("storage",e=>{if([RP,RR,LEGACY].includes(e.key)){migrate();paint()}});
 new MutationObserver(paint).observe(document.getElementById("main")||document.body,{childList:true,subtree:true});
 paint();
