@@ -19,6 +19,9 @@ jobs:
         with:
           node-version: 22
 
+      - name: Generate public route shells and sitemap
+        run: node sitemap.mjs https://outocarlos003-lang.github.io/Nocturna/
+
       - name: Validate editorial data
         run: node validate.mjs
 
