@@ -3,66 +3,33 @@ import { readFileSync, writeFileSync, rmSync, mkdirSync } from "node:fs";
 import { join, dirname } from "node:path";
 import vm from "node:vm";
 
-const base = process.argv[2];
-if (!/^https?:\/\/[^/]+(?:\/[^/]*)*\/$/.test(base || "")) {
-  console.error("Informe uma URL pública real terminando em /");
-  process.exit(1);
-}
-const root = process.cwd();
-const source = readFileSync(join(root, "index.html"), "utf8");
-const m = source.match(/const DATA=(\{[\s\S]*?\});\s*\/\*END DATA\*\//);
-if (!m) throw new Error("DATA editorial não encontrada em index.html");
-const DATA = vm.runInNewContext("(" + m[1] + ")");
-if (!Array.isArray(DATA.pubs) || !Array.isArray(DATA.cats)) throw new Error("DATA editorial inválida.");
-for (const p of DATA.pubs) {
-  if (!p?.id || !p?.title || typeof p?.content !== "string") throw new Error("Publicação inválida em index.html.");
-}
-const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-const abs = p => base.replace(/\/$/, "") + "/" + p.replace(/^\//, "");
-const catPath = c => "/categorias/" + encodeURIComponent(c.slug) + "/";
-const tagPath = t => "/tags/" + encodeURIComponent(t) + "/";
-const pubPath = p => "/artigos/" + encodeURIComponent(p.id) + "/";
-const routeShell = (route, title, description) => `<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="index,follow"><meta name="description" content="${esc(description)}"><link rel="canonical" href="${esc(abs(route))}"><title>${esc(title)}</title><script>const root="/Nocturna/";const route=${JSON.stringify(route)};location.replace(root+"#"+route+location.search);</script></head><body><main><p>Carregando Nocturna…</p><noscript><p>Ative JavaScript para abrir esta rota no núcleo editorial.</p><p><a href="${esc(base+"#"+route)}">Abrir</a></p></noscript></main></body></html>`;
+const base=process.argv[2];
+if(!/^https?:\/\/[^/]+(?:\/[^/]*)*\/$/.test(base||"")){console.error("Informe uma URL pública real terminando em /");process.exit(1)}
+const root=process.cwd(),indexPath=join(root,"index.html"),source=readFileSync(indexPath,"utf8");
+const m=source.match(/const DATA=(\{[\s\S]*?\});\s*\/\*END DATA\*\//);if(!m)throw new Error("DATA editorial não encontrada em index.html");
+const DATA=vm.runInNewContext("("+m[1]+")");
+if(!Array.isArray(DATA.pubs)||!Array.isArray(DATA.cats))throw new Error("DATA editorial inválida.");
+let CONTENT;try{CONTENT=JSON.parse(readFileSync(join(root,"data","content.json"),"utf8"))}catch(e){throw new Error("data/content.json inválido ou ausente: "+e.message)}
+if(!CONTENT?.pubs||typeof CONTENT.pubs!=="object")throw new Error("data/content.json inválido: mapa pubs ausente.");
+for(const p of DATA.pubs){if(!p?.id||!p?.title)throw new Error("Publicação inválida em index.html: id/título ausente.");if(typeof CONTENT.pubs[p.id]!=="string")throw new Error(`Conteúdo ausente em data/content.json para ${p.id}.`)}
+for(const s of DATA.series||[])for(const b of s.blocks||[])for(const c of b.chapters||[])if(!c?.id||!c?.slug||!c?.title)throw new Error(`Capítulo inválido em ${s.id}/${b.id}.`);
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const abs=p=>base.replace(/\/$/,"")+"/"+p.replace(/^\//,"");
+const catPath=c=>"/categorias/"+encodeURIComponent(c.slug)+"/",tagPath=t=>"/tags/"+encodeURIComponent(t)+"/",pubPath=p=>"/artigos/"+encodeURIComponent(p.id)+"/",seriesPath=s=>"/series/"+encodeURIComponent(s.slug)+"/",blockPath=(s,b)=>seriesPath(s)+encodeURIComponent(b.slug)+"/",chapterPath=(s,b,c)=>blockPath(s,b)+encodeURIComponent(c.slug)+"/";
 
-const generatedRoots = ["artigos","publicacoes","buscar","categorias","tags","arquivo","sobre","faq","contato","privacidade","series"];
-for (const dir of generatedRoots) rmSync(join(root, dir), {recursive:true, force:true});
+const stateBridge=`<script id="nocturna-state-bridge">(()=>{\n"use strict";\nconst RR="nocturna-reading-read-v1",RP="nocturna-reading-progress-v1",CK="nocturna:colecoes:lidas",PK="nocturna:publicacoes:lidas";\nconst json=(k,d)=>{try{const v=JSON.parse(localStorage.getItem(k));return v??d}catch{return d}},put=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch{}};\nconst sync=()=>{const cr=new Set(Array.isArray(json(CK,[]))?json(CK,[]):[]),pr=new Set(Array.isArray(json(PK,[]))?json(PK,[]):[]),raw=json(RR,[]),rs=new Set(Array.isArray(raw)?raw:Object.keys(raw||{}).filter(k=>raw[k])),prog=json(RP,{});\nfor(const s of (window.DATA?.series||[]))for(const b of (s.blocks||[]))for(const c of (b.chapters||[])){const legacy=[s.id||s.slug,b.id||b.slug,c.id||c.slug].join("/"),id="series:"+s.id+":chapter:"+c.id;if(cr.has(legacy)||rs.has(id)){cr.add(legacy);rs.add(id);prog[id]={...(prog[id]||{}),percent:100,updatedAt:prog[id]?.updatedAt||Date.now()}}}\nfor(const p of (window.DATA?.pubs||[])){const id="article:"+p.id;if(pr.has(p.id)||rs.has(id)){pr.add(p.id);rs.add(id);prog[id]={...(prog[id]||{}),percent:100,updatedAt:prog[id]?.updatedAt||Date.now()}}}\nput(RR,[...rs]);put(RP,prog);put(CK,[...cr]);put(PK,[...pr]);window.dispatchEvent(new CustomEvent("nocturna:reading-state-synced"))};\nconst later=()=>setTimeout(sync,0);document.addEventListener("click",e=>{if(e.target.closest("[data-collection-read-id],[data-read-id]"))later()},{passive:true});addEventListener("nocturna:reading-state",later);addEventListener("hashchange",later);addEventListener("storage",later);addEventListener("visibilitychange",later);sync();setInterval(sync,2000);\n})();</script>`;
 
-const routes = new Map();
-const add = (route,title,description) => routes.set(route,{title,description});
-add("/artigos/","Artigos — Nocturna","Todas as publicações da Nocturna.");
-add("/publicacoes/","Publicações — Nocturna","Todas as publicações da Nocturna.");
-add("/buscar/","Buscar — Nocturna","Pesquisa no acervo da Nocturna.");
-add("/categorias/","Categorias — Nocturna","Categorias editoriais da Nocturna.");
-add("/tags/","Tags — Nocturna","Tags editoriais da Nocturna.");
-const tags=[...new Set(DATA.pubs.flatMap(p=>p.tags||[]))].sort((a,b)=>a.localeCompare(b,"pt"));
-for(const c of DATA.cats) add(catPath(c),c.name+" — Nocturna",c.description||"Publicações da categoria "+c.name+" na Nocturna.");
-for(const t of tags) add(tagPath(t),"Tag: "+t+" — Nocturna","Publicações marcadas com "+t+" na Nocturna.");
-add("/arquivo/","Arquivo — Nocturna","Arquivo cronológico das publicações da Nocturna.");
-add("/sobre/","Sobre — Nocturna","Sobre a Nocturna, publicação digital de leitura.");
-add("/faq/","FAQ — Nocturna","Perguntas frequentes sobre a Nocturna.");
-add("/contato/","Contato — Nocturna","Contato da Nocturna.");
-add("/privacidade/","Privacidade e cookies — Nocturna","Como a Nocturna trata dados, cookies e armazenamento.");
-for(const p of DATA.pubs) add(pubPath(p),p.title+" — Nocturna",p.summary||p.title);
-const seriesPath = s => "/series/" + encodeURIComponent(s.slug) + "/";
-const blockPath = (s,b) => seriesPath(s) + encodeURIComponent(b.slug) + "/";
-const chapterPath = (s,b,c) => blockPath(s,b) + encodeURIComponent(c.slug) + "/";
-for(const s of DATA.series||[]){
-  add(seriesPath(s),s.title+" — Nocturna",s.summary||s.title);
-  for(const b of s.blocks||[]){
-    add(blockPath(s,b),b.title+" — Nocturna",b.summary||b.title);
-    for(const c of b.chapters||[]) add(chapterPath(s,b,c),c.title+" — Nocturna",c.summary||c.title);
-  }
-}
-for(const [route,meta] of routes){
-  const file=join(root,route.replace(/^\//,""),"index.html");
-  mkdirSync(dirname(file),{recursive:true});
-  writeFileSync(file,routeShell(route,meta.title,meta.description),"utf8");
-}
-const all=["/",...routes.keys()];
-const today=new Date().toISOString().slice(0,10);
-const xml='<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'+all.map(u=>'  <url><loc>'+esc(abs(u))+'</loc><lastmod>'+today+'</lastmod></url>').join("\n")+"\n</urlset>\n";
-writeFileSync(join(root,"sitemap.xml"),xml,"utf8");
-writeFileSync(join(root,"robots.txt"),"User-agent: *\nAllow: /\nSitemap: "+abs("/sitemap.xml")+"\n","utf8");
-console.log("Fonte editorial única: index.html:DATA.");
-console.log("Cascas mínimas: "+routes.size+"; cópias editoriais fora do núcleo: 0.");
-console.log("Sitemap: "+all.length+" URLs públicas.");
+const generatedRoots=["artigos","publicacoes","buscar","categorias","tags","arquivo","sobre","faq","contato","privacidade","series"];for(const d of generatedRoots)rmSync(join(root,d),{recursive:true,force:true});
+const routes=new Map(),add=(r,t,d)=>routes.set(r,{title:t,description:d});
+add("/artigos/","Artigos — Nocturna","Todas as publicações da Nocturna.");add("/publicacoes/","Publicações — Nocturna","Todas as publicações da Nocturna.");add("/buscar/","Buscar — Nocturna","Pesquisa no acervo da Nocturna.");add("/categorias/","Categorias — Nocturna","Categorias editoriais da Nocturna.");add("/tags/","Tags — Nocturna","Tags editoriais da Nocturna.");
+for(const c of DATA.cats)add(catPath(c),c.name+" — Nocturna",c.description||"Publicações da categoria "+c.name+" na Nocturna.");
+for(const t of [...new Set(DATA.pubs.flatMap(p=>p.tags||[]))])add(tagPath(t),"Tag: "+t+" — Nocturna","Publicações marcadas com "+t+" na Nocturna.");
+for(const [r,t,d] of [["/arquivo/","Arquivo — Nocturna","Arquivo cronológico das publicações da Nocturna."],["/sobre/","Sobre — Nocturna","Sobre a Nocturna, publicação digital de leitura."],["/faq/","FAQ — Nocturna","Perguntas frequentes sobre a Nocturna."],["/contato/","Contato — Nocturna","Contato da Nocturna."],["/privacidade/","Privacidade e cookies — Nocturna","Como a Nocturna trata dados, cookies e armazenamento."]])add(r,t,d);
+for(const p of DATA.pubs)add(pubPath(p),p.title+" — Nocturna",p.summary||p.title);
+for(const s of DATA.series||[]){add(seriesPath(s),s.title+" — Nocturna",s.summary||s.title);for(const b of s.blocks||[]){add(blockPath(s,b),b.title+" — Nocturna",b.summary||b.title);for(const c of b.chapters||[])add(chapterPath(s,b,c),c.title+" — Nocturna",c.summary||c.title)}}
+const shell=(r,t,d)=>`<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="index,follow"><meta name="description" content="${esc(d)}"><link rel="canonical" href="${esc(abs(r))}"><title>${esc(t)}</title><script>const root="/Nocturna/";const route=${JSON.stringify(r)};location.replace(root+"#"+route+location.search);</script></head><body><main><p>Carregando Nocturna…</p><noscript><p>Ative JavaScript para abrir esta rota.</p><p><a href="${esc(base+"#"+r)}">Abrir</a></p></noscript></main></body></html>`;
+for(const [r,meta] of routes){const f=join(root,r.replace(/^\//,""),"index.html");mkdirSync(dirname(f),{recursive:true});writeFileSync(f,shell(r,meta.title,meta.description),"utf8")}
+if(!source.includes('id="nocturna-state-bridge"')){const patched=source.replace("</body>",stateBridge+"</body>");if(patched===source)throw new Error("Não foi possível instalar a ponte de estado em index.html.");writeFileSync(indexPath,patched,"utf8")}
+const all=["/",...routes.keys()],today=new Date().toISOString().slice(0,10),xml='<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'+all.map(u=>`  <url><loc>${esc(abs(u))}</loc><lastmod>${today}</lastmod></url>`).join("\n")+"\n</urlset>\n";
+writeFileSync(join(root,"sitemap.xml"),xml,"utf8");writeFileSync(join(root,"robots.txt"),"User-agent: *\nAllow: /\nSitemap: "+abs("/sitemap.xml")+"\n","utf8");
+console.log("Fonte editorial: index.html:DATA + data/content.json.");console.log("Validação lazy-load: OK.");console.log("Ponte de estado: OK.");console.log("Cascas mínimas: "+routes.size+".");console.log("Sitemap: "+all.length+" URLs públicas.");
