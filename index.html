@@ -125,13 +125,13 @@ footer{border-top:1px solid var(--line);padding:2rem 0;color:var(--mute)}
 let CONTENT=null,contentPromise=null;
 async function loadContent(){
  if(CONTENT)return CONTENT;
- if(!contentPromise)contentPromise=fetch("/Nocturna/data/content.json",{cache:"default"}).then(r=>{if(!r.ok)throw new Error("Falha ao carregar o conteúdo");return r.json()}).then(x=>CONTENT=x);
+ if(!contentPromise)contentPromise=fetch(new URL("data/content.json",document.baseURI).href,{cache:"default"}).then(r=>{if(!r.ok)throw new Error("Falha ao carregar o conteúdo");return r.json()}).then(x=>CONTENT=x);
  return contentPromise;
 }
 async function ensureContent(parts){
  const kind=parts[0],id=parts[1];
  if(kind==="artigos"&&id){const c=await loadContent(),p=DATA.pubs.find(x=>x.id===id);if(p&&c.pubs&&Object.prototype.hasOwnProperty.call(c.pubs,id))p.content=c.pubs[id];}
- else if(kind==="series"&&parts.length===4&&id){const c=await loadContent(),full=c.series?.[id],i=DATA.series.findIndex(x=>x.id===id||x.slug===id);if(full&&i>=0)DATA.series[i]=full;}
+ else if(kind==="series"&&id){const c=await loadContent();for(const x of DATA.series||[]){if(c.series?.[x.id]){const i=DATA.series.findIndex(y=>y.id===x.id);if(i>=0)DATA.series[i]=c.series[x.id]}}}
  else if(kind==="buscar"){const c=await loadContent();for(const p of DATA.pubs)if(c.pubs&&Object.prototype.hasOwnProperty.call(c.pubs,p.id))p.content=c.pubs[p.id];for(const x of DATA.series||[]){if(c.series?.[x.id]){const i=DATA.series.findIndex(y=>y.id===x.id);if(i>=0)DATA.series[i]=c.series[x.id]}}}
 }
 const $=s=>document.querySelector(s),
