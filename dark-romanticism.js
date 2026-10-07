@@ -109,28 +109,7 @@ const home=()=>{const p=location.pathname.replace(/\/+$/,'')||'/';if(p!=='/'&&p!
 const refresh=()=>{const x=ctx();if(x){chapterUI(x)}else if(!location.hash)home();decorateStatus()};let frame=0,lastSave=0;const onReadingScroll=()=>{if(frame)return;frame=requestAnimationFrame(()=>{frame=0;const now=Date.now();if(now-lastSave<250)return;lastSave=now;save()})};const onReadingPageHide=()=>save();const onReadingVisibility=()=>document.visibilityState==='hidden'&&save();addEventListener('scroll',onReadingScroll,{passive:true});addEventListener('pagehide',onReadingPageHide);addEventListener('visibilitychange',onReadingVisibility);addEventListener('hashchange',()=>setTimeout(()=>{refresh();const x=ctx();if(x){put(RA,{collectionId:x.s.id,chapterId:x.c.id,url:x.url,updatedAt:Date.now()});restore()}else if(pubCtx())restorePub()},50));document.addEventListener('click',e=>{const b=e.target.closest('.nr-read-toggle');if(!b)return;const r=reads();r.has(b.dataset.rid)?r.delete(b.dataset.rid):r.add(b.dataset.rid);put(RR,[...r]);refresh();home()});new MutationObserver(refresh).observe(document.getElementById('main')||document.body,{childList:true,subtree:true});style();refresh();const initial=ctx();if(initial){put(RA,{collectionId:initial.s.id,chapterId:initial.c.id,url:initial.url,updatedAt:Date.now()});restore()}else if(pubCtx())restorePub();
 })();
 
-/* NOCTURNA_SHARED_COMMENTS_EMBED */
+/* NOCTURNA_PHILOSOPHICAL_QUOTES */
 (()=>{"use strict";
-const COMMENTS_URL="/Nocturna/comentarios/?embed=1";
-const publication=()=>!!document.querySelector(".read .read-content");
-const chapter=()=>!!document.querySelector("article.series-content");
-const mount=()=>{
-  if(document.getElementById("nocturna-shared-comments")) return;
-  if(!publication()&&!chapter()) return;
-  const host=document.createElement("section");
-  host.id="nocturna-shared-comments";
-  host.setAttribute("aria-label","Comentários");
-  host.innerHTML='<iframe title="Comentários" loading="lazy" src="'+COMMENTS_URL+'" style="display:block;width:100%;min-height:720px;height:720px;border:0;margin:3rem 0 0;overflow:hidden;background:transparent"></iframe>';
-  const frame=host.querySelector("iframe");
-  frame.addEventListener("load",()=>{try{frame.contentWindow.postMessage({type:"nocturna-comments-context",url:location.href},location.origin)}catch{}});
-  const target=document.querySelector("article.series-content")||document.querySelector(".read");
-  target?.insertAdjacentElement("afterend",host);
-};
-addEventListener("message",e=>{
-  if(e.origin!==location.origin||e.data?.type!=="nocturna-comments-height")return;
-  const frame=document.querySelector("#nocturna-shared-comments iframe");
-  if(frame&&Number.isFinite(Number(e.data.height)))frame.style.height=Math.max(720,Number(e.data.height)+8)+"px";
-});
-mount();
-new MutationObserver(mount).observe(document.getElementById("main")||document.body,{childList:true,subtree:true});
+/* A página de frases é acessada pelo rodapé. Nenhum componente de comentários é injetado nas publicações. */
 })();
