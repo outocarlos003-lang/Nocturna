@@ -24,7 +24,7 @@ const tagPath = t => "/tags/" + encodeURIComponent(t) + "/";
 const pubPath = p => "/artigos/" + encodeURIComponent(p.id) + "/";
 const routeShell = (route, title, description) => `<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="index,follow"><meta name="description" content="${esc(description)}"><link rel="canonical" href="${esc(abs(route))}"><title>${esc(title)}</title><script>const root="/Nocturna/";const route=${JSON.stringify(route)};location.replace(root+"#"+route+location.search);</script></head><body><main><p>Carregando Nocturna…</p><noscript><p>Ative JavaScript para abrir esta rota no núcleo editorial.</p><p><a href="${esc(base+"#"+route)}">Abrir</a></p></noscript></main></body></html>`;
 
-const generatedRoots = ["artigos","publicacoes","categorias","tags","arquivo","sobre","faq","contato","privacidade"];
+const generatedRoots = ["artigos","publicacoes","categorias","tags","arquivo","sobre","faq","contato","privacidade","series"];
 for (const dir of generatedRoots) rmSync(join(root, dir), {recursive:true, force:true});
 
 const routes = new Map();
@@ -52,7 +52,6 @@ for(const s of DATA.series||[]){
     for(const c of b.chapters||[]) add(chapterPath(s,b,c),c.title+" — Nocturna",c.summary||c.title);
   }
 }
-
 for(const [route,meta] of routes){
   const file=join(root,route.replace(/^\//,""),"index.html");
   mkdirSync(dirname(file),{recursive:true});
