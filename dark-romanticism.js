@@ -16,63 +16,7 @@ function conceptDiagram(){const article=$(".read"),p=currentPub();if(!article||!
 function adorn(){heroSigil();constellation();conceptDiagram()}
 adorn();addEventListener("hashchange",()=>setTimeout(adorn,0));
 })();
-/* Nocturna · Editorial visual system v2 */
-(()=>{"use strict";
-const esc2=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-const data2=typeof DATA!=="undefined"?DATA:{}, pubs2=data2.pubs||[], cats2=data2.cats||[];
-const byId2=new Map(pubs2.map(p=>[p.id,p]));
-const root2="/Nocturna/";
-const slug2=s=>String(s||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
-const fallbackArt2=(p)=>{
- const title=esc2(String(p.title||"Nocturna").slice(0,44));
- const cat=(p.cats||[]).map(id=>cats2.find(c=>c.id===id)?.name).filter(Boolean)[0]||"Ensaio";
- const catSafe=esc2(cat);
- const seed=(String(p.id||"nocturna").length%5)+1;
- const svg='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675"><defs><radialGradient id="g"><stop stop-color="#8b2948"/><stop offset="1" stop-color="#0d0b0f"/></radialGradient></defs><rect width="1200" height="675" fill="#0d0b0f"/><circle cx="'+(760+seed*20)+'" cy="250" r="250" fill="url(#g)" opacity=".72"/><path d="M120 540 Q360 '+(390-seed*15)+' 600 540 T1080 540" fill="none" stroke="#d2b77f" stroke-opacity=".5" stroke-width="2"/><circle cx="600" cy="285" r="94" fill="none" stroke="#d2b77f" stroke-opacity=".34"/><path d="M600 192 L650 285 L600 378 L550 285 Z" fill="none" stroke="#b34362" stroke-width="2"/><text x="72" y="82" fill="#d2b77f" font-family="Georgia,serif" font-size="20" letter-spacing="5">NOCTURNA · '+catSafe.toUpperCase()+'</text><text x="72" y="600" fill="#f2eadc" font-family="Georgia,serif" font-size="34">'+title+'</text></svg>';
- return "data:image/svg+xml;charset=UTF-8,"+encodeURIComponent(svg);
-};
-const artSrc2=p=>{const s=p?.image?.src;if(!s)return root2+"assets/editorial/"+slug2(p?.title||p?.id)+".svg";if(/^(https?:|data:|\/)/.test(s))return s;return root2+s.replace(/^\.\//,"");};
-function cardArt2(card,p){
- if(!card||!p||card.dataset.nrArt==="1")return;
- const a=card.querySelector("a[href*='/artigos/']");
- if(!a)return;
- card.dataset.nrArt="1";
- const art=document.createElement("div"); art.className="nr-card-art";
- const img=document.createElement("img"); img.loading="lazy"; img.decoding="async"; img.alt=p.image?.alt||("Arte editorial de "+p.title);
- img.src=artSrc2(p); img.onerror=()=>{if(img.dataset.fallback)return;img.dataset.fallback="1";img.src=fallbackArt2(p)};
- art.appendChild(img);
- const body=document.createElement("div"); body.className="nr-card-body";
- while(card.firstChild)body.appendChild(card.firstChild);
- const kicker=document.createElement("div"); kicker.className="nr-card-kicker"; kicker.textContent=(p.cats||[]).map(id=>cats2.find(c=>c.id===id)?.name).filter(Boolean)[0]||"Ensaio";
- body.insertBefore(kicker,body.firstChild);
- card.append(art,body);
-}
-function decorateCards2(){
- document.querySelectorAll(".card").forEach(card=>{
-   const a=card.querySelector("a[href*='/artigos/']"); if(!a)return;
-   const m=a.getAttribute("href").match(/\/artigos\/([^/?#]+)/); const p=m&&byId2.get(decodeURIComponent(m[1]));
-   if(p)cardArt2(card,p);
- });
-}
-function decoratePost2(){
- const read=document.querySelector(".read"); if(!read)return;
- const m=location.hash.match(/#\/artigos\/([^/?#]+)/)||location.pathname.match(/\/artigos\/([^/]+)\/?$/);
- const p=m&&byId2.get(decodeURIComponent(m[1])); if(!p)return;
- if(!read.querySelector(".nr-post-art")){
-   const fig=document.createElement("figure");fig.className="nr-post-art";
-   const img=document.createElement("img");img.loading="eager";img.decoding="async";img.alt=p.image?.alt||("Arte editorial de "+p.title);img.src=artSrc2(p);
-   img.onerror=()=>{if(img.dataset.fallback)return;img.dataset.fallback="1";img.src=fallbackArt2(p)};
-   fig.appendChild(img);
-   const cap=document.createElement("figcaption");cap.textContent=p.image?.caption||"Composição editorial original · Nocturna";fig.appendChild(cap);
-   const content=read.querySelector(".read-content"); content?read.insertBefore(fig,content):read.prepend(fig);
- }
-}
-function refresh2(){decorateCards2();decoratePost2();}
-refresh2();
-new MutationObserver(()=>refresh2()).observe(document.body,{subtree:true,childList:true});
-addEventListener("hashchange",()=>setTimeout(refresh2,40));
-})();
-
+/* Imagens das publicações são renderizadas pelo template principal (index.html). */
 
 (()=>{'use strict';
 const RP='nocturna-reading-progress-v1',RR='nocturna-reading-read-v1',RA='nocturna-reading-activity-v1',ROOT='/Nocturna/';
