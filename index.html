@@ -92,7 +92,7 @@ footer{border-top:1px solid var(--line);padding:2rem 0;color:var(--mute)}
 <header><div class="wrap bar">
 <a class="brand" href="/Nocturna/">Nocturna</a>
 <button id="mb" class="btn alt" aria-expanded="false" aria-controls="nav">Menu</button>
-<nav id="nav" aria-label="Principal"><ul id="tree"><li><a href="/Nocturna/#/artigos/">Publicações</a></li><li><a href="/Nocturna/publicacoes/">Publicações</a></li><li><a href="/Nocturna/#/series/">Coleções</a></li><li><a href="/Nocturna/tags/">Tags</a></li><li><a href="/Nocturna/categorias/">Categorias</a></li><li><a href="/Nocturna/arquivo/">Arquivo</a></li><li><a href="/Nocturna/sobre/">Sobre</a></li><li><a href="/Nocturna/faq/">FAQ</a></li><li><a href="/Nocturna/contato/">Contato</a></li><li><a href="/Nocturna/privacidade/">Privacidade e cookies</a></li></ul>
+<nav id="nav" aria-label="Principal"><ul id="tree"><li><a href="/Nocturna/tags/">Tags</a></li><li><a href="/Nocturna/categorias/">Categorias</a></li><li><a href="/Nocturna/arquivo/">Arquivo</a></li><li><a href="/Nocturna/sobre/">Sobre</a></li><li><a href="/Nocturna/faq/">FAQ</a></li><li><a href="/Nocturna/contato/">Contato</a></li><li><a href="/Nocturna/privacidade/">Privacidade e cookies</a></li></ul>
 <form id="sf" role="search"><label for="sq" class="sr">Pesquisar no acervo</label><input id="sq" type="search" placeholder="Pesquisar" style="padding-left:2.8rem;background-image:url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2224%22 height=%2224%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%23e0bfae%22 stroke-width=%221.8%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Ccircle cx=%2211%22 cy=%2211%22 r=%227%22/%3E%3Cpath d=%22m20 20-4-4%22/%3E%3C/svg%3E');background-repeat:no-repeat;background-position:0.9rem center;background-size:1.2rem 1.2rem;"><button class="btn">Buscar</button></form>
 </nav></div></header>
 <div id="reading-progress" class="progress" aria-hidden="true"></div><main id="main" class="wrap">
@@ -155,8 +155,6 @@ empty=m=>`<p class="empty" role="status">${m}</p>`,
  PS=10;
 /* Árvore de navegação: cada destino aparece uma única vez na superfície; ramos de uma mesma raiz ficam agrupados sob ela. */
 const TREE=[
-  {t:"Publicações",h:"/Nocturna/#/artigos/"},
- {t:"Coleções",h:"/Nocturna/#/series/"},
  {t:"Tags",h:"/Nocturna/tags/"},
  {t:"Categorias",h:"/Nocturna/categorias/",all:"Todas as categorias",kids:()=>DATA.cats.map(c=>({t:c.name,h:catHref(c)}))},
  {t:"Institucional",kids:[{t:"Sobre",h:"/Nocturna/sobre/"},{t:"FAQ",h:"/Nocturna/faq/"},{t:"Contato",h:"/Nocturna/contato/"},{t:"Privacidade e cookies",h:"/Nocturna/privacidade/"}]}
