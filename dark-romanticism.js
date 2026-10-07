@@ -53,3 +53,24 @@ const refresh=()=>{const x=ctx();if(x){chapterUI(x)}else if(!location.hash)home(
 (()=>{"use strict";
 /* A página de frases é acessada pelo rodapé. Nenhum componente de comentários é injetado nas publicações. */
 })();
+
+
+/* NOCTURNA_COLLECTION_READ_SYNC */
+(()=>{
+"use strict";
+const RP="nocturna-reading-progress-v1",RR="nocturna-reading-read-v1",LEGACY="nocturna:colecoes:lidas";
+const readJson=(k,d)=>{try{const v=JSON.parse(localStorage.getItem(k));return v??d}catch{return d}};
+const writeJson=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch{}};
+const all=()=> (window.DATA?.series||[]).flatMap(s=>(s.blocks||[]).flatMap(b=>(b.chapters||[]).map(c=>({s,b,c,id:"series:"+s.id+":chapter:"+c.id,legacy:String(s.id||s.slug)+"/"+String(b.id||b.slug)+"/"+String(c.id||c.slug)}))));
+const progress=()=>readJson(RP,{}),reads=()=>new Set(readJson(RR,[]));
+const done=id=>Math.round(progress()[id]?.percent||0)>=100||reads().has(id);
+const setDone=(id,on)=>{const q=progress(),r=reads();if(on){q[id]={...(q[id]||{}),percent:100,updatedAt:Date.now()};r.add(id)}else{delete q[id];r.delete(id)}writeJson(RP,q);writeJson(RR,[...r])};
+const migrate=()=>{const old=new Set(readJson(LEGACY,[])),q=progress(),r=reads(),now=Date.now();for(const x of all())if(old.has(x.legacy)){q[x.id]={...(q[x.id]||{}),percent:100,updatedAt:q[x.id]?.updatedAt||now};r.add(x.id)}writeJson(RP,q);writeJson(RR,[...r])};
+const paint=()=>{const q=progress(),r=reads();document.querySelectorAll("[data-collection-status]").forEach(el=>{const s=(DATA.series||[]).find(x=>String(x.id||x.slug)===String(el.dataset.collectionStatus));if(!s)return;const cs=all().filter(x=>x.s.id===s.id),n=cs.filter(x=>Math.round(q[x.id]?.percent||0)>=100||r.has(x.id)).length,t=cs.length,p=t?Math.round(n*100/t):0,on=t>0&&p>=100;el.classList.toggle("is-complete",on);el.textContent=(on?"✓ Lido":"Não lido")+" · "+p+"%";el.setAttribute("aria-label",on?"Coleção lida":"Não lido")});document.querySelectorAll("[data-collection-read-id]").forEach(btn=>{const x=all().find(y=>y.legacy===btn.dataset.collectionReadId);if(!x)return;const on=done(x.id);btn.classList.toggle("is-read",on);btn.setAttribute("aria-pressed",String(on));btn.textContent=on?"✓ Capítulo lido":"Marcar capítulo como lido";btn.setAttribute("aria-label",on?"Desmarcar capítulo como lido":"Marcar capítulo como lido")})};
+migrate();
+document.addEventListener("click",e=>{const b=e.target.closest("[data-collection-read-id]");if(!b)return;const x=all().find(y=>y.legacy===b.dataset.collectionReadId);if(!x)return;const on=!done(x.id);setDone(x.id,on);const old=new Set(readJson(LEGACY,[]));on?old.add(x.legacy):old.delete(x.legacy);writeJson(LEGACY,[...old]);setTimeout(paint,0)},true);
+document.addEventListener("click",e=>{const b=e.target.closest(".nr-read-toggle[data-rid]");if(!b)return;setTimeout(()=>{migrate();paint()},0)});
+addEventListener("storage",e=>{if([RP,RR,LEGACY].includes(e.key)){migrate();paint()}});
+new MutationObserver(paint).observe(document.getElementById("main")||document.body,{childList:true,subtree:true});
+paint();
+})();
