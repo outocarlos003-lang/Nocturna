@@ -34,7 +34,7 @@ for (const file of htmlFiles) {
     if (target === "") target = "index.html";
     const fileTarget = exists(target);
     const directoryTarget = exists(target.replace(/\/$/, "/index.html"));
-    if (!fileTarget && !directoryTarget && /\.[A-Za-z0-9]+$/.test(target)) {
+    if (!fileTarget && !directoryTarget) {
       fail(`${rel}: referência local ausente -> ${ref}`);
     }
   }
