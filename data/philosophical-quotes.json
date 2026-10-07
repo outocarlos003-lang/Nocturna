@@ -1,0 +1,122 @@
+{
+  "version": 1,
+  "title": "Frases Filosóficas",
+  "description": "Coleção de frases filosóficas da Nocturna. As entradas preservam todos os personagens e seus pensamentos, agora apresentadas como aforismos autônomos, sem estrutura de comentários ou respostas.",
+  "entries": [
+    {
+      "id": 1,
+      "author": "Akashi Seijuro",
+      "content": "“A autoridade não nasce da necessidade de impor uma resposta; nasce da capacidade de enxergar o conjunto antes que os demais percebam que estão apenas reagindo às partes.”"
+    },
+    {
+      "id": 2,
+      "author": "Johan Liebert",
+      "content": "“É curioso. Um texto pode revelar muito sobre quem o escreveu, mesmo quando o autor acredita estar apenas descrevendo o mundo. Às vezes, aquilo que chamamos de verdade é somente a forma mais elegante que encontramos para esconder aquilo que somos.”"
+    },
+    {
+      "id": 3,
+      "author": "Ayanokoji Kiyotaka",
+      "content": "“Pessoas revelam suas estruturas involuntariamente. Basta observar o que escolhem enfatizar, omitir e defender para perceber aquilo que prefeririam permanecer oculto.”"
+    },
+    {
+      "id": 4,
+      "author": "Osamu Dazai",
+      "content": "“Transformar pessoas em mecanismos produz uma ilusão confortável: a de que a imprevisibilidade deixou de existir. Mas aquilo que escapa ao cálculo continua sendo parte da própria natureza humana.”"
+    },
+    {
+      "id": 5,
+      "author": "Light Yagami",
+      "content": "“Imprevisibilidade não significa ausência de estrutura; significa apenas que a variável decisiva ainda não foi encontrada.”"
+    },
+    {
+      "id": 6,
+      "author": "L Lawliet",
+      "content": "“A crença de possuir a variável correta pode ser apenas mais uma variável do erro que se pretende eliminar.”"
+    },
+    {
+      "id": 7,
+      "author": "Sasuke Uchiha",
+      "content": "“Procuramos padrões porque precisamos acreditar que tudo pode ser compreendido. Algumas verdades, porém, só se revelam quando alguém atravessa aquilo que tentou evitar.”"
+    },
+    {
+      "id": 8,
+      "author": "Ranpo Edogawa",
+      "content": "“Se a verdade parece surgir apenas depois, talvez ela nunca tenha sido incompreensível; talvez apenas tenhamos procurado no lugar errado.”"
+    },
+    {
+      "id": 9,
+      "author": "Johan Liebert",
+      "content": "“O lugar errado também pode ser escolhido deliberadamente; às vezes, o erro de percepção é menos acidente do que estratégia.”"
+    },
+    {
+      "id": 10,
+      "author": "Ranpo Edogawa",
+      "content": "“Quem constrói uma distração sempre deixa marcas; quanto mais cuidadosamente algo é ocultado, mais reveladora pode ser a arquitetura do desvio.”"
+    },
+    {
+      "id": 11,
+      "author": "L Lawliet",
+      "content": "“As marcas mais interessantes geralmente aparecem justamente naquilo que uma pessoa considera irrelevante.”"
+    },
+    {
+      "id": 12,
+      "author": "Light Yagami",
+      "content": "“Interpretação e conhecimento não são a mesma coisa: interpretar é atribuir sentido ao que se percebe; conhecer exige responder pela verdade daquilo que foi atribuído.”"
+    },
+    {
+      "id": 13,
+      "author": "Ayanokoji Kiyotaka",
+      "content": "“Confiança e certeza não são sinônimos; a primeira pode nascer da convicção, enquanto a segunda exige que a realidade suporte aquilo que se afirma.”"
+    },
+    {
+      "id": 14,
+      "author": "Osamu Dazai",
+      "content": "“Uns querem controlar a verdade, outros deduzi-la, outros observá-la; enquanto isso, a existência permanece perguntando se compreender o mundo basta para justificar continuar nele.”"
+    },
+    {
+      "id": 15,
+      "author": "Sasuke Uchiha",
+      "content": "“Existe uma razão para continuar, mas sua existência não depende de ser reconhecida por quem ainda procura uma resposta.”"
+    },
+    {
+      "id": 16,
+      "author": "Osamu Dazai",
+      "content": "“A pergunta mais difícil raramente é se existe uma razão, mas qual razão seria capaz de sobreviver quando todas as respostas forem examinadas.”"
+    },
+    {
+      "id": 17,
+      "author": "Sasuke Uchiha",
+      "content": "“Descobrir quem está mentindo pode ser menos importante do que descobrir por que a verdade precisa ser escondida.”"
+    },
+    {
+      "id": 18,
+      "author": "Johan Liebert",
+      "content": "“Talvez a pergunta mais interessante não seja quem mente, mas o que leva alguém a precisar que uma mentira seja acreditada.”"
+    },
+    {
+      "id": 19,
+      "author": "L Lawliet",
+      "content": "“A pergunta decisiva nem sempre é a que procura um nome; às vezes, é aquela que revela por que precisamos de uma resposta.”"
+    },
+    {
+      "id": 20,
+      "author": "Johan Liebert",
+      "content": "“Quem precisa que a mentira seja descoberta talvez ainda dependa dela para compreender aquilo que não consegue aceitar como verdade.”"
+    },
+    {
+      "id": 21,
+      "author": "Ranpo Edogawa",
+      "content": "“Uma pergunta útil não é necessariamente a que encerra um problema, mas a que finalmente aponta para aquilo que o problema estava escondendo.”"
+    },
+    {
+      "id": 22,
+      "author": "Itachi Uchiha",
+      "content": "“A verdade não se torna menos verdadeira porque alguém não consegue suportá-la. Revelá-la sem discernimento, porém, também pode ferir aqueles que tentamos proteger. O peso de uma escolha só é compreendido por quem aceita carregar suas consequências em silêncio.”"
+    },
+    {
+      "id": 23,
+      "author": "Satoru Gojo",
+      "content": "“Enxergar o que está diante de si não significa compreender tudo. Perceber os limites dos outros é apenas o primeiro passo; mais difícil é saber o que fazer com aquilo que somente você consegue ver.”"
+    }
+  ]
+}
