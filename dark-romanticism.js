@@ -206,7 +206,7 @@ const installStyles=()=>{
     '.nr-cover-flag-read:not(.is-read){color:#fff}'+
     '.nr-cover-frame{position:relative!important;isolation:isolate!important}'+
     '.nr-cover-frame>img,.nr-cover-frame>.series-cover{display:block}'+
-    '@media(max-width:560px){.nr-cover-flag-host>.nr-cover-flag{top:8px;min-height:40px;padding:.4rem .55rem;font-size:.72rem}.nr-cover-flag-favorite{right:8px}.nr-cover-flag-read{left:8px}.nr-cover-flag-favorite .nr-cover-label{display:none}}';
+    '@media(max-width:560px){.nr-cover-flag-host>.nr-cover-flag{top:8px;min-height:40px;padding:.4rem .55rem;font-size:.72rem}.nr-cover-flag-favorite{right:8px}.nr-cover-flag-read{left:8px}}';
   document.head.appendChild(s);
 };
 const ensureCoverHost=card=>{
