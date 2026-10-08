@@ -97,6 +97,20 @@ footer{border-top:1px solid var(--line);padding:2rem 0;color:var(--mute)}
 .cover-heart{font-size:1.08rem!important;line-height:1!important}
 .cover-read-status{position:absolute;left:8px;top:8px;z-index:20;min-height:40px;padding:.42rem .62rem;border:1px solid rgba(255,255,255,.58);border-radius:999px;background:rgba(10,10,12,.94);color:#fff;font:600 .76rem/1 system-ui,-apple-system,"Segoe UI",sans-serif;box-shadow:0 3px 14px rgba(0,0,0,.58);cursor:default;pointer-events:none}
 @media(max-width:560px){.cover-flag{min-height:42px!important;padding:.4rem .52rem!important;font-size:.7rem!important}.cover-read{left:7px!important}.cover-favorite{right:7px!important}.cover-read-status{left:7px;top:7px;font-size:.7rem}}
+</style><style id="nocturna-home-editorial-style">
+.home-reading{margin:1.5rem 0 2rem;padding:clamp(1rem,3vw,2rem);background:#1c1b1d;border:1px solid #38333c;border-left:3px solid #9c2d49;border-radius:10px}
+.home-reading-head{margin:0 0 1.5rem}.home-reading-title{margin:.2rem 0 1.5rem;font-size:clamp(2rem,5vw,3rem);max-width:30rem}
+.home-reading-label{margin:0 0 .65rem;color:#b2aa98;font-size:.82rem;letter-spacing:.12em;text-transform:uppercase}
+.home-reading-grid{display:grid;gap:.9rem;margin-top:1rem}.home-reading-row{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.85rem 1rem;border:1px solid #38333c;border-radius:8px;background:#121212;color:#e9e1cf}
+.home-reading-row strong{font-family:Georgia,"Times New Roman",serif;font-size:1.02rem}.home-reading-collection{margin-top:1rem;padding:.9rem 1rem;border:1px solid #38333c;border-radius:8px;background:#121212}.home-reading-collection strong{font-family:Georgia,"Times New Roman",serif;font-size:1.15rem}
+.home-reading-total{margin:1rem 0 1.25rem;color:#b2aa98}.home-reading-action{display:flex;justify-content:flex-start}
+.home-constellation{margin:0 0 2.5rem;padding:clamp(1rem,3vw,2rem);background:#1c1b1d;border:1px solid #38333c;border-radius:10px;overflow:hidden}
+.home-constellation-head{max-width:44rem}.home-constellation-kicker{margin:0 0 .5rem;color:#e0bfae;font-size:.82rem;letter-spacing:.12em;text-transform:uppercase}
+.home-constellation-title{margin:.2rem 0 .9rem}.home-constellation-copy{max-width:42rem;color:#b2aa98}
+.home-constellation-map{display:block;width:100%;height:auto;margin:1rem auto 0}.home-constellation-map a{color:inherit;text-decoration:none}
+.home-constellation-map text{font-family:Georgia,"Times New Roman",serif;fill:#e0bfae}.home-constellation-map .node-label{font-size:15px}.home-constellation-map .center-label{font-size:20px;fill:#e9e1cf}
+.home-constellation-map .node{fill:#9c2d49;stroke:#e0bfae;stroke-width:2}.home-constellation-map .orbit{fill:none;stroke:#7a1f35;stroke-width:2}.home-constellation-map .link{stroke:#7a1f35;stroke-width:2;fill:none}
+@media(max-width:700px){.home-reading-row{align-items:flex-start;flex-direction:column}.home-constellation-map .node-label{font-size:12px}.home-constellation-map .center-label{font-size:18px}}
 </style></head>
 <body>
 <a class="skip" href="#main">Ir para o conteúdo</a>
@@ -177,7 +191,49 @@ function navHtml(){return TREE.map((n,i)=>{
 function pager(l,pg,base){const n=Math.max(1,Math.ceil(l.length/PS)),p=Math.min(Math.max(1,pg|0||1),n),u=x=>base+(base.includes("?")?"&":"?")+"p="+x;
  return{items:l.slice((p-1)*PS,p*PS),nav:n>1?`<nav class="pager" aria-label="Paginação">${p>1?`<a href="${u(p-1)}">← Anterior</a>`:""}<span>Página ${p} de ${n}</span>${p<n?`<a href="${u(p+1)}">Próxima →</a>`:""}</nav>`:""}}
 const P={
- home:()=>({t:"Início",d:"Nocturna: publicação digital de leitura em metafísica, teologia, ficção, psicologia, filosofia e outras áreas de investigação.",h:`<section class="hero"><h1 tabindex="-1">Nocturna</h1><p class="lead">Uma publicação digital para ler com calma e descobrir por categorias.</p><p class="archive-stat" aria-label="Publicações e coleções"><strong>${DATA.pubs.length}</strong><span>publicações e ${DATA.series.length} ${DATA.series.length===1?"coleção":"coleções"}</span></p><p>A obra é a unidade editorial; as categorias a organizam e a busca permite encontrá-la. Feita para leitores que preferem a interface em segundo plano.</p><p class="archive-actions"></p></section>${DATA.pubs.filter(p=>p.featured)[0]?`<section class="featured"><p class="eyebrow">Em destaque</p><h2>${esc(shortTitle(DATA.pubs.filter(p=>p.featured)[0].title))}</h2><p>${esc(DATA.pubs.filter(p=>p.featured)[0].summary||"")}</p></section>`:""}<h2 class="home-section-title"><a class="publicacoes-link" href="/Nocturna/#/artigos/">Publicações</a><a class="series-link" href="/Nocturna/#/series/">Coleções</a></h2>`}),
+ home:()=>({t:"Início",d:"Nocturna: publicação digital de leitura em metafísica, teologia, ficção, psicologia, filosofia e outras áreas de investigação.",h:`<section class="hero"><h1 tabindex="-1">Nocturna</h1><p class="lead">Uma publicação digital para ler com calma e descobrir por categorias.</p><p class="archive-stat" aria-label="Publicações e coleções"><strong>${DATA.pubs.length}</strong><span>publicações e ${DATA.series.length} ${DATA.series.length===1?"coleção":"coleções"}</span></p><p>A obra é a unidade editorial; as categorias a organizam e a busca permite encontrá-la. Feita para leitores que preferem a interface em segundo plano.</p><p class="archive-actions"></p></section>
+<section class="home-reading" aria-labelledby="continuar-leitura">
+  <div class="home-reading-head">
+    <p class="home-reading-label">CONTINUAR LEITURA</p>
+    <h2 id="continuar-leitura" class="home-reading-title">O Arquivo da Última Luz</h2>
+  </div>
+  <div class="home-reading-grid" aria-label="CAPÍTULOS LIDOS">
+    <div class="home-reading-row"><strong>CAPÍTULO I · Lido</strong></div>
+    <div class="home-reading-row"><strong>CAPÍTULO II · 0% LIDO</strong></div>
+  </div>
+  <div class="home-reading-collection"><strong>COLEÇÃO · 25% LIDO</strong></div>
+  <p class="home-reading-total">1 de 4 capítulos integralmente lidos</p>
+  <p class="home-reading-action"><a class="btn" href="/Nocturna/series/o-arquivo-da-ultima-luz/o-arquivo-da-ultima-luz/a-luz-sobre-o-papel/">CONTINUAR LEITURA</a></p>
+</section>
+<section class="home-constellation" aria-labelledby="constelacao-editorial">
+  <div class="home-constellation-head">
+    <p class="home-constellation-kicker">✦ CARTOGRAFIA EDITORIAL</p>
+    <h2 id="constelacao-editorial" class="home-constellation-title">Constelação editorial</h2>
+    <p class="home-constellation-copy">As categorias funcionam como pontos de uma mesma noite intelectual. Nenhuma ideia precisa fingir que vive sozinha.</p>
+  </div>
+  <svg class="home-constellation-map" viewBox="0 0 900 430" role="img" aria-label="Constelação editorial">
+    <ellipse class="orbit" cx="450" cy="215" rx="330" ry="145"></ellipse>
+    <path class="link" d="M450 70 L584 83 L695 118 L764 170 L778 230 L736 288 L644 332 L519 357 L381 357 L256 332 L164 288 L122 230 L136 170 L205 118 L316 83 Z"></path>
+    <circle cx="450" cy="215" r="58" fill="#121212" stroke="#7a1f35" stroke-width="2"></circle>
+    <text x="450" y="222" text-anchor="middle" class="center-label">Nocturna</text>
+    <a href="/Nocturna/categorias/metafisica/"><circle class="node" cx="450" cy="70" r="13"></circle><text class="node-label" x="450" y="42" text-anchor="middle">Metafísica</text></a>
+    <a href="/Nocturna/categorias/teologia/"><circle class="node" cx="584" cy="83" r="13"></circle><text class="node-label" x="604" y="65">Teologia</text></a>
+    <a href="/Nocturna/categorias/ficcao/"><circle class="node" cx="695" cy="118" r="13"></circle><text class="node-label" x="718" y="115">Ficção</text></a>
+    <a href="/Nocturna/categorias/psicologia/"><circle class="node" cx="764" cy="170" r="13"></circle><text class="node-label" x="792" y="175">Psicologia</text></a>
+    <a href="/Nocturna/categorias/filosofia/"><circle class="node" cx="778" cy="230" r="13"></circle><text class="node-label" x="806" y="235">Filosofia</text></a>
+    <a href="/Nocturna/categorias/hipotese/"><circle class="node" cx="736" cy="288" r="13"></circle><text class="node-label" x="758" y="307">Hipótese</text></a>
+    <a href="/Nocturna/categorias/arquetipo/"><circle class="node" cx="644" cy="332" r="13"></circle><text class="node-label" x="660" y="358">Arquétipo</text></a>
+    <a href="/Nocturna/categorias/tipologia/"><circle class="node" cx="519" cy="357" r="13"></circle><text class="node-label" x="519" y="389" text-anchor="middle">Tipologia</text></a>
+    <a href="/Nocturna/categorias/parabola/"><circle class="node" cx="381" cy="357" r="13"></circle><text class="node-label" x="381" y="389" text-anchor="middle">Parábola</text></a>
+    <a href="/Nocturna/categorias/metafora/"><circle class="node" cx="256" cy="332" r="13"></circle><text class="node-label" x="240" y="358" text-anchor="end">Metáfora</text></a>
+    <a href="/Nocturna/categorias/epistemologia/"><circle class="node" cx="164" cy="288" r="13"></circle><text class="node-label" x="142" y="308" text-anchor="end">Epistemologia</text></a>
+    <a href="/Nocturna/categorias/hermeneutica/"><circle class="node" cx="122" cy="230" r="13"></circle><text class="node-label" x="96" y="235" text-anchor="end">Hermenêutica</text></a>
+    <a href="/Nocturna/categorias/fenomenologia/"><circle class="node" cx="136" cy="170" r="13"></circle><text class="node-label" x="110" y="175" text-anchor="end">Fenomenologia</text></a>
+    <a href="/Nocturna/categorias/antropologia/"><circle class="node" cx="205" cy="118" r="13"></circle><text class="node-label" x="190" y="95" text-anchor="end">Antropologia</text></a>
+    <a href="/Nocturna/categorias/romanticism-dark/"><circle class="node" cx="316" cy="83" r="13"></circle><text class="node-label" x="305" y="57" text-anchor="end">Romantismo Dark</text></a>
+  </svg>
+</section>
+${DATA.pubs.filter(p=>p.featured)[0]?`<section class="featured"><p class="eyebrow">Em destaque</p><h2>${esc(shortTitle(DATA.pubs.filter(p=>p.featured)[0].title))}</h2><p>${esc(DATA.pubs.filter(p=>p.featured)[0].summary||"")}</p></section>`:""}<h2 class="home-section-title"><a class="publicacoes-link" href="/Nocturna/#/artigos/">Publicações</a><a class="series-link" href="/Nocturna/#/series/">Coleções</a></h2>`}),
  grid:()=>`<ul class="grid">${DATA.cats.map(c=>`<li class="card"><h3><a href="${catHref(c)}">${esc(c.name)}</a></h3><small>${count(c)} obra(s)</small></li>`).join("")}</ul>`,
  sobre:()=>({t:"Sobre",d:"Identidade, propósito e organização editorial da Nocturna.",h:`<h1 tabindex="-1">Sobre</h1><div class="read"><p><strong>A Nocturna é um acervo editorial digital.</strong> Reúne publicações e coleções em uma estrutura pública de leitura, consulta e descoberta.</p><h2>Princípio editorial</h2><p>Uma ideia não se esclarece apenas pelo nome que recebe, mas pelas relações que consegue tornar inteligíveis. Cada texto procura delinear seu objeto, explicitar seus pressupostos e conduzir o leitor pelas conexões que sustentam seu argumento.</p><p>A forma aforística concentra. O delineamento desenvolve. A distinção evita confusões; a articulação revela relações. Brevidade e extensão não são fins opostos: cada uma serve à necessidade do conteúdo.</p><h2>O que você encontrará</h2><p><strong>Publicações:</strong> estudos e textos individuais, acessíveis pelo índice do acervo e pelas páginas próprias.</p><p><strong>Coleções:</strong> conteúdos seriados organizados em estruturas contínuas, com blocos e capítulos quando aplicável. A sequência permite acompanhar o desenvolvimento de uma investigação sem reduzir cada parte a um texto isolado.</p><p><strong>Categorias:</strong> indicam os campos temáticos e interpretativos de uma obra. Uma publicação pode pertencer a várias categorias, pois um mesmo argumento pode atravessar diferentes áreas.</p><p><strong>Tags:</strong> apontam temas, termos e motivos específicos. Enquanto a categoria situa uma obra em um campo, a tag facilita encontrar assuntos recorrentes entre textos distintos.</p><p><strong>Arquivo:</strong> organiza as publicações datadas em ordem cronológica. <strong>Busca:</strong> permite localizar conteúdos por termos, filtrar por categoria e ordenar resultados por título.</p><h2>Orientação de leitura</h2><p>Leia cada texto segundo sua própria proposta. Distinga afirmação, interpretação, hipótese e recurso alegórico. Uma construção especulativa não se torna fato estabelecido apenas por ser formulada com convicção; analogias e arquétipos são instrumentos de interpretação, não substitutos automáticos de demonstração.</p><p>Os textos podem dialogar com teologia, metafísica, filosofia, psicologia, ficção e outros campos. Essa aproximação não significa que todos operem segundo o mesmo método ou tenham o mesmo estatuto de verdade.</p><h2>Participação e contato</h2><p>Sugestões, feedbacks, dúvidas, relatos de erros e propostas de correção podem ser enviados pela página <a href="/Nocturna/contato/">Contato</a>, por e-mail ou WhatsApp. A mensagem é preparada no aplicativo escolhido; o envio por e-mail depende da confirmação do remetente.</p><p>Consulte também a <a href="/Nocturna/privacidade/">Política de privacidade e cookies</a> para conhecer o tratamento de dados previsto pelo site.</p><p><em>Uma publicação é um ponto de entrada; o acervo é uma rede de relações. Explorar é encontrar os vínculos, sem apagar as diferenças.</em></p><p>Por Riquelmi.</p></div>`}),
  cats:()=>({t:"Categorias",d:"As quinze categorias editoriais da Nocturna.",h:`<h1 tabindex="-1">Categorias</h1>${P.grid()}`}),
