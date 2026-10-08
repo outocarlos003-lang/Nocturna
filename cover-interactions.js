@@ -51,6 +51,7 @@ const ensureStyle=()=>{
   const s=document.createElement("style");
   s.id="nocturna-cover-actions-style";
   s.textContent=
+    ".nr-cover-flag,.nr-cover-v2{display:none!important}"+
     ".nocturna-cover-actions{position:absolute!important;inset:0!important;z-index:50!important;pointer-events:none!important}"+
     ".nocturna-cover-action{position:absolute!important;top:8px!important;z-index:51!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:.32rem!important;min-height:44px!important;padding:.42rem .68rem!important;border:1px solid rgba(255,255,255,.62)!important;border-radius:999px!important;background:rgba(10,10,12,.94)!important;color:#fff!important;font:600 .78rem/1 system-ui,sans-serif!important;box-shadow:0 3px 14px rgba(0,0,0,.58)!important;cursor:pointer!important;touch-action:manipulation!important;-webkit-tap-highlight-color:transparent!important;pointer-events:auto!important}"+
     ".nocturna-cover-action.read{left:8px!important}"+
