@@ -278,7 +278,6 @@ refresh();
 new MutationObserver(()=>refresh()).observe(document.body,{subtree:true,childList:true});
 })();
 
-/* test marker */
 
 /* NOCTURNA_COVER_INTERACTION_FLAGS_V2 */
 (()=>{"use strict";
@@ -302,11 +301,11 @@ const apply=()=>{style();document.querySelectorAll(".card").forEach(card=>{
  if(p){const h=host(card);if(!h)return;h.style.position="relative";h.style.isolation="isolate";let r=h.querySelector(".nr-cover-v2.read"),f=h.querySelector(".nr-cover-v2.fav");
   if(!r){r=make("read");h.appendChild(r);r.addEventListener("click",e=>{e.preventDefault();e.stopPropagation();setRead(p,!isRead(p));apply()})}
   if(!f){f=make("fav");h.appendChild(f);f.addEventListener("click",e=>{e.preventDefault();e.stopPropagation();const k="article:"+p.id;favorite(k,!isFavorite(k));apply()})}
-  r.classList.toggle("on",isRead(p));r.setAttribute("aria-pressed",String(isRead(p)));r.setAttribute("aria-label",isRead(p)?"Marcar como não lido":"Marcar como lido");r.textContent=isRead(p)?"Lido":"Marcar como lido";
-  const fk="article:"+p.id,fa=isFavorite(fk);f.classList.toggle("on",fa);f.setAttribute("aria-pressed",String(fa));f.setAttribute("aria-label",fa?"Remover dos favoritos":"Adicionar aos favoritos");f.innerHTML='<span class="heart" aria-hidden="true">'+(fa?"♥":"♡")+'</span><span>Favorito</span>';return;
+  r.classList.toggle("on",isRead(p));r.setAttribute("aria-pressed",String(isRead(p)));r.setAttribute("aria-label",isRead(p)?"Marcar como não lido":"Marcar como lido");const rl=isRead(p)?"Lido":"Marcar como lido";if(r.textContent!==rl)r.textContent=rl;
+  const fk="article:"+p.id,fa=isFavorite(fk);f.classList.toggle("on",fa);f.setAttribute("aria-pressed",String(fa));f.setAttribute("aria-label",fa?"Remover dos favoritos":"Adicionar aos favoritos");const fh='<span class="heart" aria-hidden="true">'+(fa?"♥":"♡")+'</span><span>Favorito</span>';if(f.innerHTML!==fh)f.innerHTML=fh;return;
  }
  const b=card.querySelector("a[href*='/series/']");const s=b&&getSeries(b.getAttribute("href")||"");
- if(s){const h=host(card);if(!h)return;h.style.position="relative";h.style.isolation="isolate";let f=h.querySelector(".nr-cover-v2.fav");if(!f){f=make("fav");h.appendChild(f);f.addEventListener("click",e=>{e.preventDefault();e.stopPropagation();const k="collection:"+s.id;favorite(k,!isFavorite(k));apply()})}const k="collection:"+s.id,fa=isFavorite(k);f.classList.toggle("on",fa);f.setAttribute("aria-pressed",String(fa));f.setAttribute("aria-label",fa?"Remover dos favoritos":"Adicionar aos favoritos");f.innerHTML='<span class="heart" aria-hidden="true">'+(fa?"♥":"♡")+'</span><span>Favorito</span>'}
+ if(s){const h=host(card);if(!h)return;h.style.position="relative";h.style.isolation="isolate";let f=h.querySelector(".nr-cover-v2.fav");if(!f){f=make("fav");h.appendChild(f);f.addEventListener("click",e=>{e.preventDefault();e.stopPropagation();const k="collection:"+s.id;favorite(k,!isFavorite(k));apply()})}const k="collection:"+s.id,fa=isFavorite(k);f.classList.toggle("on",fa);f.setAttribute("aria-pressed",String(fa));f.setAttribute("aria-label",fa?"Remover dos favoritos":"Adicionar aos favoritos");const fh='<span class="heart" aria-hidden="true">'+(fa?"♥":"♡")+'</span><span>Favorito</span>';if(f.innerHTML!==fh)f.innerHTML=fh}
 })};
 apply();
 new MutationObserver(()=>apply()).observe(document.getElementById("main")||document.body,{childList:true,subtree:true});
