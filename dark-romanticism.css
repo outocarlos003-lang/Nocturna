@@ -101,3 +101,16 @@ section[aria-labelledby="navegacao-acervo"] > p > a.btn + a.btn{
 .nr-comments-more:hover{background:var(--nr-wine);color:#fff}
 @media(max-width:600px){.nr-comment.reply{margin-left:1rem}.nr-comment.reply.deep{margin-left:1.75rem}}
 
+
+
+/* Índice da coleção: título menos dominante que a capa/hero */
+.series-content > h1{
+  font-size:clamp(1.65rem,5vw,2.45rem);
+  line-height:1.12;
+  letter-spacing:-.02em;
+  margin-top:.65rem;
+  margin-bottom:.8rem;
+}
+@media(max-width:42rem){
+  .series-content > h1{font-size:clamp(1.55rem,6.2vw,2rem)}
+}
