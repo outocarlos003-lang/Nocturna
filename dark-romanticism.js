@@ -279,3 +279,35 @@ new MutationObserver(()=>refresh()).observe(document.body,{subtree:true,childLis
 })();
 
 /* test marker */
+
+/* NOCTURNA_COVER_INTERACTION_FLAGS_V2 */
+(()=>{"use strict";
+const F="nocturna-cover-favorites-v1",P="nocturna-reading-progress-v1",BASE="/Nocturna/";
+const read=(k,d)=>{try{const v=JSON.parse(localStorage.getItem(k));return v==null?d:v}catch(e){return d}};
+const write=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
+const D=typeof DATA==="undefined"?{}:DATA;
+const pubs=Array.isArray(D.pubs)?D.pubs:[];
+const series=Array.isArray(D.series)?D.series:[];
+const getPub=href=>{const x=href.indexOf("/artigos/");if(x<0)return null;const id=decodeURIComponent(href.slice(x+9).split(/[/?#]/)[0]);return pubs.find(p=>p.id===id)||null};
+const getSeries=href=>{const x=href.indexOf("/series/");if(x<0)return null;const id=decodeURIComponent(href.slice(x+8).split(/[/?#]/)[0]);return series.find(s=>s.id===id||s.slug===id)||null};
+const favorite=(key,on)=>{const q=read(F,{});if(on)q[key]=true;else delete q[key];write(F,q)};
+const isFavorite=key=>read(F,{})[key]===true;
+const isRead=p=>Math.round(read(P,{})["article:"+p.id]?.percent||0)>=100;
+const setRead=(p,on)=>{const q=read(P,{}),k="article:"+p.id;if(on)q[k]={...(q[k]||{}),percent:100,url:BASE+"#/artigos/"+encodeURIComponent(p.id)+"/",updatedAt:Date.now()};else delete q[k];write(P,q)};
+const style=()=>{if(document.getElementById("nr-cover-v2"))return;const s=document.createElement("style");s.id="nr-cover-v2";s.textContent=".nr-cover-v2{position:absolute!important;top:8px!important;z-index:100!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:.3rem!important;min-height:44px!important;padding:.42rem .62rem!important;border:1px solid rgba(255,255,255,.55)!important;border-radius:999px!important;background:rgba(10,10,12,.92)!important;color:#fff!important;font:600 .78rem/1 system-ui,sans-serif!important;cursor:pointer!important;touch-action:manipulation!important;box-shadow:0 3px 14px rgba(0,0,0,.55)!important}.nr-cover-v2.read{left:8px!important}.nr-cover-v2.fav{right:8px!important}.nr-cover-v2.fav.on{border-color:#ef4d67!important;background:#5b0c1e!important}.nr-cover-v2.fav .heart{font-size:1.1rem}.nr-cover-v2.fav.on .heart{color:#ff4964}.nr-cover-v2.read.on{background:#711d39!important;border-color:#b34362!important}@media(max-width:560px){.nr-cover-v2{font-size:.72rem!important;min-height:42px!important;padding:.4rem .52rem!important}}";document.head.appendChild(s)};
+const host=card=>{let h=card.querySelector(".nr-card-art");if(h)return h;h=card.querySelector(".nr-cover-host");if(h)return h;const img=card.querySelector(".series-cover,.publication-cover");if(!img)return null;h=document.createElement("div");h.className="nr-cover-host";h.style.cssText="position:relative!important;isolation:isolate!important";img.parentNode.insertBefore(h,img);h.appendChild(img);return h};
+const make=(kind)=>{const b=document.createElement("button");b.type="button";b.className="nr-cover-v2 "+kind;return b};
+const apply=()=>{style();document.querySelectorAll(".card").forEach(card=>{
+ const a=card.querySelector("a[href*='/artigos/']");const p=a&&getPub(a.getAttribute("href")||"");
+ if(p){const h=host(card);if(!h)return;h.style.position="relative";h.style.isolation="isolate";let r=h.querySelector(".nr-cover-v2.read"),f=h.querySelector(".nr-cover-v2.fav");
+  if(!r){r=make("read");h.appendChild(r);r.addEventListener("click",e=>{e.preventDefault();e.stopPropagation();setRead(p,!isRead(p));apply()})}
+  if(!f){f=make("fav");h.appendChild(f);f.addEventListener("click",e=>{e.preventDefault();e.stopPropagation();const k="article:"+p.id;favorite(k,!isFavorite(k));apply()})}
+  r.classList.toggle("on",isRead(p));r.setAttribute("aria-pressed",String(isRead(p)));r.setAttribute("aria-label",isRead(p)?"Marcar como não lido":"Marcar como lido");r.textContent=isRead(p)?"Lido":"Marcar como lido";
+  const fk="article:"+p.id,fa=isFavorite(fk);f.classList.toggle("on",fa);f.setAttribute("aria-pressed",String(fa));f.setAttribute("aria-label",fa?"Remover dos favoritos":"Adicionar aos favoritos");f.innerHTML='<span class="heart" aria-hidden="true">'+(fa?"♥":"♡")+'</span><span>Favorito</span>';return;
+ }
+ const b=card.querySelector("a[href*='/series/']");const s=b&&getSeries(b.getAttribute("href")||"");
+ if(s){const h=host(card);if(!h)return;h.style.position="relative";h.style.isolation="isolate";let f=h.querySelector(".nr-cover-v2.fav");if(!f){f=make("fav");h.appendChild(f);f.addEventListener("click",e=>{e.preventDefault();e.stopPropagation();const k="collection:"+s.id;favorite(k,!isFavorite(k));apply()})}const k="collection:"+s.id,fa=isFavorite(k);f.classList.toggle("on",fa);f.setAttribute("aria-pressed",String(fa));f.setAttribute("aria-label",fa?"Remover dos favoritos":"Adicionar aos favoritos");f.innerHTML='<span class="heart" aria-hidden="true">'+(fa?"♥":"♡")+'</span><span>Favorito</span>'}
+})};
+apply();
+new MutationObserver(()=>apply()).observe(document.getElementById("main")||document.body,{childList:true,subtree:true});
+})();
