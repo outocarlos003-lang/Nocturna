@@ -111,7 +111,15 @@ footer{border-top:1px solid var(--line);padding:2rem 0;color:var(--mute)}
 .home-constellation-map text{font-family:Georgia,"Times New Roman",serif;fill:#e0bfae}.home-constellation-map .node-label{font-size:15px}.home-constellation-map .center-label{font-size:20px;fill:#e9e1cf}
 .home-constellation-map .node{fill:#9c2d49;stroke:#e0bfae;stroke-width:2}.home-constellation-map .orbit{fill:none;stroke:#7a1f35;stroke-width:2}.home-constellation-map .link{stroke:#7a1f35;stroke-width:2;fill:none}
 @media(max-width:700px){.home-reading-row{align-items:flex-start;flex-direction:column}.home-constellation-map .node-label{font-size:12px}.home-constellation-map .center-label{font-size:18px}}
-</style></head>
+<style id="nocturna-continue-reading-v2-style">
+.home-reading .nr-continue-read-state{margin:0 0 1rem;color:#e9e1cf;font-family:Georgia,"Times New Roman",serif;font-size:1.05rem;line-height:1.55}
+.home-reading .nr-continue-read-state span{color:#b2aa98}
+.home-reading .nr-continue-read-state br+span{display:inline-block;margin-top:.15rem}
+.home-reading .nr-continue-collection{margin:0;padding:.9rem 1rem;border:1px solid #38333c;border-radius:8px;background:#121212}
+.home-reading .nr-continue-collection strong{font-family:Georgia,"Times New Roman",serif;font-size:1.15rem}
+.home-reading .home-reading-total{margin:1rem 0 1.25rem;color:#b2aa98}
+@media(max-width:700px){.home-reading .nr-continue-read-state{font-size:1rem}}
+</style></style></head>
 <body>
 <a class="skip" href="#main">Ir para o conteúdo</a>
 <header><div class="wrap bar">
@@ -360,5 +368,39 @@ addEventListener("hashchange",()=>setTimeout(apply,0));
 addEventListener("storage",apply);
 apply();
 })();
-</script></body>
+</script><script id="nocturna-continue-reading-v2">
+(()=>{"use strict";
+const RP="nocturna-reading-progress-v1";
+const CFG=Object.freeze({alternateCollections:true,preserveExistingProgress:true,skipCompletedCollections:true});
+const getProgress=()=>{try{return JSON.parse(localStorage.getItem(RP)||"{}")}catch{return{}}};
+const saveProgress=q=>{try{localStorage.setItem(RP,JSON.stringify(q))}catch{}};
+const chapters=s=>(s.blocks||[]).flatMap(b=>b.chapters||[]);
+const key=(s,c)=>"series:"+s.id+":chapter:"+c.id;
+const pct=(q,s,c)=>Math.round(q[key(s,c)]?.percent||0);
+const isRead=(q,s,c)=>pct(q,s,c)>=100;
+const stats=(q,s)=>{const a=chapters(s),n=a.filter(c=>isRead(q,s,c)).length;return{n,t:a.length,p:a.length?Math.round(n/a.length*100):0}};
+const url=(s,c)=>"/Nocturna/series/"+encodeURIComponent(s.slug||s.id)+"/"+encodeURIComponent(s.blocks?.[0]?.slug||s.blocks?.[0]?.id||s.slug||s.id)+"/"+encodeURIComponent(c.slug||c.id)+"/";
+const roman=n=>{const v=[[10,"X"],[9,"IX"],[5,"V"],[4,"IV"],[1,"I"]];let out="";for(const [x,r] of v){while(n>=x){out+=r;n-=x}}return out};
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const readList=(s,q)=>{const nums=chapters(s).map((c,i)=>isRead(q,s,c)?i+1:null).filter(Boolean);if(!nums.length)return"NONE";const groups=[];let a=nums[0],b=nums[0];for(let i=1;i<nums.length;i++){const n=nums[i];if(n===b+1){b=n}else{groups.push([a,b]);a=b=n}}groups.push([a,b]);return"Capítulos "+groups.map(([x,y])=>x===y?roman(x):roman(x)+"–"+roman(y)).join(", ")+"<br><span>✓ Lidos.</span>"};
+const collectionResume=(s,q)=>{const a=chapters(s),partial=a.filter(c=>!isRead(q,s,c)&&pct(q,s,c)>0).sort((x,y)=>(q[key(s,y)]?.updatedAt||0)-(q[key(s,x)]?.updatedAt||0));return partial[0]||a.find(c=>!isRead(q,s,c))||null};
+const completed=(s,q)=>{const a=chapters(s);return a.length>0&&a.every(c=>isRead(q,s,c))};
+const choose=()=>{const series=DATA.series||[],q=getProgress();if(!series.length)return null;
+ let latest=null,latestTime=-1;
+ for(const s of series)for(const c of chapters(s)){const p=q[key(s,c)];if(p&&p.updatedAt&&(p.updatedAt>latestTime)){latest={s,c};latestTime=p.updatedAt}}
+ if(latest&&!completed(latest.s,q))return latest;
+ if(latest&&completed(latest.s,q)&&CFG.alternateCollections){
+   const start=series.indexOf(latest.s),ordered=series.slice(start+1).concat(series.slice(0,start));
+   for(const s of ordered){if(CFG.skipCompletedCollections&&completed(s,q))continue;const c=CFG.preserveExistingProgress?collectionResume(s,q):chapters(s).find(x=>!isRead(q,s,x));if(c)return{s,c}}
+ }
+ for(const s of series){if(CFG.skipCompletedCollections&&completed(s,q))continue;const c=collectionResume(s,q);if(c)return{s,c}}
+ for(const s of series){const c=chapters(s)[0];if(c)return{s,c}}
+ return null};
+const render=()=>{if(!/^\/Nocturna\/?$/.test(location.pathname))return;const old=document.querySelector(".home-reading");old?.remove();const q=getProgress(),x=choose();if(!x)return;const z=stats(q,x.s),reads=readList(x.s,q),card=document.createElement("section");card.className="home-reading";card.id="nocturna-continue-reading-v2";card.innerHTML='<div class="home-reading-head"><p class="home-reading-label">CONTINUAR LEITURA</p><h2 class="home-reading-title">'+esc(x.s.title)+'</h2></div><div class="nr-continue-read-state">'+(reads==="NONE"?"Nenhum capítulo lido.":reads)+'</div><div class="nr-continue-collection"><strong>COLEÇÃO '+z.p+'% lida</strong></div><p class="home-reading-total">'+z.n+' de '+z.t+' capítulo'+(z.n===1?"":"s")+' integralmente lido'+(z.n===1?"":"s")+'</p><p class="home-reading-action"><a class="btn" href="'+url(x.s,x.c)+'">CONTINUAR LEITURA</a></p>';
+ const main=document.querySelector("#main"),hero=main?.querySelector(".hero");if(hero)hero.insertAdjacentElement("afterend",card);else main?.prepend(card);
+};
+render();addEventListener("storage",e=>{if(e.key===RP)render()});addEventListener("hashchange",()=>setTimeout(render,0));
+})();
+</script>
+</body>
 </html>
