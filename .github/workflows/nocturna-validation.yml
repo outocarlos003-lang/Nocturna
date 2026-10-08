@@ -30,3 +30,6 @@ jobs:
 
       - name: Validate repository structure
         run: node scripts/validate-system.mjs
+
+      - name: Validate asset loading
+        run: node scripts/validate-assets.mjs
