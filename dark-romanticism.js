@@ -78,15 +78,23 @@ addEventListener("hashchange",()=>setTimeout(refresh2,40));
 
 (()=>{'use strict';
 const RP='nocturna-reading-progress-v1',RR='nocturna-reading-read-v1',RA='nocturna-reading-activity-v1',ROOT='/Nocturna/';
+const CONTINUE_READING_CONFIG=Object.freeze({
+ alternateCollections:true,
+ preserveExistingProgress:true,
+ skipCompletedCollections:true,
+ order:'catalog'
+});
 const get=(k,d)=>{try{const v=JSON.parse(localStorage.getItem(k));return v??d}catch{return d}},put=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch{}};
 const reads=()=>{const v=get(RR,[]);return new Set(Array.isArray(v)?v:Object.keys(v||{}).filter(k=>v[k]))},prog=()=>get(RP,{});
 const roman=n=>{let s='';for(const x of [[10,'X'],[9,'IX'],[5,'V'],[4,'IV'],[1,'I']])while(n>=x[0])s+=x[1],n-=x[0];return s};
 const route=()=>{const raw=location.hash.slice(1)||location.pathname.replace(/^\/Nocturna(?=\/|$)/,'')||'/';return(raw.replace(/\/+$/,'')||'/')};
 const ctx=()=>{const m=route().match(/^\/series\/([^/]+)\/([^/]+)\/([^/]+)$/);if(!m)return;const d=decodeURIComponent,s=(DATA.series||[]).find(x=>x.slug===d(m[1])||x.id===d(m[1])),b=s?.blocks?.find(x=>x.slug===d(m[2])||x.id===d(m[2])),c=b?.chapters?.find(x=>x.slug===d(m[3])||x.id===d(m[3]));if(!s||!b||!c)return;const all=(s.blocks||[]).flatMap(z=>(z.chapters||[]).map(y=>({s,b:z,c:y}))),i=all.findIndex(x=>x.c.id===c.id);return{s,b,c,all,i,id:'series:'+s.id+':chapter:'+c.id,url:ROOT+'series/'+encodeURIComponent(s.slug)+'/'+encodeURIComponent(b.slug)+'/'+encodeURIComponent(c.slug)}};
 const pubCtx=()=>{const m=route().match(/^\/artigos\/([^/]+)$/);if(!m)return;const p=(DATA.pubs||[]).find(x=>x.id===decodeURIComponent(m[1]));return p?{p,id:'article:'+p.id,url:ROOT+'#/artigos/'+encodeURIComponent(p.id)+'/'}:null};
-const state=s=>{const a=(s.blocks||[]).flatMap(x=>x.chapters||[]),r=reads(),n=a.filter(c=>r.has('series:'+s.id+':chapter:'+c.id)).length;return{a,n,t:a.length,p:a.length?Math.round(n/a.length*100):0}};
-const collectionProgress=s=>{const chapters=(s.blocks||[]).flatMap(b=>b.chapters||[]),q=prog(),n=chapters.filter(c=>Math.round(q['series:'+s.id+':chapter:'+c.id]?.percent||0)>=100).length;return{t:chapters.length,n,p:chapters.length?Math.round(n/chapters.length*100):0}};
-const collectionIsRead=s=>{const chapters=(s.blocks||[]).flatMap(b=>b.chapters||[]);if(!chapters.length)return false;const q=prog();return chapters.every(c=>Math.round(q['series:'+s.id+':chapter:'+c.id]?.percent||0)>=100)};
+const chapterIsRead=(s,c,r=reads(),q=prog())=>r.has('series:'+s.id+':chapter:'+c.id)||Math.round(q['series:'+s.id+':chapter:'+c.id]?.percent||0)>=100;
+const collectionChapters=s=>(s.blocks||[]).flatMap(b=>b.chapters||[]);
+const state=s=>{const a=collectionChapters(s),r=reads(),q=prog(),n=a.filter(c=>chapterIsRead(s,c,r,q)).length;return{a,n,t:a.length,p:a.length?Math.round(n/a.length*100):0}};
+const collectionProgress=s=>{const chapters=collectionChapters(s),r=reads(),q=prog(),n=chapters.filter(c=>chapterIsRead(s,c,r,q)).length;return{t:chapters.length,n,p:chapters.length?Math.round(n/chapters.length*100):0}};
+const collectionIsRead=s=>{const chapters=collectionChapters(s);if(!chapters.length)return false;const r=reads(),q=prog();return chapters.every(c=>chapterIsRead(s,c,r,q))};
 const publicationIsRead=p=>Math.round(prog()['article:'+p.id]?.percent||0)>=100;
 const root=()=>document.querySelector('article.series-content')?.querySelector(':scope > .series-content')||document.querySelector('article.series-content');
 const pubRoot=()=>document.querySelector('.read .read-content');
@@ -104,7 +112,35 @@ const decorateStatus=()=>{};
 const restorePub=async()=>{const p=pubCtx()?.p;if(!p)return;await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));const q=pubRoot(),o=prog()['article:'+p.id]||{};if(q&&o.percent>0&&o.percent<100){const r=q.getBoundingClientRect();scrollTo(0,Math.max(0,r.top+scrollY+r.height*(+o.percent||0)/100-innerHeight*.45))}};
 const chapterUI=x=>{style();const a=document.querySelector('article.series-content');if(!a)return;const z=state(x.s),o=prog()[x.id]||{},r=reads().has(x.id),cp=r?100:Math.round(o.percent||0),lp=cp>=100?'100%':cp+'%',gc=z.p>=100?'100%':z.p+'%',sig=[cp,z.p,z.n,r].join('|');let w=a.querySelector('.nr-read-wrap');if(!w){w=document.createElement('div');w.className='nr-read-wrap';a.querySelector('h1')?.insertAdjacentElement('afterend',w)}if(w.dataset.sig===sig)return;w.dataset.sig=sig;w.innerHTML='<section class="nr-read-summary"><div><b>'+lp+'</b><span>Capítulo</span></div><div><b>'+gc+'</b><span>Coleção</span></div><div><b>'+z.n+' de '+z.t+'</b><span>capítulos concluídos</span></div></section><button class="btn alt nr-read-toggle" data-rid="'+x.id+'">'+(r?'Desmarcar como lido':'Marcar como lido')+'</button>};
 const allChapters=()=> (DATA.series||[]).flatMap(s=>(s.blocks||[]).flatMap(b=>(b.chapters||[]).map(c=>({s,b,c,id:'series:'+s.id+':chapter:'+c.id,url:ROOT+'series/'+encodeURIComponent(s.slug||s.id)+'/'+encodeURIComponent(b.slug||b.id)+'/'+encodeURIComponent(c.slug||c.id)}))));
-const chooseResume=()=>{const all=allChapters(),r=reads(),q=prog(),a=get(RA,null),active=a&&all.find(y=>y.s.id===a.collectionId&&y.c.id===a.chapterId&&!r.has(y.id));if(active)return active;const pending=all.filter(y=>!r.has(y.id)&&q[y.id]?.percent>0).sort((u,v)=>(q[v.id]?.updatedAt||0)-(q[u.id]?.updatedAt||0));if(pending[0])return pending[0];return all.find(y=>!r.has(y.id))||null};
+const collectionHasProgress=(s,r=reads(),q=prog())=>collectionChapters(s).some(c=>{const id='series:'+s.id+':chapter:'+c.id;return r.has(id)||Math.round(q[id]?.percent||0)>0});
+const collectionResume=(s,r=reads(),q=prog())=>{
+ const pending=allChapters().filter(x=>x.s.id===s.id&&!chapterIsRead(s,x.c,r,q));
+ if(!pending.length)return null;
+ const progressed=pending.filter(x=>Math.round(q[x.id]?.percent||0)>0).sort((u,v)=>(q[v.id]?.updatedAt||0)-(q[u.id]?.updatedAt||0));
+ return progressed[0]||pending[0];
+};
+const chooseResume=()=>{
+ const all=allChapters(),r=reads(),q=prog(),a=get(RA,null);
+ if(!all.length)return null;
+ const active=a&&all.find(y=>y.s.id===a.collectionId&&y.c.id===a.chapterId);
+ if(active&&!chapterIsRead(active.s,active.c,r,q))return active;
+
+ const activeIndex=active?DATA.series.findIndex(s=>s.id===active.s.id):-1;
+ if(CONTINUE_READING_CONFIG.alternateCollections&&activeIndex>=0){
+   const ordered=DATA.series.slice(activeIndex+1).concat(DATA.series.slice(0,activeIndex+1));
+   if(CONTINUE_READING_CONFIG.preserveExistingProgress){
+     const withProgress=ordered.map(s=>collectionResume(s,r,q)).filter(Boolean).find(x=>collectionHasProgress(x.s,r,q));
+     if(withProgress)return withProgress;
+   }
+   const next=ordered.map(s=>collectionResume(s,r,q)).filter(Boolean)[0];
+   if(next)return next;
+ }else if(CONTINUE_READING_CONFIG.preserveExistingProgress){
+   const pending=all.filter(x=>!chapterIsRead(x.s,x.c,r,q)&&Math.round(q[x.id]?.percent||0)>0).sort((u,v)=>(q[v.id]?.updatedAt||0)-(q[u.id]?.updatedAt||0));
+   if(pending[0])return pending[0];
+ }
+
+ return all.find(x=>!chapterIsRead(x.s,x.c,r,q))||null;
+};
 const home=()=>{const p=location.pathname.replace(/\/+$/,'')||'/';if(p!=='/'&&p!=='/Nocturna')return;style();const all=allChapters(),r=reads(),q=prog(),x=chooseResume();if(!x){const review=all[0];if(!review)return;const z=state(review.s),readList=z.a.map((c,i)=>r.has('series:'+review.s.id+':chapter:'+c.id)?'<span>CAPÍTULO '+roman(i+1)</span>':'').join(''),old=document.querySelector('.nr-continue');old?.remove();const card=document.createElement('section');card.className='nr-continue';card.innerHTML='<p class="eyebrow">CONTINUAR LEITURA</p><div class="nr-continue-track"><article class="nr-continue-item"><h2>'+review.s.title+'</h2><p class="nr-read-list-title">CAPÍTULOS CONCLUÍDOS</p><div class="nr-read-list">'+readList+'</div><p class="nr-continue-collection">COLEÇÃO · 100%</p><p class="nr-continue-count">'+z.n+' de '+z.t+' capítulos concluídos</p><a class="btn" href="'+review.url+'">REVISAR COLEÇÃO</a></article></div>';const main=document.getElementById('main'),hero=document.querySelector('.hero');(hero?.parentNode?hero.parentNode.insertBefore(card,hero.nextSibling):main?.prepend(card));return}const z=state(x.s),o=q[x.id]||{},i=z.a.findIndex(c=>c.id===x.c.id),cp=r.has(x.id)?100:Math.round(o.percent||0),lp=cp>=100?'100%':cp+'%',gc=z.p>=100?'100%':z.p+'%',readList=z.a.map((c,j)=>r.has('series:'+x.s.id+':chapter:'+c.id)?'<span>CAPÍTULO '+roman(j+1)</span>':'').join(''),sig=[x.id,z.p,z.n,cp,r.size].join('|'),old=document.querySelector('.nr-continue');if(old?.dataset.sig===sig)return;old?.remove();const card=document.createElement('section');card.className='nr-continue';card.dataset.sig=sig;card.innerHTML='<p class="eyebrow">CONTINUAR LEITURA</p><div class="nr-continue-track"><article class="nr-continue-item"><h2>'+x.s.title+'</h2>'+(readList?'<p class="nr-read-list-title">CAPÍTULOS CONCLUÍDOS</p><div class="nr-read-list">'+readList+'</div>':'')+'<p class="nr-continue-chapter">CAPÍTULO '+roman(i+1)+' · '+lp+'</p><p class="nr-continue-collection">COLEÇÃO · '+gc+'</p><p class="nr-continue-count">'+z.n+' de '+z.t+' capítulos concluídos</p><a class="btn" href="'+x.url+'">CONTINUAR LEITURA</a></article></div>';const main=document.getElementById('main'),hero=document.querySelector('.hero');(hero?.parentNode?hero.parentNode.insertBefore(card,hero.nextSibling):main?.prepend(card))};
 const refresh=()=>{const x=ctx();if(x){chapterUI(x)}else if(!location.hash)home();decorateStatus()};let frame=0,lastSave=0;const onReadingScroll=()=>{if(frame)return;frame=requestAnimationFrame(()=>{frame=0;const now=Date.now();if(now-lastSave<250)return;lastSave=now;save()})};const onReadingPageHide=()=>save();const onReadingVisibility=()=>document.visibilityState==='hidden'&&save();addEventListener('scroll',onReadingScroll,{passive:true});addEventListener('pagehide',onReadingPageHide);addEventListener('visibilitychange',onReadingVisibility);addEventListener('hashchange',()=>setTimeout(()=>{refresh();const x=ctx();if(x){put(RA,{collectionId:x.s.id,chapterId:x.c.id,url:x.url,updatedAt:Date.now()});restore()}else if(pubCtx())restorePub()},50));document.addEventListener('click',e=>{const b=e.target.closest('.nr-read-toggle');if(!b)return;const r=reads();r.has(b.dataset.rid)?r.delete(b.dataset.rid):r.add(b.dataset.rid);put(RR,[...r]);refresh();home()});new MutationObserver(refresh).observe(document.getElementById('main')||document.body,{childList:true,subtree:true});style();refresh();const initial=ctx();if(initial){put(RA,{collectionId:initial.s.id,chapterId:initial.c.id,url:initial.url,updatedAt:Date.now()});restore()}else if(pubCtx())restorePub();
 })();
