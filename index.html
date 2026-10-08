@@ -200,20 +200,6 @@ function pager(l,pg,base){const n=Math.max(1,Math.ceil(l.length/PS)),p=Math.min(
  return{items:l.slice((p-1)*PS,p*PS),nav:n>1?`<nav class="pager" aria-label="Paginação">${p>1?`<a href="${u(p-1)}">← Anterior</a>`:""}<span>Página ${p} de ${n}</span>${p<n?`<a href="${u(p+1)}">Próxima →</a>`:""}</nav>`:""}}
 const P={
  home:()=>({t:"Início",d:"Nocturna: publicação digital de leitura em metafísica, teologia, ficção, psicologia, filosofia e outras áreas de investigação.",h:`<section class="hero"><h1 tabindex="-1">Nocturna</h1><p class="lead">Uma publicação digital para ler com calma e descobrir por categorias.</p><p class="archive-stat" aria-label="Publicações e coleções"><strong>${DATA.pubs.length}</strong><span>publicações e ${DATA.series.length} ${DATA.series.length===1?"coleção":"coleções"}</span></p><p>A obra é a unidade editorial; as categorias a organizam e a busca permite encontrá-la. Feita para leitores que preferem a interface em segundo plano.</p><p class="archive-actions"></p></section>
-<section class="home-reading" aria-labelledby="continuar-leitura">
-  <div class="home-reading-head">
-    <p class="home-reading-label">CONTINUAR LEITURA</p>
-    <h2 id="continuar-leitura" class="home-reading-title">O Arquivo da Última Luz</h2>
-  </div>
-  <p class="home-reading-label">CAPÍTULOS LIDOS</p><div class="home-reading-grid">
-    <div class="home-reading-row"><strong>CAPÍTULO I · Lido</strong></div>
-    <div class="home-reading-row"><strong>CAPÍTULO II · 0% LIDO</strong></div>
-  </div>
-  <div class="home-reading-collection"><strong>COLEÇÃO · 25% LIDO</strong></div>
-  <p class="home-reading-total">1 de 4 capítulos integralmente lidos</p>
-  <p class="home-reading-action"><a class="btn" href="/Nocturna/series/o-arquivo-da-ultima-luz/o-arquivo-da-ultima-luz/a-luz-sobre-o-papel/">CONTINUAR LEITURA</a></p>
-</section>
-
 ${DATA.pubs.filter(p=>p.featured)[0]?`<section class="featured"><p class="eyebrow">Em destaque</p><h2>${esc(shortTitle(DATA.pubs.filter(p=>p.featured)[0].title))}</h2><p>${esc(DATA.pubs.filter(p=>p.featured)[0].summary||"")}</p></section><section class="home-constellation" aria-labelledby="constelacao-editorial">
   <div class="home-constellation-head">
     <p class="home-constellation-kicker">✦ CARTOGRAFIA EDITORIAL</p>
@@ -279,6 +265,7 @@ function render(){
  else if(s[0]==="arquivo"&&s.length===1)r=P.arquivo();
  else if(LEAF.includes(s[0])&&s.length===1)r=P[s[0]](q);
  else r=P.nf();
+ const isHome=!s.length;document.querySelectorAll(".home-reading").forEach(el=>{if(!isHome)el.remove()});
  const full=r.t==="Início"?"Nocturna":r.t+" — Nocturna";
  document.title=full;meta("name","description",r.d);meta("property","og:title",full);meta("property","og:description",r.d);meta("name","robots",r.nf?"noindex":"index,follow");
  let c=$("link[rel=canonical]");if(/^https?:$/.test(location.protocol)){if(!c){c=document.createElement("link");c.rel="canonical";document.head.append(c)}c.href=location.origin+location.pathname}else if(c)c.remove();
