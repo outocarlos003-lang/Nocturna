@@ -82,7 +82,6 @@ const CONTINUE_READING_CONFIG=Object.freeze({
  alternateCollections:true,
  preserveExistingProgress:true,
  skipCompletedCollections:true,
- order:'catalog'
 });
 const get=(k,d)=>{try{const v=JSON.parse(localStorage.getItem(k));return v??d}catch{return d}},put=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch{}};
 const reads=()=>{const v=get(RR,[]);return new Set(Array.isArray(v)?v:Object.keys(v||{}).filter(k=>v[k]))},prog=()=>get(RP,{});
@@ -115,7 +114,10 @@ const allChapters=()=> (DATA.series||[]).flatMap(s=>(s.blocks||[]).flatMap(b=>(b
 const collectionHasProgress=(s,r=reads(),q=prog())=>collectionChapters(s).some(c=>{const id='series:'+s.id+':chapter:'+c.id;return r.has(id)||Math.round(q[id]?.percent||0)>0});
 const collectionResume=(s,r=reads(),q=prog())=>{
  const pending=allChapters().filter(x=>x.s.id===s.id&&!chapterIsRead(s,x.c,r,q));
- if(!pending.length)return null;
+ if(!pending.length){
+   if(CONTINUE_READING_CONFIG.skipCompletedCollections)return null;
+   return allChapters().find(x=>x.s.id===s.id)||null;
+ }
  const progressed=pending.filter(x=>Math.round(q[x.id]?.percent||0)>0).sort((u,v)=>(q[v.id]?.updatedAt||0)-(q[u.id]?.updatedAt||0));
  return progressed[0]||pending[0];
 };
