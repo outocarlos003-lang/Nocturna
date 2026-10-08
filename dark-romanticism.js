@@ -178,13 +178,15 @@ const setFavoriteButton=(b,active)=>{
   b.classList.toggle("is-favorite",active);
   b.setAttribute("aria-pressed",String(active));
   b.setAttribute("aria-label",active?"Remover dos favoritos":"Adicionar aos favoritos");
-  b.innerHTML='<span class="nr-cover-heart" aria-hidden="true">'+(active?"♥":"♡")+'</span><span class="nr-cover-label">Favorito</span>';
+  const html='<span class="nr-cover-heart" aria-hidden="true">'+(active?"♥":"♡")+'</span><span class="nr-cover-label">Favorito</span>';
+  if(b.innerHTML!==html)b.innerHTML=html;
 };
 const setReadButton=(b,active)=>{
   b.classList.toggle("is-read",active);
   b.setAttribute("aria-pressed",String(active));
   b.setAttribute("aria-label",active?"Marcar como não lido":"Marcar como lido");
-  b.textContent=active?"Lido":"Marcar como lido";
+  const label=active?"Lido":"Marcar como lido";
+  if(b.textContent!==label)b.textContent=label;
 };
 const installStyles=()=>{
   if(document.getElementById("nr-cover-flag-style"))return;
