@@ -9,7 +9,7 @@ const fixture=path.join(dir,"issue-1.json");
 const base={
   schema:"nocturna.comment-tree/v1",
   repository:"outocarlos003-lang/Nocturna",
-  issue:{number:1,url:"https://github.com/outocarlos003-lang/Nocturna/issues/1",rootNodeId:"1",rootCommentId:100,rootAuthor:"Johan Liebert"},
+  issue:{number:32,url:"https://github.com/outocarlos003-lang/Nocturna/issues/32",rootNodeId:"1",rootCommentId:100,rootAuthor:"Johan Liebert"},
   identity:{nextNodeId:3},
   nodes:[
     {nodeId:"1",sourceId:"root",commentId:100,commentUrl:"https://github.com/x#issuecomment-100",content:"root",author:{displayName:"Johan Liebert"},parentNodeId:null,depth:0,rootNodeId:"1",rootCommentId:100,branchNodeId:null,order:1},
