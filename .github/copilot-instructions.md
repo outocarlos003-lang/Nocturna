@@ -33,3 +33,8 @@ Ao receber um pedido de inserção editorial, execute a tarefa de ponta a ponta 
 
 ## Regra de comunicação
 Evite perguntas de esclarecimento desnecessárias. Só interrompa para perguntar quando houver ambiguidade real que não possa ser resolvida pela estrutura existente ou quando faltar o próprio conteúdo que o usuário espera que seja publicado. Nunca invente capítulos ou conteúdo ausente. Se cometer um erro de leitura, reconheça-o claramente, corrija a causa no processo e não transfira ao solicitante a responsabilidade por um texto que estava presente.
+
+
+## Protocolo para reduzir ruídos de comunicação
+
+Consulte `REQUEST_PROTOCOL.md` para prever ambiguidades comuns, preservar o contexto entre mensagens e separar alteração, validação e publicação. Trate a mensagem atual como fonte autoritativa do conteúdo; mantenha coleção/bloco ativos durante continuações; não crie duplicatas; pergunte apenas quando houver ambiguidade real que o repositório não resolva. Ao concluir, relate alterações, verificações realizadas e pendências sem equiparar commit a deploy.
