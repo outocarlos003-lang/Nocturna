@@ -91,6 +91,7 @@ const checkNested = (entries, label) => {
     check(entry && nonempty(entry.summary), `${label} ${index + 1}: resumo ausente.`);
     check(entry && Array.isArray(entry.cats) && entry.cats.length > 0, `${label} ${index + 1}: categorias ausentes.`);
     for (const cat of entry?.cats || []) check(categories.has(cat), `${label} ${index + 1}: categoria inexistente ${cat}.`);
+    if (label === "Capítulo") check(nonempty(entry?.content), `Capítulo ${index + 1}: conteúdo integral ausente.`);
     if (label === "Bloco") {
       check(Array.isArray(entry?.chapters) && entry.chapters.length > 0, `Bloco ${index + 1}: capítulos ausentes.`);
       for (const [ci, chapter] of (entry?.chapters || []).entries()) {
