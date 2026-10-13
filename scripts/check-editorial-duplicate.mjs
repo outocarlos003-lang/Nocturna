@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import { readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
+import vm from "node:vm";
 
 export const DUPLICATE_THRESHOLD = 0.90;
 
@@ -87,7 +88,7 @@ function readData() {
   const html = readFileSync("index.html", "utf8");
   const match = html.match(/const DATA=(\{[\s\S]*?\});\s*\/\*END DATA\*\//);
   if (!match) throw new Error("DATA editorial não encontrada em index.html.");
-  return JSON.parse(match[1]);
+  return vm.runInNewContext("(" + match[1] + ")");
 }
 
 function collectCorpus(DATA) {
