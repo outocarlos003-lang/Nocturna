@@ -12,7 +12,7 @@ permissions:
 
 jobs:
   publish:
-    if: !contains(github.event.head_commit.message, '[skip nocturna-publish]')
+    if: ${{ !contains(github.event.head_commit.message, '[skip nocturna-publish]') }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -33,7 +33,6 @@ jobs:
           if (!m) throw new Error('DATA editorial não encontrada em index.html');
           const DATA = vm.runInNewContext('(' + m[1] + ')');
           DATA.pubs = Array.isArray(DATA.pubs) ? DATA.pubs : [];
-          const esc = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
           const parseFrontMatter = text => {
             if (!text.startsWith('---\n')) throw new Error('Front matter ausente');
             const end = text.indexOf('\n---\n', 4);
@@ -44,8 +43,10 @@ jobs:
               if (i < 0) continue;
               const k = line.slice(0,i).trim();
               const v = line.slice(i+1).trim();
-              if (v.startsWith('[') && v.endsWith(']')) fm[k] = JSON.parse(v);
-              else if (v === 'true' || v === 'false') fm[k] = v === 'true';
+              if (v.startsWith('[') && v.endsWith(']')) {
+                try { fm[k] = JSON.parse(v); }
+                catch { fm[k] = v.slice(1,-1).split(',').map(x=>x.trim()).filter(Boolean); }
+              } else if (v === 'true' || v === 'false') fm[k] = v === 'true';
               else fm[k] = v;
             }
             return {fm, body:text.slice(end+5)};
@@ -56,17 +57,7 @@ jobs:
             const {fm,body} = parseFrontMatter(fs.readFileSync(path.join(dir,file),'utf8'));
             if (!fm.id || !fm.title || !fm.date || !fm.summary || !fm.cats || !fm.tags || !fm.image || !fm.imageAlt || !fm.imageCaption) throw new Error('Campos editoriais obrigatórios ausentes em '+file);
             const content = body.replace(/^\n+|\n+$/g,'');
-            const pub = {
-              id: fm.id,
-              title: fm.title,
-              date: fm.date,
-              featured: false,
-              summary: fm.summary,
-              cats: fm.cats,
-              tags: fm.tags,
-              image: {src: fm.image, alt: fm.imageAlt, caption: fm.imageCaption},
-              content
-            };
+            const pub = {id:fm.id,title:fm.title,date:fm.date,featured:false,summary:fm.summary,cats:fm.cats,tags:fm.tags,image:{src:fm.image,alt:fm.imageAlt,caption:fm.imageCaption},content};
             const i = DATA.pubs.findIndex(p=>p.id===pub.id);
             if (i >= 0) DATA.pubs[i] = pub; else DATA.pubs.push(pub);
           }
