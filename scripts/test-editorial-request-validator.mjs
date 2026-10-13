@@ -61,8 +61,39 @@ try {
     throw new Error("A solicitação inválida falhou por um motivo inesperado.");
   }
 
+  const proposalPath = join(directory, "proposal.md");
+  const generator = spawnSync(process.execPath, [
+    "scripts/prepare-editorial-proposal.mjs",
+    join(directory, "valid.json"),
+    proposalPath
+  ], { encoding: "utf8" });
+  if (generator.status !== 0) {
+    console.error(generator.stdout);
+    console.error(generator.stderr);
+    throw new Error("O gerador não criou uma proposta para solicitação válida.");
+  }
+  const proposal = readFileSync(proposalPath, "utf8");
+  if (!proposal.includes("Proposta editorial para revisão") || !proposal.includes("Não foi aplicado ao site")) {
+    throw new Error("A proposta gerada não contém os avisos de revisão esperados.");
+  }
+  const overwrite = spawnSync(process.execPath, [
+    "scripts/prepare-editorial-proposal.mjs",
+    join(directory, "valid.json"),
+    proposalPath
+  ], { encoding: "utf8" });
+  if (overwrite.status === 0) throw new Error("O gerador sobrescreveu uma proposta existente.");
+
+  const invalidProposal = spawnSync(process.execPath, [
+    "scripts/prepare-editorial-proposal.mjs",
+    join(directory, "invalid.json"),
+    join(directory, "invalid-proposal.md")
+  ], { encoding: "utf8" });
+  if (invalidProposal.status === 0) throw new Error("O gerador criou uma proposta para solicitação inválida.");
+
   console.log("Teste aprovado: solicitação válida aceita.");
   console.log("Teste aprovado: solicitação inválida rejeitada.");
+  console.log("Teste aprovado: proposta de revisão gerada sem sobrescrever arquivos.");
+  console.log("Teste aprovado: gerador bloqueia solicitações inválidas.");
 } finally {
   rmSync(directory, { recursive: true, force: true });
 }
