@@ -2,6 +2,14 @@
 
 Ao receber um pedido de inserção editorial, execute a tarefa de ponta a ponta na mesma solicitação. Não peça confirmação sobre decisões que possam ser inferidas com segurança do modelo existente.
 
+## Regra prioritária: escopo explícito da coleção
+
+1. Se o solicitante especificar o título de uma coleção no pedido, esse título determina o destino do capítulo ou material solicitado, mesmo que exista capítulo com o mesmo número ou título em outra coleção. A existência de um Capítulo III em outra série não prova que o Capítulo III atual pertença a ela.
+2. Aplique a resolução de destino nesta ordem: (a) título de coleção explicitamente indicado no pedido atual; (b) título de coleção explicitamente estabelecido anteriormente e ainda vigente na sequência editorial em curso; (c) vínculo inferido por bloco, tema, referências e capítulos vizinhos; (d) esclarecimento apenas se ainda houver mais de um destino plausível.
+3. Quando o solicitante apresentar um título de coleção e, em seguida, fornecer um ou mais capítulos, associe-os à coleção indicada. Preserve esse contexto para pedidos subsequentes que claramente continuem a mesma sequência, até que outro título de coleção seja indicado ou o contexto seja explicitamente encerrado.
+4. Antes de recusar ou redirecionar um capítulo por duplicação, procure o destino explicitamente nomeado. Compare duplicações dentro da coleção-alvo separadamente de capítulos homônimos ou numerados em outras coleções. Nunca deixe um conflito histórico global sobrepor-se à atribuição explícita do solicitante.
+5. Se a coleção explicitamente nomeada já existir, atualize essa coleção e o bloco correto; se não existir, crie a coleção conforme o modelo editorial. Não crie outra coleção só porque o número do capítulo já existe em uma série diferente. Preserve todos os registros preexistentes.
+
 ## Regra crítica: o pedido atual é a fonte do conteúdo
 
 1. Leia a mensagem atual do solicitante integralmente antes de concluir que algum texto, capítulo, título ou metadado está ausente. Nunca afirme que o usuário não forneceu um conteúdo sem conferir toda a mensagem atual.
