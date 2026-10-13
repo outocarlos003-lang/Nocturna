@@ -62,7 +62,14 @@ function collectCandidate(item) {
     if (!node || typeof node !== "object") return;
     const body = node.content ?? node.sourceText;
     if (typeof body === "string" && body.trim()) units.push({ label, text: body });
+    for (const [i, chapter] of (node.chapters || []).entries()) {
+      visit(chapter, `capítulo proposto ${i + 1}: ${chapter.title || chapter.id || "sem título"}`);
+    }
     for (const [i, block] of (node.blocks || []).entries()) {
+      const blockBody = block.content ?? block.sourceText;
+      if (typeof blockBody === "string" && blockBody.trim()) {
+        units.push({ label: `bloco proposto ${i + 1}: ${block.title || block.id || "sem título"}`, text: blockBody });
+      }
       for (const [j, chapter] of (block.chapters || []).entries()) {
         visit(chapter, `capítulo proposto ${i + 1}.${j + 1}: ${chapter.title || chapter.id || "sem título"}`);
       }
