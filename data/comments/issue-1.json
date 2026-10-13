@@ -3,13 +3,13 @@
   "version": 1,
   "repository": "outocarlos003-lang/Nocturna",
   "issue": {
-    "number": 1,
-    "title": "Nocturna — conversa canônica",
-    "url": "https://github.com/outocarlos003-lang/Nocturna/issues/1",
+    "number": 32,
+    "title": "Nocturna — conversa canônica (raiz restaurada)",
+    "url": "https://github.com/outocarlos003-lang/Nocturna/issues/32",
     "authority": "github",
     "rootNodeId": "2",
-    "rootCommentId": 6015397380,
-    "rootCommentUrl": "https://github.com/outocarlos003-lang/Nocturna/issues/1#issuecomment-6015397380",
+    "rootCommentId": 6155363234,
+    "rootCommentUrl": "https://github.com/outocarlos003-lang/Nocturna/issues/32#issuecomment-6155363234",
     "rootAuthor": "Johan Liebert"
   },
   "identity": {
@@ -35,7 +35,7 @@
     {
       "nodeId": "1",
       "sourceId": "nocturna-site-comment-1",
-      "issueNumber": 1,
+      "issueNumber": 32,
       "threadKey": "1",
       "parentNodeId": "2",
       "parentThreadKey": "2",
@@ -62,15 +62,15 @@
     {
       "nodeId": "2",
       "sourceId": "nocturna-site-comment-2",
-      "issueNumber": 1,
+      "issueNumber": 32,
       "threadKey": "2",
       "parentNodeId": null,
       "parentThreadKey": null,
       "depth": 0,
       "parentCommentId": null,
       "parentAuthor": null,
-      "commentId": 6015397380,
-      "commentUrl": "https://github.com/outocarlos003-lang/Nocturna/issues/1#issuecomment-6015397380",
+      "commentId": 6155363234,
+      "commentUrl": "https://github.com/outocarlos003-lang/Nocturna/issues/32#issuecomment-6155363234",
       "author": {
         "displayName": "Johan Liebert",
         "role": "Comentário inicial"
@@ -78,7 +78,7 @@
       "content": "# Johan Liebert — comentário inicial\n\n> “É curioso. Um texto pode revelar muito sobre quem o escreveu, mesmo quando o autor acredita estar apenas descrevendo o mundo. Às vezes, aquilo que chamamos de verdade é somente a forma mais elegante que encontramos para esconder aquilo que somos.”\n\n<!--\nEste comentário é o **nó raiz real** da árvore canônica. Todas as respostas canônicas — de personagens ou de participantes humanos que optarem pelo fluxo canônico — devem apontar para este comentário ou para um descendente verificável.\n\nA relação pai → filho será preservada pelo sistema, junto com autor, identidade, profundidade, ordem e permalink.\n-->",
       "origin": {
         "kind": "github-issue-comment",
-        "location": "https://github.com/outocarlos003-lang/Nocturna/issues/1#issuecomment-6015397380",
+        "location": "https://github.com/outocarlos003-lang/Nocturna/issues/32#issuecomment-6155363234",
         "migrated": false,
         "normalized": true,
         "historicalIssueBody": "# Johan Liebert — comentário inicial\n\n> “É curioso. Um texto pode revelar muito sobre quem o escreveu, mesmo quando o autor acredita estar apenas descrevendo o mundo. Às vezes, aquilo que chamamos de verdade é somente a forma mais elegante que encontramos para esconder aquilo que somos.”\n\n<!--\nEste comentário é o **nó raiz real** da árvore canônica. Todas as respostas canônicas — de personagens ou de participantes humanos que optarem pelo fluxo canônico — devem apontar para este comentário ou para um descendente verificável.\n\nA relação pai → filho será preservada pelo sistema, junto com autor, identidade, profundidade, ordem e permalink.\n-->",
@@ -91,7 +91,7 @@
     {
       "nodeId": "3",
       "sourceId": "nocturna-site-comment-3",
-      "issueNumber": 1,
+      "issueNumber": 32,
       "threadKey": "3",
       "parentNodeId": "2",
       "parentThreadKey": "2",
@@ -118,7 +118,7 @@
     {
       "nodeId": "4",
       "sourceId": "nocturna-site-comment-4",
-      "issueNumber": 1,
+      "issueNumber": 32,
       "threadKey": "4",
       "parentNodeId": "3",
       "parentThreadKey": "3",
@@ -145,7 +145,7 @@
     {
       "nodeId": "5",
       "sourceId": "nocturna-site-comment-5",
-      "issueNumber": 1,
+      "issueNumber": 32,
       "threadKey": "5",
       "parentNodeId": "4",
       "parentThreadKey": "4",
@@ -172,7 +172,7 @@
     {
       "nodeId": "6",
       "sourceId": "nocturna-site-comment-6",
-      "issueNumber": 1,
+      "issueNumber": 32,
       "threadKey": "6",
       "parentNodeId": "5",
       "parentThreadKey": "5",
@@ -199,7 +199,7 @@
     {
       "nodeId": "7",
       "sourceId": "nocturna-site-comment-7",
-      "issueNumber": 1,
+      "issueNumber": 32,
       "threadKey": "7",
       "parentNodeId": "6",
       "parentThreadKey": "6",
@@ -226,7 +226,7 @@
     {
       "nodeId": "8",
       "sourceId": "nocturna-site-comment-8",
-      "issueNumber": 1,
+      "issueNumber": 32,
       "threadKey": "8",
       "parentNodeId": "7",
       "parentThreadKey": "7",
@@ -253,7 +253,7 @@
     {
       "nodeId": "9",
       "sourceId": "nocturna-site-comment-9",
-      "issueNumber": 1,
+      "issueNumber": 32,
       "threadKey": "9",
       "parentNodeId": "8",
       "parentThreadKey": "8",
@@ -280,7 +280,7 @@
     {
       "nodeId": "10",
       "sourceId": "nocturna-site-comment-10",
-      "issueNumber": 1,
+      "issueNumber": 32,
       "threadKey": "10",
       "parentNodeId": "9",
       "parentThreadKey": "9",
@@ -307,7 +307,7 @@
     {
       "nodeId": "11",
       "sourceId": "nocturna-site-comment-11",
-      "issueNumber": 1,
+      "issueNumber": 32,
       "threadKey": "11",
       "parentNodeId": "10",
       "parentThreadKey": "10",
@@ -334,7 +334,7 @@
     {
       "nodeId": "12",
       "sourceId": "nocturna-site-comment-12",
-      "issueNumber": 1,
+      "issueNumber": 32,
       "threadKey": "12",
       "parentNodeId": "11",
       "parentThreadKey": "11",
@@ -361,7 +361,7 @@
     {
       "nodeId": "13",
       "sourceId": "nocturna-site-comment-13",
-      "issueNumber": 1,
+      "issueNumber": 32,
       "threadKey": "13",
       "parentNodeId": "12",
       "parentThreadKey": "12",
@@ -388,7 +388,7 @@
     {
       "nodeId": "14",
       "sourceId": "nocturna-site-comment-14",
-      "issueNumber": 1,
+      "issueNumber": 32,
       "threadKey": "14",
       "parentNodeId": "13",
       "parentThreadKey": "13",
@@ -415,7 +415,7 @@
     {
       "nodeId": "15",
       "sourceId": "nocturna-site-comment-15",
-      "issueNumber": 1,
+      "issueNumber": 32,
       "threadKey": "15",
       "parentNodeId": "14",
       "parentThreadKey": "14",
@@ -442,7 +442,7 @@
     {
       "nodeId": "16",
       "sourceId": "nocturna-site-comment-16",
-      "issueNumber": 1,
+      "issueNumber": 32,
       "threadKey": "16",
       "parentNodeId": "15",
       "parentThreadKey": "15",
@@ -469,7 +469,7 @@
     {
       "nodeId": "17",
       "sourceId": "nocturna-site-comment-17",
-      "issueNumber": 1,
+      "issueNumber": 32,
       "threadKey": "17",
       "parentNodeId": "16",
       "parentThreadKey": "16",
@@ -496,7 +496,7 @@
     {
       "nodeId": "18",
       "sourceId": "nocturna-site-comment-18",
-      "issueNumber": 1,
+      "issueNumber": 32,
       "threadKey": "18",
       "parentNodeId": "17",
       "parentThreadKey": "17",
@@ -523,7 +523,7 @@
     {
       "nodeId": "19",
       "sourceId": "nocturna-site-comment-19",
-      "issueNumber": 1,
+      "issueNumber": 32,
       "threadKey": "19",
       "parentNodeId": "18",
       "parentThreadKey": "18",
@@ -550,7 +550,7 @@
     {
       "nodeId": "20",
       "sourceId": "nocturna-site-comment-20",
-      "issueNumber": 1,
+      "issueNumber": 32,
       "threadKey": "20",
       "parentNodeId": "19",
       "parentThreadKey": "19",
@@ -577,7 +577,7 @@
     {
       "nodeId": "21",
       "sourceId": "nocturna-site-comment-21",
-      "issueNumber": 1,
+      "issueNumber": 32,
       "threadKey": "21",
       "parentNodeId": "20",
       "parentThreadKey": "20",
@@ -604,7 +604,7 @@
     {
       "nodeId": "22",
       "sourceId": "nocturna-site-comment-22",
-      "issueNumber": 1,
+      "issueNumber": 32,
       "threadKey": "22",
       "parentNodeId": "2",
       "parentThreadKey": "2",
@@ -631,7 +631,7 @@
     {
       "nodeId": "23",
       "sourceId": "nocturna-site-comment-23",
-      "issueNumber": 1,
+      "issueNumber": 32,
       "threadKey": "23",
       "parentNodeId": "22",
       "parentThreadKey": "22",
