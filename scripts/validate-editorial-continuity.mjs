@@ -102,6 +102,23 @@ for (const group of byTitle.values()) {
   }
 }
 
+// Coleções novas começam pelo capítulo introdutório I. Um bloco que começa
+// depois de I também é suspeito: continuações não devem ser deslocadas para um
+// novo contêiner só para acomodar um capítulo sequencial.
+for (const s of series) {
+  const first = chapterList(s)[0];
+  if (first) {
+    const n = numberOf(first.chapter);
+    if (n != null && n !== 1) fail(`coleção ${s.id} começa no capítulo ${n}; uma coleção nova deve começar pelo capítulo I`);
+  }
+  for (const b of s.blocks || []) {
+    const firstChapter = (b.chapters || [])[0];
+    if (!firstChapter) continue;
+    const n = numberOf(firstChapter);
+    if (n != null && n !== 1) fail(`bloco ${s.id}/${b.id} começa no capítulo ${n}; confirme a estrutura em vez de deslocar uma continuação para outro bloco`);
+  }
+}
+
 // Dentro de cada bloco, IDs e números de capítulo devem ser únicos e a ordem
 // numérica deve ser crescente. Lacunas são bloqueantes: podem indicar capítulo
 // inserido na coleção errada ou capítulo omitido.
