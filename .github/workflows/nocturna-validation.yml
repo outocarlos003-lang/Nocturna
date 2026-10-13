@@ -26,6 +26,9 @@ jobs:
       - name: Test 90% duplicate policy
         run: node scripts/check-editorial-duplicate.mjs --self-test
 
+      - name: Test duplicate checker against editorial corpus
+        run: node scripts/check-editorial-duplicate.mjs scripts/fixtures/editorial-duplicate-smoke.json
+
       - name: Check editorial request validator syntax
         run: node --check scripts/validate-editorial-request.mjs
 
