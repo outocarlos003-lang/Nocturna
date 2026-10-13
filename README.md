@@ -79,11 +79,14 @@ O `ALLOWED_ORIGIN` do Worker é `https://outocarlos003-lang.github.io`; altere-o
 
 ## Validação
 
-Valide o acervo editorial:
+Valide o acervo editorial e a continuidade das coleções/capítulos:
 
 ```bash
 node validate.mjs
+node scripts/validate-editorial-continuity.mjs
 ```
+
+A validação de continuidade é executada automaticamente no GitHub Actions antes de qualquer índice gerado ser publicado. Ela bloqueia títulos de coleção duplicados novos, IDs/números repetidos dentro de um bloco, ordem decrescente e lacunas na numeração. Há uma exceção temporária e explícita para a colisão histórica entre `se-o-trono-nunca-morreu-antes-da-semente-a-espada` e `a-fenomenologia-da-regeneracao-pela-palavra-viva`; o validador emite avisos para essa sobreposição antiga, mas bloqueia novas sobreposições nesse par. Essa exceção deve ser removida quando a ambiguidade histórica for resolvida editorialmente.
 
 Valide a árvore canônica:
 
