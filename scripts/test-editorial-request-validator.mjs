@@ -33,6 +33,7 @@ try {
       title: "Capítulo de teste automatizado",
       summary: "Resumo usado apenas para testar o validador.",
       content: "Conteúdo integral fictício para testar a validação sem publicar nada.",
+      sourceText: "Conteúdo integral fictício para testar a validação sem publicar nada.",
       cats: [category]
     }
   });
@@ -61,8 +62,30 @@ try {
     throw new Error("A solicitação inválida falhou por um motivo inesperado.");
   }
 
+  const mismatch = run("mismatch", {
+    operation: "add-chapter",
+    parentSeriesId: series.id,
+    parentBlockId: block.id,
+    item: {
+      id: "teste-divergencia-editorial",
+      slug: "teste-divergencia-editorial",
+      title: "Capítulo com divergência",
+      summary: "Teste de igualdade textual exata.",
+      content: "Texto encurtado.",
+      sourceText: "Texto original integral que não pode ser encurtado.",
+      cats: [category]
+    }
+  });
+  if (mismatch.status === 0) throw new Error("O validador aceitou conteúdo divergente da fonte original.");
+  if (!mismatch.stderr.includes("diverge da fonte original")) {
+    console.error(mismatch.stdout);
+    console.error(mismatch.stderr);
+    throw new Error("A divergência falhou por um motivo inesperado.");
+  }
+
   console.log("Teste aprovado: solicitação válida aceita.");
   console.log("Teste aprovado: solicitação inválida rejeitada.");
+  console.log("Teste aprovado: conteúdo divergente da fonte original rejeitado.");
 } finally {
   rmSync(directory, { recursive: true, force: true });
 }
