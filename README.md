@@ -133,3 +133,8 @@ O conteúdo editorial da resposta continua limpo. Os metadados de parentesco fic
 O sentido GitHub → Nocturna continua sendo a entrada oficial para novos comentários canônicos. O sentido Nocturna → GitHub materializa os nós históricos que ainda não tinham um comentário real na Issue #1. A identidade semântica do personagem é preservada no envelope; a autoria técnica continua sendo a conta que publicou o comentário via GitHub API.
 
 A reconciliação remove duplicações seguras, rejeita conflitos de identidade e corrige edições manuais de comentários materializados. Exclusões de materializações também são recuperadas automaticamente, porque o comentário pode ser recriado a partir da projeção canônica.
+
+
+## Regras obrigatórias para inclusão de capítulos
+
+Antes de incluir ou corrigir capítulos, consulte [EDITORIAL_RULES.md](EDITORIAL_RULES.md). Capítulos II, III e seguintes continuam na coleção e no bloco visados por padrão; não se cria uma coleção nova para acomodá-los. Um Capítulo I normalmente inicia uma coleção, salvo quando a instrução contextual identifica uma correção de Capítulo I já existente. Em caso de destino ambíguo, inspecione o catálogo e não publique uma estrutura presumida. Após qualquer alteração, confira o diff, a contagem de coleções, as rotas e o sitemap.
