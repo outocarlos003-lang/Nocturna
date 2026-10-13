@@ -31,6 +31,40 @@ jobs:
             if (!parent || parent.toLowerCase() === '_no response_') missing.push('Coleção ou bloco de destino');
             if (!content || content.toLowerCase() === '_no response_' || content.length < 30) missing.push('Conteúdo integral a inserir (inclua o texto completo, não apenas um resumo)');
             if (!checks.includes('[x] O texto acima contém integralmente') && !checks.includes('[X] O texto acima contém integralmente')) missing.push('Confirmação de que o material está integralmente incluído');
+            const readyLabel = 'editorial-ready';
+            try {
+              await github.rest.issues.getLabel({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                name: readyLabel
+              });
+            } catch (error) {
+              if (error.status !== 404) throw error;
+              await github.rest.issues.createLabel({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                name: readyLabel,
+                color: '0e8a16',
+                description: 'Solicitação editorial completa na pré-verificação'
+              });
+            }
+            if (missing.length) {
+              await github.rest.issues.removeLabel({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issue.number,
+                name: readyLabel
+              }).catch(error => {
+                if (error.status !== 404) throw error;
+              });
+            } else {
+              await github.rest.issues.addLabels({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issue.number,
+                labels: [readyLabel]
+              });
+            }
             const marker = '<!-- nocturna-editorial-preflight -->';
             const message = missing.length
               ? marker + '\n## Pré-verificação editorial: pendências\n\nA solicitação foi recebida, mas ainda não está pronta para implementação. Complete os itens abaixo para evitar idas e voltas:\n' + missing.map(item => '- [ ] ' + item).join('\n') + '\n\nQuando todos os campos estiverem completos, a solicitação poderá seguir para implementação. Este controle verifica a entrada; não publica nem altera o site sozinho.'
