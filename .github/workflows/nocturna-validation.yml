@@ -20,6 +20,9 @@ jobs:
         with:
           node-version: 22
 
+      - name: Check editorial request validator syntax
+        run: node --check scripts/validate-editorial-request.mjs
+
       - name: Generate public route shells and sitemap
         run: node sitemap.mjs https://outocarlos003-lang.github.io/Nocturna/
 
