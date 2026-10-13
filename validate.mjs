@@ -9,11 +9,42 @@ const fail = [], ok = (c, m) => c || fail.push(m);
 
 const cats = Array.isArray(DATA.cats) ? DATA.cats : [];
 const pubs = Array.isArray(DATA.pubs) ? DATA.pubs : [];
+const series = Array.isArray(DATA.series) ? DATA.series : [];
 ok(cats.length > 0, "categorias presentes");
 ok(new Set(cats.map(c => c.id)).size === cats.length, "ids de categorias únicos");
 ok(new Set(cats.map(c => c.slug)).size === cats.length, "slugs de categorias únicos");
 ok(pubs.length > 0, "publicações presentes");
 ok(new Set(pubs.map(p => p.id)).size === pubs.length, "publicações únicas");
+
+// Coleções são validadas recursivamente para impedir que uma inserção parcial
+// publique uma coleção sem blocos, capítulos, conteúdo ou categorias válidas.
+ok(Array.isArray(DATA.series), "DATA.series deve ser uma lista de coleções");
+ok(new Set(series.map(s => s.id)).size === series.length, "ids de coleções únicos");
+ok(new Set(series.map(s => s.slug)).size === series.length, "slugs de coleções únicos");
+const seriesIds = new Set(), seriesSlugs = new Set();
+series.forEach((s, si) => {
+  const label = s.title || s.id || `coleção ${si + 1}`;
+  ok(typeof s.id === "string" && /^[-a-z0-9]+$/.test(s.id), `id inválido em ${label}`);
+  ok(typeof s.slug === "string" && /^[-a-z0-9]+$/.test(s.slug), `slug inválido em ${label}`);
+  ok(typeof s.title === "string" && s.title.trim().length > 0, `título ausente em ${label}`);
+  ok(Array.isArray(s.blocks) && s.blocks.length > 0, `coleção sem blocos: ${label}`);
+  (s.blocks || []).forEach((block, bi) => {
+    const blockLabel = block.title || block.id || `${label}, bloco ${bi + 1}`;
+    ok(typeof block.id === "string" && /^[-a-z0-9]+$/.test(block.id), `id de bloco inválido em ${blockLabel}`);
+    ok(typeof block.slug === "string" && /^[-a-z0-9]+$/.test(block.slug), `slug de bloco inválido em ${blockLabel}`);
+    ok(typeof block.title === "string" && block.title.trim().length > 0, `título ausente em ${blockLabel}`);
+    ok(Array.isArray(block.chapters) && block.chapters.length > 0, `bloco sem capítulos: ${blockLabel}`);
+    (block.chapters || []).forEach((chapter, ci) => {
+      const chapterLabel = chapter.title || chapter.id || `${blockLabel}, capítulo ${ci + 1}`;
+      ok(typeof chapter.id === "string" && /^[-a-z0-9]+$/.test(chapter.id), `id inválido em ${chapterLabel}`);
+      ok(typeof chapter.slug === "string" && /^[-a-z0-9]+$/.test(chapter.slug), `slug inválido em ${chapterLabel}`);
+      ok(typeof chapter.title === "string" && chapter.title.trim().length > 0, `título ausente em ${chapterLabel}`);
+      ok(typeof chapter.content === "string" && chapter.content.trim().length > 0, `conteúdo ausente em ${chapterLabel}`);
+      (chapter.cats || []).forEach(k => ok(catIds.has(k), `categoria inexistente em ${chapterLabel}: ${k}`));
+    });
+  });
+  (s.cats || []).forEach(k => ok(catIds.has(k), `categoria inexistente em coleção ${label}: ${k}`));
+});
 
 const catIds = new Set(cats.map(c => c.id));
 pubs.forEach(p => {
