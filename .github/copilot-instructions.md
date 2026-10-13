@@ -2,6 +2,14 @@
 
 Ao receber um pedido editorial, execute a operação real de ponta a ponta na mesma solicitação. Não substitua uma inserção por um issue, comentário, checklist ou registro de tarefa. Issues são apenas acompanhamento opcional e nunca são o destino nem um pré-requisito para inserir publicações.
 
+## Registros de tarefa: opcionais e nunca bloqueantes
+
+1. O trabalho editorial começa na primeira solicitação do usuário, não depois da abertura de issue, criação de checklist, planejamento separado ou autorização de um registro de tarefa.
+2. Issues, tarefas e comentários podem ser criados em paralelo para rastreabilidade, mas não podem atrasar, substituir, condicionar nem interromper a inserção de publicações, coleções, blocos, capítulos ou outros conteúdos solicitados.
+3. Priorize executar a alteração canônica na mesma solicitação. Se uma etapa depender de informação realmente ausente, continue todas as partes independentes e peça apenas o dado indispensável para a parte bloqueada.
+4. Um registro de tarefa documenta o trabalho; não é entrega editorial. Considere a solicitação concluída somente com evidência da alteração solicitada e informe separadamente validação, merge, deploy e publicação pública.
+
+
 ## Roteamento operacional obrigatório: decidir antes de agir
 
 1. Identifique o tipo de conteúdo solicitado a partir do pedido e do modelo existente.
