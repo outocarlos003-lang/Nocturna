@@ -1,0 +1,7 @@
+{
+  "item": {
+    "id": "smoke-test-editorial-parser",
+    "title": "Teste técnico de leitura do acervo",
+    "content": "Este texto sintético verifica exclusivamente se o verificador consegue carregar o acervo editorial completo, interpretar a estrutura de dados e comparar uma proposta distinta sem sinalizar duplicação. A amostra usa uma descrição de diagnóstico sobre constelações geométricas, arquivos de teste, instrumentação de software e observações de laboratório, sem reproduzir conteúdo editorial publicado."
+  }
+}
