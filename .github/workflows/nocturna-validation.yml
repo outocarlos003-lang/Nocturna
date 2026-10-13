@@ -20,6 +20,12 @@ jobs:
         with:
           node-version: 22
 
+      - name: Check duplicate policy syntax
+        run: node --check scripts/check-editorial-duplicate.mjs
+
+      - name: Test 90% duplicate policy
+        run: node scripts/check-editorial-duplicate.mjs --self-test
+
       - name: Check editorial request validator syntax
         run: node --check scripts/validate-editorial-request.mjs
 
