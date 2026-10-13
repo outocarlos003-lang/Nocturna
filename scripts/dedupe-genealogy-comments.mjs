@@ -2,7 +2,7 @@
 
 const OWNER = "outocarlos003-lang";
 const REPO = "Nocturna";
-const ISSUE = 1;
+const ISSUE = 32;
 const token = process.env.GITHUB_TOKEN;
 if (!token) throw new Error("GITHUB_TOKEN obrigatorio");
 
