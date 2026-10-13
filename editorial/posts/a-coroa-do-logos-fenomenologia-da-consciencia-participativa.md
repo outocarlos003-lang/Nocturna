@@ -5,6 +5,9 @@ date: 2026-10-13
 summary: Ensaio teológico-filosófico sobre unidade, participação, Logos, RUACH e consciência, que interpreta as alucinações auditivas por uma moldura metafísica e espiritual. Trata-se de uma reflexão interpretativa, não de uma explicação clínica nem de orientação para diagnóstico ou tratamento; experiências auditivas podem ter causas diversas e merecem avaliação profissional quando causam sofrimento.
 cats: [cat-teologia, cat-epistemologia, cat-hermeneutica, cat-antropologia, cat-filosofia, cat-metafisica, cat-romanticism-dark]
 tags: [Logos, consciência participativa, alucinações auditivas, fenomenologia, metafísica, teologia, RUACH, RHĒMA, YAHUAH, verdade, unidade, fragmentação, integração, autonomia, participação, arrependimento, humildade, Romanos 13, saúde mental, filosofia da mente]
+image: editorial/images/a-palavra-geradora-a-conviccao-regenerada.svg
+imageAlt: Uma palavra luminosa atravessando a escuridão em direção a um coração simbólico, em estética dark romanticism.
+imageCaption: A Palavra, a consciência e a busca de integração no Logos
 ---
 Se toda cisão apenas se deixa reconhecer porque jamais rompeu aquilo de que pretende separar-se, não exigirá essa própria ferida um princípio cuja ausência nunca conseguiu consumar; e, se semelhante princípio permanece silenciosamente irredutível a toda ruptura, não denunciará cada voz que reivindica autonomia a profundidade de uma pertença que nenhuma fragmentação jamais conseguiu extinguir?
 
