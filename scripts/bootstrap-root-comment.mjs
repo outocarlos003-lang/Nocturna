@@ -58,6 +58,8 @@ rootNode.origin={
 };
 
 for(const node of data.nodes){
+  node.rootNodeId=String(rootNode.nodeId);
+  node.rootCommentId=root.id;
   if(String(node.nodeId)!==String(rootNode.nodeId) && String(node.parentNodeId)===String(rootNode.nodeId)){
     node.parentCommentId=root.id;
     node.parentAuthor="Johan Liebert";
