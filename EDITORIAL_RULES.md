@@ -2,6 +2,10 @@
 
 Estas regras valem para qualquer inclusão, correção, reorganização ou publicação de capítulos. A estrutura editorial existente é a fonte de verdade; nunca crie uma coleção apenas para acomodar um capítulo subsequente.
 
+## Prioridade do título de coleção explicitamente informado
+
+O título da coleção indicado pelo solicitante é a atribuição editorial prioritária. Um capítulo de mesmo número ou título existente em outra coleção não deve bloquear a inclusão nem alterar o destino pedido. Quando o usuário fornece um título de coleção e depois envia capítulos, vincule-os a essa coleção; mantenha esse contexto em solicitações subsequentes que continuem a mesma sequência até que outro título seja indicado ou a sequência seja encerrada explicitamente. Primeiro procure o capítulo dentro da coleção-alvo; verifique duplicatas globais sem confundir obras distintas. Se a coleção-alvo já existir, use-a; se não existir, crie-a segundo o modelo do sistema. Nunca crie uma coleção duplicada quando a coleção-alvo já estiver identificada.
+
 ## Regra de pertencimento
 
 1. **Capítulos sequenciais pertencem à mesma coleção e ao mesmo bloco já visados.** Capítulo II, III, IV e seguintes são continuações por padrão. Preserve os IDs, slugs, título da coleção, título do bloco e a ordem existentes.
