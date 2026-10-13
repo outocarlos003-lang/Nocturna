@@ -35,6 +35,7 @@ jobs:
       - name: Validate complete editorial system
         run: |
           node validate.mjs
+          node scripts/validate-editorial-continuity.mjs
           node scripts/validate-comments.mjs
           node scripts/validate-system.mjs
           node scripts/validate-assets.mjs
