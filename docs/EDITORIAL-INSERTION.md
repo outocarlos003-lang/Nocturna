@@ -2,6 +2,11 @@
 
 Este procedimento usa o modelo canônico já adotado pela Nocturna. A primeira decisão é operacional: identificar o destino correto e editar a fonte de verdade. Issue não é inserção, não altera o acervo e não é pré-requisito para publicar.
 
+## Registros de tarefa não bloqueiam a inserção
+
+O fluxo começa na primeira solicitação editorial. Abrir issue, criar tarefa, checklist ou comentário é opcional e pode ocorrer em paralelo, nunca como pré-requisito. Esses registros não podem substituir a edição da fonte canônica nem atrasar ou interromper a inserção de publicações, coleções, blocos, capítulos e conteúdos relacionados. Se faltar um dado indispensável para uma parte, avance nas partes independentes e limite a interrupção ao trecho realmente bloqueado. Registros acompanham o trabalho; não são a entrega.
+
+
 ## Roteamento por tipo de conteúdo
 
 - **Publicação individual do acervo:** criar `editorial/posts/<slug>.md` com os campos obrigatórios de front matter e o texto integral; executar `node scripts/sync-editorial.mjs` para sincronizar os dados em `DATA.pubs` no `index.html`.
