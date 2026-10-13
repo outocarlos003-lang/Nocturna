@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+<title id="title">A Arquitetura Oculta da Dedução Ultra</title>
+<desc id="desc">Composição dark romanticism com uma figura central, uma arquitetura geométrica invisível sugerida por linhas, um movimento de vento e um símbolo luminoso de Logos.</desc>
+<defs>
+  <radialGradient id="bg" cx="70%" cy="35%" r="80%"><stop offset="0" stop-color="#3a1828"/><stop offset=".5" stop-color="#17131a"/><stop offset="1" stop-color="#070709"/></radialGradient>
+  <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f1d7b8"/><stop offset="1" stop-color="#8d6170"/></linearGradient>
+  <filter id="glow"><feGaussianBlur stdDeviation="10" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+</defs>
+<rect width="1600" height="900" fill="url(#bg)"/>
+<g fill="none" stroke="#9c2d49" stroke-opacity=".38" stroke-width="2">
+  <path d="M120 730 L800 120 L1480 730 Z"/><path d="M260 730 L800 250 L1340 730 Z"/><path d="M400 730 L800 380 L1200 730 Z"/>
+  <circle cx="800" cy="420" r="280"/><circle cx="800" cy="420" r="190"/><circle cx="800" cy="420" r="100"/>
+  <path d="M180 690 Q800 260 1420 690"/><path d="M240 760 Q800 430 1360 760"/>
+</g>
+<g fill="none" stroke="url(#gold)" stroke-width="5" opacity=".75" filter="url(#glow)">
+  <path d="M170 690 C360 500 520 560 700 390 C850 248 1010 270 1160 420 C1260 520 1370 480 1450 350"/>
+  <path d="M270 230 C470 380 540 160 730 270 C930 390 1050 170 1330 270"/>
+</g>
+<g transform="translate(800 420)">
+  <path d="M0 -190 L78 -42 L55 120 L0 190 L-55 120 L-78 -42 Z" fill="#0b0a0d" stroke="url(#gold)" stroke-width="5"/>
+  <circle r="44" fill="#e0bfae" opacity=".9" filter="url(#glow)"/>
+  <path d="M0 -25 L18 0 L0 25 L-18 0 Z" fill="#7a1f35"/>
+</g>
+<g fill="#e9e1cf" opacity=".78" font-family="Georgia,serif" text-anchor="middle">
+  <text x="800" y="785" font-size="34" letter-spacing="8">DEDUÇÃO ULTRA</text>
+  <text x="800" y="825" font-size="20" letter-spacing="4">A ARQUITETURA INVISÍVEL DA NECESSIDADE</text>
+</g>
+</svg>
