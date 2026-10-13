@@ -64,3 +64,21 @@ Exemplo: “Continue na coleção [título], bloco [título]. Adicione o Capítu
 ## Regra de ouro
 
 Não transfira ao solicitante o custo de resolver uma ambiguidade que o contexto do projeto já resolve. Não esconda uma ambiguidade real atrás de um palpite. Preserve o conteúdo, o contexto e a distinção entre feito, validado e publicado.
+
+## Execução na primeira solicitação: regra de não interrupção
+
+Quando uma solicitação contém o material integral e pede inserção/publicação, a tarefa é de execução, não apenas de investigação. A partir da primeira mensagem, o executor deve:
+
+1. Ler integralmente a solicitação atual e identificar o texto-fonte, o destino e os instrumentos pertinentes.
+2. Recuperar e aplicar os instrumentos editoriais pelo repositório, sem transformar a recuperação em condição para interromper o trabalho.
+3. Inspecionar o modelo canônico de dados e os exemplos existentes, depois realizar a menor alteração completa compatível com o sistema.
+4. Preservar literalmente o corpo fornecido. Não reconstruir, resumir nem substituir um texto-fonte que não esteja acessível no contexto operacional; nesse caso, concluir todas as partes independentes e registrar precisamente o único bloqueio restante.
+5. Integrar a publicação ao índice canônico, categorias, tags, pesquisa, sitemap, rotas e assets exigidos pelo sistema. Não criar arquivos isolados que não sejam consumidos pela aplicação.
+6. Executar os validadores disponíveis, revisar o diff e verificar o arquivo gravado e a rota pública. Separar explicitamente commit, validação, workflow, deploy e disponibilidade pública.
+7. Não encerrar após busca, leitura ou planejamento enquanto houver uma etapa de execução disponível e autorizada. Se uma ferramenta falhar, tentar uma alternativa compatível; só parar quando houver bloqueio real de permissão, dados indispensáveis indisponíveis ou risco de alteração incorreta.
+8. Não declarar publicação integral se o conteúdo integral não foi preservado ou se o sistema canônico não o apresenta. O relatório final deve identificar o que foi efetivamente gravado e qualquer verificação pendente.
+
+### Critério de aceitação para novas publicações
+
+A solicitação só pode ser reportada como concluída quando o conteúdo fornecido estiver integralmente presente no registro canônico e a publicação estiver integrada às estruturas pertinentes. Uma confirmação de commit, isoladamente, não prova que a publicação esteja visível no site.
+
