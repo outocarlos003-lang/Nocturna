@@ -75,6 +75,8 @@ if (operation === "add-series") {
   check(Boolean(blockTarget), `Bloco de destino não encontrado: ${request?.parentBlockId || "(ausente)"}`);
   siblings = blockTarget?.chapters || [];
   check(nonempty(item?.content), "item.content é obrigatório para um capítulo.");
+  check(nonempty(item?.sourceText), "item.sourceText é obrigatório: inclua a fonte original integral para comparação.");
+  check(item?.content === item?.sourceText, "item.content diverge da fonte original em item.sourceText.");
 }
 
 if (item && typeof item === "object") {
@@ -91,7 +93,11 @@ const checkNested = (entries, label) => {
     check(entry && nonempty(entry.summary), `${label} ${index + 1}: resumo ausente.`);
     check(entry && Array.isArray(entry.cats) && entry.cats.length > 0, `${label} ${index + 1}: categorias ausentes.`);
     for (const cat of entry?.cats || []) check(categories.has(cat), `${label} ${index + 1}: categoria inexistente ${cat}.`);
-    if (label === "Capítulo") check(nonempty(entry?.content), `Capítulo ${index + 1}: conteúdo integral ausente.`);
+    if (label === "Capítulo") {
+      check(nonempty(entry?.content), `Capítulo ${index + 1}: conteúdo integral ausente.`);
+      check(nonempty(entry?.sourceText), `Capítulo ${index + 1}: fonte original (sourceText) ausente para comparação.`);
+      check(entry?.content === entry?.sourceText, `Capítulo ${index + 1}: conteúdo diverge da fonte original (sourceText).`);
+    }
     if (label === "Bloco") {
       check(Array.isArray(entry?.chapters) && entry.chapters.length > 0, `Bloco ${index + 1}: capítulos ausentes.`);
       for (const [ci, chapter] of (entry?.chapters || []).entries()) {
