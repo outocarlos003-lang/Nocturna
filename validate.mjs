@@ -10,6 +10,7 @@ const fail = [], ok = (c, m) => c || fail.push(m);
 const cats = Array.isArray(DATA.cats) ? DATA.cats : [];
 const pubs = Array.isArray(DATA.pubs) ? DATA.pubs : [];
 const series = Array.isArray(DATA.series) ? DATA.series : [];
+const catIds = new Set(cats.map(c => c.id));
 ok(cats.length > 0, "categorias presentes");
 ok(new Set(cats.map(c => c.id)).size === cats.length, "ids de categorias únicos");
 ok(new Set(cats.map(c => c.slug)).size === cats.length, "slugs de categorias únicos");
@@ -46,7 +47,6 @@ series.forEach((s, si) => {
   (s.cats || []).forEach(k => ok(catIds.has(k), `categoria inexistente em coleção ${label}: ${k}`));
 });
 
-const catIds = new Set(cats.map(c => c.id));
 pubs.forEach(p => {
   ok(/^[-a-z0-9]+$/.test(p.id), `id inválido em publicação ${p.id || "(sem id)"}`);
   ok(typeof p.title === "string" && p.title.trim().length > 0, `título ausente em ${p.id}`);
