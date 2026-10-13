@@ -6,7 +6,7 @@ featured: false
 summary: "Uma leitura metafísica de Baki como arquétipo da Coerência-Anômica: a integração funcional que, sem participação consciente no LOGOS, confunde força, autonomia e fundamento."
 cats: [cat-metafisica, cat-teologia, cat-filosofia, cat-arquetipo, cat-tipologia]
 tags: ["Baki", "Anomia", "LOGOS", "RUACH Ha'Kodesh", "Coerência-Anômica", "Participação-Logocêntrica", "João 17"]
-image: "assets/images/akashi-consciousness.svg"
+image: "akashi-o-arquetipo-da-consciencia-inteira.svg"
 imageAlt: "Imagem editorial da Nocturna"
 imageCaption: "Nocturna — acervo de metafísica e teologia"
 ---
