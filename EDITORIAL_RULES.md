@@ -27,3 +27,8 @@ O título da coleção indicado pelo solicitante é a atribuição editorial pri
 ## Critério de aceitação
 
 Uma continuação só está correta quando o capítulo novo aparece dentro da coleção e do bloco previamente visados, a contagem de coleções não aumenta sem autorização explícita, nenhum capítulo existente foi perdido e as rotas públicas apontam para o registro canônico.
+
+
+## Comunicação e continuidade entre pedidos
+
+Aplique também o `REQUEST_PROTOCOL.md`: preserve o contexto ativo entre mensagens sequenciais; dê prioridade à coleção explicitamente indicada; leia integralmente a mensagem atual como fonte do conteúdo; resolva ambiguidades com evidências do repositório; evite perguntas desnecessárias e duplicações. Relate separadamente alteração gravada, validação, workflow, deploy e inspeção pública.
