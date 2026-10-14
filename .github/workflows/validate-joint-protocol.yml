@@ -1,0 +1,44 @@
+name: Validate joint Promptaria-Nocturna protocol
+
+on:
+  push:
+    paths:
+      - ".github/copilot-instructions.md"
+      - "docs/PROTOCOLO-PROMPTARIA-NOCTURNA.md"
+      - "docs/REGISTRO-COBERTURA-PROMPTARIA-NOCTURNA.md"
+      - "scripts/validate-promptaria-protocol.mjs"
+      - ".github/workflows/validate-joint-protocol.yml"
+  pull_request:
+    paths:
+      - ".github/copilot-instructions.md"
+      - "docs/PROTOCOLO-PROMPTARIA-NOCTURNA.md"
+      - "docs/REGISTRO-COBERTURA-PROMPTARIA-NOCTURNA.md"
+      - "scripts/validate-promptaria-protocol.mjs"
+      - ".github/workflows/validate-joint-protocol.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  protocol-contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate protocol and coverage register
+        shell: bash
+        run: |
+          set -euo pipefail
+          instructions=".github/copilot-instructions.md"
+          protocol="docs/PROTOCOLO-PROMPTARIA-NOCTURNA.md"
+          coverage="docs/REGISTRO-COBERTURA-PROMPTARIA-NOCTURNA.md"
+          validator="scripts/validate-promptaria-protocol.mjs"
+          test -s "$instructions"
+          test -s "$protocol"
+          test -s "$coverage"
+          test -s "$validator"
+          grep -Eiq 'Promptária.*Nocturna|Nocturna.*Promptária' "$instructions"
+          grep -Eiq 'Limite técnico|automação|automaticamente' "$instructions"
+          grep -Eiq 'escopo|cobertura|fontes' "$instructions"
+          node "$validator"
+          echo "Contrato mínimo de integração presente."
