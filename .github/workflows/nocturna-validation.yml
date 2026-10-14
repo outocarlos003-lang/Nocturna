@@ -3,6 +3,7 @@ name: Nocturna validation
 on:
   push:
   pull_request:
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -18,6 +19,12 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version: 22
+
+      - name: Check editorial request validator syntax
+        run: node --check scripts/validate-editorial-request.mjs
+
+      - name: Test editorial request validator
+        run: node scripts/test-editorial-request-validator.mjs
 
       - name: Generate public route shells and sitemap
         run: node sitemap.mjs https://outocarlos003-lang.github.io/Nocturna/
