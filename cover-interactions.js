@@ -52,7 +52,7 @@ const ensureStyle=()=>{
   s.id="nocturna-cover-actions-style";
   s.textContent=
     ".nr-cover-flag,.nr-cover-v2{display:none!important}"+
-    ".nocturna-cover-actions{position:absolute!important;inset:0!important;z-index:50!important;pointer-events:none!important}"+
+    ".nocturna-cover-actions{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;z-index:50!important;pointer-events:none!important;line-height:normal!important}"+
     ".nocturna-cover-action{position:absolute!important;top:8px!important;z-index:51!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:.32rem!important;min-height:44px!important;padding:.42rem .68rem!important;border:1px solid rgba(255,255,255,.62)!important;border-radius:999px!important;background:rgba(10,10,12,.94)!important;color:#fff!important;font:600 .78rem/1 system-ui,sans-serif!important;box-shadow:0 3px 14px rgba(0,0,0,.58)!important;cursor:pointer!important;touch-action:manipulation!important;-webkit-tap-highlight-color:transparent!important;pointer-events:auto!important}"+
     ".nocturna-cover-action.read{left:8px!important}"+
     ".nocturna-cover-action.favorite{right:8px!important}"+
@@ -66,17 +66,27 @@ const ensureStyle=()=>{
 };
 
 const coverHost=card=>{
-  let host=card.querySelector(".nr-card-art,.nr-cover-frame,.nr-cover-host");
+  const img=card.querySelector(".publication-cover,.series-cover");
+  if(!img)return null;
+  // Anchor the controls to the actual cover image area, never to the card text.
+  let host=img.closest(".cover-stage,.nr-card-art,.nr-cover-frame,.nr-cover-host");
   if(!host){
-    const img=card.querySelector(".publication-cover,.series-cover");
-    if(!img)return null;
     host=document.createElement("div");
     host.className="nr-cover-host";
     img.parentNode.insertBefore(host,img);
     host.appendChild(img);
+  }else if(!host.contains(img)){
+    host.appendChild(img);
   }
-  host.style.position="relative";
-  host.style.isolation="isolate";
+  host.style.setProperty("position","relative","important");
+  host.style.setProperty("display","block","important");
+  host.style.setProperty("isolation","isolate","important");
+  host.style.setProperty("width","100%","important");
+  host.style.setProperty("line-height","0","important");
+  img.style.setProperty("display","block","important");
+  img.style.setProperty("width","100%","important");
+  img.style.setProperty("height","auto","important");
+  img.style.setProperty("margin","0","important");
   return host;
 };
 
