@@ -59,3 +59,33 @@ Ao receber um pedido editorial, execute a operação real de ponta a ponta na me
 ## Regra de comunicação
 
 Evite perguntas desnecessárias. Só interrompa quando houver ambiguidade real ou faltar o próprio conteúdo que precisa ser publicado. Se cometer um erro de leitura, reconheça-o e corrija o processo, sem transferir ao solicitante a responsabilidade por um texto fornecido.
+
+
+## Protocolo Promptária–Nocturna: recuperação sob demanda e execução verificável
+
+Estas instruções orientam o trabalho realizado neste repositório e devem ser aplicadas conforme a pertinência de cada solicitação. Não afirmam nem configuram, por si mesmas, memória global do ChatGPT, automação externa ou persistência entre sessões.
+
+### Ciclo operacional por demanda
+
+1. **Delimitar a tarefa.** Identifique objeto, finalidade, escopo, pressupostos, entregável e critério de conclusão. Determine se a solicitação exige consultar o acervo Nocturna ou se apenas menciona o projeto incidentalmente.
+2. **Recuperar instrumentos pertinentes.** Consulte primeiro as instruções e ferramentas operacionais já disponíveis no repositório e escolha somente os procedimentos necessários à tarefa. Não invente ferramentas, integrações, memória ou capacidades.
+3. **Decidir sobre recuperação documental.** Consulte publicações, coleções, capítulos e documentos Nocturna quando o usuário solicitar essa consulta ou quando ela for necessária, de modo justificável, para cumprir a tarefa. A simples disponibilidade ou menção do acervo não autoriza leitura preventiva.
+4. **Definir e registrar o escopo.** Quando houver pesquisa documental, registre o universo pertinente, os documentos localizados e os efetivamente examinados. Diferencie leitura integral, leitura parcial, excertos, páginas apenas identificadas e itens inacessíveis.
+5. **Examinar proporcionalmente.** Em tarefas delimitadas, leia as unidades pertinentes e amplie o escopo somente quando uma necessidade concreta surgir. Se a tarefa exigir reconstrução abrangente, defina o universo documental abrangido e examine todas as unidades acessíveis desse universo; não confunda esse universo com todo o acervo por padrão.
+6. **Analisar com fidelidade.** Distinga conteúdo verificado, interpretação, hipótese e questão em aberto. Preserve as estruturas e os fundamentos pertinentes; adapte a função ao contexto sem adulterar arbitrariamente a fonte.
+7. **Verificar cobertura e resultado.** Antes de declarar completude, compare o escopo definido com as unidades efetivamente examinadas. Não declare cobertura integral quando existirem lacunas de acesso, anexos não recuperados ou inventário insuficiente.
+8. **Apresentar ostensivamente.** Informe, conforme a complexidade, fontes, escopo, métodos realmente executados, resultados e limitações. Transparência significa demonstrar o trabalho necessário, não executar procedimentos irrelevantes nem expor raciocínio interno privado.
+9. **Concluir sem monitoramento autônomo.** Não iniciar varreduras recorrentes, leituras preventivas, inventários contínuos ou vigilância do acervo sem solicitação e finalidade operacional concreta.
+
+### Referência filosófica normativa
+
+Quando a tarefa for pertinente à arquitetura filosófica da Nocturna, use como referência metodológica o instrumento fornecido pelo solicitante: “Conservar o Fundamento, Transformar a Função, Reconstruir a Necessidade, Revelar o Todo em Cada Parte e Reconhecer na Origem a Presença Integral de Todas as Consequências Legítimas.” Trate essa formulação como orientação para investigar necessidade, relações entre escalas, causalidade, coerência e fechamento arquitetônico; não a apresente como prova de conteúdo documental que não tenha sido consultado.
+
+### Regra de evidência e limites
+
+- Identifique o endereço oficial e as unidades documentais relevantes quando uma demanda requerer recuperação documental e os recursos permitirem confirmá-los.
+- Não confunda catálogo ou índice com leitura do documento; abertura de página com exame integral; excerto com obra completa; amostra com universo completo.
+- Preserve divergências entre documentos e versões quando forem encontradas; não presuma uniformidade conceitual.
+- Quando o acesso ou a capacidade de recuperação forem insuficientes, trabalhe em etapas verificáveis e registre pendências.
+- Só afirme que um procedimento foi executado quando houver evidência de execução. Diferencie diretriz registrada, alteração commitada, validação, merge, deploy e publicação pública.
+- Estas instruções orientam ferramentas que efetivamente as leem no contexto deste repositório. Não instalam automaticamente uma configuração global em outras conversas, produtos ou sessões.
