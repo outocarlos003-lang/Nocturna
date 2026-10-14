@@ -59,3 +59,10 @@ Ao receber um pedido editorial, execute a operação real de ponta a ponta na me
 ## Regra de comunicação
 
 Evite perguntas desnecessárias. Só interrompa quando houver ambiguidade real ou faltar o próprio conteúdo que precisa ser publicado. Se cometer um erro de leitura, reconheça-o e corrija o processo, sem transferir ao solicitante a responsabilidade por um texto fornecido.
+
+
+## Coordenação operacional com a Promptária
+
+Para solicitações que envolvam instrumentos promptuais ou a arquitetura filosófica Nocturna, aplique também `.github/PROTOCOLO-PROMPTARIA-NOCTURNA.md`. O repositório `outocarlos003-lang/Prompt-ria` é o destino canônico dos instrumentos e validações promptuais; este repositório é o destino canônico das publicações e estruturas editoriais Nocturna. Se o pedido envolver ambos, execute as mudanças pertinentes em ambos, sem tratar issue ou plano como entrega substituta.
+
+Acione a leitura documental somente por solicitação expressa ou necessidade identificável da tarefa. Uma análise global exige escopo documental explicitamente delimitado e cobertura de todas as unidades acessíveis nele; uma tarefa delimitada exige somente as fontes pertinentes. Diferencie materiais identificados, abertos, parcialmente lidos e integralmente examinados. Não afirme cobertura, execução de workflow, deploy, publicação ou persistência sem evidência. Os workflows GitHub respondem aos eventos configurados e não interceptam automaticamente cada conversa do ChatGPT; não adicione leitura preventiva ou monitoramento periódico do acervo.
