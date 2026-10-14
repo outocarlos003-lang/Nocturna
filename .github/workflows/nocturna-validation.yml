@@ -41,6 +41,9 @@ jobs:
       - name: Validate canonical comments
         run: node scripts/validate-comments.mjs
 
+      - name: Validate Promptaria-Nocturna protocol
+        run: node scripts/validate-promptaria-protocol.mjs
+
       - name: Validate repository structure
         run: node scripts/validate-system.mjs
 
