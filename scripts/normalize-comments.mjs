@@ -3,7 +3,7 @@ import fs from "node:fs";
 
 const OWNER="outocarlos003-lang";
 const REPO="Nocturna";
-const ISSUE=1;
+const ISSUE=32;
 const PATH="data/comments/issue-1.json";
 const token=process.env.GITHUB_TOKEN;
 if(!token) throw new Error("GITHUB_TOKEN obrigatorio");
@@ -92,7 +92,7 @@ for(const c of comments){
   if(required.some(k=>!meta[k])) continue;
   const replyAuthor=String(c.user?.login||c.user?.name||"").trim();
   if(!replyAuthor) continue;
-  if(!/^github-issue1-reply-[A-Za-z0-9_-]{16,100}$/.test(meta["source-id"])) continue;
+  if(!/^github-issue32-reply-[A-Za-z0-9_-]{16,100}$/.test(meta["source-id"])) continue;
 
   const commentId=String(c.id);
   const sourceId=meta["source-id"];

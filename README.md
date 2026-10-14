@@ -15,7 +15,7 @@ GitHub Pages
   │
   └── POST → Cloudflare Worker (index.js)
                          │
-                         └── GitHub API → Issue #1
+                         └── GitHub API → Issue #32
                                               │
                                               └── nocturna-comments.yml
                                                    ├── bootstrap root
@@ -77,13 +77,20 @@ Depois de publicar o Worker, coloque a URL pública em `comentarios/reply-api-co
 
 O `ALLOWED_ORIGIN` do Worker é `https://outocarlos003-lang.github.io`; altere-o se o domínio público da aplicação mudar.
 
+## Protocolo Promptária–Nocturna
+
+A especificação operacional está em [`docs/PROTOCOLO-PROMPTARIA-NOCTURNA.md`](docs/PROTOCOLO-PROMPTARIA-NOCTURNA.md). A consulta ao conteúdo editorial da Nocturna ocorre somente quando necessária à demanda; a mera conexão com o repositório não autoriza leitura preventiva. Registre o universo consultado, o estado de leitura por unidade e as evidências no [modelo de cobertura](docs/REGISTRO-COBERTURA-PROMPTARIA-NOCTURNA.md). O validador `scripts/validate-promptaria-protocol.mjs` verifica a presença do protocolo e os campos mínimos do modelo, e é executado pelo workflow de validação existente. Isso valida a estrutura documental, não prova que uma execução futura consultou ou leu o acervo.
+
 ## Validação
 
-Valide o acervo editorial:
+Valide o acervo editorial e a continuidade das coleções/capítulos:
 
 ```bash
 node validate.mjs
+node scripts/validate-editorial-continuity.mjs
 ```
+
+A validação de continuidade é executada automaticamente no GitHub Actions antes de qualquer índice gerado ser publicado. Ela bloqueia títulos de coleção duplicados novos, IDs/números repetidos dentro de um bloco, ordem decrescente e lacunas na numeração. Há uma exceção temporária e explícita para a colisão histórica entre `se-o-trono-nunca-morreu-antes-da-semente-a-espada` e `a-fenomenologia-da-regeneracao-pela-palavra-viva`; o validador emite avisos para essa sobreposição antiga, mas bloqueia novas sobreposições nesse par. Essa exceção deve ser removida quando a ambiguidade histórica for resolvida editorialmente.
 
 Valide a árvore canônica:
 
@@ -97,7 +104,7 @@ Valide as invariantes da genealogia com casos positivos e negativos:
 node scripts/test-genealogy.mjs
 ```
 
-Valide também a correspondência entre a projeção e os comentários vivos do Issue #1:
+Valide também a correspondência entre a projeção e os comentários vivos do Issue #32:
 
 ```bash
 GITHUB_TOKEN=... node scripts/verify-github-genealogy.mjs
@@ -111,7 +118,7 @@ node sitemap.mjs https://outocarlos003-lang.github.io/Nocturna/
 
 ## Comentários canônicos
 
-- A Issue #1 é a autoridade histórica.
+- A Issue #32 é a autoridade histórica.
 - A projeção canônica é `data/comments/issue-1.json`.
 - A interface `comentarios/index.html` somente lê essa projeção e reconstrói a árvore.
 - `site-comments-export.json` é preservado como evidência de migração histórica; não é consumidor da interface.
@@ -120,9 +127,9 @@ node sitemap.mjs https://outocarlos003-lang.github.io/Nocturna/
 - Cada descendente guarda `parentNodeId`, `parentCommentId`, `parentAuthor`, `depth`, `order`, autoria, conteúdo, origem e, após a reconciliação, a raiz e o ramo a que pertence.
 - `scripts/validate-comments.mjs` rejeita duplicidade, pai ausente, auto-pai, ciclo, profundidade incoerente, origem divergente e lacunas de identidade.
 - `scripts/normalize-comments.mjs` aceita somente o envelope `nocturna-reply:v1` produzido pelo mecanismo de resposta e por comentário de bot; a operação é idempotente pela identidade `source-id` e reconcilia a genealogia existente antes de incorporar novos nós.
-- `scripts/publish-genealogy-to-github.mjs` materializa nós sem comentário real no Issue #1, usando `nocturna-node:v1` como identidade técnica idempotente e atualizando os permalinks reais na projeção.
+- `scripts/publish-genealogy-to-github.mjs` materializa nós sem comentário real no Issue #32, usando `nocturna-node:v1` como identidade técnica idempotente e atualizando os permalinks reais na projeção.
 - `scripts/verify-github-genealogy.mjs` faz a checagem inversa: cada nó não-raiz deve ter exatamente um comentário vivo, com `nodeId`, `sourceId`, pai, raiz, profundidade, `commentId` e corpo exatamente compatíveis com a projeção.
-- `.github/workflows/nocturna-comments.yml` reage a criação, edição e exclusão de comentários do Issue #1, serializa a reconciliação por Issue, normaliza antes de publicar e só implanta depois da verificação viva.
+- `.github/workflows/nocturna-comments.yml` reage a criação, edição e exclusão de comentários do Issue #32, serializa a reconciliação por Issue, normaliza antes de publicar e só implanta depois da verificação viva.
 - A busca da raiz e todas as leituras de comentários usam paginação, evitando que o sistema quebre silenciosamente quando a conversa ultrapassar 100 comentários.
 - Comentários públicos sem o envelope canônico permanecem públicos, mas não entram artificialmente na genealogia.
 
@@ -130,6 +137,11 @@ O conteúdo editorial da resposta continua limpo. Os metadados de parentesco fic
 
 ### Publicação bidirecional
 
-O sentido GitHub → Nocturna continua sendo a entrada oficial para novos comentários canônicos. O sentido Nocturna → GitHub materializa os nós históricos que ainda não tinham um comentário real na Issue #1. A identidade semântica do personagem é preservada no envelope; a autoria técnica continua sendo a conta que publicou o comentário via GitHub API.
+O sentido GitHub → Nocturna continua sendo a entrada oficial para novos comentários canônicos. O sentido Nocturna → GitHub materializa os nós históricos que ainda não tinham um comentário real na Issue #32. A identidade semântica do personagem é preservada no envelope; a autoria técnica continua sendo a conta que publicou o comentário via GitHub API.
 
 A reconciliação remove duplicações seguras, rejeita conflitos de identidade e corrige edições manuais de comentários materializados. Exclusões de materializações também são recuperadas automaticamente, porque o comentário pode ser recriado a partir da projeção canônica.
+
+
+## Regras obrigatórias para inclusão de capítulos
+
+Antes de incluir ou corrigir capítulos, consulte [EDITORIAL_RULES.md](EDITORIAL_RULES.md). Capítulos II, III e seguintes continuam na coleção e no bloco visados por padrão; não se cria uma coleção nova para acomodá-los. Um Capítulo I normalmente inicia uma coleção, salvo quando a instrução contextual identifica uma correção de Capítulo I já existente. Em caso de destino ambíguo, inspecione o catálogo e não publique uma estrutura presumida. Após qualquer alteração, confira o diff, a contagem de coleções, as rotas e o sitemap.
