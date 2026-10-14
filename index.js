@@ -1,6 +1,6 @@
 const GITHUB_API = "https://api.github.com";
 const REPO = "outocarlos003-lang/Nocturna";
-const ISSUE = 1;
+const ISSUE = 32;
 const ALLOWED_ORIGIN = "https://outocarlos003-lang.github.io";
 const ALLOWED_AUTHORS = new Set([
   "Akashi Seijuro",
@@ -175,7 +175,7 @@ export default {
           : `https://github.com/${REPO}/issues/${ISSUE}#node-${parentNode.nodeId}`;
       }
 
-      const sourceId = `github-issue1-reply-${input.requestId}`;
+      const sourceId = `github-issue32-reply-${input.requestId}`;
       const allComments = await ghGet(`/repos/${REPO}/issues/${ISSUE}/comments?per_page=100`, token);
       const existing = allComments.find(comment => String(comment.body || "").includes(`source-id=${sourceId}`));
       if (existing) return json({ ok: true, comment_id: existing.id, comment_url: existing.html_url, parent_url: parentLink, message: "Resposta já publicada; nenhuma nova identidade foi criada." }, 200, origin);

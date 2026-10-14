@@ -1,0 +1,48 @@
+name: Solicitação editorial
+description: Inserção ou atualização de coleção, bloco, capítulo ou publicação seguindo o modelo da Nocturna.
+title: "[Editorial] "
+labels: ["editorial"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Preencha o conteúdo editorial integral. A estrutura final seguirá o modelo já existente na Nocturna.
+  - type: dropdown
+    id: operation
+    attributes:
+      label: Operação
+      options:
+        - Nova coleção
+        - Novo bloco numa coleção existente
+        - Novo capítulo
+        - Nova publicação
+        - Correção de conteúdo existente
+    validations:
+      required: true
+  - type: input
+    id: parent
+    attributes:
+      label: Coleção ou bloco de destino
+      description: Para nova coleção, escreva "Nova coleção".
+    validations:
+      required: true
+  - type: textarea
+    id: full_content
+    attributes:
+      label: Conteúdo integral a inserir
+      description: Inclua título, subtítulo, texto completo, referências, ordem e metadados necessários. Não envie apenas um resumo.
+      placeholder: |
+        Título:
+        Subtítulo:
+        Texto integral:
+        Referências:
+        Ordem:
+    validations:
+      required: true
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Verificação
+      options:
+        - label: O texto acima contém integralmente o material que deve ser publicado.
+          required: true

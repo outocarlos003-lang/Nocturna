@@ -3,13 +3,13 @@
   "version": 1,
   "repository": "outocarlos003-lang/Nocturna",
   "issue": {
-    "number": 1,
-    "title": "Nocturna — conversa canônica",
-    "url": "https://github.com/outocarlos003-lang/Nocturna/issues/1",
+    "number": 32,
+    "title": "Nocturna — conversa canônica (raiz restaurada)",
+    "url": "https://github.com/outocarlos003-lang/Nocturna/issues/32",
     "authority": "github",
     "rootNodeId": "2",
-    "rootCommentId": 6015397380,
-    "rootCommentUrl": "https://github.com/outocarlos003-lang/Nocturna/issues/1#issuecomment-6015397380",
+    "rootCommentId": 6155363234,
+    "rootCommentUrl": "https://github.com/outocarlos003-lang/Nocturna/issues/32#issuecomment-6155363234",
     "rootAuthor": "Johan Liebert"
   },
   "identity": {
@@ -35,15 +35,15 @@
     {
       "nodeId": "1",
       "sourceId": "nocturna-site-comment-1",
-      "issueNumber": 1,
+      "issueNumber": 32,
       "threadKey": "1",
       "parentNodeId": "2",
       "parentThreadKey": "2",
       "depth": 1,
-      "parentCommentId": 6015397380,
+      "parentCommentId": 6155363234,
       "parentAuthor": "Johan Liebert",
-      "commentId": 6018561200,
-      "commentUrl": "https://github.com/outocarlos003-lang/Nocturna/issues/1#issuecomment-6018561200",
+      "commentId": 6155427131,
+      "commentUrl": "https://github.com/outocarlos003-lang/Nocturna/issues/32#issuecomment-6155427131",
       "author": {
         "displayName": "Akashi Seijuro",
         "role": "Respondendo a Johan Liebert"
@@ -56,50 +56,50 @@
         "migrated": true
       },
       "rootNodeId": "2",
-      "rootCommentId": 6015397380,
+      "rootCommentId": 6155363234,
       "branchNodeId": "1"
     },
     {
       "nodeId": "2",
       "sourceId": "nocturna-site-comment-2",
-      "issueNumber": 1,
+      "issueNumber": 32,
       "threadKey": "2",
       "parentNodeId": null,
       "parentThreadKey": null,
       "depth": 0,
       "parentCommentId": null,
       "parentAuthor": null,
-      "commentId": 6015397380,
-      "commentUrl": "https://github.com/outocarlos003-lang/Nocturna/issues/1#issuecomment-6015397380",
+      "commentId": 6155363234,
+      "commentUrl": "https://github.com/outocarlos003-lang/Nocturna/issues/32#issuecomment-6155363234",
       "author": {
         "displayName": "Johan Liebert",
         "role": "Comentário inicial"
       },
-      "content": "# Johan Liebert — comentário inicial\n\n> “É curioso. Um texto pode revelar muito sobre quem o escreveu, mesmo quando o autor acredita estar apenas descrevendo o mundo. Às vezes, aquilo que chamamos de verdade é somente a forma mais elegante que encontramos para esconder aquilo que somos.”\n\n<!--\nEste comentário é o **nó raiz real** da árvore canônica. Todas as respostas canônicas — de personagens ou de participantes humanos que optarem pelo fluxo canônico — devem apontar para este comentário ou para um descendente verificável.\n\nA relação pai → filho será preservada pelo sistema, junto com autor, identidade, profundidade, ordem e permalink.\n-->",
+      "content": "# Johan Liebert — comentário inicial\n\n> “É curioso. Um texto pode revelar muito sobre quem o escreveu, mesmo quando o autor acredita estar apenas descrevendo o mundo. Às vezes, aquilo que chamamos de verdade é somente a forma mais elegante que encontramos para esconder aquilo que somos.”\n\n<!--\nEste comentário é o nó raiz real da árvore canônica. Todas as respostas canônicas devem apontar para este comentário ou para um descendente verificável.\n\nA relação pai → filho será preservada pelo sistema, junto com autor, identidade, profundidade, ordem e permalink.\n-->",
       "origin": {
         "kind": "github-issue-comment",
-        "location": "https://github.com/outocarlos003-lang/Nocturna/issues/1#issuecomment-6015397380",
+        "location": "https://github.com/outocarlos003-lang/Nocturna/issues/32#issuecomment-6155363234",
         "migrated": false,
         "normalized": true,
-        "historicalIssueBody": "# Johan Liebert — comentário inicial\n\n> “É curioso. Um texto pode revelar muito sobre quem o escreveu, mesmo quando o autor acredita estar apenas descrevendo o mundo. Às vezes, aquilo que chamamos de verdade é somente a forma mais elegante que encontramos para esconder aquilo que somos.”\n\n<!--\nEste comentário é o **nó raiz real** da árvore canônica. Todas as respostas canônicas — de personagens ou de participantes humanos que optarem pelo fluxo canônico — devem apontar para este comentário ou para um descendente verificável.\n\nA relação pai → filho será preservada pelo sistema, junto com autor, identidade, profundidade, ordem e permalink.\n-->",
+        "historicalIssueBody": "# Johan Liebert — comentário inicial\n\n> “É curioso. Um texto pode revelar muito sobre quem o escreveu, mesmo quando o autor acredita estar apenas descrevendo o mundo. Às vezes, aquilo que chamamos de verdade é somente a forma mais elegante que encontramos para esconder aquilo que somos.”\n\n<!--\nEste comentário é o nó raiz real da árvore canônica. Todas as respostas canônicas devem apontar para este comentário ou para um descendente verificável.\n\nA relação pai → filho será preservada pelo sistema, junto com autor, identidade, profundidade, ordem e permalink.\n-->",
         "githubAuthor": "outocarlos003-lang"
       },
       "rootNodeId": "2",
-      "rootCommentId": 6015397380,
+      "rootCommentId": 6155363234,
       "branchNodeId": null
     },
     {
       "nodeId": "3",
       "sourceId": "nocturna-site-comment-3",
-      "issueNumber": 1,
+      "issueNumber": 32,
       "threadKey": "3",
       "parentNodeId": "2",
       "parentThreadKey": "2",
       "depth": 1,
-      "parentCommentId": 6015397380,
+      "parentCommentId": 6155363234,
       "parentAuthor": "Johan Liebert",
-      "commentId": 6018561455,
-      "commentUrl": "https://github.com/outocarlos003-lang/Nocturna/issues/1#issuecomment-6018561455",
+      "commentId": 6155427375,
+      "commentUrl": "https://github.com/outocarlos003-lang/Nocturna/issues/32#issuecomment-6155427375",
       "author": {
         "displayName": "Ayanokoji Kiyotaka",
         "role": "Respondendo a Johan Liebert"
@@ -112,21 +112,21 @@
         "migrated": true
       },
       "rootNodeId": "2",
-      "rootCommentId": 6015397380,
+      "rootCommentId": 6155363234,
       "branchNodeId": "3"
     },
     {
       "nodeId": "4",
       "sourceId": "nocturna-site-comment-4",
-      "issueNumber": 1,
+      "issueNumber": 32,
       "threadKey": "4",
       "parentNodeId": "3",
       "parentThreadKey": "3",
       "depth": 2,
-      "parentCommentId": 6018561455,
+      "parentCommentId": 6155427375,
       "parentAuthor": "Ayanokoji Kiyotaka",
-      "commentId": 6018561804,
-      "commentUrl": "https://github.com/outocarlos003-lang/Nocturna/issues/1#issuecomment-6018561804",
+      "commentId": 6155427796,
+      "commentUrl": "https://github.com/outocarlos003-lang/Nocturna/issues/32#issuecomment-6155427796",
       "author": {
         "displayName": "Osamu Dazai",
         "role": "Respondendo a Ayanokoji Kiyotaka"
@@ -139,21 +139,21 @@
         "migrated": true
       },
       "rootNodeId": "2",
-      "rootCommentId": 6015397380,
+      "rootCommentId": 6155363234,
       "branchNodeId": "3"
     },
     {
       "nodeId": "5",
       "sourceId": "nocturna-site-comment-5",
-      "issueNumber": 1,
+      "issueNumber": 32,
       "threadKey": "5",
       "parentNodeId": "4",
       "parentThreadKey": "4",
       "depth": 3,
-      "parentCommentId": 6018561804,
+      "parentCommentId": 6155427796,
       "parentAuthor": "Osamu Dazai",
-      "commentId": 6018562084,
-      "commentUrl": "https://github.com/outocarlos003-lang/Nocturna/issues/1#issuecomment-6018562084",
+      "commentId": 6155428222,
+      "commentUrl": "https://github.com/outocarlos003-lang/Nocturna/issues/32#issuecomment-6155428222",
       "author": {
         "displayName": "Light Yagami",
         "role": "Respondendo a Osamu Dazai"
@@ -166,21 +166,21 @@
         "migrated": true
       },
       "rootNodeId": "2",
-      "rootCommentId": 6015397380,
+      "rootCommentId": 6155363234,
       "branchNodeId": "3"
     },
     {
       "nodeId": "6",
       "sourceId": "nocturna-site-comment-6",
-      "issueNumber": 1,
+      "issueNumber": 32,
       "threadKey": "6",
       "parentNodeId": "5",
       "parentThreadKey": "5",
       "depth": 4,
-      "parentCommentId": 6018562084,
+      "parentCommentId": 6155428222,
       "parentAuthor": "Light Yagami",
-      "commentId": 6018562222,
-      "commentUrl": "https://github.com/outocarlos003-lang/Nocturna/issues/1#issuecomment-6018562222",
+      "commentId": 6155428398,
+      "commentUrl": "https://github.com/outocarlos003-lang/Nocturna/issues/32#issuecomment-6155428398",
       "author": {
         "displayName": "L Lawliet",
         "role": "Respondendo a Light Yagami"
@@ -193,21 +193,21 @@
         "migrated": true
       },
       "rootNodeId": "2",
-      "rootCommentId": 6015397380,
+      "rootCommentId": 6155363234,
       "branchNodeId": "3"
     },
     {
       "nodeId": "7",
       "sourceId": "nocturna-site-comment-7",
-      "issueNumber": 1,
+      "issueNumber": 32,
       "threadKey": "7",
       "parentNodeId": "6",
       "parentThreadKey": "6",
       "depth": 5,
-      "parentCommentId": 6018562222,
+      "parentCommentId": 6155428398,
       "parentAuthor": "L Lawliet",
-      "commentId": 6018562386,
-      "commentUrl": "https://github.com/outocarlos003-lang/Nocturna/issues/1#issuecomment-6018562386",
+      "commentId": 6155428570,
+      "commentUrl": "https://github.com/outocarlos003-lang/Nocturna/issues/32#issuecomment-6155428570",
       "author": {
         "displayName": "Sasuke Uchiha",
         "role": "Respondendo a L Lawliet"
@@ -220,21 +220,21 @@
         "migrated": true
       },
       "rootNodeId": "2",
-      "rootCommentId": 6015397380,
+      "rootCommentId": 6155363234,
       "branchNodeId": "3"
     },
     {
       "nodeId": "8",
       "sourceId": "nocturna-site-comment-8",
-      "issueNumber": 1,
+      "issueNumber": 32,
       "threadKey": "8",
       "parentNodeId": "7",
       "parentThreadKey": "7",
       "depth": 6,
-      "parentCommentId": 6018562386,
+      "parentCommentId": 6155428570,
       "parentAuthor": "Sasuke Uchiha",
-      "commentId": 6018562544,
-      "commentUrl": "https://github.com/outocarlos003-lang/Nocturna/issues/1#issuecomment-6018562544",
+      "commentId": 6155428842,
+      "commentUrl": "https://github.com/outocarlos003-lang/Nocturna/issues/32#issuecomment-6155428842",
       "author": {
         "displayName": "Ranpo Edogawa",
         "role": "Respondendo a Sasuke Uchiha"
@@ -247,21 +247,21 @@
         "migrated": true
       },
       "rootNodeId": "2",
-      "rootCommentId": 6015397380,
+      "rootCommentId": 6155363234,
       "branchNodeId": "3"
     },
     {
       "nodeId": "9",
       "sourceId": "nocturna-site-comment-9",
-      "issueNumber": 1,
+      "issueNumber": 32,
       "threadKey": "9",
       "parentNodeId": "8",
       "parentThreadKey": "8",
       "depth": 7,
-      "parentCommentId": 6018562544,
+      "parentCommentId": 6155428842,
       "parentAuthor": "Ranpo Edogawa",
-      "commentId": 6018562731,
-      "commentUrl": "https://github.com/outocarlos003-lang/Nocturna/issues/1#issuecomment-6018562731",
+      "commentId": 6155429033,
+      "commentUrl": "https://github.com/outocarlos003-lang/Nocturna/issues/32#issuecomment-6155429033",
       "author": {
         "displayName": "Johan Liebert",
         "role": "Respondendo a Ranpo Edogawa"
@@ -274,21 +274,21 @@
         "migrated": true
       },
       "rootNodeId": "2",
-      "rootCommentId": 6015397380,
+      "rootCommentId": 6155363234,
       "branchNodeId": "3"
     },
     {
       "nodeId": "10",
       "sourceId": "nocturna-site-comment-10",
-      "issueNumber": 1,
+      "issueNumber": 32,
       "threadKey": "10",
       "parentNodeId": "9",
       "parentThreadKey": "9",
       "depth": 8,
-      "parentCommentId": 6018562731,
+      "parentCommentId": 6155429033,
       "parentAuthor": "Johan Liebert",
-      "commentId": 6018562971,
-      "commentUrl": "https://github.com/outocarlos003-lang/Nocturna/issues/1#issuecomment-6018562971",
+      "commentId": 6155429285,
+      "commentUrl": "https://github.com/outocarlos003-lang/Nocturna/issues/32#issuecomment-6155429285",
       "author": {
         "displayName": "Ranpo Edogawa",
         "role": "Respondendo a Johan Liebert"
@@ -301,21 +301,21 @@
         "migrated": true
       },
       "rootNodeId": "2",
-      "rootCommentId": 6015397380,
+      "rootCommentId": 6155363234,
       "branchNodeId": "3"
     },
     {
       "nodeId": "11",
       "sourceId": "nocturna-site-comment-11",
-      "issueNumber": 1,
+      "issueNumber": 32,
       "threadKey": "11",
       "parentNodeId": "10",
       "parentThreadKey": "10",
       "depth": 9,
-      "parentCommentId": 6018562971,
+      "parentCommentId": 6155429285,
       "parentAuthor": "Ranpo Edogawa",
-      "commentId": 6018563182,
-      "commentUrl": "https://github.com/outocarlos003-lang/Nocturna/issues/1#issuecomment-6018563182",
+      "commentId": 6155429792,
+      "commentUrl": "https://github.com/outocarlos003-lang/Nocturna/issues/32#issuecomment-6155429792",
       "author": {
         "displayName": "L Lawliet",
         "role": "Respondendo a Ranpo Edogawa"
@@ -328,21 +328,21 @@
         "migrated": true
       },
       "rootNodeId": "2",
-      "rootCommentId": 6015397380,
+      "rootCommentId": 6155363234,
       "branchNodeId": "3"
     },
     {
       "nodeId": "12",
       "sourceId": "nocturna-site-comment-12",
-      "issueNumber": 1,
+      "issueNumber": 32,
       "threadKey": "12",
       "parentNodeId": "11",
       "parentThreadKey": "11",
       "depth": 10,
-      "parentCommentId": 6018563182,
+      "parentCommentId": 6155429792,
       "parentAuthor": "L Lawliet",
-      "commentId": 6018563394,
-      "commentUrl": "https://github.com/outocarlos003-lang/Nocturna/issues/1#issuecomment-6018563394",
+      "commentId": 6155430170,
+      "commentUrl": "https://github.com/outocarlos003-lang/Nocturna/issues/32#issuecomment-6155430170",
       "author": {
         "displayName": "Light Yagami",
         "role": "Respondendo a L Lawliet"
@@ -355,21 +355,21 @@
         "migrated": true
       },
       "rootNodeId": "2",
-      "rootCommentId": 6015397380,
+      "rootCommentId": 6155363234,
       "branchNodeId": "3"
     },
     {
       "nodeId": "13",
       "sourceId": "nocturna-site-comment-13",
-      "issueNumber": 1,
+      "issueNumber": 32,
       "threadKey": "13",
       "parentNodeId": "12",
       "parentThreadKey": "12",
       "depth": 11,
-      "parentCommentId": 6018563394,
+      "parentCommentId": 6155430170,
       "parentAuthor": "Light Yagami",
-      "commentId": 6018563597,
-      "commentUrl": "https://github.com/outocarlos003-lang/Nocturna/issues/1#issuecomment-6018563597",
+      "commentId": 6155430491,
+      "commentUrl": "https://github.com/outocarlos003-lang/Nocturna/issues/32#issuecomment-6155430491",
       "author": {
         "displayName": "Ayanokoji Kiyotaka",
         "role": "Respondendo a Light Yagami"
@@ -382,21 +382,21 @@
         "migrated": true
       },
       "rootNodeId": "2",
-      "rootCommentId": 6015397380,
+      "rootCommentId": 6155363234,
       "branchNodeId": "3"
     },
     {
       "nodeId": "14",
       "sourceId": "nocturna-site-comment-14",
-      "issueNumber": 1,
+      "issueNumber": 32,
       "threadKey": "14",
       "parentNodeId": "13",
       "parentThreadKey": "13",
       "depth": 12,
-      "parentCommentId": 6018563597,
+      "parentCommentId": 6155430491,
       "parentAuthor": "Ayanokoji Kiyotaka",
-      "commentId": 6018563788,
-      "commentUrl": "https://github.com/outocarlos003-lang/Nocturna/issues/1#issuecomment-6018563788",
+      "commentId": 6155430800,
+      "commentUrl": "https://github.com/outocarlos003-lang/Nocturna/issues/32#issuecomment-6155430800",
       "author": {
         "displayName": "Osamu Dazai",
         "role": "Respondendo a Ayanokoji Kiyotaka"
@@ -409,21 +409,21 @@
         "migrated": true
       },
       "rootNodeId": "2",
-      "rootCommentId": 6015397380,
+      "rootCommentId": 6155363234,
       "branchNodeId": "3"
     },
     {
       "nodeId": "15",
       "sourceId": "nocturna-site-comment-15",
-      "issueNumber": 1,
+      "issueNumber": 32,
       "threadKey": "15",
       "parentNodeId": "14",
       "parentThreadKey": "14",
       "depth": 13,
-      "parentCommentId": 6018563788,
+      "parentCommentId": 6155430800,
       "parentAuthor": "Osamu Dazai",
-      "commentId": 6018563964,
-      "commentUrl": "https://github.com/outocarlos003-lang/Nocturna/issues/1#issuecomment-6018563964",
+      "commentId": 6155431079,
+      "commentUrl": "https://github.com/outocarlos003-lang/Nocturna/issues/32#issuecomment-6155431079",
       "author": {
         "displayName": "Sasuke Uchiha",
         "role": "Respondendo a Osamu Dazai"
@@ -436,21 +436,21 @@
         "migrated": true
       },
       "rootNodeId": "2",
-      "rootCommentId": 6015397380,
+      "rootCommentId": 6155363234,
       "branchNodeId": "3"
     },
     {
       "nodeId": "16",
       "sourceId": "nocturna-site-comment-16",
-      "issueNumber": 1,
+      "issueNumber": 32,
       "threadKey": "16",
       "parentNodeId": "15",
       "parentThreadKey": "15",
       "depth": 14,
-      "parentCommentId": 6018563964,
+      "parentCommentId": 6155431079,
       "parentAuthor": "Sasuke Uchiha",
-      "commentId": 6018564171,
-      "commentUrl": "https://github.com/outocarlos003-lang/Nocturna/issues/1#issuecomment-6018564171",
+      "commentId": 6155431308,
+      "commentUrl": "https://github.com/outocarlos003-lang/Nocturna/issues/32#issuecomment-6155431308",
       "author": {
         "displayName": "Osamu Dazai",
         "role": "Respondendo a Sasuke Uchiha"
@@ -463,21 +463,21 @@
         "migrated": true
       },
       "rootNodeId": "2",
-      "rootCommentId": 6015397380,
+      "rootCommentId": 6155363234,
       "branchNodeId": "3"
     },
     {
       "nodeId": "17",
       "sourceId": "nocturna-site-comment-17",
-      "issueNumber": 1,
+      "issueNumber": 32,
       "threadKey": "17",
       "parentNodeId": "16",
       "parentThreadKey": "16",
       "depth": 15,
-      "parentCommentId": 6018564171,
+      "parentCommentId": 6155431308,
       "parentAuthor": "Osamu Dazai",
-      "commentId": 6018564346,
-      "commentUrl": "https://github.com/outocarlos003-lang/Nocturna/issues/1#issuecomment-6018564346",
+      "commentId": 6155431534,
+      "commentUrl": "https://github.com/outocarlos003-lang/Nocturna/issues/32#issuecomment-6155431534",
       "author": {
         "displayName": "Sasuke Uchiha",
         "role": "Respondendo a Osamu Dazai"
@@ -490,21 +490,21 @@
         "migrated": true
       },
       "rootNodeId": "2",
-      "rootCommentId": 6015397380,
+      "rootCommentId": 6155363234,
       "branchNodeId": "3"
     },
     {
       "nodeId": "18",
       "sourceId": "nocturna-site-comment-18",
-      "issueNumber": 1,
+      "issueNumber": 32,
       "threadKey": "18",
       "parentNodeId": "17",
       "parentThreadKey": "17",
       "depth": 16,
-      "parentCommentId": 6018564346,
+      "parentCommentId": 6155431534,
       "parentAuthor": "Sasuke Uchiha",
-      "commentId": 6018564504,
-      "commentUrl": "https://github.com/outocarlos003-lang/Nocturna/issues/1#issuecomment-6018564504",
+      "commentId": 6155431788,
+      "commentUrl": "https://github.com/outocarlos003-lang/Nocturna/issues/32#issuecomment-6155431788",
       "author": {
         "displayName": "Johan Liebert",
         "role": "Respondendo a Sasuke Uchiha"
@@ -517,21 +517,21 @@
         "migrated": true
       },
       "rootNodeId": "2",
-      "rootCommentId": 6015397380,
+      "rootCommentId": 6155363234,
       "branchNodeId": "3"
     },
     {
       "nodeId": "19",
       "sourceId": "nocturna-site-comment-19",
-      "issueNumber": 1,
+      "issueNumber": 32,
       "threadKey": "19",
       "parentNodeId": "18",
       "parentThreadKey": "18",
       "depth": 17,
-      "parentCommentId": 6018564504,
+      "parentCommentId": 6155431788,
       "parentAuthor": "Johan Liebert",
-      "commentId": 6018564711,
-      "commentUrl": "https://github.com/outocarlos003-lang/Nocturna/issues/1#issuecomment-6018564711",
+      "commentId": 6155432088,
+      "commentUrl": "https://github.com/outocarlos003-lang/Nocturna/issues/32#issuecomment-6155432088",
       "author": {
         "displayName": "L Lawliet",
         "role": "Respondendo a Johan Liebert"
@@ -544,21 +544,21 @@
         "migrated": true
       },
       "rootNodeId": "2",
-      "rootCommentId": 6015397380,
+      "rootCommentId": 6155363234,
       "branchNodeId": "3"
     },
     {
       "nodeId": "20",
       "sourceId": "nocturna-site-comment-20",
-      "issueNumber": 1,
+      "issueNumber": 32,
       "threadKey": "20",
       "parentNodeId": "19",
       "parentThreadKey": "19",
       "depth": 18,
-      "parentCommentId": 6018564711,
+      "parentCommentId": 6155432088,
       "parentAuthor": "L Lawliet",
-      "commentId": 6018564851,
-      "commentUrl": "https://github.com/outocarlos003-lang/Nocturna/issues/1#issuecomment-6018564851",
+      "commentId": 6155432329,
+      "commentUrl": "https://github.com/outocarlos003-lang/Nocturna/issues/32#issuecomment-6155432329",
       "author": {
         "displayName": "Johan Liebert",
         "role": "Respondendo a L Lawliet"
@@ -571,21 +571,21 @@
         "migrated": true
       },
       "rootNodeId": "2",
-      "rootCommentId": 6015397380,
+      "rootCommentId": 6155363234,
       "branchNodeId": "3"
     },
     {
       "nodeId": "21",
       "sourceId": "nocturna-site-comment-21",
-      "issueNumber": 1,
+      "issueNumber": 32,
       "threadKey": "21",
       "parentNodeId": "20",
       "parentThreadKey": "20",
       "depth": 19,
-      "parentCommentId": 6018564851,
+      "parentCommentId": 6155432329,
       "parentAuthor": "Johan Liebert",
-      "commentId": 6018565002,
-      "commentUrl": "https://github.com/outocarlos003-lang/Nocturna/issues/1#issuecomment-6018565002",
+      "commentId": 6155432594,
+      "commentUrl": "https://github.com/outocarlos003-lang/Nocturna/issues/32#issuecomment-6155432594",
       "author": {
         "displayName": "Ranpo Edogawa",
         "role": "Última resposta"
@@ -598,21 +598,21 @@
         "migrated": true
       },
       "rootNodeId": "2",
-      "rootCommentId": 6015397380,
+      "rootCommentId": 6155363234,
       "branchNodeId": "3"
     },
     {
       "nodeId": "22",
       "sourceId": "nocturna-site-comment-22",
-      "issueNumber": 1,
+      "issueNumber": 32,
       "threadKey": "22",
       "parentNodeId": "2",
       "parentThreadKey": "2",
       "depth": 1,
-      "parentCommentId": 6015397380,
+      "parentCommentId": 6155363234,
       "parentAuthor": "Johan Liebert",
-      "commentId": 6018561661,
-      "commentUrl": "https://github.com/outocarlos003-lang/Nocturna/issues/1#issuecomment-6018561661",
+      "commentId": 6155427603,
+      "commentUrl": "https://github.com/outocarlos003-lang/Nocturna/issues/32#issuecomment-6155427603",
       "author": {
         "displayName": "Itachi Uchiha",
         "role": "Respondendo a Johan Liebert"
@@ -625,21 +625,21 @@
         "migrated": true
       },
       "rootNodeId": "2",
-      "rootCommentId": 6015397380,
+      "rootCommentId": 6155363234,
       "branchNodeId": "22"
     },
     {
       "nodeId": "23",
       "sourceId": "nocturna-site-comment-23",
-      "issueNumber": 1,
+      "issueNumber": 32,
       "threadKey": "23",
       "parentNodeId": "22",
       "parentThreadKey": "22",
       "depth": 2,
-      "parentCommentId": 6018561661,
+      "parentCommentId": 6155427603,
       "parentAuthor": "Itachi Uchiha",
-      "commentId": 6018561945,
-      "commentUrl": "https://github.com/outocarlos003-lang/Nocturna/issues/1#issuecomment-6018561945",
+      "commentId": 6155428025,
+      "commentUrl": "https://github.com/outocarlos003-lang/Nocturna/issues/32#issuecomment-6155428025",
       "author": {
         "displayName": "Satoru Gojo",
         "role": "Respondendo a Itachi Uchiha"
@@ -652,7 +652,7 @@
         "migrated": true
       },
       "rootNodeId": "2",
-      "rootCommentId": 6015397380,
+      "rootCommentId": 6155363234,
       "branchNodeId": "22"
     }
   ],
