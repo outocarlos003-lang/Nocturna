@@ -22,9 +22,18 @@ for (const [index, match] of [...html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/sc
   }
 }
 
+for (const file of ["dark-romanticism.js", "cover-interactions.js"]) {
+  try {
+    new vm.Script(fs.readFileSync(file, "utf8"), { filename: file });
+    checked++;
+  } catch (error) {
+    errors.push(`${file}: ${error.stack || error.message}`);
+  }
+}
+
 if (errors.length) {
-  console.error("Inline JavaScript syntax errors:\n" + errors.join("\n"));
+  console.error("Browser JavaScript syntax errors:\n" + errors.join("\n"));
   process.exit(1);
 }
 
-console.log(`Inline JavaScript syntax validation passed (${checked} scripts checked).`);
+console.log(`Browser JavaScript syntax validation passed (${checked} scripts checked).`);
