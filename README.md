@@ -77,6 +77,10 @@ Depois de publicar o Worker, coloque a URL pública em `comentarios/reply-api-co
 
 O `ALLOWED_ORIGIN` do Worker é `https://outocarlos003-lang.github.io`; altere-o se o domínio público da aplicação mudar.
 
+## Protocolo Promptária–Nocturna
+
+A especificação operacional está em [`docs/PROTOCOLO-PROMPTARIA-NOCTURNA.md`](docs/PROTOCOLO-PROMPTARIA-NOCTURNA.md). A consulta ao conteúdo editorial da Nocturna ocorre somente quando necessária à demanda; a mera conexão com o repositório não autoriza leitura preventiva. Registre o universo consultado, o estado de leitura por unidade e as evidências no [modelo de cobertura](docs/REGISTRO-COBERTURA-PROMPTARIA-NOCTURNA.md). O validador `scripts/validate-promptaria-protocol.mjs` verifica a presença do protocolo e os campos mínimos do modelo, e é executado pelo workflow de validação existente. Isso valida a estrutura documental, não prova que uma execução futura consultou ou leu o acervo.
+
 ## Validação
 
 Valide o acervo editorial e a continuidade das coleções/capítulos:
