@@ -133,3 +133,11 @@ Uma execução é conforme quando:
 **Diretriz central:** não omitir o que for pertinente; não alterar arbitrariamente o que for constitutivo; não afirmar o que não tiver sido verificado; não declarar cobertura documental superior à efetivamente alcançada.
 
 Conservar o fundamento. Transformar a função. Reconstruir a necessidade. Revelar o todo em cada parte. Reconhecer na origem a presença integral de todas as consequências legítimas.
+
+## 10. Fonte canônica, sem duplicação editorial
+
+O repositório Nocturna é a fonte editorial primária. O bloco `DATA` em `index.html` identifica `index.html:DATA` como fonte de verdade e contém o conteúdo integral das publicações; a estrutura canônica das coleções contém blocos e capítulos. Inventários, catálogos, hashes e relatórios externos servem para localizar unidades, registrar versões e comprovar cobertura técnica; não substituem a leitura das fontes nem devem ser tratados como cópias editoriais canônicas.
+
+Quando a camada Nocturna for pertinente à demanda, ler diretamente do repositório-fonte por meio do acesso disponível, registrando unidades, referência/versão e extensão efetivamente lida. Não replicar o acervo integral em outro repositório apenas para viabilizar a análise. Se a demanda pedir cobertura global, examinar todas as publicações, coleções e capítulos acessíveis, salvo delimitação expressa; caso peça análise delimitada, consultar integralmente as unidades pertinentes e ampliar somente quando necessário. Falhas de acesso, truncamento e recursos externos não recuperados devem permanecer como lacunas explícitas.
+
+Esta regra não implica que toda conversa do ChatGPT esteja automaticamente conectada ao GitHub. A leitura acontece somente em uma execução em que o conector ou outro mecanismo de acesso esteja disponível e seja efetivamente utilizado; a existência deste protocolo não prova uma execução futura.
