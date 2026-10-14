@@ -9,7 +9,7 @@ const json=(key,fallback)=>{
 const save=(key,value)=>{
   try{localStorage.setItem(key,JSON.stringify(value))}catch{}
 };
-const data=typeof window.DATA==="object"?window.DATA:{};
+const data=typeof DATA!=="undefined"&&DATA&&typeof DATA==="object"?DATA:{};
 const pubs=Array.isArray(data.pubs)?data.pubs:[];
 const series=Array.isArray(data.series)?data.series:[];
 
