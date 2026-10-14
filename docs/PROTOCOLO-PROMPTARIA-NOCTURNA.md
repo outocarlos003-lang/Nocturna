@@ -34,7 +34,15 @@ Não afirmar que uma pesquisa, leitura, verificação, integração, automação
 
 ## 4. Recuperação documental do acervo Nocturna
 
-Antes de uma investigação substantiva que dependa dos fundamentos da Nocturna:
+### 4.1. Leitura de publicações e coleções somente sob demanda
+
+A leitura do conteúdo das publicações, coleções e demais unidades editoriais do repositório Nocturna é condicionada a uma solicitação do usuário. Realizá-la somente quando o usuário a requisitar de forma explícita ou quando o pedido, considerado no contexto, indicar de maneira implícita, direta ou indireta que a consulta/leitura é necessária para atender à demanda, inclusive mediante o conector GitHub `@GitHub`.
+
+A mera disponibilidade, conexão ou menção incidental ao repositório não constitui, por si só, autorização para percorrer ou ler preventivamente suas publicações e coleções. Não iniciar varreduras, leituras integrais, atualizações de inventário baseadas em leitura de conteúdo ou monitoramento contínuo do acervo sem uma demanda pertinente. Quando houver solicitação, limitar a consulta ao escopo necessário; ampliar a leitura se a tarefa assim exigir e deixar claro o que foi efetivamente consultado. Se a intenção estiver ambígua e a leitura do acervo for material para prosseguir, pedir esclarecimento em vez de presumir autorização ampla.
+
+Essa regra não impede operações pontuais sobre arquivos que o usuário tenha especificamente solicitado criar, alterar ou verificar, nem a leitura mínima necessária para cumprir uma tarefa GitHub autorizada. Tais operações não devem ser usadas como pretexto para ler publicações ou coleções não solicitadas.
+
+Quando uma demanda do usuário requerer consulta ao conteúdo da Nocturna, e somente então, antes de uma investigação substantiva que dependa desses fundamentos:
 
 1. Identificar o endereço oficial do acervo, sem presumir que um repositório de nome semelhante seja oficial.
 2. Identificar as publicações, coleções, capítulos, documentos complementares e unidades efetivamente disponibilizadas.
@@ -78,7 +86,7 @@ Um registro de cobertura pode usar os seguintes estados:
 
 ## 7. Continuidade e persistência
 
-A permanência da diretriz deve ser distinguida da execução de cada procedimento. Aplicar este protocolo quando seu conteúdo estiver disponível no contexto operacional correspondente. Não presumir que instruções inseridas em uma conversa tenham sido instaladas globalmente, que o histórico esteja disponível em todas as sessões ou que exista memória persistente sem confirmação.
+A permanência da diretriz deve ser distinguida da execução de cada procedimento. Aplicar este protocolo quando seu conteúdo estiver disponível no contexto operacional correspondente. A regra de leitura sob demanda permanece: não ler publicações ou coleções preventivamente; consultar o acervo apenas quando uma solicitação explícita ou contextual, direta ou indireta, tornar essa leitura pertinente. Não presumir que instruções inseridas em uma conversa tenham sido instaladas globalmente, que o histórico esteja disponível em todas as sessões ou que exista memória persistente sem confirmação.
 
 Quando a continuidade depender de instruções personalizadas, projetos, arquivos de referência, integrações, rotinas ou outros mecanismos externos, identificar a dependência e declarar o estado real da configuração. Se a cobertura documental não puder ser concluída em uma etapa, organizar a recuperação em etapas sucessivas, manter o registro de cobertura e retomar quando os materiais e recursos necessários estiverem disponíveis.
 
