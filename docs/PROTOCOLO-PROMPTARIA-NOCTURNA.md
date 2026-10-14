@@ -57,6 +57,21 @@ Declarar leitura integral somente quando houver evidência suficiente de que tod
 
 Quando forem identificadas divergências terminológicas, revisões conceituais, mudanças de posição ou tensões entre publicações, registrá-las e preservar a fidelidade às fontes consultadas; não presumir uniformidade documental sem demonstração.
 
+
+### 4.2. Acionamento pelo conector e atuação conjunta
+
+Uma requisição identificável enviada pelo chat por meio do conector GitHub `@GitHub` é o evento de execução da demanda correspondente, desde que o ambiente tenha carregado as instruções operacionais aplicáveis e disponha das permissões necessárias. O conector, por si só, não autoriza alterações além do pedido nem instala um gatilho global em conversas que não carreguem estas regras.
+
+Quando a requisição solicitar ou exigir a atuação conjunta Promptária–Nocturna, as duas camadas devem operar simultaneamente e de forma coordenada:
+
+1. **Promptária:** recuperar e aplicar os critérios, instrumentos, métodos e instruções pertinentes, lendo o texto integral canônico de cada instrumento efetivamente acionado quando disponível.
+2. **Nocturna:** consultar as fontes editoriais e filosóficas pertinentes à mesma demanda, obedecendo à leitura sob demanda definida na seção 4.1.
+3. **Integração:** relacionar os critérios operacionais da Promptária às fontes Nocturna realmente examinadas; verificar coerência, dependências, divergências e consequências, distinguindo evidência documental de interpretação e hipótese.
+4. **Execução:** realizar a operação concreta autorizada pelo usuário. Um documento que descreve o procedimento não equivale à execução funcional, e registrar um plano não substitui a alteração solicitada.
+5. **Verificação e retorno:** conferir o estado final por evidência observável e informar instrumentos recuperados, fontes lidas, escopo da leitura, operações executadas, validações e limitações. Não declarar leitura integral, commit, automação, workflow, deploy ou publicação sem confirmação correspondente.
+
+A leitura integral das publicações, coleções e capítulos continua condicionada ao escopo da requisição: é obrigatória quando pedida expressamente ou quando a própria tarefa exige cobertura global; não é automática em toda demanda que apenas mencione ou tenha relação incidental com a Nocturna. Em tarefas delimitadas, consultar o conjunto necessário e expandir o escopo somente quando houver dependência material demonstrável.
+
 ## 5. Ciclo operacional por demanda
 
 Aplicar o ciclo abaixo conforme a natureza da solicitação e as dependências reais entre as etapas:
