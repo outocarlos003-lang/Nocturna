@@ -8,7 +8,7 @@ on:
     types: [created, edited, deleted]
 
 concurrency:
-  group: nocturna-canonical-comments-issue-1
+  group: nocturna-canonical-comments-issue-32
   cancel-in-progress: false
 
 permissions:
@@ -19,7 +19,7 @@ permissions:
 
 jobs:
   normalize:
-    if: ${{ github.event_name != 'issue_comment' || (github.event.issue.number == 1 && !github.event.issue.pull_request && (github.event.action != 'created' || contains(github.event.comment.body, '<!-- nocturna-reply:v1'))) }}
+    if: ${{ github.event_name != 'issue_comment' || (github.event.issue.number == 32 && !github.event.issue.pull_request && (github.event.action != 'created' || contains(github.event.comment.body, '<!-- nocturna-reply:v1'))) }}
     runs-on: ubuntu-latest
     environment:
       name: github-pages
@@ -37,7 +37,7 @@ jobs:
       - name: Test genealogical invariants
         run: node scripts/test-genealogy.mjs
 
-      - name: Materialize root comment when Issue #1 exists
+      - name: Materialize root comment when Issue #32 exists
         env:
           GITHUB_TOKEN: ${{ github.token }}
         run: node scripts/bootstrap-root-comment.mjs
@@ -58,7 +58,7 @@ jobs:
       - name: Validate normalized projection
         run: node scripts/validate-comments.mjs
 
-      - name: Publish site genealogy to Issue #1
+      - name: Publish site genealogy to Issue #32
         env:
           GITHUB_TOKEN: ${{ github.token }}
         run: node scripts/publish-genealogy-to-github.mjs
