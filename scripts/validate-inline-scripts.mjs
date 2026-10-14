@@ -18,7 +18,7 @@ for (const [index, match] of [...html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/sc
   try {
     new vm.Script(source, { filename: `index.html#${id}` });
   } catch (error) {
-    errors.push(`${id}: ${error.message}`);
+    errors.push(`${id}: ${error.stack || error.message}`);
   }
 }
 
