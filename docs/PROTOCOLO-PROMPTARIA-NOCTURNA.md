@@ -18,6 +18,26 @@ Aplicar, nas demandas pertinentes, o instrumento promptual subjacente ao título
 
 Tratar esse instrumento como referência normativa para a aplicação da arquitetura filosófica da Nocturna. Preservar os fundamentos e procedimentos estabelecidos nele, sem repetição sintática desnecessária e sem atribuir ao instrumento conteúdo documental que ainda não tenha sido verificado.
 
+
+### Pré-configuração normativa: integralidade funcional do instrumento Nocturna
+
+**Regra de precedência:** o título acima aciona o instrumento promptual subjacente como unidade funcional integral. Não o reduzir à enumeração nominal de métodos, a um resumo, a uma seleção de técnicas ou a uma síntese redigida pelo executor. A lista de métodos deste protocolo é uma operacionalização mínima de verificação, não substitui nem esgota o conteúdo canônico do instrumento.
+
+Em cada demanda pertinente, executar obrigatoriamente este ciclo:
+
+1. **Recuperar o conteúdo canônico:** localizar o texto integral do instrumento e suas referências normativas no repositório-fonte Nocturna e nos instrumentos Promptária relacionados. Ler os documentos pertinentes em toda a extensão acessível; não tratar título, resultado de busca, excerto, sumário ou menção cruzada como texto integral.
+2. **Inventariar os requisitos:** extrair e registrar os fundamentos, objetivos, operações, relações entre operações, condições de aplicação, restrições, critérios de validação, saídas esperadas e regras de fechamento que o texto efetivamente estabelecer. Preservar também as relações entre esses elementos, não apenas seus nomes.
+3. **Mapear para a demanda:** relacionar cada requisito canônico ao objetivo concreto, indicando como será aplicado, que evidência o satisfaz e quais dependências possui. Um requisito só pode ser considerado inaplicável quando houver justificativa contextual explícita; não pode ser omitido silenciosamente.
+4. **Executar de forma integrada e recursiva:** aplicar os requisitos pertinentes em coordenação, permitindo que resultados de uma etapa revisem hipóteses, relações e conclusões de etapas anteriores. Não impor uma sequência rígida quando o instrumento exigir iteração ou dependência mútua.
+5. **Verificar derivações e totalidade:** conferir a correspondência entre fontes, premissas, relações causais, interpretações e conclusões; testar contradições, alternativas e lacunas; verificar se partes, escalas, princípio, origem, função e finalidade foram articulados quando pertinentes.
+6. **Fechar com rastreabilidade:** produzir uma matriz ou registro conciso requisito → aplicação → evidência/resultado → estado (cumprido, parcial, inaplicável com justificativa ou pendente). Distinguir conteúdo documentado, inferência, hipótese e indeterminação.
+7. **Tratar indisponibilidade com honestidade:** se o texto canônico integral não for encontrado ou acessível, registrar a busca e a lacuna, aplicar somente os requisitos que estejam documentados de modo verificável e identificar o trabalho como aplicação parcial/provisória. Não alegar que o instrumento integral foi executado nem preencher seu conteúdo ausente por invenção.
+
+**Critério de conformidade:** a execução só pode ser descrita como integral dentro do escopo quando o texto canônico relevante tiver sido recuperado, todos os requisitos pertinentes tiverem sido mapeados e aplicados ou justificados, as derivações tiverem sido verificadas e as pendências materiais estiverem explicitadas. “Integralidade” significa fidelidade ao instrumento completo e à sua estrutura relacional, não aplicação indiscriminada de cada operação a qualquer tarefa.
+
+A pré-configuração orienta futuras execuções que carreguem ou recuperem estas regras. A gravação deste texto no GitHub não instala, por si só, um gatilho global nem garante execução automática em conversas sem acesso a este protocolo.
+
+
 ## 3. Ostensividade e fidelidade
 
 A aplicação da Promptária deve ser ostensiva e demonstrável de modo proporcional à complexidade da demanda. Identificar, recuperar e aplicar os instrumentos, funções, métodos e instruções pertinentes que estejam efetivamente disponíveis. Preservar seus elementos constitutivos; adaptar a aplicação ao contexto sem omitir elementos relevantes, substituir métodos arbitrariamente ou alterar suas funções constitutivas.
