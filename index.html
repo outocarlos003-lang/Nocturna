@@ -360,5 +360,6 @@ render();addEventListener("storage",e=>{if(e.key===RP)render()});addEventListene
 </script>
 <style id="nocturna-remove-redundant-controls">#nocturna-neural-launcher,#nocturna-neural-panel{display:none!important;visibility:hidden!important;pointer-events:none!important}</style>
 <script id="nocturna-remove-redundant-controls-script">(()=>{"use strict";const remove=()=>{document.querySelectorAll("#nocturna-neural-launcher,#nocturna-neural-panel,#nn-open,#nn-explore").forEach(e=>e.remove());document.querySelectorAll("button,a").forEach(e=>{const t=(e.textContent||"").replace(/\\s+/g," ").trim();if(t==="⌕ Pesquisa neural"||t==="⇄ Explorar")e.remove()})};remove();new MutationObserver(remove).observe(document.documentElement,{childList:true,subtree:true})})();</script>
+<script id="nocturna-dedupe-publication-covers">(()=>{"use strict";const fix=()=>{document.querySelectorAll(".grid .card").forEach(card=>{if(!card.querySelector('a[href*="/artigos/"]'))return;const seen=new Set();card.querySelectorAll("img").forEach(img=>{const src=(img.getAttribute("src")||"").trim();if(!src)return;let key=src;try{key=new URL(src,location.href).pathname+new URL(src,location.href).search}catch{}if(seen.has(key)){img.remove()}else seen.add(key)})})};fix();new MutationObserver(fix).observe(document.documentElement,{childList:true,subtree:true})})();</script>
 </body>
 </html>
