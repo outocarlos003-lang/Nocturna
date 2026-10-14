@@ -3,17 +3,22 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="robots" content="noindex,nofollow">
-<title>Área indisponível · Nocturna</title>
+<meta name="robots" content="index,follow">
+<title>Pensadores — Nocturna</title>
 <style>
-:root{color-scheme:dark}*{box-sizing:border-box}body{margin:0;min-height:100vh;display:grid;place-items:center;background:#0d0e10;color:#eeeae4;font:16px/1.6 Arial,Helvetica,sans-serif;padding:24px}.panel{max-width:620px;text-align:center;border:1px solid #30343a;border-radius:16px;background:#15171a;padding:32px}.panel h1{font:700 1.7rem Georgia,serif;margin:0 0 12px}.panel p{color:#b6b5b8;margin:0 0 24px}.home{display:inline-block;padding:11px 18px;border:1px solid #8f5268;border-radius:8px;background:#633547;color:#fff;text-decoration:none}.home:hover{background:#7b4359}
+:root{color-scheme:dark}html,body{margin:0;min-height:100%;background:#101011}body{overflow-y:auto;overflow-x:hidden}.topbar{width:100%;max-width:1120px;margin:0 auto;padding:12px;display:flex;justify-content:center;align-items:center;background:#101011;position:relative;z-index:2;box-sizing:border-box}.home{display:flex;align-items:center;justify-content:center;width:100%;max-width:1120px;min-height:44px;padding:0 16px;border:1px solid #30343a;border-radius:10px;background:#15171a;color:#eeeae4;font:600 .95rem Arial,Helvetica,sans-serif;text-decoration:none}.home:hover{background:#3b2630;border-color:#8f5268;color:#fff}.back{display:none!important}.frame{display:block;width:100%;max-width:100%;height:100vh;min-height:720px;margin:0;border:0;background:#101011;overflow:hidden}@media(max-width:650px){.topbar{width:100%;padding:10px 12px 8px}.home{width:100%;justify-content:center}}
 </style>
 </head>
 <body>
-<main class="panel">
-<h1>Área de comentários desativada</h1>
-<p>A Nocturna não oferece mais participação pública por comentários nesta página.</p>
-<a class="home" href="/Nocturna/">Voltar à Nocturna</a>
-</main>
+<div class="topbar"><a class="home" href="/Nocturna/" aria-label="Ir para a página inicial da Nocturna">⌂ Home</a></div>
+<iframe id="quotes-frame" class="frame" src="./base.html?embed=1&v=20261014-restore" title="Pensadores da Nocturna" loading="eager"></iframe>
+<script>
+(()=>{"use strict";
+const frame=document.querySelector("#quotes-frame");
+const resize=height=>{const value=Number(height);if(Number.isFinite(value)&&value>0)frame.style.height=Math.max(value,720)+"px"};
+addEventListener("message",event=>{if(event.origin!==location.origin||event.source!==frame.contentWindow||event.data?.type!=="nocturna-quotes-height")return;resize(event.data.height)});
+frame.addEventListener("load",()=>{try{resize(frame.contentDocument.documentElement.scrollHeight)}catch{}});
+})();
+</script>
 </body>
 </html>
