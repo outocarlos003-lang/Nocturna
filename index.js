@@ -176,8 +176,12 @@ export default {
       }
 
       const sourceId = `github-issue32-reply-${input.requestId}`;
-      const allComments = await ghGet(`/repos/${REPO}/issues/${ISSUE}/comments?per_page=100`, token);
-      const existing = allComments.find(comment => String(comment.body || "").includes(`source-id=${sourceId}`));
+      let existing = null;
+      for (let page = 1; ; page++) {
+        const comments = await ghGet(`/repos/${REPO}/issues/${ISSUE}/comments?per_page=100&page=${page}`, token);
+        existing = comments.find(comment => String(comment.body || "").includes(`source-id=${sourceId}`)) || null;
+        if (existing || comments.length < 100) break;
+      }
       if (existing) return json({ ok: true, comment_id: existing.id, comment_url: existing.html_url, parent_url: parentLink, message: "Resposta já publicada; nenhuma nova identidade foi criada." }, 200, origin);
 
       const body = [
