@@ -123,6 +123,21 @@ Um registro de cobertura pode usar os seguintes estados:
 
 ## 7. Continuidade e persistência
 
+## Regra transversal de continuidade para demandas futuras
+
+Esta regra aplica-se a toda solicitação futura que seja materialmente semelhante à demanda atual ou que acione, invoque, cite pelo título ou dependa de instrumentos Promptária/Nocturna — inclusive quando a solicitação usar `@GitHub`, pedir análise, redação, pesquisa, reconstrução, revisão, implementação ou atualização documental. Não limitar a regra a pedidos que repitam literalmente as mesmas palavras.
+
+Antes de executar cada demanda semelhante:
+1. **Recuperar a regra vigente:** consultar este protocolo e os documentos normativos pertinentes no repositório-fonte; não confiar apenas na memória da conversa, em resumos anteriores ou na enumeração de alguns métodos.
+2. **Reconhecer a versão aplicável:** identificar a revisão normativa mais recente que esteja acessível e tratar as atualizações aprovadas como parte das instruções vigentes para a execução, preservando o histórico e evitando ressuscitar versões superadas.
+3. **Aplicar integralidade funcional:** recuperar o conteúdo canônico completo do instrumento acionado na extensão exigida pela tarefa, inventariar seus requisitos e relações, mapear cada requisito pertinente à demanda e aplicá-lo ou justificar explicitamente sua inaplicabilidade. Não substituir o instrumento por seleção arbitrária de métodos.
+4. **Verificar antes de concluir:** conferir cobertura, derivações, evidências, pendências e limitações; distinguir o que foi lido, aplicado, inferido, ficou inacessível ou permanece pendente. Se o texto integral não estiver disponível, classificar a execução como parcial/provisória e não alegar conformidade integral.
+5. **Manter continuidade verificável:** quando uma atualização normativa for solicitada e autorizada, registrar a regra no ponto normativo central e nos pontos de entrada pertinentes, atualizar referências cruzadas necessárias e verificar por leitura posterior que o texto ficou gravado. Não considerar a mera resposta em chat como persistência documental.
+6. **Não confundir persistência documental com acionamento automático:** os arquivos no GitHub são a fonte normativa versionada para execuções que os consultem; sua existência não garante que toda conversa futura os carregue. Em cada contexto futuro, aplicar esta regra quando ela estiver disponível ou puder ser recuperada por uma integração efetivamente acessível. Não afirmar que foi criada memória global ou automação técnica sem evidência.
+
+**Critério de conformidade futura:** uma demanda semelhante só está em conformidade com esta regra quando a versão normativa acessível foi consultada, o instrumento aplicável foi recuperado na extensão necessária, os requisitos pertinentes foram rastreados até a aplicação/evidência e as limitações foram declaradas. Esta diretriz é transversal e cumulativa: complementa, não substitui nem reduz, os protocolos específicos dos instrumentos.
+
+
 A permanência da diretriz deve ser distinguida da execução de cada procedimento. Aplicar este protocolo quando seu conteúdo estiver disponível no contexto operacional correspondente. A regra de leitura sob demanda permanece: não ler publicações ou coleções preventivamente; consultar o acervo apenas quando uma solicitação explícita ou contextual, direta ou indireta, tornar essa leitura pertinente. Não presumir que instruções inseridas em uma conversa tenham sido instaladas globalmente, que o histórico esteja disponível em todas as sessões ou que exista memória persistente sem confirmação.
 
 Quando a continuidade depender de instruções personalizadas, projetos, arquivos de referência, integrações, rotinas ou outros mecanismos externos, identificar a dependência e declarar o estado real da configuração. Se a cobertura documental não puder ser concluída em uma etapa, organizar a recuperação em etapas sucessivas, manter o registro de cobertura e retomar quando os materiais e recursos necessários estiverem disponíveis.
