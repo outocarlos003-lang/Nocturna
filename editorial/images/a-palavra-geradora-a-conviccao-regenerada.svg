@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" role="img" aria-labelledby="t d">
+<title id="t">A Palavra Geradora à Convicção Regenerada</title>
+<desc id="d">Arte dark romanticism com uma palavra luminosa atravessando a escuridão em direção a um coração simbólico.</desc>
+<defs>
+  <radialGradient id="bg" cx="58%" cy="45%" r="75%"><stop offset="0" stop-color="#3a1726"/><stop offset=".48" stop-color="#171218"/><stop offset="1" stop-color="#08080b"/></radialGradient>
+  <linearGradient id="beam" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f0d9bd" stop-opacity="0"/><stop offset=".5" stop-color="#f0d9bd" stop-opacity=".8"/><stop offset="1" stop-color="#b34362" stop-opacity="0"/></linearGradient>
+  <radialGradient id="heart" cx="50%" cy="45%" r="65%"><stop offset="0" stop-color="#f0d9bd"/><stop offset=".18" stop-color="#d2b77f"/><stop offset=".55" stop-color="#711d39"/><stop offset="1" stop-color="#1a0d14"/></radialGradient>
+  <filter id="glow"><feGaussianBlur stdDeviation="18" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  <filter id="soft"><feGaussianBlur stdDeviation="45"/></filter>
+</defs>
+<rect width="1600" height="1000" fill="url(#bg)"/>
+<path d="M0 760 C240 620 310 820 520 700 S860 540 1080 690 S1370 820 1600 610 V1000 H0Z" fill="#0b0a0d" opacity=".8"/>
+<g opacity=".35" filter="url(#soft)"><circle cx="1120" cy="470" r="230" fill="#9c2d49"/><circle cx="820" cy="500" r="120" fill="#d2b77f"/></g>
+<path d="M-50 160 L1180 690 L920 760 L-70 270Z" fill="url(#beam)" opacity=".42" filter="url(#glow)"/>
+<path d="M0 145 C360 255 560 330 880 505" fill="none" stroke="#e0bfae" stroke-width="3" opacity=".7"/>
+<g transform="translate(1020 555)">
+  <path d="M0 180 C-115 70 -115 -80 0 -120 C115 -80 115 70 0 180Z" fill="url(#heart)" stroke="#d2b77f" stroke-width="5" opacity=".94"/>
+  <path d="M0 160 C-10 65 -5 10 0 -35 C5 10 10 65 0 160Z" fill="#08080b" opacity=".75"/>
+  <path d="M-10 -30 C-70 -70 -90 -145 -40 -175 C-5 -195 18 -165 0 -125 C-18 -165 5 -195 40 -175 C90 -145 70 -70 10 -30" fill="#171218" stroke="#e0bfae" stroke-width="3"/>
+</g>
+<g transform="translate(360 410)" fill="#08080b" stroke="#493941" stroke-width="4">
+  <path d="M0 330 C70 210 120 140 180 100 C245 55 315 80 340 140 C360 188 325 240 275 260 L220 285 L170 390Z"/>
+  <circle cx="255" cy="105" r="58"/>
+  <path d="M300 105 Q370 125 415 170" fill="none" stroke="#e0bfae" stroke-width="10" stroke-linecap="round"/>
+</g>
+<g fill="#e0bfae" font-family="Georgia,serif" text-anchor="middle">
+  <text x="790" y="220" font-size="72" opacity=".92">PALAVRA</text>
+  <text x="790" y="285" font-size="28" letter-spacing="9" opacity=".65">OUVIR · REVELAÇÃO · FÉ</text>
+</g>
+<g stroke="#d2b77f" opacity=".38" fill="none"><path d="M180 820 Q800 600 1430 830"/><path d="M230 865 Q800 675 1380 870"/><circle cx="1020" cy="555" r="245"/></g>
+</svg>
