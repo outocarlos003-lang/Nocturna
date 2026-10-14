@@ -358,5 +358,7 @@ const render=()=>{if(!isHome()){document.querySelectorAll(".home-reading").forEa
 render();addEventListener("storage",e=>{if(e.key===RP)render()});addEventListener("hashchange",()=>setTimeout(render,0));
 })();
 </script>
+<style id="nocturna-remove-redundant-controls">#nocturna-neural-launcher,#nocturna-neural-panel{display:none!important;visibility:hidden!important;pointer-events:none!important}</style>
+<script id="nocturna-remove-redundant-controls-script">(()=>{"use strict";const remove=()=>{document.querySelectorAll("#nocturna-neural-launcher,#nocturna-neural-panel,#nn-open,#nn-explore").forEach(e=>e.remove());document.querySelectorAll("button,a").forEach(e=>{const t=(e.textContent||"").replace(/\\s+/g," ").trim();if(t==="⌕ Pesquisa neural"||t==="⇄ Explorar")e.remove()})};remove();new MutationObserver(remove).observe(document.documentElement,{childList:true,subtree:true})})();</script>
 </body>
 </html>
