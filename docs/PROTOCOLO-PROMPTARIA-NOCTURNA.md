@@ -92,7 +92,7 @@ Quando a continuidade depender de instruções personalizadas, projetos, arquivo
 
 ## 8. Registro mínimo por execução
 
-Quando pertinente e proporcional à complexidade, registrar:
+Quando pertinente e proporcional à complexidade, registrar. Para uniformizar e tornar auditável esse registro, usar o modelo [`docs/REGISTRO-COBERTURA-PROMPTARIA-NOCTURNA.md`](REGISTRO-COBERTURA-PROMPTARIA-NOCTURNA.md), preenchendo somente os campos aplicáveis à demanda e preservando evidências verificáveis:
 - demanda e escopo;
 - instrumentos da Promptária efetivamente disponíveis e aplicados;
 - endereço do acervo consultado e fontes identificáveis;
