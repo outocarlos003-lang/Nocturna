@@ -1,4 +1,8 @@
+# Referência ao Protocolo-Mestre Promptária
 
+Para tarefas neste repositório acionadas por `@GitHub`, consulte o protocolo canônico em [Prompt-ria — Protocolo-Mestre de acionamento genérico](https://github.com/outocarlos003-lang/Prompt-ria/blob/main/docs/PROTOCOLO-MESTRE-ACIONAMENTO-GENERICO-PROMPTARIA.md). Aplique o ciclo de reconhecimento de instrumentos, recuperação de fontes, determinação de pertinência, execução, verificação e relato rastreável conforme o escopo da tarefa.
+
+Esta referência complementa — não substitui — as regras locais Nocturna e a integração Promptária–Nocturna abaixo. Preserve a distinção entre instruções disponíveis neste repositório e configuração efetiva de outros ambientes: a referência GitHub não ativa automaticamente o protocolo em todas as conversas ou modelos do ChatGPT.
 
 ## Integração operacional Promptária–Nocturna
 
