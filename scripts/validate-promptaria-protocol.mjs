@@ -25,6 +25,7 @@ if (!fs.existsSync(path.join(root, protocolPath))) {
     "## 7. Continuidade e persistência",
     "## 8. Registro mínimo por execução",
     "## 9. Critério de conformidade",
+    "Quando a Nocturna for ativada como camada documental global em uma atuação Promptária–Nocturna, o padrão é inventariar e examinar integralmente todo o universo acessível de publicações, coleções e capítulos de coleções",
     "não comprova que o acervo Nocturna tenha sido integralmente recuperado ou lido",
     "Lido integralmente",
     "Lido parcialmente",
