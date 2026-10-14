@@ -20,6 +20,12 @@ jobs:
         with:
           node-version: 22
 
+      - name: Check Worker syntax
+        run: node --check index.js
+
+      - name: Validate Worker idempotency pagination
+        run: node scripts/validate-worker-idempotency.mjs
+
       - name: Check duplicate policy syntax
         run: node --check scripts/check-editorial-duplicate.mjs
 
