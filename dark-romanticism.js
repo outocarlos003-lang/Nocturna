@@ -36,6 +36,9 @@ const fallbackArt2=(p)=>{
 const artSrc2=p=>{const s=p?.image?.src;if(!s)return root2+"assets/editorial/"+slug2(p?.title||p?.id)+".svg";if(/^(https?:|data:|\/)/.test(s))return s;return root2+s.replace(/^\.\//,"");};
 function cardArt2(card,p){
  if(!card||!p||card.dataset.nrArt==="1")return;
+ // O template principal já fornece a capa em .cover-stage, com os controles de leitura e favorito.
+ // Não injete uma segunda capa nesse caso.
+ if(card.querySelector(".cover-stage,.publication-cover")){card.dataset.nrArt="1";return;}
  const a=card.querySelector("a[href*='/artigos/']");
  if(!a)return;
  card.dataset.nrArt="1";
