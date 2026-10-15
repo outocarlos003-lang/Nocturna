@@ -1,4 +1,5 @@
 import { readFileSync } from "node:fs";
+import { spawnSync } from "node:child_process";
 
 const file = "index.html";
 const html = readFileSync(file, "utf8");
@@ -27,8 +28,19 @@ for (const [index, match] of scripts.entries()) {
   }
 }
 
+// Also validate the external scripts loaded by the published homepage. These
+// are independent assets, so inline parsing alone would miss their syntax errors.
+for (const asset of ["dark-romanticism.js", "cover-interactions.js"]) {
+  const result = spawnSync(process.execPath, ["--check", asset], { encoding: "utf8" });
+  if (result.status !== 0) {
+    failures.push(asset + ": " + (result.stderr || result.stdout || "node --check failed").trim());
+  } else {
+    checked++;
+  }
+}
+
 if (failures.length) {
-  console.error("JavaScript syntax validation failed for " + failures.length + " inline script(s):");
+  console.error("JavaScript syntax validation failed for " + failures.length + " script(s):");
   for (const failure of failures) console.error("- " + failure);
   process.exitCode = 1;
 } else {
