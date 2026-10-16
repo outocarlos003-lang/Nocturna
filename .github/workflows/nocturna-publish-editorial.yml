@@ -46,7 +46,7 @@ jobs:
               if (i < 0) continue;
               const k = line.slice(0,i).trim();
               const v = line.slice(i+1).trim();
-              if (v.startsWith('[') && v.endsWith(']')) fm[k] = JSON.parse(v);
+              if (v.startsWith('[') && v.endsWith(']')) fm[k] = v.slice(1,-1).split(',').map(item=>item.trim().replace(/^['"]|['"]$/g,''));
               else if (v === 'true' || v === 'false') fm[k] = v === 'true';
               else fm[k] = v;
             }
