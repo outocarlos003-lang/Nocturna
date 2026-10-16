@@ -1,5 +1,5 @@
 name: Publicar editorial Nocturna
-# Reprocessamento solicitado para sincronizar o acervo editorial e reconstruir DATA a partir de editorial/posts.
+# Reprocessamento editorial: este push aciona a reconstrução integral de DATA a partir de editorial/posts, incluindo publicações que ficaram fora do índice público.
 
 on:
   push:
