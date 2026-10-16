@@ -68,6 +68,13 @@ for (const file of files) {
   }
   ok(text.slice(end + 5).trim().length > 0, file + ": corpo do artigo vazio");
 }
+if (process.argv.includes("--check-sync") && match) {
+  const indexed = Array.isArray(DATA.pubs) ? DATA.pubs : [];
+  const indexedIds = new Set(indexed.map(publication => publication.id));
+  for (const id of ids.keys()) ok(indexedIds.has(id), "publicação fonte não integrada ao índice DATA: " + id);
+  ok(indexedIds.size === indexed.length, "DATA contém IDs de publicação duplicados");
+  console.log("Conferência de integração: " + ids.size + " fontes, " + indexed.length + " publicações no índice.");
+}
 console.log("Validação preventiva: " + files.length + " arquivos Markdown, " + ids.size + " IDs únicos.");
 if (fail.length) {
   console.error("FALHAS PREVENTIVAS:\n" + fail.map(message => "- " + message).join("\n"));
