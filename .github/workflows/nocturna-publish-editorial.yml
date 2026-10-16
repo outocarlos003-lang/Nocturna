@@ -23,6 +23,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
+      - name: Validar fontes editoriais antes da integração
+        run: node scripts/validate-editorial.mjs
       - name: Integrar publicações no DATA editorial
         run: |
           node <<'NODE'
@@ -48,7 +50,7 @@ jobs:
               const v = line.slice(i+1).trim();
               if (v.startsWith('[') && v.endsWith(']')) fm[k] = v.slice(1,-1).split(',').map(item=>item.trim().replace(/^['"]|['"]$/g,''));
               else if (v === 'true' || v === 'false') fm[k] = v === 'true';
-              else fm[k] = v;
+              else fm[k] = v.length >= 2 && ((v.startsWith('\"') && v.endsWith('\"')) || (v.startsWith('\'' ) && v.endsWith('\''))) ? v.slice(1,-1) : v;
             }
             return {fm, body:text.slice(end+5)};
           };
@@ -76,6 +78,8 @@ jobs:
           const out = source.replace(/const DATA=(\{[\s\S]*?\});\s*\/\*END DATA\*\//, 'const DATA='+serialized+';/*END DATA*/');
           fs.writeFileSync(indexPath,out,'utf8');
           NODE
+      - name: Conferir sincronização de todas as fontes editoriais
+        run: node scripts/validate-editorial.mjs --check-sync
       - name: Regenerar rotas, índice público e sitemap
         run: node sitemap.mjs https://outocarlos003-lang.github.io/Nocturna/
       - name: Validar acervo
