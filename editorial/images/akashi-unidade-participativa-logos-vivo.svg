@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+<title id="title">Akashi — Unidade Participativa do LOGOS Vivo</title>
+<desc id="desc">Composição dark romanticism: espelho negro fraturado, fissuras douradas convergindo para luz marfim, arcos góticos e atmosfera vinho escuro.</desc>
+<defs>
+ <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#09090d"/><stop offset=".52" stop-color="#211018"/><stop offset="1" stop-color="#08080b"/></linearGradient>
+ <radialGradient id="glow"><stop stop-color="#fff0c9" stop-opacity=".9"/><stop offset=".22" stop-color="#d9a76c" stop-opacity=".35"/><stop offset="1" stop-color="#7a1f35" stop-opacity="0"/></radialGradient>
+ <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f8e8bd"/><stop offset=".45" stop-color="#b88754"/><stop offset="1" stop-color="#4b2630"/></linearGradient>
+ <filter id="blur"><feGaussianBlur stdDeviation="28"/></filter>
+ <pattern id="grain" width="13" height="13" patternUnits="userSpaceOnUse"><circle cx="2" cy="4" r=".7" fill="#ead7b5" opacity=".13"/><circle cx="10" cy="11" r=".5" fill="#fff" opacity=".08"/></pattern>
+</defs>
+<rect width="1200" height="675" fill="url(#bg)"/>
+<ellipse cx="600" cy="332" rx="320" ry="280" fill="url(#glow)" filter="url(#blur)"/>
+<g fill="none" stroke="#5c2638" stroke-width="3" opacity=".68">
+ <path d="M95 675V270Q95 90 270 52Q445 90 445 270V675"/>
+ <path d="M755 675V270Q755 90 930 52Q1105 90 1105 270V675"/>
+ <path d="M180 675V294Q180 170 270 128Q360 170 360 294V675"/>
+ <path d="M840 675V294Q840 170 930 128Q1020 170 1020 294V675"/>
+</g>
+<g fill="none" stroke="#a66b58" stroke-width="1.4" opacity=".6">
+ <path d="M270 52V8M930 52V8M95 270H445M755 270H1105"/>
+ <path d="M45 610L270 470L495 610M705 610L930 470L1155 610"/>
+</g>
+<circle cx="600" cy="326" r="210" fill="#09090d" stroke="#7a3944" stroke-width="3"/>
+<circle cx="600" cy="326" r="190" fill="#101014" stroke="url(#gold)" stroke-width="1.5"/>
+<path d="M600 142L628 222L700 175L681 258L768 267L702 320L759 382L676 384L675 469L608 421L554 491L538 408L454 429L484 350L408 311L489 275L458 194L543 224Z" fill="#17151a" stroke="#b88b5d" stroke-width="2"/>
+<path d="M600 151L585 287L514 231L566 307L432 311L570 330L493 402L588 352L602 494L617 357L706 415L635 341L767 272L626 304L600 151Z" fill="none" stroke="#e4c58e" stroke-width="2.2" stroke-linejoin="round"/>
+<path d="M600 170L606 310L676 250L622 324L710 356L618 346L588 433L590 344L511 371L577 322L529 269L592 305Z" fill="url(#gold)" opacity=".78"/>
+<circle cx="600" cy="326" r="34" fill="#fff0c9" opacity=".2" filter="url(#blur)"/>
+<circle cx="600" cy="326" r="12" fill="#fff1d1"/>
+<g stroke="#e7cfa1" stroke-width="1.5" opacity=".75">
+ <path d="M600 314L600 80M600 338L600 575M588 326L350 326M612 326L850 326"/>
+ <path d="M592 318L424 150M608 334L776 502M608 318L778 150M592 334L422 502"/>
+</g>
+<rect width="1200" height="675" fill="url(#grain)"/>
+<path d="M0 560Q260 500 450 575T850 565T1200 535V675H0Z" fill="#08080b" opacity=".74"/>
+<text x="600" y="594" text-anchor="middle" fill="#eee1c8" font-family="Georgia,serif" font-size="31" letter-spacing="5">AKASHI</text>
+<text x="600" y="628" text-anchor="middle" fill="#c99d8e" font-family="Georgia,serif" font-size="14" letter-spacing="3">A UNIDADE PARTICIPATIVA DO LOGOS VIVO</text>
+</svg>
