@@ -7,7 +7,7 @@ cats: [cat-teologia, cat-metafisica, cat-filosofia, cat-hermeneutica, cat-antrop
 tags: [pecado, RUACH, LOGOS, YAHUAH, participação, ontologia, soberba, self, consciência, fragmentação, dissonância, lei, verdade, restauração, teologia, metafísica]
 image: editorial/images/a-palavra-geradora-a-conviccao-regenerada.svg
 imageAlt: Uma palavra luminosa atravessando a escuridão em direção a um coração simbólico, em estética dark romanticism.
-imageCaption: A Palavra, a consciência e a busca de integração no Logos
+imageCaption: A Palavra, a consciência e a busca de integração no Logos.
 ---
 
 ✦ A Arquitetura Ontológica do Pecado · RUACH · LOGOS · PARTICIPAÇÃO — A Usurpação da Direção do Vento e a Fragmentação da Unidade do Ser ✦
