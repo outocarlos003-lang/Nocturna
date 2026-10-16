@@ -2,7 +2,7 @@
 id: a-arquitetura-ontologica-do-pecado-ruach-logos-participacao
 title: A Arquitetura Ontológica do Pecado · RUACH · LOGOS · PARTICIPAÇÃO — A Usurpação da Direção do Vento e a Fragmentação da Unidade do Ser
 date: 2026-10-15
-summary: Ensaio teológico-filosófico que interpreta o pecado como apropriação do recebido, usurpação da direção do RUACH e fragmentação da unidade interior, contrapondo essa ruptura ao retorno à participação em YAHUAH por meio do LOGOS.
+summary: Ensaio teológico-filosófico que interpreta o pecado como apropriação do que foi recebido, usurpação da direção do RUACH e disputa pelo trono do self, relacionando soberba, fragmentação interior e restauração da participação em YAHUAH por meio do LOGOS.
 cats: [cat-teologia, cat-metafisica, cat-filosofia, cat-hermeneutica, cat-antropologia, cat-epistemologia, cat-romanticism-dark]
 tags: [pecado, RUACH, LOGOS, YAHUAH, participação, ontologia, soberba, self, consciência, fragmentação, dissonância, lei, verdade, restauração, teologia, metafísica]
 image: editorial/images/a-palavra-geradora-a-conviccao-regenerada.svg
