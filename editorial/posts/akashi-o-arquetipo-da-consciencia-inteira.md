@@ -1,12 +1,12 @@
 ---
-id: "akashi-o-arquetipo-da-consciencia-inteira"
+id: akashi-o-arquetipo-da-consciencia-inteira
 title: "Akashi, o Arquétipo da Consciência Inteira"
-date: "2026-10-13"
+date: 2026-10-13
 featured: false
 summary: "O texto examina a unidade da consciência, a participação no Fundamento, a fragmentação, a coerência e a culpa total, usando Akashi como arquétipo para distinguir a integração funcional da reintegração ao LOGOS e à Verdade."
 cats: ["cat-teologia","cat-metafisica","cat-psicologia","cat-filosofia","cat-epistemologia","cat-arquetipo","cat-fenomenologia","cat-hermeneutica","cat-romanticism-dark"]
 tags: ["Akashi","consciência","consciência inteira","unidade","fragmentação","participação","Fundamento","LOGOS","Logos","RHĒMA","RUACH Ha'Kodesh","Verdade","culpa total","pecado","salvação","Tiago","Romanos 1","Emperor Eye","metafísica","ontologia","integração","coerência","contradição","ego"]
-image: "akashi-o-arquetipo-da-consciencia-inteira.svg"
+image: editorial/images/akashi-unidade-participativa-logos-vivo.svg
 imageAlt: "Ilustração dark romanticism de um espelho negro fraturado cujas fissuras convergem para um centro de luz marfim, sob sombras góticas e tons de vinho escuro, evocando unidade, consciência e fundamento."
 imageCaption: "Akashi, o Arquétipo da Consciência Inteira"
 ---
