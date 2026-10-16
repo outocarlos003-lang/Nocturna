@@ -1,4 +1,5 @@
 name: Publicar editorial Nocturna
+# Reprocessamento solicitado para sincronizar o acervo editorial.
 
 on:
   push:
