@@ -8,6 +8,7 @@ on:
       - 'editorial/posts/**'
       - 'editorial/images/**'
       - '.github/workflows/nocturna-publish-editorial.yml'
+      - 'scripts/validate-editorial.mjs'
 
 permissions:
   contents: write
